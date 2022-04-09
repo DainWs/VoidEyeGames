@@ -1,0 +1,155 @@
+@startuml
+skinparam groupInheritance 5
+
+class AjaxRequest {}
+class AjaxResponse {}
+
+namespace Desktop {
+ namespace pages {
+  interface Page {
+    #componentWillMount()
+    #componentWillUnmount()
+  }
+  class Home implements Page {}
+  class Games implements Page {}
+  class GameDetails implements Page {}
+  class Support implements Page {}
+  class SupportForm implements Page {}
+  class SignInForm implements Page {}
+  class LogInForm implements Page {}
+ }
+ namespace models {
+  class Games {
+   -id: int
+   -name: String
+   -description: String
+   -categories: List<Categories>
+   -comments: List<Comments>
+   -medias: List<Medias>
+   -plataforms: List<Plataforms>
+   +getters()
+   +setters()
+  }
+  class Categories {
+   -id: int
+   -name: String
+   +getters()
+   +setters()
+  }
+  class Comments {
+   -id: int
+   -gamesId: int
+   -userId: int
+   -description: String
+   +getters()
+   +setters()
+  }
+  class Medias {
+   -id: int
+   -gamesId: int
+   -mediaType: String
+   +getters()
+   +setters()
+  }
+  class Plataforms {
+   -id: int
+   -name: String
+   -url: Url
+   +getters()
+   +setters()
+  }
+  class Users {
+   -id: int
+   -name: String
+   -email: String
+   -password: String
+   -publicityAccepted: boolean
+   -imageUrl: String
+   +getters()
+   +setters()
+  }
+  Games --o Plataforms
+  Games --o Categories
+  Games --o Comments
+  Games --o Medias
+ }
+ namespace factories {
+  class UsersFactory {
+   +parse(User)
+   +parseAll(Users)
+  }
+  Desktop.models.Users <-u- UsersFactory 
+  class GamesFactory {
+   +parse(Game)
+   +parseAll(Games)
+  }
+  Desktop.models.Games <--r-- GamesFactory
+  class CategoriesFactory {
+   +parse(Category)
+   +parseAll(Categories)
+  }
+  Desktop.models.Categories <-down-- CategoriesFactory 
+  class MediasFactory {
+   +parse(Media)
+   +parseAll(Medias)
+   }
+  Desktop.models.Medias <-down-- MediasFactory 
+  class CommentsFactory {
+   +parse(Comment)
+   +parseAll(Comments)
+  }
+  Desktop.models.Comments <-down-- CommentsFactory 
+  class PlataformsFactory {
+   +parse(Plataform)
+   +parseAll(Plataforms)
+  }
+  Desktop.models.Plataforms <--- PlataformsFactory 
+  GamesFactory -u-> CategoriesFactory
+  GamesFactory -u-> MediasFactory 
+  GamesFactory -u-> CommentsFactory 
+  GamesFactory -u-> PlataformsFactory 
+ }
+ namespace domain {
+	class SessionManager {
+		+{static} getInstance()
+		+open(Users)
+		+update(Users)
+		+get(Users)
+		+close(Users)
+	}
+ }
+ namespace services {
+	class AjaxRequestData {
+          -url: String
+          -headers: Map<String, String> 
+          -params: Map<String, String>
+          +getters()
+          +setters()
+        }
+	class AjaxService {
+		+{static} getInstance()
+		+post(AjaxRequestData)
+		+get(AjaxRequestData)
+	}
+        class DataProvider {
+          +{static} getInstance()
+          +supply(data)
+          +provide()
+        }
+	AjaxRequestData <-r- AjaxService
+        DataProvider <-l- AjaxService
+ }
+ Desktop.services.AjaxService <-- Desktop.pages.Page
+ Desktop.services.DataProvider <-- Desktop.pages.Page
+ Desktop.domain.SessionManager <-r- Desktop.pages.Page
+ Desktop.domain.SessionManager -l-> Desktop.models.Users
+ 
+ class App {
+   -displayedPage: Page
+   +start()
+ }
+ App -d-o Desktop.pages.Page
+ Desktop.services.AjaxService -u-> .AjaxRequest
+ Desktop.services.AjaxService <-u- .AjaxResponse 
+}
+@enduml

@@ -1,0 +1,126 @@
+@startuml
+namespace API {
+ namespace config {
+  class Constants {}
+ }
+
+ namespace controllers {
+  abstract class PostController {
+   #errors: array
+   #PostController()
+   +getErrors(): array
+  }
+
+  Network.PostRequests --> PostController
+
+  class GamesController extends PostController {
+   +getGames(): JSON
+  }
+  class CategoriesController extends PostController {
+   +getCategories(): JSON
+  }
+  class PlataformsController extends PostController {
+   +getPlataforms(): JSON
+  }
+  class UsersController extends PostController {
+   +getUsers(): JSON
+  }
+ }
+ 
+ 
+ namespace services.db {
+  class DBConnection {
+   #db: PDO
+   -DBConnection()
+  }
+  API.config.Constants <-- DBConnection
+  abstract class DBTable extends DBConnection {
+   #DBTable()
+   #queryWhere(table, field, value, toClass): array
+   #{abstract} query(name, order, orderType): array
+   #{abstract} queryWith(id): array
+   +{static} count(tableName): int
+  }
+  class DBGames extends DBTable {}
+  class DBCategories extends DBTable {
+   +getCategoriesOfGame(): Array
+  }
+  class DBComments extends DBTable {
+    +getCommentsOfGame(): Array
+    +insert(rowData): bool
+  }
+  class DBMedias extends DBTable {
+   +getMediasOfGame(): Array
+  }
+  class DBPlataforms extends DBTable {
+   +getPlataformsOfGame(): Array
+  }
+  class DBUsers extends DBTable {
+   +getCommentsOfGame(): Array
+  }
+
+  API.controllers.PostController --> DBTable
+  DBGames --> API.models.Games
+  DBCategories --> API.models.Categories
+  DBComments --> API.models.Comments
+  DBMedias --> API.models.Medias
+  DBPlataforms --> API.models.Plataforms
+  DBUsers --> API.models.Users
+ }
+ namespace models {
+  class Games {
+   -id: int
+   -name: String
+   -description: String
+   -categories: List<Categories>
+   -comments: List<Comments>
+   -medias: List<Medias>
+   -plataforms: List<Plataforms>
+   +getters()
+   +setters()
+  }
+  class Categories {
+   -id: int
+   -name: String
+   +getters()
+   +setters()
+  }
+  class Comments {
+   -id: int
+   -gamesId: int
+   -userId: int
+   -description: String
+   +getters()
+   +setters()
+  }
+  class Medias {
+   -id: int
+   -gamesId: int
+   -mediaType: String
+   +getters()
+   +setters()
+  }
+  class Plataforms {
+   -id: int
+   -name: String
+   -url: Url
+   +getters()
+   +setters()
+  }
+  class Users {
+   -id: int
+   -name: String
+   -email: String
+   -password: String
+   -publicityAccepted: boolean
+   -imageUrl: String
+   +getters()
+   +setters()
+  }
+  Plataforms o-- Games
+  Categories o-- Games
+  Comments o-- Games
+  Medias o-- Games
+ }
+}
+@enduml
