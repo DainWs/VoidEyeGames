@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "void-eye-games-movil",
+    "slug": "void-eye-games-movil",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  },
+  "name": "void-eye-games-movil"
+}

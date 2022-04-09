@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "void-eye-games-desktop",
+    "slug": "void-eye-games-desktop",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  },
+  "name": "void-eye-games-desktop"
+}

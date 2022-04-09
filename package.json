@@ -1,0 +1,17 @@
+{
+  "name": "void-eye-games",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Jose Antonio Duarte Perez",
+  "license": "ISC",
+  "workspaces": [
+    "void-eye-games-api",
+    "void-eye-games-desktop",
+    "void-eye-games-movil"
+  ]
+}
