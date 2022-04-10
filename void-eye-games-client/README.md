@@ -1,4 +1,4 @@
-# Void Eye Game - Api
+# Void Eye Game - Client
 **Author:** Jose Antonio Duarte Perez
 
 ## Description
