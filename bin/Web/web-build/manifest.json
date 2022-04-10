@@ -1,0 +1,36 @@
+{
+  "background_color": "#FFFFFF",
+  "description": "Final project for 2ºDAW, its a website is intended for support in the search for the best offers and alternatives when buying video games. In addition, together with the detailed description of the video games that will be made through videos and images, you will find the different links to purchase websites and a series of comments written by users. They will also be able to report bugs to developers and view the location of our company on a map. In short, a page that helps customers to see on which page it is sold at the best price and the different prices at the time to buy video games.",
+  "display": "standalone",
+  "lang": "es_ES",
+  "name": "Void Eye Games",
+  "scope": "",
+  "short_name": "void-eye-games",
+  "start_url": "https://localhost",
+  "theme_color": "#6E6CBC",
+  "related_applications": [
+    {
+      "platform": "play",
+      "url": "http://play.google.com/store/apps/details?id=com.dainws.void_eye_games",
+      "id": "com.dainws.void_eye_games"
+    }
+  ],
+  "prefer_related_applications": true,
+  "icons": [
+    {
+      "src": "..\\bin\\Web\\pwa\\chrome-icon\\chrome-icon-144.png",
+      "sizes": "144x144",
+      "type": "image/png"
+    },
+    {
+      "src": "..\\bin\\Web\\pwa\\chrome-icon\\chrome-icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "..\\bin\\Web\\pwa\\chrome-icon\\chrome-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

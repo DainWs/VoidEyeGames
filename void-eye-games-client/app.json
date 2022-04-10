@@ -4,14 +4,13 @@
     "name": "Void Eye Games",
     "slug": "void-eye-games-client",
     "description": "Final project for 2ºDAW, its a website is intended for support in the search for the best offers and alternatives when buying video games. In addition, together with the detailed description of the video games that will be made through videos and images, you will find the different links to purchase websites and a series of comments written by users. They will also be able to report bugs to developers and view the location of our company on a map. In short, a page that helps customers to see on which page it is sold at the best price and the different prices at the time to buy video games.",
-    "owner": "Jose Antonio Duarte Perez",
+    "owner": "voideyegames",
     "version": "1.0.0",
-    "plateforms": ["web", "android"],
     "orientation": "default",
     "userInterfaceStyle": "light",
     "backgroundColor": "#FFFFFF",
     "primaryColor": "#6E6CBC",
-    "icon": "./logo.png",
+    "icon": "./assets/images/logo_rounded.png",
     "androidStatusBar": {
       "barStyle": "light-content",
       "backgroundColor": "#6E6CBC",
@@ -29,13 +28,13 @@
     "splash": {
       "backgroundColor": "#FFFFFF",
       "resizeMode": "contain",
-      "image": "./logo.png"
+      "image": "./assets/images/logo_rounded.png"
     },
     "android": {
-      "publishManifestPath": "../bin/Android/Manifest",
-      "publishBundlePath": "../bin/Android",
-      "package": "com.dainws.void-eye-games",
-      "versionCode": "1.0.0",
+      "publishManifestPath": "../bin/Android/Manifest/manifest",
+      "publishBundlePath": "../bin/Android/bundle",
+      "package": "com.dainws.void_eye_games",
+      "versionCode": 1,
       "permissions": [
         "READ_EXTERNAL_STORAGE",
         "WRITE_EXTERNAL_STORAGE"
@@ -48,17 +47,17 @@
       "splash": {
         "backgroundColor": "#FFFFFF",
         "resizeMode": "contain",
-        "image": "./logo.png",
-        "mdpi": "./android/app/src/main/res/mipmap-mdpi/ic_launcher.png",
-        "hdpi": "./android/app/src/main/res/mipmap-hdpi/ic_launcher.png",
-        "xhdpi": "./android/app/src/main/res/mipmap-xhdpi/ic_launcher.png",
-        "xxhdpi": "./android/app/src/main/res/mipmap-xxhdpi/ic_launcher.png",
-        "xxxhdpi": "./android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png"
+        "image": "./assets/images/logo_rounded.png",
+        "mdpi": "./assets/images/icons/mipmap-mdpi/ic_launcher.png",
+        "hdpi": "./assets/images/icons/mipmap-hdpi/ic_launcher.png",
+        "xhdpi": "./assets/images/icons/mipmap-xhdpi/ic_launcher.png",
+        "xxhdpi": "./assets/images/icons/mipmap-xxhdpi/ic_launcher.png",
+        "xxxhdpi": "./assets/images/icons/mipmap-xxxhdpi/ic_launcher.png"
       },
       "intentFilters": []
     },
     "web": {
-      "favicon": "./logo.png",
+      "favicon": "./assets/images/logo_rounded.png",
       "name": "Void Eye Games",
       "shortName": "void-eye-games",
       "lang": "es_ES",
