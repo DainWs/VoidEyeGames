@@ -2,12 +2,19 @@
     "require": {
         "slim/slim": "^3.1",
         "slim/php-view": "^2.0",
-        "monolog/monolog": "^1.17",
-        "robmorgan/phinx": "^0.5.1"
+        "robmorgan/phinx": "^0.5.1",
+        "monolog/monolog": "^2.5",
+        "doctrine/orm": "^2.11",
+        "symfony/cache": "^6.0",
+        "doctrine/annotations": "^1.13",
+        "atlas/orm": "~3.0"
     },
     "autoload": {
         "psr-4": {
             "": "classes/"
         }
+    },
+    "require-dev": {
+        "atlas/cli": "*"
     }
 }

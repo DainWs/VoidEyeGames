@@ -24,8 +24,9 @@ CREATE TABLE IF NOT EXISTS users(
 	name		VARCHAR(100) NOT NULL UNIQUE,
 	password	VARCHAR(255) NOT NULL,
 	email		VARCHAR(255) NOT NULL UNIQUE,
-	imageUrl		VARCHAR(255),
-	publicityAccepted BOOLEAN DEFAULT false,
+	imageUrl	VARCHAR(255),
+	publicityAccepted BOOLEAN DEFAULT 0,
+	accountType	VARCHAR(255),
 	CONSTRAINT pk_users PRIMARY KEY(id)
 );
 
@@ -39,7 +40,7 @@ CREATE TABLE IF NOT EXISTS plataforms(
 CREATE TABLE IF NOT EXISTS games(
 	id              INT(255) auto_increment NOT NULL,
 	name          	VARCHAR(100) NOT NULL UNIQUE,
-	descripcion     VARCHAR(255),
+	descripcion    	TEXT,
 	CONSTRAINT pk_games PRIMARY KEY(id)
 );
 
@@ -61,6 +62,10 @@ ALTER TABLE categories_games ADD CONSTRAINT fk_categories_games_plataforms FOREI
 CREATE TABLE IF NOT EXISTS plataforms_games(
 	plataformsId	INT(255) NOT NULL,
 	gamesId			INT(255) NOT NULL,
+	price			FLOAT(100,2) NOT NULL,
+	priceUnit		VARCHAR(100) NOT NULL,
+	discount		FLOAT(3,2) NOT NULL,
+	isEnabled		BOOLEAN NOT NULL DEFAULT 1,
 	CONSTRAINT pk_plataforms_games PRIMARY KEY(plataformsId, gamesId)
 );
 

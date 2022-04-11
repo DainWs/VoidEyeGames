@@ -1,0 +1,10 @@
+USE void_eye_games;
+
+SELECT * FROM categories;
+SELECT * FROM categories_games;
+SELECT * FROM comments;
+SELECT * FROM games;
+SELECT * FROM medias;
+SELECT * FROM plataforms;
+SELECT * FROM plataforms_games;
+SELECT * FROM users;
