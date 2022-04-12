@@ -1,22 +1,15 @@
 @startuml
 skinparam groupInheritance 5
 
-class AjaxRequest {}
-class AjaxResponse {}
+class Api {}
 
 namespace Desktop {
  namespace pages {
   interface Page {
-    #componentWillMount()
-    #componentWillUnmount()
+    +update(): void
+    #componentWillMount(): void
+    #componentWillUnmount(): void
   }
-  class Home implements Page {}
-  class Games implements Page {}
-  class GameDetails implements Page {}
-  class Support implements Page {}
-  class SupportForm implements Page {}
-  class SignInForm implements Page {}
-  class LogInForm implements Page {}
  }
  namespace models {
   class Games {
@@ -51,6 +44,16 @@ namespace Desktop {
    +getters()
    +setters()
   }
+  class GameDataOnPlataform {
+   -plataformsId: int
+   -gamesId: int
+   -price: Double
+   -priceUnit: String
+   -discount: Float
+   -isEnabled: boolean
+   +getters()
+   +setters()
+  }
   class Plataforms {
    -id: int
    -name: String
@@ -68,9 +71,11 @@ namespace Desktop {
    +getters()
    +setters()
   }
-  Games --o Plataforms
-  Games --o Categories
+  Games *--o GameDataOnPlataform 
+  GameDataOnPlataform o--* Plataforms
+  Games o--o Categories
   Games --o Comments
+  Users --o Comments
   Games --o Medias
  }
  namespace factories {
@@ -136,20 +141,27 @@ namespace Desktop {
           +supply(data)
           +provide()
         }
-	AjaxRequestData <-r- AjaxService
-        DataProvider <-l- AjaxService
+        class AjaxObserver {
+         +subscribe(callback, event): void
+         +unsubscribe(callback, event): void
+         +notify(event): void
+        }
+	AjaxRequestData <-l- AjaxService
+        AjaxService -d-> DataProvider 
+        DataProvider -r-> AjaxObserver
+        AjaxObserver -d-> Desktop.pages.Page
  }
  Desktop.services.AjaxService <-- Desktop.pages.Page
  Desktop.services.DataProvider <-- Desktop.pages.Page
- Desktop.domain.SessionManager <-r- Desktop.pages.Page
- Desktop.domain.SessionManager -l-> Desktop.models.Users
+ Desktop.domain.SessionManager <-u- Desktop.pages.Page
+ Desktop.domain.SessionManager -d-> Desktop.models.Users
  
  class App {
    -displayedPage: Page
    +start()
  }
  App -d-o Desktop.pages.Page
- Desktop.services.AjaxService -u-> .AjaxRequest
- Desktop.services.AjaxService <-u- .AjaxResponse 
+ Desktop.services.AjaxService -u-> .Api 
+ Desktop.services.AjaxService <-u- .Api 
 }
 @enduml

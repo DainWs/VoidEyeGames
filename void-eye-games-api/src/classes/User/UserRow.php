@@ -15,6 +15,7 @@ use Atlas\Table\Row;
  * @property mixed $email varchar(255) NOT NULL
  * @property mixed $imageUrl varchar(255)
  * @property mixed $publicityAccepted tinyint(3,0)
+ * @property mixed $accountType varchar(255)
  */
 class UserRow extends Row
 {
@@ -25,5 +26,6 @@ class UserRow extends Row
         'email' => null,
         'imageUrl' => null,
         'publicityAccepted' => 0,
+        'accountType' => null,
     ];
 }

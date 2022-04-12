@@ -1,0 +1,114 @@
+@startuml
+class PostRequests {}
+namespace API {
+ namespace libraries {
+  class LogManager {
+   -logger: Logger
+   -handler: StreamHandler
+   +LogManager(class)
+   +log(message, logLevel): void
+   +getFile(): String
+  }
+
+  class Atlas {}
+ }
+ namespace models {
+  class Games {
+   -id: int
+   -name: String
+   -description: String
+   -categories: List<Categories>
+   -comments: List<Comments>
+   -medias: List<Medias>
+   -plataforms: List<Plataforms>
+   +getters()
+   +setters()
+  }
+  class Categories {
+   -id: int
+   -name: String
+   +getters()
+   +setters()
+  }
+  class Comments {
+   -id: int
+   -gamesId: int
+   -userId: int
+   -description: String
+   +getters()
+   +setters()
+  }
+  class Medias {
+   -id: int
+   -gamesId: int
+   -mediaType: String
+   +getters()
+   +setters()
+  }
+  class Plataforms {
+   -id: int
+   -name: String
+   -url: Url
+   +getters()
+   +setters()
+  }
+  class GameDataOnPlataform {
+   -plataformsId: int
+   -gamesId: int
+   -price: Double
+   -priceUnit: String
+   -discount: Float
+   -isEnabled: boolean
+   +getters()
+   +setters()
+  }
+  class Users {
+   -id: int
+   -name: String
+   -email: String
+   -password: String
+   -publicityAccepted: boolean
+   -imageUrl: String
+   +getters()
+   +setters()
+  }
+  GameDataOnPlataform o--* Games
+  Plataforms *-r-o GameDataOnPlataform 
+  Categories o--o Games
+  Comments o-- Games
+  Comments o-r- Users 
+  Medias o-- Games
+ }
+
+ namespace controllers {
+  class BaseController {
+   -logger: array
+   -db: PDO
+   -atlas: Atlas
+   +BaseController()
+   +getUser(request, response, args): JSON
+   +getUsers(request, response, args): JSON
+   +getGame(request, response, args): JSON
+   +getGames(request, response, args): JSON
+   +getPlataforms(request, response, args): JSON
+   +getCategories(request, response, args): JSON
+   +signIn(request, response, args): JSON
+   +logIn(request, response, args): JSON
+   +addGame(request, response, args): JSON
+   +addPlataform(request, response, args): JSON
+   +addCategory(request, response, args): JSON
+  }
+
+  .PostRequests --> BaseController 
+  API.libraries.LogManager <-- BaseController 
+  API.libraries.Atlas <-- BaseController 
+
+  BaseController --> API.models.Games
+  BaseController --> API.models.Categories
+  BaseController --> API.models.Plataforms
+  BaseController --> API.models.Users
+ }
+ 
+ note top of API.libraries.Atlas: A Library provider by Slim framework,\n and used for DB Operations
+}
+@enduml

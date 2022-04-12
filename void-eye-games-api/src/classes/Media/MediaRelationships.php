@@ -9,6 +9,6 @@ class MediaRelationships extends MapperRelationships
 {
     protected function define()
     {
-        $this->manyToOne('game', \classes\Game\Game::class, ['gamesId' => 'id']);
+        //$this->manyToOne('games', \classes\Game\Game::class, ['gamesId' => 'id']);
     }
 }

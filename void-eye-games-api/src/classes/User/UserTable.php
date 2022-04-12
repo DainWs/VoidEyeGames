@@ -88,6 +88,17 @@ class UserTable extends Table
   'primary' => false,
   'options' => NULL,
 ),
+        'accountType' => array (
+  'name' => 'accountType',
+  'type' => 'varchar',
+  'size' => 255,
+  'scale' => NULL,
+  'notnull' => false,
+  'default' => NULL,
+  'autoinc' => false,
+  'primary' => false,
+  'options' => NULL,
+),
     ];
 
     const COLUMN_NAMES = [
@@ -97,6 +108,7 @@ class UserTable extends Table
         'email',
         'imageUrl',
         'publicityAccepted',
+        'accountType',
     ];
 
     const COLUMN_DEFAULTS = [
@@ -106,6 +118,7 @@ class UserTable extends Table
         'email' => null,
         'imageUrl' => null,
         'publicityAccepted' => 0,
+        'accountType' => null,
     ];
 
     const PRIMARY_KEY = [

@@ -9,7 +9,7 @@ include_once('autoload.php');
 $config = include('./settings.php');
 $app = new Slim\App(["settings" => $config]);
 $app->get('/users', 'src\controllers\BaseController:getUsers');
-$app->get('/game/{id}', 'src\controllers\BaseController:gatGame');
+$app->get('/game/{id}', 'src\controllers\BaseController:getGame');
 $app->get('/games', 'src\controllers\BaseController:getGames');
 $app->get('/categories', 'src\controllers\BaseController:getCategories');
 $app->get('/plataforms', 'src\controllers\BaseController:getPlataforms');

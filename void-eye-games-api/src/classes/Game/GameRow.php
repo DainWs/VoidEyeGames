@@ -11,7 +11,7 @@ use Atlas\Table\Row;
 /**
  * @property mixed $id int(10,0) NOT NULL
  * @property mixed $name varchar(100) NOT NULL
- * @property mixed $descripcion varchar(255)
+ * @property mixed $descripcion text(65535)
  */
 class GameRow extends Row
 {

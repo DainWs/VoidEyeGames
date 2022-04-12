@@ -9,5 +9,6 @@ class UserRelationships extends MapperRelationships
 {
     protected function define()
     {
+        $this->oneToMany('comments', \classes\Comment\Comment::class, ['id' => 'usersId']);
     }
 }

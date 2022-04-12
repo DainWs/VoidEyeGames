@@ -13,6 +13,7 @@ namespace classes\User;
  * @property mixed $email varchar(255) NOT NULL
  * @property mixed $imageUrl varchar(255)
  * @property mixed $publicityAccepted tinyint(3,0)
+ * @property mixed $accountType varchar(255)
  */
 trait UserFields
 {

@@ -9,6 +9,10 @@ namespace classes\PlataformsGame;
 /**
  * @property mixed $plataformsId int(10,0) NOT NULL
  * @property mixed $gamesId int(10,0) NOT NULL
+ * @property mixed $price float(100,2) NOT NULL
+ * @property mixed $priceUnit varchar(100) NOT NULL
+ * @property mixed $discount float(3,2) NOT NULL
+ * @property mixed $isEnabled tinyint(3,0) NOT NULL
  */
 trait PlataformsGameFields
 {

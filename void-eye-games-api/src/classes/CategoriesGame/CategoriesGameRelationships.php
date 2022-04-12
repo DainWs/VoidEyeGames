@@ -9,5 +9,7 @@ class CategoriesGameRelationships extends MapperRelationships
 {
     protected function define()
     {
+        $this->manyToOne('games', \classes\Game\Game::class, ['gamesId' => 'id']);
+        $this->manyToOne('categories', \classes\Category\Category::class, ['categoriesId' => 'id']);
     }
 }

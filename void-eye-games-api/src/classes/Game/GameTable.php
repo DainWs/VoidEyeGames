@@ -46,8 +46,8 @@ class GameTable extends Table
 ),
         'descripcion' => array (
   'name' => 'descripcion',
-  'type' => 'varchar',
-  'size' => 255,
+  'type' => 'text',
+  'size' => 65535,
   'scale' => NULL,
   'notnull' => false,
   'default' => NULL,

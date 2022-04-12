@@ -44,16 +44,68 @@ class PlataformsGameTable extends Table
   'primary' => true,
   'options' => NULL,
 ),
+        'price' => array (
+  'name' => 'price',
+  'type' => 'float',
+  'size' => 100,
+  'scale' => 2,
+  'notnull' => true,
+  'default' => NULL,
+  'autoinc' => false,
+  'primary' => false,
+  'options' => NULL,
+),
+        'priceUnit' => array (
+  'name' => 'priceUnit',
+  'type' => 'varchar',
+  'size' => 100,
+  'scale' => NULL,
+  'notnull' => true,
+  'default' => NULL,
+  'autoinc' => false,
+  'primary' => false,
+  'options' => NULL,
+),
+        'discount' => array (
+  'name' => 'discount',
+  'type' => 'float',
+  'size' => 3,
+  'scale' => 2,
+  'notnull' => true,
+  'default' => NULL,
+  'autoinc' => false,
+  'primary' => false,
+  'options' => NULL,
+),
+        'isEnabled' => array (
+  'name' => 'isEnabled',
+  'type' => 'tinyint',
+  'size' => 3,
+  'scale' => 0,
+  'notnull' => true,
+  'default' => 1,
+  'autoinc' => false,
+  'primary' => false,
+  'options' => NULL,
+),
     ];
 
     const COLUMN_NAMES = [
         'plataformsId',
         'gamesId',
+        'price',
+        'priceUnit',
+        'discount',
+        'isEnabled',
     ];
 
     const COLUMN_DEFAULTS = [
         'plataformsId' => null,
         'gamesId' => null,
+        'price' => null,
+        'priceUnit' => null,
+        'discount' => null,
+        'isEnabled' => 1,
     ];
 
     const PRIMARY_KEY = [
