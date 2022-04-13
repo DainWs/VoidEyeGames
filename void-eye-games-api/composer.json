@@ -2,12 +2,10 @@
     "require": {
         "slim/slim": "^3.1",
         "slim/php-view": "^2.0",
-        "robmorgan/phinx": "^0.5.1",
         "monolog/monolog": "^2.5",
-        "doctrine/orm": "^2.11",
         "symfony/cache": "^6.0",
-        "doctrine/annotations": "^1.13",
-        "atlas/orm": "~3.0"
+        "atlas/orm": "~3.0",
+        "phpmailer/phpmailer": "^6.6"
     },
     "autoload": {
         "psr-4": {
