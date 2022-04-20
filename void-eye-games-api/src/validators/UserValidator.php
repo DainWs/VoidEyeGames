@@ -2,16 +2,17 @@
 namespace src\validators;
 
 use Atlas\Orm\Atlas;
-use classes\User\User;
 use Exception;
 use InvalidArgumentException;
 use Monolog\Logger;
 
 class UserValidator extends BaseValidator {
-    private Atlas $atlas;
+    protected Atlas $atlas;
+    protected ValidationUtils $utils;
 
     public function __construct() {
         parent::__construct();
+        $this->utils = ValidationUtils::getInstance();
     }
 
     public function setAtlas(Atlas $atlas): void {
@@ -22,15 +23,8 @@ class UserValidator extends BaseValidator {
         try {
             if ($user === null) throw new InvalidArgumentException("User is null, invalid argument");
 
-            $dbUser = $this->atlas->select(User::class, ['name' => $user->name])->fetchRecord();
-            if ($dbUser != null) {
-                $this->errors['name'] = "Ya existe un usuario con este nombre.";
-            }
-
-            $dbUser = $this->atlas->select(User::class, ['email' => $user->email])->fetchRecord();
-            if ($dbUser != null) {
-                $this->errors['email'] = "Ya existe un usuario con este correo.";
-            }
+            $this->validateName($user->name);
+            $this->validateEmail($user->email);
 
             if ($user->password !== $user->confirmedPassword) {
                 $this->errors['confirmedPassword'] = "Ya existe un usuario con este correo.";
@@ -42,6 +36,22 @@ class UserValidator extends BaseValidator {
         } catch(Exception $ex) {
             $this->logger->log($ex->getMessage(), Logger::WARNING);
             $this->errors['others'] = 'Ha ocurrido un error inesperado, intentelo de nuevo mas tarde.';
+        }
+    }
+
+    private function validateName($name): void {
+        if (!$this->utils->validateNotEmpty($name)) {
+            $this->errors['name'] = 'El campo "name" es obligatorio.';
+        }
+    }
+
+    private function validateEmail($email): void {
+        if (!$this->utils->validateNotEmpty($email)) {
+            $this->errors['email'] = 'El campo "email" es obligatorio.';
+        }
+
+        if (!$this->utils->validateEmail($email)) {
+            $this->errors['email'] = 'El email indicado no es valido.';
         }
     }
 }

@@ -15,6 +15,8 @@ use src\domain\AtlasProvider;
 use src\domain\DatabaseProvider;
 use src\libraries\EmailManager;
 use src\libraries\LogManager;
+use src\validators\GameValidator;
+use src\validators\SignUserValidator;
 use src\validators\UserValidator;
 
 class BaseController {
@@ -79,17 +81,10 @@ class BaseController {
     /*** POSTS ***/
     public function signIn(Request $request, Response $response, array $args){
         $this->logger->log("[POST] signIn called.", Logger::INFO);
-        $user = null;
-        try {
-            $user = json_decode(file_get_contents('php://input'));
-        } catch(Exception $ex) { 
-            $message = $ex->getMessage();
-            $this->logger->log("Exception in signIn method: $message", Logger::WARNING);
-        }
 
-        $validator = new UserValidator();
+        $validator = new SignUserValidator();
         $validator->setAtlas($this->atlas);
-        $validator->validate($user);
+        $validator->validate($request->getParsedBody());
         if ($validator->hasErrors()) {
             return $response->withJson($validator->getErrors(), 200);
         }
@@ -99,8 +94,9 @@ class BaseController {
     public function logIn(Request $request, Response $response, array $args){
         $this->logger->log("[POST] logIn called.", Logger::INFO);
         try {
-            $username = $_REQUEST['Username'] ?? '';
-            $password = $_REQUEST['Password'] ?? '';
+            $body = $request->getParsedBody();
+            $username = $body->Username ?? $_REQUEST['Username'] ?? '';
+            $password = $body->Password ?? $_REQUEST['Password'] ?? '';
             $dbUser = $this->atlas->select(User::class, ['name' => $username])->fetchRecord();
             if ($dbUser->password === $password) {
                 return $response->withJson(true, 200);
@@ -116,9 +112,8 @@ class BaseController {
     public function sendReport(Request $request, Response $response, array $args){
         $this->logger->log("[POST] sendReport called.", Logger::INFO);
         try {
-            $report = json_decode(file_get_contents('php://input'));
             $mailSender = new EmailManager();
-            $mailSender->send($report);
+            $mailSender->send($request->getParsedBody());
         } catch(Exception $ex) {
             $this->logger->log("Exception in signIn method: " . $ex->getMessage(), Logger::WARNING);
             $this->resultCode = -1;
@@ -131,7 +126,12 @@ class BaseController {
     public function addGame(Request $request, Response $response, array $args){
         $this->logger->log("[POST] addGame called.", Logger::INFO);
         try {
-
+            $game = $request->getParsedBody();
+            $validator = new GameValidator();
+            $validator->validate($game);
+            if ($validator->hasErrors()) {
+                $this->atlas->insert($game);
+            }
         } catch(Exception $ex) { $this->processException($ex); }
         return $this->createJsonResponseMessage($response);
     }
@@ -139,7 +139,10 @@ class BaseController {
     public function addCategory(Request $request, Response $response, array $args){
         $this->logger->log("[POST] addCategory called.", Logger::INFO);
         try {
-
+            $category = $request->getParsedBody();
+            if ($category->name) {
+                $this->atlas->insert($category);
+            }
         } catch(Exception $ex) { $this->processException($ex); }
         return $this->createJsonResponseMessage($response);
     }
@@ -155,7 +158,7 @@ class BaseController {
     public function addComment(Request $request, Response $response, array $args){
         $this->logger->log("[POST] addComment called.", Logger::INFO);
         try {
-
+            $this->atlas->insert($request->getParsedBody());
         } catch(Exception $ex) { $this->processException($ex); }
         return $this->createJsonResponseMessage($response);
     }
@@ -180,7 +183,7 @@ class BaseController {
     public function updateGame(Request $request, Response $response, array $args){
         $this->logger->log("[PUT] updateGame called.", Logger::INFO);
         try {
-
+            $this->atlas->update($request->getParsedBody());
         } catch(Exception $ex) { $this->processException($ex); }
         return $this->createJsonResponseMessage($response);
     }
@@ -205,7 +208,7 @@ class BaseController {
     public function deleteGameOnPlataform(Request $request, Response $response, array $args){
         $this->logger->log("[DELETE] deleteGameOnPlataform called.", Logger::INFO);
         try {
-
+            $this->atlas->delete($request->getParsedBody());
         } catch(Exception $ex) { $this->processException($ex); }
         return $this->createJsonResponseMessage($response);
     }

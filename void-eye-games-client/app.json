@@ -61,10 +61,8 @@
       "name": "Void Eye Games",
       "shortName": "void-eye-games",
       "lang": "es_ES",
-      "scope": "",
       "themeColor": "#6E6CBC",
       "description": "Void Eye Games website",
-      "startUrl": "https://localhost",
       "backgroundColor": "#FFFFFF",
       "preferRelatedApplications": true
     }

@@ -1,25 +1,60 @@
-import { StatusBar } from 'expo-status-bar';
+import Carousel from 'nuka-carousel';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import HeaderComponent from '../components/HeaderComponent';
-import FooterComponent from '../components/FooterComponent';
+import GameItemComponent from '../components/models/GameItemComponent';
+import AjaxController from '../services/ajax/AjaxController';
+import AjaxRequest from '../services/ajax/AjaxRequest';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-        <HeaderComponent/>
-        <Text>Open up App.js to start working on your app!</Text>
-        <StatusBar style="auto" />
-        <FooterComponent/>
-    </View>
-  );
+class HomeView extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      games: []
+    }
+  }
+  
+
+  updateGames(response) {
+    console.log(response);
+    this.setState({games: response.data});
+  }
+
+  componentDidMount() {
+    AjaxController.send(new AjaxRequest(), '/games', this.updateGames.bind(this));
+  }
+
+  render() {
+    let gamesWithDiscount = this.getGamesWithDiscount();
+    let gamesItems = this.getGamesItems();
+    return (
+      <div className='container'>
+        <header>
+          <Carousel>
+            {gamesWithDiscount}
+          </Carousel>
+        </header>
+        <div>
+          {gamesItems}
+        </div>
+      </div>
+    );
+  }
+
+  getGamesWithDiscount() {
+    let discountedGames = [];
+    for (const game of this.state.games) {
+      discountedGames.push(<div key={game.id} style={{height: '60vw', maxHeight: '60vh'}}>{game.name}</div>);
+    }
+    return discountedGames;
+  }
+
+  getGamesItems() {
+    let gamesItemsViews = [];
+    for (const game of this.state.games) {
+      gamesItemsViews.push(<GameItemComponent key={game.id} game={game}/>);
+    }
+    return gamesItemsViews;
+  }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default HomeView;

@@ -5,7 +5,7 @@ class AjaxRequest {
         this.url =  Configuration.getApiUrl();
         this.method = 'GET';
         this.params = {};
-        this.headers = {};
+        this.headers = {'Access-Control-Allow-Origin': '*'};
     }
 
     setHeaders(headers) {
@@ -18,6 +18,10 @@ class AjaxRequest {
 
     setMethod(method) {
         this.method = method;
+    }
+
+    setBody(body) {
+        this.body = body;
     }
 }
 

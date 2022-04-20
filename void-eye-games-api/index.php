@@ -1,4 +1,7 @@
 <?php
+
+use Slim\Http\Request;
+use Slim\Http\Response;
 use src\domain\AtlasProvider;
 use src\domain\DatabaseProvider;
 
@@ -8,6 +11,17 @@ include_once('autoload.php');
 
 $config = include('./settings.php');
 $app = new Slim\App(["settings" => $config]);
+
+$app->add(function($request, $response, $next) {
+    $response = $next($request, $response);
+    return $response->withHeader('Access-Control-Allow-Origin', '*')
+        ->withHeader('Access-Control-Allow-Headers', '*')
+        ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+});
+
+$app->post('/', function(Request $request, Response $response, array $args) {
+    return $response->withJson($request->getParsedBody(), 200);
+});
 
 // Users
 $app->group('/users', function () use ($app) {

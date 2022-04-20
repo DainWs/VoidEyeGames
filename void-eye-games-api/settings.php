@@ -10,7 +10,7 @@ $dbPass = ($_SERVER['DB_PASSWORD'] ?? DB_DEFAULT_PASSWORD);
 return [
     'settings' => [
         'displayErrorDetails' => true,
-        'determineRouteBeforeAppMiddleware' => false,
+        'determineRouteBeforeAppMiddleware' => true,
 
         'atlas' => [
             'pdo' => [
