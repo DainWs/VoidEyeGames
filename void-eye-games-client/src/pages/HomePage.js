@@ -4,7 +4,7 @@ import GameItemComponent from '../components/models/GameItemComponent';
 import AjaxController from '../services/ajax/AjaxController';
 import AjaxRequest from '../services/ajax/AjaxRequest';
 
-class HomeView extends React.Component {
+class HomePage extends React.Component {
 
   constructor(props) {
     super(props);
@@ -27,16 +27,20 @@ class HomeView extends React.Component {
     let gamesWithDiscount = this.getGamesWithDiscount();
     let gamesItems = this.getGamesItems();
     return (
-      <div className='container'>
+      <section>
         <header>
-          <Carousel>
+          <Carousel className='w-100'>
             {gamesWithDiscount}
           </Carousel>
         </header>
-        <div>
+        <article className='border-2 m-4'>
+          <header>
+            <h1 className='text-center'>News</h1>
+          </header>
+          <hr/>
           {gamesItems}
-        </div>
-      </div>
+        </article>
+      </section>
     );
   }
 
@@ -57,4 +61,4 @@ class HomeView extends React.Component {
   }
 }
 
-export default HomeView;
+export default HomePage;

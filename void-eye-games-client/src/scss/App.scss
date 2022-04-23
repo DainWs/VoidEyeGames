@@ -1,0 +1,61 @@
+
+$primary:#FFFFFF;
+$secondary:#6E6CBC;
+$tertiary: #FAF8FF;
+$quaternary: #00C896;
+$quinary: #C38C00;
+$links: #0D6EFD;
+
+$text-primary: $primary;
+$text-secondary: #000000;
+
+$theme-colors: (
+    "primary": $primary,
+    "secondary": $secondary,
+    "tertiary": $tertiary,
+    "quaternary": $quaternary,
+    "quinary": $quinary,
+    "links": $links
+);
+
+@import "../../node_modules/bootstrap/scss/bootstrap.scss";
+
+.nav-link {
+    color: $text-primary !important;
+    font-size: 1.4rem;
+    font-family: 'Arial';
+
+    &.active,
+    &:focus,
+    &:hover {
+        background-color: $primary !important;
+        color: $text-secondary !important;
+    }
+}
+
+#search:hover {
+    cursor: pointer;
+    background: linear-gradient(rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05));
+}
+
+.dropdown {
+    &-menu{
+        top: -2px !important;
+        border: none;
+        border-radius: 0;
+        background-color: $secondary;
+    }
+
+    &-item {
+        color: $primary;
+        font-size: 1.2rem;
+        font-family: 'Arial';
+
+        &.active,
+        &:focus,
+        &:hover {
+            background-color: $primary !important;
+            color: $text-secondary !important;
+        }
+    }
+}

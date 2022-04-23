@@ -9,10 +9,17 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "eject": "expo eject"
+    "eject": "expo eject",
+    "sass": "node-sass -w src/scss/ -o assets/css/ --output-style compressed"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.1.1",
+    "@fortawesome/free-brands-svg-icons": "^6.1.1",
+    "@fortawesome/free-regular-svg-icons": "^6.1.1",
+    "@fortawesome/free-solid-svg-icons": "^6.1.1",
+    "@fortawesome/react-fontawesome": "^0.1.18",
     "axios": "^0.26.1",
+    "bootstrap": "^4.0.0",
     "expo": "~44.0.0",
     "expo-navigation-bar": "^1.1.2",
     "expo-splash-screen": "~0.14.1",
@@ -21,12 +28,16 @@
     "expo-updates": "^0.11.6",
     "nuka-carousel": "^5.0.13",
     "react": "17.0.1",
+    "react-bootstrap": "^2.3.0",
     "react-dom": "17.0.1",
     "react-native": "0.64.3",
-    "react-native-web": "0.17.1"
+    "react-native-web": "0.17.1",
+    "sass": "^1.50.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.9"
+    "@babel/core": "^7.12.9",
+    "node-sass": "^7.0.1",
+    "react-router-dom": "^6.2.1"
   },
   "private": true
 }
