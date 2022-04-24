@@ -4,10 +4,43 @@ import { StyleSheet, Text, View } from 'react-native';
 
 export default function App() {
   return (
-    <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
-        <StatusBar style="auto" />
-    </View>
+    <section>
+      <aside>
+        <section>
+          <header>
+            <h2>Order by</h2>
+          </header>
+          <div>
+            <input type="radio" value="Name" name="order" checked=""/> Name
+            <input type="radio" value="Price" name="order" /> Price
+            <input type="radio" value="Plataform" name="order" /> Plataform
+          </div>
+        </section>
+        <section>
+          <header>
+            <h2>Categories</h2>
+          </header>
+          <div>
+            <label><input type="checkbox" value={category.id} checked={isChecked}/> category.name</label>
+          </div>
+        </section>
+        <section>
+          <header>
+            <h2>Plataforms</h2>
+          </header>
+          <div>
+            <label><input type="checkbox" value={category.id} checked={isChecked}/> category.name</label>
+          </div>
+        </section>
+      </aside>
+      <article className='border-2 m-4'>
+        <header>
+          <h1 className='text-center'>News</h1>
+        </header>
+        <hr />
+        {gamesItems}
+      </article>
+    </section>
   );
 }
 

@@ -1,8 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import HeaderComponent from './components/HeaderComponent';
-import FooterComponent from './components/FooterComponent';
 import HomePage from './pages/HomePage';
 import GamesPage from './pages/GamesPage';
 import GameDetailsPage from './pages/GameDetailsPage';

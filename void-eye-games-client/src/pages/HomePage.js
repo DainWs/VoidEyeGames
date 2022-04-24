@@ -9,18 +9,18 @@ class HomePage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      games: []
+      plataformsGames: []
     }
   }
   
 
   updateGames(response) {
     console.log(response);
-    this.setState({games: response.data});
+    this.setState({plataformsGames: response.data});
   }
 
   componentDidMount() {
-    AjaxController.send(new AjaxRequest(), '/games', this.updateGames.bind(this));
+    AjaxController.send(new AjaxRequest(), '/plataformGames', this.updateGames.bind(this));
   }
 
   render() {
@@ -38,7 +38,9 @@ class HomePage extends React.Component {
             <h1 className='text-center'>News</h1>
           </header>
           <hr/>
-          {gamesItems}
+          <div className='row'>
+            {gamesItems}
+          </div>
         </article>
       </section>
     );
@@ -46,16 +48,24 @@ class HomePage extends React.Component {
 
   getGamesWithDiscount() {
     let discountedGames = [];
-    for (const game of this.state.games) {
-      discountedGames.push(<div key={game.id} style={{height: '60vw', maxHeight: '60vh'}}>{game.name}</div>);
+    for (const game of this.state.plataformsGames) {
+      discountedGames.push(
+        <div key={game.plataformsId + '-' + game.gamesId} style={{height: '60vw', maxHeight: '60vh'}}>
+          <GameItemComponent key={game.plataformsId + '-' + game.gamesId} plataformGame={game} showType='discount'/>
+        </div>
+      );
     }
     return discountedGames;
   }
 
   getGamesItems() {
     let gamesItemsViews = [];
-    for (const game of this.state.games) {
-      gamesItemsViews.push(<GameItemComponent key={game.id} game={game}/>);
+    for (const game of this.state.plataformsGames) {
+      gamesItemsViews.push(
+        <div className='col-12 col-sm-6 col-md-3 p-0'>
+          <GameItemComponent key={game.plataformsId + '-' + game.gamesId} plataformGame={game}/>
+        </div>
+      );
     }
     return gamesItemsViews;
   }

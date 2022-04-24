@@ -80,6 +80,9 @@ $app->group('/plataforms', function () use ($app) {
     });
 });
 
+// PlataformGames
+$app->get('/plataformGames', 'src\controllers\BaseController:getPlataformsGames');
+
 // Comments
 $app->post('/comment', 'src\controllers\BaseController:addComment');
 

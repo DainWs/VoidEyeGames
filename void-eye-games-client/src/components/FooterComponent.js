@@ -24,9 +24,9 @@ class FooterComponent extends React.Component {
         <section>
             <h6>Social Networks</h6>
             <ul>
-                <li><a href='https://es-es.facebook.com/' className='text-decoration-none'><FontAwesomeIcon icon={faFacebookSquare} /> Facebook</a></li>
-                <li><a href='https://twitter.com/' className='text-decoration-none'><FontAwesomeIcon icon={faTwitterSquare} /> Twitter</a></li>
-                <li><a href='https://www.instagram.com/' className='text-decoration-none'><FontAwesomeIcon icon={faInstagramSquare} /> Instagram</a></li>
+                <li><a href='https://es-es.facebook.com/' className='text-decoration-none text-links'><FontAwesomeIcon icon={faFacebookSquare} /> Facebook</a></li>
+                <li><a href='https://twitter.com/' className='text-decoration-none text-links'><FontAwesomeIcon icon={faTwitterSquare} /> Twitter</a></li>
+                <li><a href='https://www.instagram.com/' className='text-decoration-none text-links'><FontAwesomeIcon icon={faInstagramSquare} /> Instagram</a></li>
             </ul>
         </section>
       </footer>

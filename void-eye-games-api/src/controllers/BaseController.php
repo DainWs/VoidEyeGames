@@ -5,6 +5,7 @@ use Atlas\Orm\Atlas;
 use classes\Category\Category;
 use classes\Game\Game;
 use classes\Plataform\Plataform;
+use classes\PlataformsGame\PlataformsGame;
 use Monolog\Logger;
 use Slim\Http\Request;
 use Slim\Http\Response;
@@ -76,6 +77,12 @@ class BaseController {
         $this->logger->log("[GET] getPlataforms called.", Logger::INFO);
         $plataforms = $this->atlas->select(Plataform::class, [])->with(['games'])->fetchRecords();
         return $response->withJson($plataforms, 200);
+    }
+
+    public function getPlataformsGames(Request $request, Response $response, array $args) {
+        $this->logger->log("[GET] getPlataformsGames called.", Logger::INFO);
+        $plataformsGames = $this->atlas->select(PlataformsGame::class, [])->with(['games', 'plataforms'])->fetchRecords();
+        return $response->withJson($plataformsGames, 200);
     }
 
     /*** POSTS ***/
