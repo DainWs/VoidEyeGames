@@ -1,11 +1,11 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTwitterSquare, faFacebookSquare, faInstagramSquare } from '@fortawesome/free-brands-svg-icons'
-
+//TODO top padding desktop view
 class FooterComponent extends React.Component {
   render() {
     return (
-      <footer className='d-flex justify-content-around bg-white border border-top-dark' style={{marginTop: "auto"}}>
+      <footer className='d-block d-sm-flex justify-content-around bg-white p-4 p-sm-0 border border-top-dark' style={{marginTop: "auto"}}>
         <section>
             <h6>About Us</h6>
             <ul>

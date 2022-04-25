@@ -1,26 +1,15 @@
 import React from 'react';
-import PlataformGame from '../../domain/models/dtos/PlataformGame';
 import ResourceMangerInstance from '../../domain/ResourceManager';
-//TODO On click link to details
-class GameItemComponent extends React.Component {
-  constructor(props) {
-    super(props);
-    this.plataformGame = new PlataformGame(props.plataformGame);
-    this.state = {
-      showType: props.showType
-    };
-  }
+import GameItemComponent from './GameItemComponent';
 
-  componentDidMount() {
-  }
-
+class GameItemSliderComponent extends GameItemComponent {
   render() {
     let type = this.getShowTypeView();
     let imageUrl = ResourceMangerInstance.getImageUrl(this.plataformGame.games.getMainImage());
     let plataformImageUrl = ResourceMangerInstance.getImageUrl(this.plataformGame.plataforms.getLogo());
     return (
       <div className='position-relative p-0 m-1 border border-secondary mw-100 mh-100'>
-        <img style={{maxHeight: '100%', maxWidth: '100%'}} src={imageUrl} alt={this.plataformGame.games.name}/>
+        <img style={{minHeight: '100%', minWidth: '100%', maxWidth: '90vw', maxHeight: '100%'}} src={imageUrl} alt={this.plataformGame.games.name}/>
         <span className='position-absolute w-50 bg-secondary pl-2 border border-secondary text-primary' style={{left: 0, top: 0, fontWeight: 'bold'}}>{this.plataformGame.games.name}</span>
         <div className='position-absolute bg-quinary border border-secondary d-flex align-items-center' style={{right: 0, bottom: 0}}>
           <div className='bg-primary p-1 h-100' style={{maxWidth: '34px'}}><img className='mw-100' src={plataformImageUrl} alt={this.plataformGame.plataforms.name}/></div>
@@ -29,13 +18,6 @@ class GameItemComponent extends React.Component {
       </div>
     );
   }
-
-  getShowTypeView() {
-    if (this.state.showType === 'discount') {
-      return `${this.plataformGame.discount}%`;
-    }
-    return `${this.plataformGame.price} ${this.plataformGame.priceUnit}`;
-  }
 }
 
-export default GameItemComponent;
+export default GameItemSliderComponent;

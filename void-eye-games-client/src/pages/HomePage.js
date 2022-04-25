@@ -1,11 +1,11 @@
 import Carousel from 'nuka-carousel';
 import React from 'react';
 import GameItemComponent from '../components/models/GameItemComponent';
+import GameItemSliderComponent from '../components/models/GameItemSliderComponent';
 import AjaxController from '../services/ajax/AjaxController';
 import AjaxRequest from '../services/ajax/AjaxRequest';
 
 class HomePage extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -13,7 +13,6 @@ class HomePage extends React.Component {
     }
   }
   
-
   updateGames(response) {
     console.log(response);
     this.setState({plataformsGames: response.data});
@@ -29,7 +28,7 @@ class HomePage extends React.Component {
     return (
       <section>
         <header>
-          <Carousel className='w-100'>
+          <Carousel className='w-100' >
             {gamesWithDiscount}
           </Carousel>
         </header>
@@ -50,8 +49,8 @@ class HomePage extends React.Component {
     let discountedGames = [];
     for (const game of this.state.plataformsGames) {
       discountedGames.push(
-        <div key={game.plataformsId + '-' + game.gamesId} style={{height: '60vw', maxHeight: '60vh'}}>
-          <GameItemComponent key={game.plataformsId + '-' + game.gamesId} plataformGame={game} showType='discount'/>
+        <div key={game.plataformsId + '-' + game.gamesId} className='d-flex justify-content-center' style={{height: '60vw', maxHeight: '60vh'}}>
+          <GameItemSliderComponent key={game.plataformsId + '-' + game.gamesId} plataformGame={game} showType='discount'/>
         </div>
       );
     }

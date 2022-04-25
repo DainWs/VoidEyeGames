@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link, NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMagnifyingGlass, faUser, faRightFromBracket, faBars } from '@fortawesome/free-solid-svg-icons'
 
@@ -8,10 +9,12 @@ class HeaderComponent extends React.Component {
       <header>
         <nav className="nav justify-content-between bg-secondary" style={{ height: '3rem', fontSize: '1.4rem', fontFamily: 'Arial' }}>
           <div className='nav h-100 d-none d-sm-flex'>
-            <a className="h-100 mr-3" href="#"><img src={require('../../assets/images/logo.png')} alt="logo" className='h-100' /></a>
-            <a className="nav-link active pr-4" href="#">Home</a>
-            <a className="nav-link pr-4" href="#">Juegos</a>
-            <a className="nav-link pr-4" href="#">Soporte</a>
+            <Link to="/" className="h-100 mr-3" href="#">
+              <img src={require('../../assets/images/logo.png')} alt="logo" className='h-100' />
+            </Link>
+            <NavLink className="nav-link pr-4" activeclassname="active" to="/">Home</NavLink>
+            <NavLink className="nav-link pr-4" activeclassname="active" to="/games">Juegos</NavLink>
+            <NavLink className="nav-link pr-4" activeclassname="active" to="/support">Soporte</NavLink>
           </div>
           <form className="form-inline w-50 d-none d-lg-flex">
             <div className="input-group w-75">
@@ -36,9 +39,9 @@ class HeaderComponent extends React.Component {
               </a>
             </nav>
             <div className="collapse bg-secondary" id="navbarToggleExternalContent">
-                <a className="nav-link active pr-4" href="#">Home</a>
-                <a className="nav-link pr-4" href="#">Juegos</a>
-                <a className="nav-link pr-4" href="#">Soporte</a>
+              <NavLink className="nav-link pr-4" activeclassname="active" to="/">Home</NavLink>
+              <NavLink className="nav-link pr-4" activeclassname="active" to="/games">Juegos</NavLink>
+              <NavLink className="nav-link pr-4" activeclassname="active" to="/support">Soporte</NavLink>
             </div>
           </div>
         </nav>
