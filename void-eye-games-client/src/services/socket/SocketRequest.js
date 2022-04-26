@@ -1,6 +1,6 @@
 import Configuration from "../storage/Configuration";
 
-class AjaxRequest {
+class SocketRequest {
     constructor() {
         this.url =  Configuration.getApiUrl();
         this.method = 'GET';
@@ -25,4 +25,4 @@ class AjaxRequest {
     }
 }
 
-export default AjaxRequest;
+export default SocketRequest;

@@ -5,6 +5,7 @@ import ResourceMangerInstance from '../../domain/ResourceManager';
 class GameItemComponent extends React.Component {
   constructor(props) {
     super(props);
+    this.onClick = props.onClick;
     this.plataformGame = new PlataformGame(props.plataformGame);
     this.state = {
       showType: props.showType
@@ -19,8 +20,8 @@ class GameItemComponent extends React.Component {
     let imageUrl = ResourceMangerInstance.getImageUrl(this.plataformGame.games.getMainImage());
     let plataformImageUrl = ResourceMangerInstance.getImageUrl(this.plataformGame.plataforms.getLogo());
     return (
-      <div className='position-relative p-0 m-1 border border-secondary mw-100 mh-100'>
-        <img style={{maxHeight: '100%', maxWidth: '100%'}} src={imageUrl} alt={this.plataformGame.games.name}/>
+      <div className='game-item noselect position-relative p-0 m-1 border border-secondary mw-100 mh-100' onClick={this.onClick}>
+        <img style={this.getImageStyle()} src={imageUrl} alt={this.plataformGame.games.name}/>
         <span className='position-absolute w-50 bg-secondary pl-2 border border-secondary text-primary' style={{left: 0, top: 0, fontWeight: 'bold'}}>{this.plataformGame.games.name}</span>
         <div className='position-absolute bg-quinary border border-secondary d-flex align-items-center' style={{right: 0, bottom: 0}}>
           <div className='bg-primary p-1 h-100' style={{maxWidth: '34px'}}><img className='mw-100' src={plataformImageUrl} alt={this.plataformGame.plataforms.name}/></div>
@@ -28,6 +29,10 @@ class GameItemComponent extends React.Component {
         </div>
       </div>
     );
+  }
+
+  getImageStyle() {
+    return {maxHeight: '100%', maxWidth: '100%'};
   }
 
   getShowTypeView() {

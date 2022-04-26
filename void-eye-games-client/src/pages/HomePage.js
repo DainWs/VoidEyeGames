@@ -2,8 +2,11 @@ import Carousel from 'nuka-carousel';
 import React from 'react';
 import GameItemComponent from '../components/models/GameItemComponent';
 import GameItemSliderComponent from '../components/models/GameItemSliderComponent';
-import AjaxController from '../services/ajax/AjaxController';
-import AjaxRequest from '../services/ajax/AjaxRequest';
+import { SocketController } from '../services/socket/SocketController';
+import { SocketDataProvideer } from '../services/socket/SocketDataProvider';
+import { DESTINATION_PLATAFORM_GAMES } from '../services/socket/SocketDestinations';
+import { SocketObserver } from '../services/socket/SocketObserver';
+import SocketRequest from '../services/socket/SocketRequest';
 
 class HomePage extends React.Component {
   constructor(props) {
@@ -13,13 +16,19 @@ class HomePage extends React.Component {
     }
   }
   
-  updateGames(response) {
-    console.log(response);
-    this.setState({plataformsGames: response.data});
+  updatePlataformGames() {
+    let plataformsGames = SocketDataProvideer.provide(DESTINATION_PLATAFORM_GAMES);
+    console.log(plataformsGames);
+    this.setState({plataformsGames: plataformsGames});
   }
 
   componentDidMount() {
-    AjaxController.send(new AjaxRequest(), '/plataformGames', this.updateGames.bind(this));
+    SocketObserver.subscribe(DESTINATION_PLATAFORM_GAMES, 'HomePage', this.updatePlataformGames.bind(this));
+    SocketController.send(DESTINATION_PLATAFORM_GAMES);
+  }
+
+  componentWillUnmount() {
+    SocketObserver.unsubscribe(DESTINATION_PLATAFORM_GAMES, 'HomePage');
   }
 
   render() {
@@ -48,9 +57,10 @@ class HomePage extends React.Component {
   getGamesWithDiscount() {
     let discountedGames = [];
     for (const game of this.state.plataformsGames) {
+      console.log(game.plataformsId + '-' + game.gamesId);
       discountedGames.push(
-        <div key={game.plataformsId + '-' + game.gamesId} className='d-flex justify-content-center' style={{height: '60vw', maxHeight: '60vh'}}>
-          <GameItemSliderComponent key={game.plataformsId + '-' + game.gamesId} plataformGame={game} showType='discount'/>
+        <div key={game.plataformsId + '-' + game.gamesId + '--slider__items'} className='d-flex justify-content-center' style={{height: '60vw', maxHeight: '60vh'}}>
+          <GameItemSliderComponent plataformGame={game} showType='discount'/>
         </div>
       );
     }
@@ -61,8 +71,8 @@ class HomePage extends React.Component {
     let gamesItemsViews = [];
     for (const game of this.state.plataformsGames) {
       gamesItemsViews.push(
-        <div className='col-12 col-sm-6 col-md-3 p-0'>
-          <GameItemComponent key={game.plataformsId + '-' + game.gamesId} plataformGame={game}/>
+        <div key={game.plataformsId + '-' + game.gamesId + '--items'} className='col-12 col-sm-6 col-md-3 p-0'>
+          <GameItemComponent plataformGame={game}/>
         </div>
       );
     }

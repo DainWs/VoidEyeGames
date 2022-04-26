@@ -1,4 +1,4 @@
-import { API_URL } from "../services/ajax/AjaxController";
+import { API_URL } from "../services/socket/SocketController";
 
 class ResourceManger {
     getImageUrl(image) {
