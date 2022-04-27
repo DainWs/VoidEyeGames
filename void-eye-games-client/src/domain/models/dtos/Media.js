@@ -6,7 +6,8 @@ class Media {
     }
     
     getMediaSource() {
-        let ext = this.mediaType.substr(this.mediaType.indexOf('/'));
+        let ext = this.mediaType.substr(this.mediaType.indexOf('/') + 1);
         return `assets/images/games/medias/${this.gamesId}-${this.id}.${ext}`;
     }
 }
+export default Media;

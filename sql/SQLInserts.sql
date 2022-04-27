@@ -19,6 +19,7 @@ INSERT INTO GAMES VALUES (null, "Minecraft", "What is it? Minecraft is a video g
 INSERT INTO COMMENTS VALUES (null, 1, 1, "Un comentario de ejemplo");
 
 INSERT INTO MEDIAS VALUES (null, 1, "image/png");
+INSERT INTO MEDIAS VALUES (null, 1, "video/mp4");
 
 INSERT INTO categories_games VALUES (1, 1);
 INSERT INTO categories_games VALUES (2, 1);

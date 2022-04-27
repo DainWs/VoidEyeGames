@@ -8,6 +8,7 @@ import Carousel from "nuka-carousel";
 class MediaTab extends React.Component {
     constructor(props) {
         super(props);
+        console.log(props.medias);
         this.state = {
             medias: props.medias
         }

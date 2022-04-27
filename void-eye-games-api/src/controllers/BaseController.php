@@ -81,7 +81,7 @@ class BaseController {
 
     public function getPlataformsGames(Request $request, Response $response, array $args) {
         $this->logger->log("[GET] getPlataformsGames called.", Logger::INFO);
-        $plataformsGames = $this->atlas->select(PlataformsGame::class, [])->with(['games', 'plataforms'])->fetchRecords();
+        $plataformsGames = $this->atlas->select(PlataformsGame::class, [])->with(['games' => ['medias'], 'plataforms'])->fetchRecords();
         return $response->withJson($plataformsGames, 200);
     }
 
