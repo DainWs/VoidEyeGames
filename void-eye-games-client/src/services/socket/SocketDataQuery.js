@@ -1,11 +1,23 @@
 import { FilterUtils } from "../../utils/FilterUtils";
 import { SocketDataProvideer } from "./SocketDataProvider";
-import { DESTINATION_GAMES, DESTINATION_PLATAFORMS } from "./SocketDestinations";
+import { DESTINATION_GAMES, DESTINATION_PLATAFORMS, DESTINATION_PLATAFORM_GAMES } from "./SocketDestinations";
 
 class SocketDataQuery {
     getGameWithId(id) {
+        var searchedGameId = id;
         let games = SocketDataProvideer.provide(DESTINATION_GAMES);
-        return Array.from(games).find(v => v.id === id);
+        return Array.from(games).find(v => {
+            console.log(searchedGameId);
+            return v.id === searchedGameId
+        });
+    }
+
+    getPlataformsGamesWithGameId(gameId) {
+        let plataformsGames = SocketDataProvideer.provide(DESTINATION_PLATAFORM_GAMES);
+        console.log(plataformsGames);
+        if (plataformsGames === null) return [];
+        return Array.from(plataformsGames)
+            .filter(v => v.gamesId = gameId);
     }
 
     getBestPlataformsIn(list) {

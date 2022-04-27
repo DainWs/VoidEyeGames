@@ -54,7 +54,7 @@ class BaseController {
         $byParam = $args['by'];
         $valueParam = $args['value'];
         $games = $this->atlas->select(Game::class, [$byParam => $valueParam])
-            ->with(['medias', 'plataforms_games', 'plataforms', 'categories', 'comments' => [ 'users' ]])
+            ->with(['medias', 'plataforms' => ['plataforms_games'], 'categories', 'comments' => [ 'users' ]])
             ->fetchRecords();
         return $response->withJson($games, 200);
     }
@@ -62,7 +62,7 @@ class BaseController {
     public function getGames(Request $request, Response $response, array $args) {
         $this->logger->log("[GET] getGames called.", Logger::INFO);
         $games = $this->atlas->select(Game::class, [])
-            ->with(['medias', 'plataforms_games', 'plataforms', 'categories', 'comments' => [ 'users' ]])
+            ->with(['medias', 'plataforms' => ['plataforms_games'], 'categories', 'comments' => [ 'users' ]])
             ->fetchRecords();
         return $response->withJson($games, 200);
     }
