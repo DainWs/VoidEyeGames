@@ -1,12 +1,11 @@
-import { DESTINATION_CATEGORIES, DESTINATION_GAMES, DESTINATION_PLATAFORMS, DESTINATION_PLATAFORM_GAMES } from "./SocketDestinations";
+import { ALL_DESTINATIONS } from "./SocketDestinations";
 
 class SocketObserver {
     constructor() {
         this.listeners = new Map();
-        this.listeners.set(DESTINATION_GAMES, new Map());
-        this.listeners.set(DESTINATION_CATEGORIES, new Map());
-        this.listeners.set(DESTINATION_PLATAFORMS, new Map());
-        this.listeners.set(DESTINATION_PLATAFORM_GAMES, new Map());
+        for (const destination of ALL_DESTINATIONS) {
+            this.listeners.set(destination, new Map());
+        }
     }
 
     subscribe(endPoint, className, callback) {

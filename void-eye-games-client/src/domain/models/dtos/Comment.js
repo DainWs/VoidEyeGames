@@ -4,5 +4,8 @@ class Comment {
         this.usersId = builder.usersId;
         this.gamesId = builder.gamesId;
         this.description = builder.description;
+        this.user = builder.user;
+        this.game = builder.game;
     }
 }
+export default Comment;

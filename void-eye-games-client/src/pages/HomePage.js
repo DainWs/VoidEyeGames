@@ -6,7 +6,6 @@ import { SocketController } from '../services/socket/SocketController';
 import { SocketDataProvideer } from '../services/socket/SocketDataProvider';
 import { DESTINATION_PLATAFORM_GAMES } from '../services/socket/SocketDestinations';
 import { SocketObserver } from '../services/socket/SocketObserver';
-import SocketRequest from '../services/socket/SocketRequest';
 
 class HomePage extends React.Component {
   constructor(props) {
@@ -37,7 +36,7 @@ class HomePage extends React.Component {
     return (
       <section>
         <header>
-          <Carousel className='w-100' >
+          <Carousel className='w-100' animation='zoom' autoplayInterval={5}>
             {gamesWithDiscount}
           </Carousel>
         </header>
@@ -59,7 +58,7 @@ class HomePage extends React.Component {
     for (const game of this.state.plataformsGames) {
       console.log(game.plataformsId + '-' + game.gamesId);
       discountedGames.push(
-        <div key={game.plataformsId + '-' + game.gamesId + '--slider__items'} className='d-flex justify-content-center' style={{height: '60vw', maxHeight: '60vh'}}>
+        <div key={game.plataformsId + '-' + game.gamesId + '--slider__items'} className='d-flex justify-content-center' style={{maxHeight: '60vh'}}>
           <GameItemSliderComponent plataformGame={game} showType='discount'/>
         </div>
       );

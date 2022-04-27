@@ -1,8 +1,8 @@
-import Configuration from "../storage/Configuration";
+import { API_URL } from "./SocketController";
 
 class SocketRequest {
     constructor() {
-        this.url =  Configuration.getApiUrl();
+        this.url =  API_URL;
         this.method = 'GET';
         this.params = {};
         this.headers = {'Access-Control-Allow-Origin': '*'};

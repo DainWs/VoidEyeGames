@@ -8,7 +8,15 @@ class Game {
         this.comments = builder.comments;
         this.medias = builder.medias;
     }
+
+    getPlataform(key) {
+        return Array.from(this.plataforms).find(v => v.id === key);
+    }
     
+    getPlataformGame(plataformKey) {
+        return Array.from(this.plataforms).find(v => v.id === plataformKey);
+    }
+
     getMainImage() {
         return `assets/images/games/${this.name}.png`;
     }

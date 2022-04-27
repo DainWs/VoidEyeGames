@@ -1,5 +1,3 @@
-import React from 'react';
-import ResourceMangerInstance from '../../domain/ResourceManager';
 import GameItemComponent from './GameItemComponent';
 
 class GameItemSliderComponent extends GameItemComponent {

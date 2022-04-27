@@ -7,4 +7,4 @@ class ResourceManger {
 }
 
 const ResourceMangerInstance = new ResourceManger();
-export default ResourceMangerInstance;
+export { ResourceMangerInstance as ResourceManger};

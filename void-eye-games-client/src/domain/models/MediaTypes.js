@@ -1,0 +1,23 @@
+const VIDEO_ALLOWED_MEDIAS_TYPES = new Set();
+VIDEO_ALLOWED_MEDIAS_TYPES.add('video/avi');
+VIDEO_ALLOWED_MEDIAS_TYPES.add('video/mpeg');
+VIDEO_ALLOWED_MEDIAS_TYPES.add('video/mp4');
+VIDEO_ALLOWED_MEDIAS_TYPES.add('video/ogg');
+VIDEO_ALLOWED_MEDIAS_TYPES.add('video/quicktime');
+VIDEO_ALLOWED_MEDIAS_TYPES.add('video/webm');
+VIDEO_ALLOWED_MEDIAS_TYPES.add('video/x-matroska');
+VIDEO_ALLOWED_MEDIAS_TYPES.add('video/x-ms-wmv:');
+VIDEO_ALLOWED_MEDIAS_TYPES.add('video/x-flv');
+
+const IMAGE_ALLOWED_MEDIAS_TYPES = new Set();
+IMAGE_ALLOWED_MEDIAS_TYPES.add('image/gif');
+IMAGE_ALLOWED_MEDIAS_TYPES.add('image/jpeg');
+IMAGE_ALLOWED_MEDIAS_TYPES.add('image/pjpeg');
+IMAGE_ALLOWED_MEDIAS_TYPES.add('image/png');
+IMAGE_ALLOWED_MEDIAS_TYPES.add('image/bmp');
+IMAGE_ALLOWED_MEDIAS_TYPES.add('image/svg+xml');
+IMAGE_ALLOWED_MEDIAS_TYPES.add('image/tiff');
+IMAGE_ALLOWED_MEDIAS_TYPES.add('image/vnd.djvu');
+IMAGE_ALLOWED_MEDIAS_TYPES.add('image/x-xcf');
+
+export {VIDEO_ALLOWED_MEDIAS_TYPES, IMAGE_ALLOWED_MEDIAS_TYPES};
