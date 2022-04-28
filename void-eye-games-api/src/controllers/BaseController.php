@@ -14,11 +14,11 @@ use Exception;
 use PDO;
 use src\domain\AtlasProvider;
 use src\domain\DatabaseProvider;
+use src\domain\JWTManager;
 use src\libraries\EmailManager;
 use src\libraries\LogManager;
 use src\validators\GameValidator;
 use src\validators\SignUserValidator;
-use src\validators\UserValidator;
 
 class BaseController {
     private LogManager $logger;
@@ -99,21 +99,22 @@ class BaseController {
     }
 
     public function logIn(Request $request, Response $response, array $args){
-        $this->logger->log("[POST] logIn called.", Logger::INFO);
+        $this->logger->log("[POST] logIn called. ", Logger::INFO);
         try {
             $body = $request->getParsedBody();
-            $username = $body->Username ?? $_REQUEST['Username'] ?? '';
-            $password = $body->Password ?? $_REQUEST['Password'] ?? '';
+            $username = $body->username ?? $body['username'] ?? $_REQUEST['Username'] ?? '';
+            $password = $body->password ?? $body['password'] ?? $_REQUEST['Password'] ?? '';
             $dbUser = $this->atlas->select(User::class, ['name' => $username])->fetchRecord();
-            if ($dbUser->password === $password) {
-                return $response->withJson(true, 200);
+            if ($dbUser !== null && $dbUser->password === $password) {
+                $credentials = (new JWTManager())->generate($username);
+                return $response->withJson($credentials, 200);
             }
         } catch(Exception $ex) { 
             $this->logger->log("Exception in signIn method: " . $ex->getMessage(), Logger::WARNING);
-            $this->processException($ex);
-            return $this->createJsonResponseMessage($response);
         }
-        return $response->withJson(false, 200);
+        $this->resultCode = 403;
+        $this->resultMessage = 'Ivalid Username or Password.';
+        return $this->createJsonResponseMessage($response);
     }
 
     public function sendReport(Request $request, Response $response, array $args){

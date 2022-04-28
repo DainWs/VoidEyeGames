@@ -20,6 +20,7 @@
     "@fortawesome/react-fontawesome": "^0.1.18",
     "axios": "^0.26.1",
     "bootstrap": "^4.0.0",
+    "crypto-js": "^4.1.1",
     "expo": "~44.0.0",
     "expo-navigation-bar": "^1.1.2",
     "expo-splash-screen": "~0.14.1",
@@ -33,6 +34,7 @@
     "react-loading-skeleton": "^3.1.0",
     "react-native": "0.64.3",
     "react-native-web": "0.17.1",
+    "react-select": "^5.3.1",
     "redux": "^4.2.0",
     "sass": "^1.50.1",
     "video-react": "^0.15.0"

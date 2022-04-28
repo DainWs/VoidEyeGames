@@ -5,11 +5,15 @@ class SocketRequest {
         this.url =  API_URL;
         this.method = 'GET';
         this.params = {};
-        this.headers = {'Access-Control-Allow-Origin': '*'};
+        this.headers = {'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json'};
     }
 
     setHeaders(headers) {
         this.headers = headers;
+    }
+
+    setContentType(contentType) {
+        this.headers = {'Access-Control-Allow-Origin': '*', 'Content-Type': contentType};
     }
 
     setParams(params) {
@@ -21,7 +25,7 @@ class SocketRequest {
     }
 
     setBody(body) {
-        this.body = body;
+        this.data = body;
     }
 }
 

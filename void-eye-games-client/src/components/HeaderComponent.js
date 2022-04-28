@@ -22,7 +22,7 @@ class HeaderComponent extends React.Component {
             <Link to="/" className="h-100 mr-3" href="#">
               <img src={require('../../assets/images/logo.png')} alt="logo" className='h-100' />
             </Link>
-            <NavLink className="nav-link pr-4" activeclassname="active" to="/">Home</NavLink>
+            <NavLink id='navigate-home' className="nav-link pr-4" activeclassname="active" to="/">Home</NavLink>
             <NavLink className="nav-link pr-4" activeclassname="active" to="/games">Juegos</NavLink>
             <NavLink className="nav-link pr-4" activeclassname="active" to="/support">Soporte</NavLink>
           </div>

@@ -1,21 +1,82 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { NavLink } from 'react-router-dom';
+import { SessionManager } from '../domain/SessionManager';
+import { SocketController } from '../services/socket/SocketController';
+import SocketRequest from '../services/socket/SocketRequest';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
-        <StatusBar style="auto" />
-    </View>
-  );
+class SignInFormPage extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      username: '',
+      password: '',
+      errors: ''
+    };
+  }
+
+  onChangeUsername(event) {
+    this.setState({ username: event.target.value });
+  }
+
+  onChangePassword(event) {
+    this.setState({ password: event.target.value });
+  }
+
+  submit() {
+    let username = this.state.username;
+    let password = this.state.password;
+
+    let request = new SocketRequest();
+    request.setBody(`{"username": "${username}", "password": "${md5(password)}"}`);
+    request.setMethod('POST');
+    SocketController.sendCustomWithCallback(
+      request,
+      DESTINATION_LOGIN,
+      this.onSuccess.bind(this),
+      this.onFailed.bind(this)
+    );
+  }
+
+  onSuccess(response) {
+    SessionManager.setSession(response.data);
+    document.getElementById('navigate-home').click();
+  }
+
+  onFailed(response) {
+
+  }
+
+  render() {
+    return (
+      <article className='m-auto p-2 p-sm-0 w-100' style={{ maxWidth: '400px' }}>
+        <header>
+          <h1 className='text-align-center'>Log in</h1>
+        </header>
+        <form id='login-form' className='w-100'>
+          <section className='w-100'>
+            <label htmlFor='login-form--username'>Username:</label>
+            <input id='login-form--username' className='w-100' type='text' name='Username' value={this.state.username} onChange={this.onChangeUsername.bind(this)} autoComplete='false'/>
+          </section>
+          <section className='w-100'>
+            <label htmlFor='login-form--password-confirmation'>Password:</label>
+            <input id='login-form--password-confirmation' className='w-100' type='password' name='Password' value={this.state.password} onChange={this.onChangePassword.bind(this)} autoComplete='false'/>
+          </section>
+          {this.getErrorView()}
+          <section className='d-flex flex-column w-100 text-center'>
+            <a className='btn btn-quaternary w-100 text-primary' onClick={this.submit.bind(this)}>Log in</a>
+            <span>or register if you don't have an account yet</span>
+            <NavLink className='btn btn-secondary w-100 text-primary' to='/signin'>Sign in</NavLink>
+          </section>
+        </form>
+      </article>
+    );
+  }
+
+  getErrorView() {
+    let error = this.state.errors;
+    if (error.length > 0) return (<></>);
+    return (<section><p className='text-error'>{error}</p></section>);
+  }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default SignInFormPage;

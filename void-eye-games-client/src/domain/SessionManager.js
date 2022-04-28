@@ -23,6 +23,7 @@ class SessionManager {
     setSession(session) {
         if (session === null) return;
         this.session = session;
+        this.saveSession();
     }
 
     getSession() {
@@ -40,7 +41,7 @@ class SessionManager {
     }
 
     close() {
-        this.session 
+        this.setSession(DEFAULT_SESSION);
     }
 }
 

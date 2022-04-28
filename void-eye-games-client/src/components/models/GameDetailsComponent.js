@@ -245,9 +245,11 @@ class GameDetailsComponent extends React.Component {
                 </ul>
                 <div className="tab-content" id="media-tabContent">
                     <div className="tab-pane fade show active" id="nav-images" role="tabpanel" aria-labelledby="nav-images-tab">
+                        aaaaaaa
                         {this.getImagesTabView()}
                     </div>
                     <div className="tab-pane fade" id="nav-videos" role="tabpanel" aria-labelledby="nav-videos-tab">
+                        bbbbbbb
                         {this.getVideosTabView()}
                     </div>
                 </div>
