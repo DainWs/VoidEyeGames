@@ -120,8 +120,9 @@ class BaseController {
     public function sendReport(Request $request, Response $response, array $args){
         $this->logger->log("[POST] sendReport called.", Logger::INFO);
         try {
+            $body = $request->getParsedBody();
             $mailSender = new EmailManager();
-            $mailSender->send($request->getParsedBody());
+            $mailSender->send($body);
         } catch(Exception $ex) {
             $this->logger->log("Exception in signIn method: " . $ex->getMessage(), Logger::WARNING);
             $this->resultCode = -1;

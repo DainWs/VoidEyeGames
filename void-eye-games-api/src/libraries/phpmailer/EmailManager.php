@@ -41,19 +41,20 @@ class EmailManager {
 
     public function send($report): void  {
         try {
+            $selectedReason = $report['selectedReason'];
+            $issue = $report['issue'];
+            $description = $report['description'];
+            $email = $report['email'];
+
             $this->logger->log("Send report.");
             $this->mailer->addAddress(SELF::USER_EMAIL, SELF::USER_NAME);
-            $this->mailer->Subject = 'User Report';
+            $this->mailer->Subject = "User Report - $selectedReason";
 
-            $body = "Enviamos este correo para informarle que ha comprado los siguientes productos:<br/>" .
-                    "<table style=\"border: 2px solid black; border-collapse: collapse;\">" . 
-                        "<tr>" . 
-                            "<th style=\"border: 2px solid black;\">Nombre</th>" . 
-                            "<th style=\"border: 2px solid black;\">Descripci&oacute;n</th>" . 
-                            "<th style=\"border: 2px solid black;\">Unidades</th>" .
-                            "<th style=\"border: 2px solid black;\">Precio Total</th>" .
-                        "</tr>".
-                    "</table>";
+            $body = "Motivo: $selectedReason<br/>" .
+                    "Issue: $issue<br/>". 
+                    "Email: $email<br/>" .  
+                    "Description<br/><hr/><br/> $description<br/><hr/>";
+
             $this->mailer->isHTML(true);
             $this->mailer->Body = $body;
             $this->mailer->send();
