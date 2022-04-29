@@ -10,6 +10,10 @@ const REASONS = [
   { value: 'commerce', label: 'Enterprise contact' }
 ];
 
+/**
+ * FINISED. DO NOT TOUCH
+ * @author Jose Antonio Duarte Perez
+ */
 class ReportFormPage extends React.Component {
   constructor(props) {
     super(props);
@@ -97,7 +101,7 @@ class ReportFormPage extends React.Component {
 
   render() {
     return (
-      <article className='m-auto p-2 p-sm-0 w-100' style={{maxWidth: '400px'}}>
+      <article className='m-auto p-2 p-sm-0 w-100' style={{maxWidth: '450px'}}>
         <header>
           <h1 className='text-align-center'>Report form</h1>
         </header>
@@ -112,7 +116,7 @@ class ReportFormPage extends React.Component {
           </section>
           <section className='d-flex flex-column'>
             <label htmlFor='report-form--description'>Description:</label>
-            <textarea id='report-form--description' rows={10} value={this.state.description} onChange={this.onChangeDescription.bind(this)}/>
+            <textarea id='report-form--description' className='no-resize' rows={10} value={this.state.description} onChange={this.onChangeDescription.bind(this)}/>
           </section>
           <section className='d-flex flex-column'>
             <label htmlFor='report-form--email'>Contact email:</label>

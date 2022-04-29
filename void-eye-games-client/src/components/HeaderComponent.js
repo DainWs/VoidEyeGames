@@ -3,15 +3,40 @@ import { Link, NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMagnifyingGlass, faUser, faRightFromBracket, faBars, faArrowRightToBracket } from '@fortawesome/free-solid-svg-icons'
 import { SessionManager } from '../domain/SessionManager';
+import { SessionObserver } from '../domain/SessionObserver';
 
 class HeaderComponent extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      session: SessionManager.getSession()
+    }
+  }
+  
+  update() {
+    this.setState({session: SessionManager.getSession()});
+  }
+  
   closeHamburger() {
     document.getElementById('hamburger-menu').click();
   }
 
   closeHamburgerAndSession() {
     this.closeHamburger();
-    SessionManager.close.bind(SessionManager);
+    SessionManager.close();
+    this.setState({session: SessionManager.getSession()});
+  }
+
+  onKeyDown(event) {
+    console.log(event); //13
+  }
+
+  componentDidMount() {
+    SessionObserver.subscribe('HeaderComponent', this.update.bind(this));
+  }
+
+  componentWillUnmount() {
+    SessionObserver.unsubscribe('HeaderComponent');
   }
 
   render() {
@@ -31,7 +56,12 @@ class HeaderComponent extends React.Component {
               <div className="input-group-prepend">
                 <span className="input-group-text bg-primary border-0" id="search"><FontAwesomeIcon icon={faMagnifyingGlass} /></span>
               </div>
-              <input type="text" className="form-control border-0" placeholder="Search..." aria-label="Username" aria-describedby="search" />
+              <input type="text" 
+                className="form-control border-0" 
+                placeholder="Search..." 
+                aria-label="Username" 
+                aria-describedby="search" 
+                onKeyDown={this.onKeyDown.bind(this)} />
             </div>
           </form>
           <div className="dropdown d-none d-sm-block">

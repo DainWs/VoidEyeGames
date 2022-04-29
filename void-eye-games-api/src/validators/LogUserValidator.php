@@ -3,6 +3,7 @@ namespace src\validators;
 
 use classes\User\User;
 use Exception;
+use InvalidArgumentException;
 use Monolog\Logger;
 
 class LogUserValidator extends UserValidator {
@@ -11,16 +12,14 @@ class LogUserValidator extends UserValidator {
     }
 
     public function validate($user): void {
-        parent::validate($user);
-
         try {
-            if ($this->hasErrors()) return;
+            if ($user === null) throw new InvalidArgumentException("User is null, invalid argument");
 
-            $dbUser = $this->atlas->select(User::class, ['name' => $user->name])->fetchRecord();
+            $dbUser = $this->atlas->select(User::class, ['name' => $user['username']])->fetchRecord();
             $this->validateLogDBUser($dbUser);
 
             if ($dbUser !== null) {
-                $this->validateLogPassword($dbUser->password, $user->password);
+                $this->validateLogPassword($dbUser['password'], $user['password']);
             }
         } catch(Exception $ex) {
             $this->logger->log($ex->getMessage(), Logger::WARNING);

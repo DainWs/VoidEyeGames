@@ -1,3 +1,4 @@
+import { SessionObserver } from "./SessionObserver";
 import { StorageManager } from "./StorageManager";
 
 const DEFAULT_SESSION = {token: null, user: null, exporation: null};
@@ -24,6 +25,7 @@ class SessionManager {
         if (session === null) return;
         this.session = session;
         this.saveSession();
+        SessionObserver.notify();
     }
 
     getSession() {

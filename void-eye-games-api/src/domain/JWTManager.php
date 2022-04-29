@@ -9,11 +9,12 @@ class JWTManager {
     public function __construct() {
     }
     
-    public function generate(String $username){
+    public function generate(String $username, $accountType){
         $credentials = new Credentials();
         $credentials->setUser($username);
         $credentials->setToken(bin2hex(openssl_random_pseudo_bytes(16)));
         $credentials->setExpiration(strtotime(date('Y-m-d H:i:s', strtotime('+1 hour'))));
+        $credentials->setAccountType($accountType);
         $this->save($credentials);
         return $credentials;
     }

@@ -6,6 +6,11 @@ import { DESTINATION_CATEGORIES, DESTINATION_PLATAFORMS, DESTINATION_PLATAFORM_G
 import { SocketObserver } from '../services/socket/SocketObserver';
 import { Comparators } from '../utils/Comparators';
 
+/**
+ * TODO check big ones
+ * FINISED. DO NOT TOUCH
+ * @author Jose Antonio Duarte Perez
+ */
 class GamesPage extends React.Component {
   constructor(props) {
     super(props);
@@ -76,7 +81,7 @@ class GamesPage extends React.Component {
     let plataformItems = this.getPlataforms();
     return (
       <section className='d-flex flex-column flex-lg-row' style={{minHeight: '100%'}}>
-        <aside className='border-lg-right border-secondary mh-sm-100 w-15' style={{minWidth: '15vw'}}>
+        <aside className='border-lg-right border-secondary mh-sm-100 w-15 no-select' style={{minWidth: '15vw'}}>
           <section>
             <header className='bg-secondary text-primary'>
               <h4 className='m-0 px-2 py-2'>Order by</h4>

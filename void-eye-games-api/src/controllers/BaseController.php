@@ -3,6 +3,7 @@ namespace src\controllers;
 
 use Atlas\Orm\Atlas;
 use classes\Category\Category;
+use classes\Comment\Comment;
 use classes\Game\Game;
 use classes\Plataform\Plataform;
 use classes\PlataformsGame\PlataformsGame;
@@ -89,13 +90,16 @@ class BaseController {
     public function signIn(Request $request, Response $response, array $args){
         $this->logger->log("[POST] signIn called.", Logger::INFO);
 
+        $body = $request->getParsedBody();
         $validator = new SignUserValidator();
         $validator->setAtlas($this->atlas);
-        $validator->validate($request->getParsedBody());
+        $validator->validate($body);
         if ($validator->hasErrors()) {
-            return $response->withJson($validator->getErrors(), 200);
+            return $response->withJson($validator->getErrors(), 300);
         }
-        return $response->withJson(true, 200);
+        $this->atlas->insert($this->atlas->newRecord(User::class, $body));
+        $credentials = (new JWTManager())->generate($body['name'], 'User');
+        return $response->withJson($credentials, 200);
     }
 
     public function logIn(Request $request, Response $response, array $args){
@@ -106,7 +110,7 @@ class BaseController {
             $password = $body->password ?? $body['password'] ?? $_REQUEST['Password'] ?? '';
             $dbUser = $this->atlas->select(User::class, ['name' => $username])->fetchRecord();
             if ($dbUser !== null && $dbUser->password === $password) {
-                $credentials = (new JWTManager())->generate($username);
+                $credentials = (new JWTManager())->generate($username, $dbUser->accountType);
                 return $response->withJson($credentials, 200);
             }
         } catch(Exception $ex) { 
@@ -139,7 +143,7 @@ class BaseController {
             $validator = new GameValidator();
             $validator->validate($game);
             if ($validator->hasErrors()) {
-                $this->atlas->insert($game);
+                $this->atlas->insert($this->atlas->newRecord(Game::class, $game));
             }
         } catch(Exception $ex) { $this->processException($ex); }
         return $this->createJsonResponseMessage($response);
@@ -150,7 +154,7 @@ class BaseController {
         try {
             $category = $request->getParsedBody();
             if ($category->name) {
-                $this->atlas->insert($category);
+                $this->atlas->insert($this->atlas->newRecord(Category::class, $category));
             }
         } catch(Exception $ex) { $this->processException($ex); }
         return $this->createJsonResponseMessage($response);
@@ -167,7 +171,7 @@ class BaseController {
     public function addComment(Request $request, Response $response, array $args){
         $this->logger->log("[POST] addComment called.", Logger::INFO);
         try {
-            $this->atlas->insert($request->getParsedBody());
+            $this->atlas->insert($this->atlas->newRecord(Comment::class, $request->getParsedBody()));
         } catch(Exception $ex) { $this->processException($ex); }
         return $this->createJsonResponseMessage($response);
     }
@@ -192,7 +196,7 @@ class BaseController {
     public function updateGame(Request $request, Response $response, array $args){
         $this->logger->log("[PUT] updateGame called.", Logger::INFO);
         try {
-            $this->atlas->update($request->getParsedBody());
+            $this->atlas->update($this->atlas->newRecord(Game::class, $request->getParsedBody()));
         } catch(Exception $ex) { $this->processException($ex); }
         return $this->createJsonResponseMessage($response);
     }
@@ -217,7 +221,7 @@ class BaseController {
     public function deleteGameOnPlataform(Request $request, Response $response, array $args){
         $this->logger->log("[DELETE] deleteGameOnPlataform called.", Logger::INFO);
         try {
-            $this->atlas->delete($request->getParsedBody());
+            $this->atlas->delete($this->atlas->newRecord(Game::class, $request->getParsedBody()));
         } catch(Exception $ex) { $this->processException($ex); }
         return $this->createJsonResponseMessage($response);
     }

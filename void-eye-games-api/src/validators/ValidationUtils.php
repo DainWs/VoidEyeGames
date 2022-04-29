@@ -3,10 +3,10 @@
 namespace src\validators;
 
 final class ValidationUtils {
-    private static ValidationUtils $instance;
+    private static ?ValidationUtils $instance = null;
 
     public static function getInstance(): ValidationUtils {
-        if (!SELF::$instance) {
+        if (SELF::$instance == null) {
             SELF::$instance = new ValidationUtils();
         }
         return SELF::$instance;

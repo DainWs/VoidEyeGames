@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS users(
 	email		VARCHAR(255) NOT NULL UNIQUE,
 	imageUrl	VARCHAR(255),
 	publicityAccepted BOOLEAN DEFAULT 0,
-	accountType	VARCHAR(255),
+	accountType	VARCHAR(255) DEFAULT 1,
 	CONSTRAINT pk_users PRIMARY KEY(id)
 );
 

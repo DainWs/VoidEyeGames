@@ -26,4 +26,12 @@ class Credentials {
     public function getExpiration(): String {
         return $this->expiration;
     }
+
+    public function setAccountType($accountType): void {
+        $this->accountType = $accountType;
+    }
+
+    public function getAccountType() {
+        return $this->accountType;
+    }
 }

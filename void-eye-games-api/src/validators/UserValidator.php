@@ -23,14 +23,14 @@ class UserValidator extends BaseValidator {
         try {
             if ($user === null) throw new InvalidArgumentException("User is null, invalid argument");
 
-            $this->validateName($user->name);
-            $this->validateEmail($user->email);
+            $this->validateName($user['name']);
+            $this->validateEmail($user['email']);
 
-            if ($user->password !== $user->confirmedPassword) {
-                $this->errors['confirmedPassword'] = "Ya existe un usuario con este correo.";
+            if ($user['password'] !== $user['confirmationPassword']) {
+                $this->errors['confirmationPassword'] = "Ya existe un usuario con este correo.";
             }
 
-            if ($user->terms !== true) {
+            if ($user['terms'] !== true) {
                 $this->errors['terms'] = "Es obligatorio aceptar los terminos de uso.";
             }
         } catch(Exception $ex) {

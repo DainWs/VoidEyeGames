@@ -16,6 +16,7 @@ import { FilterUtils } from '../../utils/FilterUtils';
 import Carousel from 'nuka-carousel';
 import { Player } from 'video-react';
 
+//TODO check more button
 class GameDetailsComponent extends React.Component {
     constructor(props) {
         super(props);
@@ -100,14 +101,14 @@ class GameDetailsComponent extends React.Component {
         return (
             <article className='m-lg-3'>
                 <header className='row'>
-                    <h1 className='col-lg-4'>{this.state.game.name || <Skeleton />}</h1>
+                    <h1 className='col-lg-4 ml-2 ml-sm-0'>{this.state.game.name || <Skeleton />}</h1>
                 </header>
                 <section className='row p-0 m-0 m-sm-1'>
-                    <div className='row col-12 col-lg-4 w-100 h-50 h-lg-100 overflow-hidden p-0 m-2 m-lg-0'>
-                        <div className='col-12 col-sm-4 col-lg-12 h-100 h-lg-50 p-0 overflow-hidden'>
-                            {this.getGameImageView() || <Skeleton style={{ height: '100%' }} />}
+                    <div className='row col-12 col-lg-4 w-100 h-50 h-lg-100 overflow-hidden p-0 m-0 my-2 my-lg-0'>
+                        <div className='col-12 col-sm-5 col-lg-12 h-100 h-lg-50 p-0 overflow-hidden'>
+                            {this.getGameImageView() ||  <Skeleton className='mt-2 mt-sm-3 mx-2 mx-sm-0 p-2 p-sm-3 ' />}
                         </div>
-                        <div className='col-12 col-sm-8 col-lg-12 h-100 h-lg-50 p-4 p-lg-0 d-flex flex-column justify-content-center'>
+                        <div className='col-12 col-sm-7 col-lg-12 h-100 h-lg-50 p-4 p-sm-1 px-sm-4 p-lg-0 d-flex flex-column justify-content-center'>
                             {this.getBestPlataforms() || <Skeleton count={3} className='mt-2 mt-sm-3 mx-2 mx-sm-0 p-2 p-sm-3 ' />}
                         </div>
                     </div>
@@ -131,7 +132,7 @@ class GameDetailsComponent extends React.Component {
                                 <FontAwesomeIcon icon={faUser} style={{ width: '50%', height: '50%' }} />
                             </div>
                         </div>
-                        <textarea style={{ flexGrow: 1, resize: 'none' }} rows={5} onChange={this.setCommentText.bind(this)}></textarea>
+                        <textarea className='no-resize flex-grow-1' rows={5} onChange={this.setCommentText.bind(this)}></textarea>
                     </div>
                     <div className='d-flex flex-column justify-content-center'>
                         <div className='row m-3'>
@@ -235,21 +236,19 @@ class GameDetailsComponent extends React.Component {
     getMediaTabView() {
         return (
             <>
-                <ul className="nav nav-tabs bg-secondary" id="media-tab" role="tablist">
+                <ul className="nav nav-tabs bg-secondary border-0" id="myTab" role="tablist">
                     <li className="nav-item">
-                        <a className="nav-link active" id="images-tab" data-toggle="tab" href="#images" role="tab" aria-controls="nav-images" aria-selected="true">Images</a>
+                        <a className="nav-link active" id="nav-images-tab"  data-toggle="tab" href="#nav-images" role="tab" aria-controls="nav-images" aria-selected="true">Images</a>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link" id="videos-tab" data-toggle="tab" href="#videos" role="tab" aria-controls="nav-videos" aria-selected="false">Videos</a>
+                        <a className="nav-link" id="nav-videos-tab" data-toggle="tab" href="#nav-videos" role="tab" aria-controls="nav-videos" aria-selected="false">Videos</a>
                     </li>
                 </ul>
-                <div className="tab-content" id="media-tabContent">
-                    <div className="tab-pane fade show active" id="nav-images" role="tabpanel" aria-labelledby="nav-images-tab">
-                        aaaaaaa
+                <div className="tab-content bg-tertiary border border-dark" id="myTabContent">
+                    <div className="tab-pane fade show active tab-content--images" id="nav-images" role="tabpanel" aria-labelledby="nav-images-tab">
                         {this.getImagesTabView()}
                     </div>
-                    <div className="tab-pane fade" id="nav-videos" role="tabpanel" aria-labelledby="nav-videos-tab">
-                        bbbbbbb
+                    <div className="tab-pane fade tab-content--videos" id="nav-videos" role="tabpanel" aria-labelledby="nav-videos-tab">
                         {this.getVideosTabView()}
                     </div>
                 </div>
@@ -273,7 +272,7 @@ class GameDetailsComponent extends React.Component {
 
     /** SKELETON **/
     getSkeleton() {
-        return (<Skeleton height='50vh' />);
+        return (<div className='skeleton-image' ><Skeleton/></div>);
     }
 
     /** NORMAL **/
@@ -284,7 +283,7 @@ class GameDetailsComponent extends React.Component {
             let imageDto = new Media(imageObject);
             let imageUrl = ResourceManger.getImageUrl(imageDto.getMediaSource());
             let key = `${imageDto.gamesId}-${imageDto.gamesId}`;
-            imageMedias.push(<div className='w-100 d-flex justify-content-center'><img key={key} src={imageUrl} alt={key} /></div>)
+            imageMedias.push(<div key={key} className='w-100 h-100 d-flex justify-content-center'><img className='w-100' src={imageUrl} alt={key} /></div>)
         }
         return this.getCarouselWithItems(imageMedias);
     }
@@ -296,13 +295,13 @@ class GameDetailsComponent extends React.Component {
             let videoDto = new Media(videoObject);
             let videoUrl = ResourceManger.getImageUrl(videoDto.getMediaSource());
             let key = `${videoDto.gamesId}-${videoDto.gamesId}`;
-            videosMedias.push(<div className='w-100 d-flex justify-content-center'><Player key={key} src={videoUrl} playsInline /></div>)
+            videosMedias.push(<div key={key} className='w-100 d-flex justify-content-center video'><Player src={videoUrl}   playsInline /></div>)
         }
         return this.getCarouselWithItems(videosMedias);
     }
 
     getCarouselWithItems(items) {
-        return (<Carousel className='w-100' >{items}</Carousel>);
+        return (<Carousel className='w-100 h-100'>{items}</Carousel>);
     }
 }
 
