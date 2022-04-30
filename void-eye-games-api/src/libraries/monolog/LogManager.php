@@ -29,7 +29,7 @@ class LogManager {
      * @param $level is the severity level for this log message.
      */
     public function log(String $message, $level = Logger::DEBUG): void {
-        $this->logger->log($level, '['.((session_id()) ? session_id() : 'UNKNOWN')."] $message");
+        $this->logger->log($level, "$message");
     }
 
     /**

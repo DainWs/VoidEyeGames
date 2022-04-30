@@ -4,6 +4,7 @@ $secondary:#6E6CBC;
 $tertiary: #FAF8FF;
 $quaternary: #00C896;
 $quinary: #C38C00;
+$form: #e2e2e2;
 $links: #0D6EFD;
 $error: #c70f0f;
 
@@ -16,6 +17,7 @@ $theme-colors: (
     "tertiary": $tertiary,
     "quaternary": $quaternary,
     "quinary": $quinary,
+    "form": $form,
     "links": $links,
     "error": $error
 );
@@ -132,6 +134,14 @@ $theme-colors: (
         &:hover {
             background-color: $primary !important;
             color: $text-secondary !important;
+        }
+    }
+}
+
+.list {
+    &--item {
+        &:hover {
+            transition: background 0.2s ease-in-out;
         }
     }
 }

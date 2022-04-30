@@ -1,9 +1,9 @@
 import React from 'react';
 import md5 from 'crypto-js/md5';
-import { SessionManager } from '../domain/SessionManager';
-import { SocketController } from '../services/socket/SocketController';
-import SocketRequest from '../services/socket/SocketRequest';
-import {  DESTINATION_SIGNIN } from '../services/socket/SocketDestinations';
+import { SessionManager } from '../../domain/SessionManager';
+import { SocketController } from '../../services/socket/SocketController';
+import SocketRequest from '../../services/socket/SocketRequest';
+import {  DESTINATION_SIGNIN } from '../../services/socket/SocketDestinations';
 
 class SignInFormPage extends React.Component {
   constructor(props) {

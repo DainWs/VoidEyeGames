@@ -20,19 +20,7 @@ $app->add(function($request, $response, $next) {
 });
 
 $app->post('/', function(Request $request, Response $response, array $args) {
-    return $response->withBody($request->getBody(), 200);
-});
-
-// Users
-$app->group('/users', function () use ($app) {
-    $app->get('', 'src\controllers\BaseController:getUsers');
-
-    /**
-     * Documentation for '/user/{by}/{value}' uri.
-     * @param by - must be one of the following: id, name, email
-     * @param value - depending on the 'by' parameter, this will refer to the id/name/email
-     */
-    $app->get('/{by}/{value}', 'src\controllers\BaseController:getUser');
+    return $response->withBody($request->getBody(), 404);
 });
 
 $app->post('/signIn', 'src\controllers\BaseController:signIn');
@@ -43,27 +31,12 @@ $app->group('/games', function () use ($app) {
     $app->get('', 'src\controllers\BaseController:getGames');
     $app->post('', 'src\controllers\BaseController:addGame')->add(new AuthMiddleware());
     $app->put('', 'src\controllers\BaseController:updateGame')->add(new AuthMiddleware());
-
-    /**
-     * Documentation for '/game/{by}/{value}' uri.
-     * @param by - must be one of the following: id, name
-     * @param value - depending on the 'by' parameter, this will refer to the id/name
-     */
-    $app->get('/{by}/{value}', 'src\controllers\BaseController:getGame');
-
-    $app->post('/categories', 'src\controllers\BaseController:updateCategoriesToGame')->add(new AuthMiddleware());
-
-    $app->delete('/plataform', 'src\controllers\BaseController:deleteGameOnPlataform')->add(new AuthMiddleware());
 });
 
 // Categories
 $app->group('/categories', function () use ($app) {
     $app->get('', 'src\controllers\BaseController:getCategories');
-
-    $app->group('/add', function () use ($app) {
-        $app->post('', 'src\controllers\BaseController:addCategory');
-        $app->post('/game', 'src\controllers\BaseController:addGameToCategory');
-    })->add(new AuthMiddleware());
+    $app->post('', 'src\controllers\BaseController:addCategory')->add(new AuthMiddleware());
 });
 
 // Plataforms

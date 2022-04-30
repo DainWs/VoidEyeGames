@@ -1,3 +1,4 @@
+import { SessionManager } from "../../domain/SessionManager";
 import { API_URL } from "./SocketController";
 
 class SocketRequest {
@@ -25,7 +26,8 @@ class SocketRequest {
     }
 
     setBody(body) {
-        this.data = body;
+        let credentials = JSON.stringify(SessionManager.getSession());
+        this.data = `{"credentials": ${credentials}, "data": ${body} }`;
     }
 }
 

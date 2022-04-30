@@ -1,8 +1,8 @@
 import React from 'react';
 import Select from 'react-select'
-import { SocketController } from '../services/socket/SocketController';
-import { DESTINATION_REPORT } from '../services/socket/SocketDestinations';
-import SocketRequest from '../services/socket/SocketRequest';
+import { SocketController } from '../../services/socket/SocketController';
+import { DESTINATION_REPORT } from '../../services/socket/SocketDestinations';
+import SocketRequest from '../../services/socket/SocketRequest';
 
 const REASONS = [
   { value: 'website_error', label: 'Website bug/errors' },

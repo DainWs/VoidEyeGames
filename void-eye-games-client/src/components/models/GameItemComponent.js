@@ -6,7 +6,6 @@ import { ResourceManger } from '../../domain/ResourceManager';
 class GameItemComponent extends React.Component {
   constructor(props) {
     super(props);
-    this.onClick = props.onClick;
     this.plataformGame = new PlataformGame(props.plataformGame);
     this.state = {
       showType: props.showType
@@ -19,14 +18,14 @@ class GameItemComponent extends React.Component {
   render() {
     return (
       <Link to={'details/' + this.plataformGame.gamesId}>
-      <div className='game-item noselect position-relative p-0 m-1 border border-secondary mw-100 mh-100'>
-        {this.getGameImageView()}
-        <span className='position-absolute w-50 bg-secondary pl-2 border border-secondary text-primary font-weight-bold p-left-top-0'>{this.plataformGame.games.name}</span>
-        <div className='position-absolute bg-quinary border border-secondary d-flex align-items-center p-right-bottom-0' style={{minWidth: '20%'}}>
-          <div className='bg-primary p-1 h-100' style={{maxWidth: '2.125rem'}}>{this.getPlataformImageView()}</div>
-          <div className='flex-grow-1 d-flex align-items-center justify-content-center'><span className='px-2 text-primary font-weight-bold'>{this.getShowTypeView()}</span></div>
+        <div className='game-item noselect position-relative p-0 m-1 border border-secondary mw-100 mh-100'>
+          {this.getGameImageView()}
+          <span className='position-absolute w-50 bg-secondary pl-2 border border-secondary text-primary font-weight-bold p-left-top-0'>{this.plataformGame.games.name}</span>
+          <div className='position-absolute bg-quinary border border-secondary d-flex align-items-center p-right-bottom-0' style={{minWidth: '20%'}}>
+            <div className='bg-primary p-1 h-100' style={{maxWidth: '2.125rem'}}>{this.getPlataformImageView()}</div>
+            <div className='flex-grow-1 d-flex align-items-center justify-content-center'><span className='px-2 text-primary font-weight-bold'>{this.getShowTypeView()}</span></div>
+          </div>
         </div>
-      </div>
       </Link>
     );
   }

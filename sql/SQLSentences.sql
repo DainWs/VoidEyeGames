@@ -91,12 +91,3 @@ CREATE TABLE IF NOT EXISTS comments(
 
 ALTER TABLE comments ADD CONSTRAINT fk_comments_users FOREIGN KEY(usersId) REFERENCES users(id);
 ALTER TABLE comments ADD CONSTRAINT fk_comments_games FOREIGN KEY(gamesId) REFERENCES games(id);
-
-/*
-USE VOID_EYE_GAMES;
-CREATE VIEW games_with_categories AS
-	SELECT g.id as gameId, c.id as categoriesId, g.*, c.*
-	FROM categories_games cg
-	LEFT OUTER JOIN games g ON g.id = cg.gamesId
-	LEFT OUTER JOIN categories c ON cg.categoriesId = c.id;
-*/

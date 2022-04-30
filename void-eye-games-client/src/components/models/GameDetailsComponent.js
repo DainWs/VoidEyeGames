@@ -12,7 +12,7 @@ import { SocketController } from '../../services/socket/SocketController';
 import { SocketObserver } from '../../services/socket/SocketObserver';
 import { ResourceManger } from '../../domain/ResourceManager';
 import Plataform from '../../domain/models/dtos/Plataform';
-import { FilterUtils } from '../../utils/FilterUtils';
+import { SocketDataFilter } from '../../services/socket/SocketDataFilter';
 import Carousel from 'nuka-carousel';
 import { Player } from 'video-react';
 
@@ -278,7 +278,7 @@ class GameDetailsComponent extends React.Component {
     /** NORMAL **/
     getImagesMedias() {
         var imageMedias = [];
-        let images = FilterUtils.getImageMediasFrom(this.state.game.medias);
+        let images = SocketDataFilter.getImageMediasFrom(this.state.game.medias);
         for (const imageObject of images) {
             let imageDto = new Media(imageObject);
             let imageUrl = ResourceManger.getImageUrl(imageDto.getMediaSource());
@@ -290,7 +290,7 @@ class GameDetailsComponent extends React.Component {
 
     getVideoMedias() {
         var videosMedias = [];
-        let videos = FilterUtils.getVideoMediasFrom(this.state.game.medias);
+        let videos = SocketDataFilter.getVideoMediasFrom(this.state.game.medias);
         for (const videoObject of videos) {
             let videoDto = new Media(videoObject);
             let videoUrl = ResourceManger.getImageUrl(videoDto.getMediaSource());

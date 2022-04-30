@@ -1,15 +1,29 @@
-import { FilterUtils } from "../../utils/FilterUtils";
+import { SocketDataFilter } from "./SocketDataFilter";
 import { SocketDataProvideer } from "./SocketDataProvider";
-import { DESTINATION_GAMES, DESTINATION_PLATAFORMS, DESTINATION_PLATAFORM_GAMES } from "./SocketDestinations";
+import { DESTINATION_CATEGORIES, DESTINATION_GAMES, DESTINATION_PLATAFORMS, DESTINATION_PLATAFORM_GAMES } from "./SocketDestinations";
 
 class SocketDataQuery {
     getGameWithId(id) {
-        var searchedGameId = id;
+        var searchedId = id;
         let games = SocketDataProvideer.provide(DESTINATION_GAMES);
-        return Array.from(games).find(v => {
-            console.log(searchedGameId);
-            return v.id === searchedGameId
-        });
+        return Array.from(games).find(v => v.id === searchedId);
+    }
+
+    getGamesNotIn(gamesList) {
+        let games = SocketDataProvideer.provide(DESTINATION_GAMES);
+        return SocketDataFilter.getGamesNotIn(games, gamesList);
+    }
+
+    getCategoryWithId(id) {
+        var searchedId = id;
+        let categories = SocketDataProvideer.provide(DESTINATION_CATEGORIES);
+        return Array.from(categories).find(v => v.id === searchedId)
+    }
+
+    getPlataformWithId(id) {
+        var searchedId = id;
+        let plataforms = SocketDataProvideer.provide(DESTINATION_PLATAFORMS);
+        return Array.from(plataforms).find(v => v.id === searchedId)
     }
 
     getPlataformsGamesWithGameId(gameId) {
@@ -21,13 +35,13 @@ class SocketDataQuery {
     }
 
     getBestPlataformsIn(list) {
-        let bestPlataformKeys = FilterUtils.getBestPlataforms(list);
+        let bestPlataformKeys = SocketDataFilter.getBestPlataforms(list);
         return this.getPlataformsIn(bestPlataformKeys);
     }
     
     getPlataformsIn(keyList) {
         let plataforms = SocketDataProvideer.provide(DESTINATION_PLATAFORMS);
-        return FilterUtils.getPlataformsOfList(plataforms, keyList);
+        return SocketDataFilter.getPlataformsOfList(plataforms, keyList);
     }
 }
 

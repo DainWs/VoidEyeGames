@@ -1,7 +1,8 @@
+import { ACCOUNT_TYPE_UNKNOWN } from "./models/AccountTypes";
 import { SessionObserver } from "./SessionObserver";
 import { StorageManager } from "./StorageManager";
 
-const DEFAULT_SESSION = {token: null, user: null, exporation: null};
+const DEFAULT_SESSION = {token: null, user: null, expiration: null, accountType: ACCOUNT_TYPE_UNKNOWN.getId()};
 
 class SessionManager {
     constructor() {

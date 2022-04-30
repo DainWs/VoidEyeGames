@@ -10,4 +10,5 @@ SELECT * FROM plataforms_games;
 SELECT * FROM users;
 
 USE void_eye_games;
-SELECT * FROM users;
+SELECT * FROM categories;
+SELECT * FROM categories_games;

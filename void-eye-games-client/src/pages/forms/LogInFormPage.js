@@ -1,10 +1,10 @@
 import React from 'react';
 import { Navigate, NavLink } from 'react-router-dom';
 import md5 from 'crypto-js/md5';
-import { SocketController } from '../services/socket/SocketController';
-import { DESTINATION_LOGIN } from '../services/socket/SocketDestinations';
-import SocketRequest from '../services/socket/SocketRequest';
-import { SessionManager } from '../domain/SessionManager';
+import { SocketController } from '../../services/socket/SocketController';
+import { DESTINATION_LOGIN } from '../../services/socket/SocketDestinations';
+import SocketRequest from '../../services/socket/SocketRequest';
+import { SessionManager } from '../../domain/SessionManager';
 
 class LogInFormPage extends React.Component {
   constructor(props) {
