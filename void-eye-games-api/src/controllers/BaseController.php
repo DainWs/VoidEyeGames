@@ -115,7 +115,7 @@ class BaseController {
         return $this->createJsonResponseMessage($response);
     }
 
-    /*** PUTS ***/
+    /*** INSERTS ***/
     public function addGame(Request $request, Response $response, array $args){
         $this->logger->log("[POST] addGame called.", Logger::INFO);
         try {
@@ -135,7 +135,7 @@ class BaseController {
             $game['plataforms_games'] = $this->parseArrayToRecord($game['plataforms_games'], PlataformsGame::class);
             $record = $this->atlas->newRecord(Game::class, $game);
             $this->atlas->beginTransaction();
-            $this->atlas->persist($record);
+            $this->atlas->insert($record);
             $this->atlas->commit();
         } catch(Exception $ex) {
             $this->atlas->rollBack();
@@ -193,8 +193,9 @@ class BaseController {
             $comment['games'] = [];
             $comment['users'] = [];
             $record = $this->atlas->newRecord(Comment::class, $comment);
+            
             $this->atlas->beginTransaction();
-            $this->atlas->persist($record);
+            $this->atlas->insert($record);
             $this->atlas->commit();
         } catch(Exception $ex) { 
             $this->atlas->rollBack();
@@ -205,10 +206,30 @@ class BaseController {
 
     /*** UPDATES ***/
     public function updateGame(Request $request, Response $response, array $args){
-        $this->logger->log("[PUT] updateGame called.", Logger::INFO);
+        $this->logger->log("[POST] updateGame called.", Logger::INFO);
         try {
-            $this->atlas->update($this->atlas->newRecord(Game::class, $request->getParsedBody()['data']));
-        } catch(Exception $ex) { $this->processException($ex); }
+            $game = $request->getParsedBody()['data'];
+            $validator = new GameValidator();
+            $validator->setAtlas($this->atlas);
+            $validator->validate($game);
+            if ($validator->hasErrors()) {
+                return $response->withJson($validator->getErrors(), 400);
+            }
+
+            $game['categories'] = [];
+            $game['plataforms'] = [];
+            $game['medias'] = $this->parseArrayToRecord($game['medias'], Media::class);
+            $game['comments'] = $this->parseArrayToRecord($game['comments'], Comment::class);
+            $game['categories_games'] = $this->parseArrayToRecord($game['categories_games'], CategoriesGame::class);
+            $game['plataforms_games'] = $this->parseArrayToRecord($game['plataforms_games'], PlataformsGame::class);
+            $record = $this->atlas->newRecord(Game::class, $game);
+            $this->atlas->beginTransaction();
+            $this->atlas->persist($record);
+            $this->atlas->commit();
+        } catch(Exception $ex) {
+            $this->atlas->rollBack();
+            $this->processException($ex);
+        }
         return $this->createJsonResponseMessage($response);
     }
 

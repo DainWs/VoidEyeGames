@@ -26,8 +26,8 @@ $theme-colors: (
 
 @import "../../node_modules/bootstrap/scss/bootstrap.scss";
 
-#root {
-    overflow: hidden;
+body {
+    overflow-x: hidden;
 }
 
 .p {
@@ -150,6 +150,19 @@ $theme-colors: (
 
 .game-item {
     position: relative;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    &__container {
+        width: 100% !important;
+        height: 100% !important;
+
+        &.game-slider {
+            min-width: 320px !important;
+            width: 80vw !important;
+        }
+    }
 
     &:hover::before,
     &:focus::before {
@@ -169,5 +182,19 @@ $theme-colors: (
         font-size: 2rem;
         color: $text-primary;
         background-color: rgba($color: $text-secondary, $alpha: 0.3);
+    }
+}
+
+.home--header {
+    & .slider {
+        &-frame,
+        &-container {
+            width: 100% !important;
+            height: 100% !important;
+        }
+
+        &-list {
+            height: 100% !important;
+        }
     }
 }

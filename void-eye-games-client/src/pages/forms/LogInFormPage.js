@@ -82,7 +82,7 @@ class LogInFormPage extends React.Component {
 
   getErrorView() {
     let error = this.state.errors;
-    if (error.length > 0) return (<></>);
+    if (error === undefined || error === null || error.length > 0) return (<></>);
     return (<section><p className='text-error'>{error}</p></section>);
   }
 }

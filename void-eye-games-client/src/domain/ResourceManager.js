@@ -2,7 +2,7 @@ import { API_URL } from "../services/socket/SocketController";
 
 class ResourceManger {
     getImageUrl(image) {
-        return `${API_URL}/${image}`;
+        return `${API_URL}/assets/images/${image}`.replace(' ', '_');
     }
 }
 

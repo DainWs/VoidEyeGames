@@ -1,7 +1,7 @@
 const DESTINATION_GAMES = '/games';
-const DESTINATION_PLATAFORM_GAMES = '/plataformGames';
 const DESTINATION_CATEGORIES = '/categories';
 const DESTINATION_PLATAFORMS = '/plataforms';
+const DESTINATION_PLATAFORM_GAMES = '/plataformGames';
 
 const DESTINATION_COMMENT = '/comment';
 const DESTINATION_LOGIN = '/logIn';

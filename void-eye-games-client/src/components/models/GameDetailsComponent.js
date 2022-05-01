@@ -67,8 +67,8 @@ class GameDetailsComponent extends React.Component {
         comment.description = this.state.commentText;
 
         let request = new SocketRequest();
-        request.body = JSON.stringify(comment);
-        request.method = 'POST';
+        request.setBody(JSON.stringify(comment));
+        request.setMethod('POST');
         SocketController.sendCustom(request, DESTINATION_COMMENT);
 
         this.setState({ commentText: '' });
@@ -97,7 +97,6 @@ class GameDetailsComponent extends React.Component {
     }
 
     render() {
-        console.log(this.state.game);
         return (
             <article className='m-lg-3'>
                 <header className='row'>
@@ -161,24 +160,21 @@ class GameDetailsComponent extends React.Component {
     getGameImageView() {
         let game = new Game(this.state.game);
         if (game.name === null) return null;
-        let relativeImageUrl = game.getMainImage();
-        let completeImageUrl = ResourceManger.getImageUrl(relativeImageUrl);
-        return (<img src={completeImageUrl} alt={game.name} style={{ maxHeight: '100%', maxWidth: '100%' }} />);
+        return (<img src={game.getImageUrl()} alt={game.name} style={{ maxHeight: '100%', maxWidth: '100%' }} />);
     }
 
     getBestPlataforms() {
         if (this.state.game.name === null) return null;
-        var bestPlataformsViews = new Set();
+        var bestPlataformsViews = [];
         for (const plataformGame of this.state.plataformsGames) {
-            bestPlataformsViews.add(this.preparePlataformView(plataformGame));
+            bestPlataformsViews.push(this.preparePlataformView(plataformGame));
         }
-        return bestPlataformsViews;
+        return bestPlataformsViews.slice(0, 3);
     }
 
     preparePlataformView(plataformGame) {
-        console.log(plataformGame);
         let plataform = new Plataform(plataformGame.plataforms);
-        let discount = (plataformGame.discount > 0) ? `(${plataformGame.discount})` : '';
+        let discount = (plataformGame.discount > 0) ? `(-${plataformGame.discount * 100}%)` : '';
         return (
             <div key={`${plataformGame.gamesId}-${plataformGame.plataformsId}__price-tag`}
                 className='d-flex border border-black rounded m-0 mt-2 w-100'>
@@ -213,7 +209,6 @@ class GameDetailsComponent extends React.Component {
 
     prepareCommentView(comment) {
         if (comment.users == undefined) comment.users = { name: null };
-        console.log(comment);
         return (
             <div key={`comment-${comment.id}`} className='d-flex m-3'>
                 <div className='d-flex align-items-start justify-content-center rounded mr-3 mt-2'>
@@ -230,7 +225,7 @@ class GameDetailsComponent extends React.Component {
     }
 
     getPlataformImageView(plataform) {
-        return (<img src={ResourceManger.getImageUrl(plataform.getLogo())} alt={plataform.name} style={{ width: '25px' }} />);
+        return (<img src={plataform.getLogo()} alt={plataform.name} style={{ width: '25px' }} />);
     }
 
     getMediaTabView() {
@@ -281,9 +276,8 @@ class GameDetailsComponent extends React.Component {
         let images = SocketDataFilter.getImageMediasFrom(this.state.game.medias);
         for (const imageObject of images) {
             let imageDto = new Media(imageObject);
-            let imageUrl = ResourceManger.getImageUrl(imageDto.getMediaSource());
-            let key = `${imageDto.gamesId}-${imageDto.gamesId}`;
-            imageMedias.push(<div key={key} className='w-100 h-100 d-flex justify-content-center'><img className='w-100' src={imageUrl} alt={key} /></div>)
+            let key = `${imageDto.gamesId}-${imageDto.gamesId}-image`;
+            imageMedias.push(<div key={key} className='w-100 h-100 d-flex justify-content-center'><img className='w-100' src={imageDto.getUrl()} alt={key} /></div>)
         }
         return this.getCarouselWithItems(imageMedias);
     }
@@ -293,9 +287,8 @@ class GameDetailsComponent extends React.Component {
         let videos = SocketDataFilter.getVideoMediasFrom(this.state.game.medias);
         for (const videoObject of videos) {
             let videoDto = new Media(videoObject);
-            let videoUrl = ResourceManger.getImageUrl(videoDto.getMediaSource());
-            let key = `${videoDto.gamesId}-${videoDto.gamesId}`;
-            videosMedias.push(<div key={key} className='w-100 d-flex justify-content-center video'><Player src={videoUrl}   playsInline /></div>)
+            let key = `${videoDto.gamesId}-${videoDto.gamesId}-video`;
+            videosMedias.push(<div key={key} className='w-100 d-flex justify-content-center video'><Player src={videoDto.getUrl()}   playsInline /></div>)
         }
         return this.getCarouselWithItems(videosMedias);
     }

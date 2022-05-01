@@ -3,7 +3,8 @@ import { Link, NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMagnifyingGlass, faUser, faRightFromBracket, faBars, faArrowRightToBracket } from '@fortawesome/free-solid-svg-icons'
 import { SessionManager } from '../domain/SessionManager';
-import { SessionObserver } from '../domain/SessionObserver';
+import { EventObserver } from '../domain/EventObserver';
+import { EVENT_SESSION_CHANGE } from '../domain/EventsEnum';
 
 class HeaderComponent extends React.Component {
   constructor(props) {
@@ -32,11 +33,11 @@ class HeaderComponent extends React.Component {
   }
 
   componentDidMount() {
-    SessionObserver.subscribe('HeaderComponent', this.update.bind(this));
+    EventObserver.subscribe(EVENT_SESSION_CHANGE, 'HeaderComponent', this.update.bind(this));
   }
 
   componentWillUnmount() {
-    SessionObserver.unsubscribe('HeaderComponent');
+    EventObserver.unsubscribe(EVENT_SESSION_CHANGE, 'HeaderComponent');
   }
 
   render() {
@@ -77,6 +78,7 @@ class HeaderComponent extends React.Component {
               <NavLink className="nav-link pr-4" activeclassname="active" to="/" onClick={this.closeHamburger}>Home</NavLink>
               <NavLink className="nav-link pr-4" activeclassname="active" to="/games" onClick={this.closeHamburger}>Juegos</NavLink>
               <NavLink className="nav-link pr-4" activeclassname="active" to="/support" onClick={this.closeHamburger}>Soporte</NavLink>
+              
               <hr/>
               {this.getSessionHamburgerView()}
             </div>
@@ -111,6 +113,9 @@ class HeaderComponent extends React.Component {
     );
   }
 
+  getAdminHamburgerView() {
+  }
+
   getSessionHamburgerView() {
     let session = SessionManager.getSession();
     if (session.token === null) {
@@ -125,6 +130,43 @@ class HeaderComponent extends React.Component {
 
   getSignedSessionHamburgerView() {
     return (<a className="nav-link" href="#" onClick={this.closeHamburgerAndSession.bind(this)}><FontAwesomeIcon icon={faRightFromBracket} /> Sign out</a>);
+  }
+
+  //---------------------------------------------------------------------------------------------
+  // ADMIN NAV LINKS
+  //---------------------------------------------------------------------------------------------
+  getAdminGameLink(onClick = function() {}) {
+    return this.getNavLink('New game', '/admin/game', onClick);
+  }
+
+  getAdminPlataformLink(onClick = function() {}) {
+    return this.getNavLink('New plataform', '/admin/plataform', onClick);
+  }
+
+  getAdminCategoryLink(onClick = function() {}) {
+    return this.getNavLink('New category', '/admin/category', onClick);
+  }
+
+  //---------------------------------------------------------------------------------------------
+  // USERS NAV LINKS
+  //---------------------------------------------------------------------------------------------
+
+  getHomeLink(onClick = function() {}) {
+    return this.getNavLink('Home', '/', onClick);
+  }
+
+  getGamesLink(onClick = function() {}) {
+    return this.getNavLink('Juegos', '/games', onClick);
+  }
+
+  getSupportLink(onClick = function() {}) {
+    return this.getNavLink('Soporte', '/support', onClick);
+  }
+
+  //---------------------------------------------------------------------------------------------
+
+  getNavLink(title, path, onClick = function() {}) {
+    return (<NavLink className="nav-link pr-4" activeclassname="active" to={path} onClick={onClick}>{title}</NavLink>);
   }
 }
 

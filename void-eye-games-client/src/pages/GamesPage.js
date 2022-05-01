@@ -128,7 +128,7 @@ class GamesPage extends React.Component {
     let gamesItemsViews = [];
     for (const plataformGame of this.getSortedPlataformsGames()) {
       gamesItemsViews.push(
-        <div className='col-12 col-sm-6 col-md-3 p-0' key={plataformGame.plataformsId + '-' + plataformGame.gamesId}>
+        <div key={plataformGame.plataformsId + '-' + plataformGame.games.id} className='col-12 col-sm-6 col-md-3 p-0' style={{minHeight: 'calc(15vw + 10vh)'}}>
           <GameItemComponent plataformGame={plataformGame}/>
         </div>
       );

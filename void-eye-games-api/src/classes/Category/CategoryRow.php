@@ -9,7 +9,7 @@ namespace classes\Category;
 use Atlas\Table\Row;
 
 /**
- * @property mixed $id int(10,0) NOT NULL
+ * @property mixed $id int(10,0) NOT NULL AUTO_INCREMENT
  * @property mixed $name varchar(100) NOT NULL
  */
 class CategoryRow extends Row

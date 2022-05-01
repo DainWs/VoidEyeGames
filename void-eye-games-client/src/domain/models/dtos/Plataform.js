@@ -1,3 +1,4 @@
+import { ResourceManger } from "../../ResourceManager";
 import Game from "./Game";
 import PlataformGame from "./PlataformGame";
 
@@ -35,7 +36,11 @@ class Plataform {
     }
 
     getLogo() {
-        return `assets/images/plataforms/${this.name}.png`;
+        try {   
+            return ResourceManger.getImageUrl(`plataforms/${this.name}.png`);
+        } catch(ex) {
+            return ResourceManger.getImageUrl('not-found.png');
+        }
     }
 }
 

@@ -3,6 +3,7 @@ import React from 'react';
 import GameItemComponent from '../components/models/GameItemComponent';
 import GameItemSliderComponent from '../components/models/GameItemSliderComponent';
 import { SocketController } from '../services/socket/SocketController';
+import { SocketDataFilter } from '../services/socket/SocketDataFilter';
 import { SocketDataProvideer } from '../services/socket/SocketDataProvider';
 import { DESTINATION_PLATAFORM_GAMES } from '../services/socket/SocketDestinations';
 import { SocketObserver } from '../services/socket/SocketObserver';
@@ -17,7 +18,6 @@ class HomePage extends React.Component {
   
   updatePlataformGames() {
     let plataformsGames = SocketDataProvideer.provide(DESTINATION_PLATAFORM_GAMES);
-    console.log(plataformsGames);
     this.setState({plataformsGames: plataformsGames});
   }
 
@@ -34,18 +34,18 @@ class HomePage extends React.Component {
     let gamesWithDiscount = this.getGamesWithDiscount();
     let gamesItems = this.getGamesItems();
     return (
-      <section>
-        <header>
-          <Carousel className='w-100' animation='zoom' autoplayInterval={5}>
+      <section className='w-100 h-100'>
+        <header className='home--header' style={{minHeight: '320px', height: 'calc(20vw + 35vh)'}}>
+          <Carousel className='w-100' animation='zoom' autoplay={true}>
             {gamesWithDiscount}
           </Carousel>
         </header>
-        <article className='border-2 m-4'>
+        <article className='d-flex flex-column flex-grow-2 m-4 border-2'>
           <header>
             <h1 className='text-center'>News</h1>
           </header>
           <hr/>
-          <div className='row'>
+          <div className='d-flex flex-wrap align-content-start'>
             {gamesItems}
           </div>
         </article>
@@ -55,11 +55,11 @@ class HomePage extends React.Component {
 
   getGamesWithDiscount() {
     let discountedGames = [];
-    for (const game of this.state.plataformsGames) {
-      console.log(game.plataformsId + '-' + game.gamesId);
+    let gamesList = SocketDataFilter.getBestPlataforms(this.state.plataformsGames, true);
+    for (const plataformGame of gamesList) {
       discountedGames.push(
-        <div key={game.plataformsId + '-' + game.gamesId + '--slider__items'} className='d-flex justify-content-center' style={{maxHeight: '60vh'}}>
-          <GameItemSliderComponent plataformGame={game} showType='discount'/>
+        <div key={plataformGame.plataformsId + '-' + plataformGame.gamesId + '--slider__items'} className='d-flex justify-content-center w-100 h-100'>
+          <GameItemSliderComponent plataformGame={plataformGame} showType='discount'/>
         </div>
       );
     }
@@ -68,14 +68,14 @@ class HomePage extends React.Component {
 
   getGamesItems() {
     let gamesItemsViews = [];
-    for (const game of this.state.plataformsGames) {
+    for (const plataformGame of this.state.plataformsGames) {
       gamesItemsViews.push(
-        <div key={game.plataformsId + '-' + game.gamesId + '--items'} className='col-12 col-sm-6 col-md-3 p-0'>
-          <GameItemComponent plataformGame={game}/>
+        <div key={plataformGame.plataformsId + '-' + plataformGame.gamesId + '--items'} className='p-0' style={{flex: '1 1 30vh', minHeight: '30vh', maxHeight: '255px'}}>
+          <GameItemComponent plataformGame={plataformGame}/>
         </div>
       );
     }
-    return gamesItemsViews;
+    return gamesItemsViews.slice(0, 7);
   }
 }
 

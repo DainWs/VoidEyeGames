@@ -1,5 +1,6 @@
+import { EventObserver } from "./EventObserver";
+import { EVENT_SESSION_CHANGE } from "./EventsEnum";
 import { ACCOUNT_TYPE_UNKNOWN } from "./models/AccountTypes";
-import { SessionObserver } from "./SessionObserver";
 import { StorageManager } from "./StorageManager";
 
 const DEFAULT_SESSION = {token: null, user: null, expiration: null, accountType: ACCOUNT_TYPE_UNKNOWN.getId()};
@@ -26,7 +27,7 @@ class SessionManager {
         if (session === null) return;
         this.session = session;
         this.saveSession();
-        SessionObserver.notify();
+        EventObserver.notify(EVENT_SESSION_CHANGE);
     }
 
     getSession() {

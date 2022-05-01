@@ -1,3 +1,5 @@
+import { ResourceManger } from "../../ResourceManager";
+
 class Game {
     constructor(builder = {id: -1, name: null, description: null, plataforms: [], plataformGames: [], categories: [], comments: [], medias: []}) {
         this.id = builder.id;
@@ -22,8 +24,12 @@ class Game {
         return Array.from(this.categories).find(v => v.id == categoryKey) !== null;
     }
 
-    getMainImage() {
-        return `assets/images/games/${this.name}.png`;
+    getImageUrl() {
+        try {
+            return ResourceManger.getImageUrl(`games/${this.name}.png`);
+        } catch(ex) {
+            return ResourceManger.getImageUrl('not-found.png');
+        }
     }
 }
 

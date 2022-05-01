@@ -1,8 +1,8 @@
 import GameItemComponent from './GameItemComponent';
 
 class GameItemSliderComponent extends GameItemComponent {
-  getImageStyle() {
-    return {minHeight: '100%', minWidth: '100%', maxWidth: '90vw', maxHeight: '100%'};
+  getContainerClasses() {
+    return 'game-item__container game-slider p-1';
   }
 }
 
