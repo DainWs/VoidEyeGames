@@ -7,23 +7,45 @@ import { SocketDataFilter } from '../services/socket/SocketDataFilter';
 import { SocketDataProvideer } from '../services/socket/SocketDataProvider';
 import { DESTINATION_PLATAFORM_GAMES } from '../services/socket/SocketDestinations';
 import { SocketObserver } from '../services/socket/SocketObserver';
+import SocketRequest from '../services/socket/SocketRequest';
 
 class HomePage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      sliderGames: [],
       plataformsGames: []
     }
   }
   
-  updatePlataformGames() {
-    let plataformsGames = SocketDataProvideer.provide(DESTINATION_PLATAFORM_GAMES);
+  updateSliderGames(response) {
+    this.setState({sliderGames: response.data});
+  }
+
+  updatePlataformGames(response) {
+    let plataformsGames = this.state.plataformsGames;
+    plataformsGames.push(...response.data);
     this.setState({plataformsGames: plataformsGames});
   }
 
+  sendSliderGamesRequest() {
+    let request = new SocketRequest();
+    request.setParams({pageNum: 1, discount: true});
+    request.setMethod('GET');
+    SocketController.sendCustomWithCallback(request, DESTINATION_PLATAFORM_GAMES, this.updateSliderGames.bind(this));
+  }
+
+  sendGamesRequest(page = 1) {
+    let request = new SocketRequest();
+    request.setParams({pageNum: page});
+    request.setMethod('GET');
+    SocketController.sendCustomWithCallback(request, DESTINATION_PLATAFORM_GAMES, this.updatePlataformGames.bind(this));
+  }
+
   componentDidMount() {
-    SocketObserver.subscribe(DESTINATION_PLATAFORM_GAMES, 'HomePage', this.updatePlataformGames.bind(this));
-    SocketController.send(DESTINATION_PLATAFORM_GAMES);
+    this.sendGamesRequest(1);
+    this.sendGamesRequest(2);
+    this.sendSliderGamesRequest();
   }
 
   componentWillUnmount() {

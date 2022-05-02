@@ -90,6 +90,7 @@ class BaseController {
         /* OTHERS */
         $search = $request->getParam('name', '');
         $sortBy = $request->getParam('sort', 'name');
+        $discount = $request->getParam('discount', false);
 
         /* QUERY */
         $query = $this->atlas->select(PlataformsGame::class)
@@ -101,6 +102,10 @@ class BaseController {
             ->offset($pageStart)
             ->limit(QUERY_GAMES_PER_PAGE);
         
+        if ($discount) {
+            $query = $query->where('plataforms_games.discount >', 0);
+        }
+
         if (!empty($plataformsIds)) {
             $query = $query->where('plataforms_games.plataformsId IN', $plataformsIds);
         }
