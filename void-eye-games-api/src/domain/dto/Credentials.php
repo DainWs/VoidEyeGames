@@ -3,6 +3,11 @@
 namespace src\domain\dto;
 
 class Credentials {
+    private string $user;
+    private string $token;
+    private int $expiration;
+    private int $accountType;
+
     public function __construct($builder = ['user' => '', 'token' => '', 'expiration' => 0, 'accountType' => 2]) {
         $this->user = $builder['user'];
         $this->token = $builder['token'];
@@ -10,35 +15,39 @@ class Credentials {
         $this->accountType = $builder['accountType'];
     }
 
-    public function setUser($user) {
+    public function setUser($user): void {
         $this->user = $user;
     }
 
-    public function getUser(): ?String {
+    public function getUser(): String {
         return $this->user;
     }
 
-    public function setToken($token) {
+    public function setToken($token): void {
         $this->token = $token;
     }
 
-    public function getToken(): ?String {
+    public function getToken(): String {
         return $this->token;
     }
 
-    public function setExpiration($expiration) {
+    public function setExpiration(int $expiration): void {
         $this->expiration = $expiration;
     }
 
-    public function getExpiration(): ?String {
+    public function getExpiration(): String {
         return $this->expiration;
     }
 
-    public function setAccountType($accountType): void {
+    public function setAccountType(int $accountType): void {
         $this->accountType = $accountType;
     }
 
-    public function getAccountType() {
+    public function getAccountType(): int {
         return $this->accountType;
+    }
+
+    public function hasExpired(): bool {
+        return ($this->expiration <= strtotime(date('Y-m-d H:i:s')));
     }
 }

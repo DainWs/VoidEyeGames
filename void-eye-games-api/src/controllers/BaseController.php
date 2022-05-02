@@ -1,23 +1,24 @@
 <?php
 namespace src\controllers;
 
-use Atlas\Orm\Atlas;
-use classes\CategoriesGame\CategoriesGame;
-use classes\Category\Category;
-use classes\Comment\Comment;
-use classes\Game\Game;
-use classes\Media\Media;
-use classes\Plataform\Plataform;
-use classes\PlataformsGame\PlataformsGame;
+use PDO;
+use Exception;
 use Monolog\Logger;
+use Slim\Route;
 use Slim\Http\Request;
 use Slim\Http\Response;
+use Atlas\Orm\Atlas;
 use classes\User\User;
-use Exception;
-use PDO;
-use src\domain\AtlasProvider;
-use src\domain\DatabaseProvider;
-use src\domain\JWTManager;
+use classes\Game\Game;
+use classes\Media\Media;
+use classes\Comment\Comment;
+use classes\Category\Category;
+use classes\Plataform\Plataform;
+use classes\CategoriesGame\CategoriesGame;
+use classes\PlataformsGame\PlataformsGame;
+use src\domain\providers\AtlasProvider;
+use src\domain\providers\DatabaseProvider;
+use src\domain\AuthManager;
 use src\libraries\EmailManager;
 use src\libraries\LogManager;
 use src\validators\CategoryValidator;
@@ -26,12 +27,18 @@ use src\validators\PlataformValidator;
 use src\validators\SignUserValidator;
 
 class BaseController {
+    private const ORDER_METHODS = [
+        'name' => 'games.name',
+        'price' => 'plataforms_games.price',
+        'plataform' => 'plataforms.name'
+    ];
+
     private LogManager $logger;
     private PDO $db;
     private Atlas $atlas;
 
     private int $resultCode = 200;
-    private String $resultMessage = "OK";
+    private String $resultMessage = 'OK';
 
     public function __construct() {
         $this->logger = new LogManager(BaseController::class);
@@ -39,36 +46,148 @@ class BaseController {
         $this->atlas = AtlasProvider::getInstance();
     }
 
-    /*** GETS ***/
+    //----------------------------------------------------------------------------------
+    //##################################################################################
+    // GETS
+    //##################################################################################
+    //----------------------------------------------------------------------------------
+
+    //----------------------------------------------------------------------------------
+    // GAME SECTION
+    //----------------------------------------------------------------------------------
     public function getGames(Request $request, Response $response, array $args) {
-        $this->logger->log("[GET] getGames called.", Logger::INFO);
-        $games = $this->atlas->select(Game::class, [])
-            ->with(['medias', 'plataforms' => ['plataforms_games'], 'categories', 'comments' => [ 'users' ]])
-            ->fetchRecords();
-        return $response->withJson($games, 200);
+        $this->logger->log("[GET] getGames called.");
+
+        /* PAGE */
+        $pageNum = $request->getParam('pageNum', []);
+        $pageNum = ($pageNum < 1) ? 1 : $pageNum;
+        $pageStart = ($pageNum - 1) * QUERY_GAMES_PER_PAGE;
+
+        /* CATEGORIES */
+        $gamesInCategories = [];
+        $categoriesIds = $request->getParam('categories', []);
+        if (!empty($categoriesIds)) {
+            try {
+                $this->logger->log("Exception " . json_encode($categoriesIds));
+                $gamesInCategories = $this->atlas->select(CategoriesGame::class)
+                    ->columns('gamesId', 'count(categoriesId) as numCategories')
+                    ->where('categoriesId IN', $categoriesIds)
+                    ->groupBy('gamesId')
+                    ->having('numCategories =', count($categoriesIds))
+                    ->fetchColumn();
+            } catch(Exception $ex) {
+                $this->logger->log("Exception " . $ex->getMessage());
+            }
+        }
+
+        /* PLATAFORMS */
+        $plataformsIds = $request->getParam('plataforms', []);
+
+        /* OTHERS */
+        $search = $request->getParam('name', '');
+        $sortBy = $request->getParam('sort', 'name');
+
+        /* QUERY */
+        $query = $this->atlas->select(PlataformsGame::class)
+            ->with(['plataforms', 'games' => ['medias']])
+            ->joinWith('plataforms')
+            ->joinWith('games')
+            ->where('games.name LIKE ', "%$search%")
+            ->orderBy(SELF::ORDER_METHODS[$sortBy] ?? 'games.name')
+            ->offset($pageStart)
+            ->limit(QUERY_GAMES_PER_PAGE);
+        
+        if (!empty($plataformsIds)) {
+            $query = $query->where('plataforms_games.plataformsId IN', $plataformsIds);
+        }
+
+        if (!empty($gamesInCategories)) {
+            $query = $query->andWhere('plataforms_games.gamesId IN', $gamesInCategories);
+        }
+
+        return $response->withJson($query->fetchRecords(), 200);
     }
 
+    public function getGame(Request $request, Response $response, array $args) {
+        $this->logger->log("[GET] getGame called.");
+
+        /* ID */
+        $gameId = $request->getParam('id', 1);
+
+        $game = $this->atlas->select(Game::class)
+            ->with(['medias', 'plataforms_games' => ['plataforms']])
+            ->where('id =', $gameId)
+            ->fetchRecord();
+        
+        $plataformsGames = $this->atlas->select(PlataformsGame::class)
+            ->with(['plataforms'])
+            ->where('gamesId =', $game->id)
+            ->orderBy('discount DESC', '(price - (price * discount))')
+            ->fetchRecordSet();
+        $game->plataforms_games = $plataformsGames;
+
+        $comments = $this->atlas->select(Comment::class)
+            ->with(['users'])
+            ->where('gamesId =', $game->id)
+            ->limit(QUERY_COMMENTS_PER_GAME)
+            ->fetchRecordSet();
+        $game->comments = $comments;
+
+        return $response->withJson($game, 200);
+    }
+
+    //----------------------------------------------------------------------------------
+    // COMMENTS SECTION
+    //----------------------------------------------------------------------------------
+    public function getComments(Request $request, Response $response, array $args) {
+        $this->logger->log("[GET] getComments called.");
+
+        /* PAGE */
+        $pageNum = $request->getParam('pageNum', []);
+        $pageNum = ($pageNum < 1) ? 1 : $pageNum;
+        $pageStart = ($pageNum - 1) * QUERY_COMMENTS_PER_GAME;
+
+        /* GAME ID */
+        $gameId = $request->getParam('gameId', 1);
+        
+        $comments = $this->atlas->select(Comment::class)
+            ->with(['users'])
+            ->where('gamesId =', $gameId)
+            ->offset($pageStart)
+            ->limit(QUERY_COMMENTS_PER_GAME)
+            ->fetchRecords();
+        return $response->withJson($comments, 200);
+    }
+
+    //----------------------------------------------------------------------------------
+    // CATEGORIES SECTION
+    //----------------------------------------------------------------------------------
     public function getCategories(Request $request, Response $response, array $args) {
-        $this->logger->log("[GET] getCategories called.", Logger::INFO);
-        $categories = $this->atlas->select(Category::class, [])->with(['games'])->fetchRecords();
+        $this->logger->log("[GET] getCategories called.");
+        $categories = $this->atlas->select(Category::class)->fetchRecords();
         return $response->withJson($categories, 200);
     }
 
+    //----------------------------------------------------------------------------------
+    // PLATAFORMS SECTION
+    //----------------------------------------------------------------------------------
     public function getPlataforms(Request $request, Response $response, array $args) {
-        $this->logger->log("[GET] getPlataforms called.", Logger::INFO);
-        $plataforms = $this->atlas->select(Plataform::class, [])->with(['games'])->fetchRecords();
+        $this->logger->log("[GET] getPlataforms called.");
+        $plataforms = $this->atlas->select(Plataform::class)->fetchRecords();
         return $response->withJson($plataforms, 200);
     }
 
-    public function getPlataformsGames(Request $request, Response $response, array $args) {
-        $this->logger->log("[GET] getPlataformsGames called.", Logger::INFO);
-        $plataformsGames = $this->atlas->select(PlataformsGame::class, [])->with(['games' => ['medias'], 'plataforms'])->fetchRecords();
-        return $response->withJson($plataformsGames, 200);
-    }
-
-    /*** POSTS ***/
+    //----------------------------------------------------------------------------------
+    //##################################################################################
+    // POSTS
+    //##################################################################################
+    //----------------------------------------------------------------------------------
+    
+    //----------------------------------------------------------------------------------
+    // SESSIONS SECTION
+    //----------------------------------------------------------------------------------
     public function signIn(Request $request, Response $response, array $args){
-        $this->logger->log("[POST] signIn called.", Logger::INFO);
+        $this->logger->log("[POST] signIn called.");
 
         $body = $request->getParsedBody()['data'];
         $validator = new SignUserValidator();
@@ -78,19 +197,19 @@ class BaseController {
             return $response->withJson($validator->getErrors(), 400);
         }
         $this->atlas->insert($this->atlas->newRecord(User::class, $body));
-        $credentials = (new JWTManager())->generate($body['name'], 'User');
+        $credentials = (new AuthManager())->registre($body['name'], 'User');
         return $response->withJson($credentials, 200);
     }
 
     public function logIn(Request $request, Response $response, array $args){
-        $this->logger->log("[POST] logIn called. ", Logger::INFO);
+        $this->logger->log("[POST] logIn called. ");
         try {
             $body = $request->getParsedBody()['data'];
             $username = $body->username ?? $body['username'] ?? $_REQUEST['Username'] ?? '';
             $password = $body->password ?? $body['password'] ?? $_REQUEST['Password'] ?? '';
             $dbUser = $this->atlas->select(User::class, ['name' => $username])->fetchRecord();
             if ($dbUser !== null && $dbUser->password === $password) {
-                $credentials = (new JWTManager())->generate($username, $dbUser->accountType);
+                $credentials = (new AuthManager())->registre($username, $dbUser->accountType);
                 return $response->withJson($credentials, 200);
             }
         } catch(Exception $ex) { 
@@ -101,8 +220,11 @@ class BaseController {
         return $this->createJsonResponseMessage($response);
     }
 
+    //----------------------------------------------------------------------------------
+    // REPORTS SECTION
+    //----------------------------------------------------------------------------------
     public function sendReport(Request $request, Response $response, array $args){
-        $this->logger->log("[POST] sendReport called.", Logger::INFO);
+        $this->logger->log("[POST] sendReport called.");
         try {
             $body = $request->getParsedBody()['data'];
             $mailSender = new EmailManager();
@@ -115,9 +237,17 @@ class BaseController {
         return $this->createJsonResponseMessage($response);
     }
 
-    /*** INSERTS ***/
+    //----------------------------------------------------------------------------------
+    //##################################################################################
+    // PUTS
+    //##################################################################################
+    //----------------------------------------------------------------------------------
+    
+    //----------------------------------------------------------------------------------
+    // GAMES SECTION
+    //----------------------------------------------------------------------------------
     public function addGame(Request $request, Response $response, array $args){
-        $this->logger->log("[POST] addGame called.", Logger::INFO);
+        $this->logger->log("[POST] addGame called.");
         try {
             $game = $request->getParsedBody()['data'];
             $validator = new GameValidator();
@@ -144,8 +274,11 @@ class BaseController {
         return $this->createJsonResponseMessage($response);
     }
 
+    //----------------------------------------------------------------------------------
+    // CATEGORY SECTION
+    //----------------------------------------------------------------------------------
     public function addCategory(Request $request, Response $response, array $args){
-        $this->logger->log("[POST] addCategory called.", Logger::INFO);
+        $this->logger->log("[POST] addCategory called.");
         try {
             $category = $request->getParsedBody()['data'];
             $validator = new CategoryValidator();
@@ -169,8 +302,11 @@ class BaseController {
         return $this->createJsonResponseMessage($response);
     }
 
+    //----------------------------------------------------------------------------------
+    // PLATAFORM SECTION
+    //----------------------------------------------------------------------------------
     public function addPlataform(Request $request, Response $response, array $args) {
-        $this->logger->log("[POST] addPlataform called.", Logger::INFO);
+        $this->logger->log("[POST] addPlataform called.");
         try {
             $plataforms = $request->getParsedBody()['data'];
             $validator = new PlataformValidator();
@@ -186,8 +322,11 @@ class BaseController {
         return $this->createJsonResponseMessage($response);
     }
 
+    //----------------------------------------------------------------------------------
+    // COMMENTS SECTION
+    //----------------------------------------------------------------------------------
     public function addComment(Request $request, Response $response, array $args){
-        $this->logger->log("[POST] addComment called.", Logger::INFO);
+        $this->logger->log("[POST] addComment called.");
         try {
             $comment = $request->getParsedBody()['data'];
             $comment['games'] = [];
@@ -204,9 +343,14 @@ class BaseController {
         return $this->createJsonResponseMessage($response);
     }
 
-    /*** UPDATES ***/
+    //----------------------------------------------------------------------------------
+    //##################################################################################
+    // UPDATES
+    //##################################################################################
+    //----------------------------------------------------------------------------------
+
     public function updateGame(Request $request, Response $response, array $args){
-        $this->logger->log("[POST] updateGame called.", Logger::INFO);
+        $this->logger->log("[POST] updateGame called.");
         try {
             $game = $request->getParsedBody()['data'];
             $validator = new GameValidator();
@@ -233,16 +377,24 @@ class BaseController {
         return $this->createJsonResponseMessage($response);
     }
 
-    /*** DELETES ***/
+    //----------------------------------------------------------------------------------
+    //##################################################################################
+    // DELETES
+    //##################################################################################
+    //----------------------------------------------------------------------------------
     public function deleteGameOnPlataform(Request $request, Response $response, array $args){
-        $this->logger->log("[DELETE] deleteGameOnPlataform called.", Logger::INFO);
+        $this->logger->log("[DELETE] deleteGameOnPlataform called.");
         try {
             $this->atlas->delete($this->atlas->newRecord(Game::class, $request->getParsedBody()['data']));
         } catch(Exception $ex) { $this->processException($ex); }
         return $this->createJsonResponseMessage($response);
     }
 
-    /*** UTILS ***/
+    //----------------------------------------------------------------------------------
+    //##################################################################################
+    // UTILS
+    //##################################################################################
+    //----------------------------------------------------------------------------------
     private function parseArrayToRecord($array, $class) {
         $gameSet = $this->atlas->newRecordSet($class);
         foreach ($array as $value) {

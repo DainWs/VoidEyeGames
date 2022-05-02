@@ -1,5 +1,5 @@
 <?php
-namespace src\domain;
+namespace src\domain\providers;
 
 use Atlas\Orm\Atlas;
 use Atlas\Orm\AtlasBuilder;

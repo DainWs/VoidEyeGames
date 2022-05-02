@@ -1,8 +1,7 @@
 <?php
-namespace src\domain;
+namespace src\domain\providers;
 
 use PDO;
-use Slim\Container;
 
 class DatabaseProvider {
     private static ?PDO $instance = null;
