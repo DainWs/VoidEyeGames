@@ -15,6 +15,7 @@ import Plataform from '../../domain/models/dtos/Plataform';
 import { SocketDataFilter } from '../../services/socket/SocketDataFilter';
 import Carousel from 'nuka-carousel';
 import { Player } from 'video-react';
+import { SocketDataProvideer } from '../../services/socket/SocketDataProvider';
 
 //TODO check more button
 class GameDetailsComponent extends React.Component {
@@ -39,10 +40,7 @@ class GameDetailsComponent extends React.Component {
     }
 
     updateGame() {
-        let newGame = SocketDataQuery.getGameWithId(this.gameId);
-        if (newGame == null) {
-            return;
-        }
+        let newGame = SocketDataProvideer.provide(DESTINATION_GAMES);
         this.setState({ game: newGame });
     }
 
@@ -83,12 +81,20 @@ class GameDetailsComponent extends React.Component {
         this.setState({ numOfComments: num + 3 });
     }
 
+    sendGamesRequest() {
+        let params = {};
+        params.id = this.gameId;
+    
+        let request = new SocketRequest();
+        request.setParams(params);
+        request.setMethod('GET');
+        SocketController.sendCustom(request, DESTINATION_GAMES);
+    }
+
     componentDidMount() {
         SocketObserver.subscribe(DESTINATION_GAMES, 'GameDetailsPage', this.updateGame.bind(this));
         SocketObserver.subscribe(DESTINATION_COMMENT, 'GameDetailsPage', this.updateComment.bind(this));
-        SocketObserver.subscribe(DESTINATION_PLATAFORM_GAMES, 'GameDetailsPage', this.updatePlataformsGames.bind(this));
-        SocketController.send(DESTINATION_GAMES);
-        SocketController.send(DESTINATION_PLATAFORM_GAMES);
+        this.sendGamesRequest();
     }
 
     componentWillUnmount() {
@@ -166,7 +172,7 @@ class GameDetailsComponent extends React.Component {
     getBestPlataforms() {
         if (this.state.game.name === null) return null;
         var bestPlataformsViews = [];
-        for (const plataformGame of this.state.plataformsGames) {
+        for (const plataformGame of this.state.game.plataforms_games) {
             bestPlataformsViews.push(this.preparePlataformView(plataformGame));
         }
         return bestPlataformsViews.slice(0, 3);

@@ -1,7 +1,7 @@
 import React from 'react';
-import ListItemComponent from './ListItemComponent';
+import ItemContextMenuComponent from './ItemContextMenuComponent';
 
-class GameListItemComponent extends ListItemComponent {
+class GameListItemComponent extends ItemContextMenuComponent {
     constructor(props) {
         super(props);
         this.onEditClick = props.onEditClick;

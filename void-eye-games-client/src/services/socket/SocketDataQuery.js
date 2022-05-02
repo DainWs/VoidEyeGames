@@ -28,7 +28,6 @@ class SocketDataQuery {
 
     getPlataformsGamesWithGameId(gameId) {
         let plataformsGames = SocketDataProvideer.provide(DESTINATION_PLATAFORM_GAMES);
-        console.log(plataformsGames);
         if (plataformsGames === null) return [];
         return Array.from(plataformsGames)
             .filter(v => v.gamesId = gameId);

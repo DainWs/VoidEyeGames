@@ -1,6 +1,6 @@
 import React from 'react';
 
-class ListItemComponent extends React.Component {
+class ItemContextMenuComponent extends React.Component {
     constructor(props) {
         super(props);
         this.navigate = props.navigate;
@@ -51,4 +51,4 @@ class ListItemComponent extends React.Component {
     }
 }
 
-export default ListItemComponent;
+export default ItemContextMenuComponent;

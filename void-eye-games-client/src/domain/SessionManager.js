@@ -20,6 +20,7 @@ class SessionManager {
     }
 
     saveSession() {
+        this.reload();
         StorageManager.setSession(this.session);
     }
 
@@ -27,18 +28,23 @@ class SessionManager {
         if (session === null) return;
         this.session = session;
         this.saveSession();
+        this.reload();
         EventObserver.notify(EVENT_SESSION_CHANGE);
     }
 
     getSession() {
+        this.reload();
         return this.session;
     }
 
     has() {
+        this.reload();
         return (this.session.token !== null);
     }
 
     reload() {
+        console.log(this.session.expiration);
+        console.log(Date.now());
         if (this.session.expiration < Date.now()) {
             this.session = DEFAULT_SESSION;
         }

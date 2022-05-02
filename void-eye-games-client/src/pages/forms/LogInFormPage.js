@@ -5,6 +5,8 @@ import { SocketController } from '../../services/socket/SocketController';
 import { DESTINATION_LOGIN } from '../../services/socket/SocketDestinations';
 import SocketRequest from '../../services/socket/SocketRequest';
 import { SessionManager } from '../../domain/SessionManager';
+import { EventObserver } from '../../domain/EventObserver';
+import { EVENT_SESSION_CHANGE } from '../../domain/EventsEnum';
 
 class LogInFormPage extends React.Component {
   constructor(props) {
@@ -39,8 +41,13 @@ class LogInFormPage extends React.Component {
     );
   }
 
-  onSuccess(response) {
+  onSuccess(response) {console.log(response);
+    if (response.status !== 200) {
+      this.onFailed(response);
+      return;
+    }
     SessionManager.setSession(response.data);
+    EventObserver.notify(EVENT_SESSION_CHANGE);
     document.getElementById('navigate-home').click();
   }
 
@@ -82,7 +89,7 @@ class LogInFormPage extends React.Component {
 
   getErrorView() {
     let error = this.state.errors;
-    if (error === undefined || error === null || error.length > 0) return (<></>);
+    if (error === undefined || error === null || error.length <= 0) return (<section><br/></section>);
     return (<section><p className='text-error'>{error}</p></section>);
   }
 }

@@ -6,7 +6,6 @@ class SocketDataProvideer {
     }
 
     supply(endPoint, data) {
-        console.log(data);
         this.data.set(endPoint, data);
         SocketObserver.notify(endPoint);
     }

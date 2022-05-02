@@ -1,9 +1,11 @@
 import React from 'react';
 import GameItemComponent from '../components/models/GameItemComponent';
+import RequestFactory from '../factories/RequestFactory';
 import { SocketController } from '../services/socket/SocketController';
 import { SocketDataProvideer } from '../services/socket/SocketDataProvider';
 import { DESTINATION_CATEGORIES, DESTINATION_PLATAFORMS, DESTINATION_PLATAFORM_GAMES } from '../services/socket/SocketDestinations';
 import { SocketObserver } from '../services/socket/SocketObserver';
+import SocketRequest from '../services/socket/SocketRequest';
 import { Comparators } from '../utils/Comparators';
 
 /**
@@ -14,7 +16,13 @@ import { Comparators } from '../utils/Comparators';
 class GamesPage extends React.Component {
   constructor(props) {
     super(props);
+    this.pageNum = 1;
+    this.isFiltring = false;
+    this.hasMore = true;
+
+    let searchTitle = (props.searchTitle) ? props.searchTitle : '';
     this.state = {
+      searchTitle: searchTitle,
       orderMethod: 'name',
       plataformsGames: [],
       categories: [],
@@ -29,17 +37,27 @@ class GamesPage extends React.Component {
   }
 
   updatePlataformGames() {
-    let plataformsGames = SocketDataProvideer.provide(DESTINATION_PLATAFORM_GAMES);
+    let plataformsGames = (this.isFiltring) ? [] : Array.from(this.state.plataformsGames);
+    let oldSize = plataformsGames.length;
+    plataformsGames.push(...SocketDataProvideer.provide(DESTINATION_PLATAFORM_GAMES));
+    this.hasMore = (oldSize < plataformsGames.length);
     this.setState({plataformsGames: plataformsGames});
   }
 
   changeCategoryState(event) {
     var categoryId = event.target.value;
-    let category = this.state.categories.find(c => c.id === categoryId);
-    let newSelectedCategories = this.state.selectedCategories;
-    if (newSelectedCategories.has(category)) newSelectedCategories.delete(category);
-    else newSelectedCategories.add(category);
-    this.setState({selectedCategories: newSelectedCategories});
+    let selectedCategories = this.state.selectedCategories;
+    if (selectedCategories.has(categoryId)) selectedCategories.delete(categoryId);
+    else selectedCategories.add(categoryId);
+    this.setState({selectedCategories: selectedCategories});
+  }
+
+  changePlataformState(event) {
+    var plataformId = event.target.value;
+    let selectedPlataforms = this.state.selectedPlataforms;
+    if (selectedPlataforms.has(plataformId)) selectedPlataforms.delete(plataformId);
+    else selectedPlataforms.add(plataformId);
+    this.setState({selectedPlataforms: selectedPlataforms});
   }
 
   updateCategories() {
@@ -47,17 +65,21 @@ class GamesPage extends React.Component {
     this.setState({categories: categories});
   }
 
-  changePlataformState(event) {
-    var plataformId = event.target.value;
-    let newSelectedPlataforms = this.state.selectedPlataforms;
-    if (newSelectedPlataforms.has(plataformId)) newSelectedPlataforms.delete(plataformId);
-    else newSelectedPlataforms.add(plataformId);
-    this.setState({selectedPlataforms: newSelectedPlataforms});
-  }
-
   updatePlataforms() {
     let plataforms = SocketDataProvideer.provide(DESTINATION_PLATAFORMS);
     this.setState({plataforms: plataforms});
+  }
+
+  onShowMore() {
+    this.pageNum++;
+    this.isFiltring = false;
+    this.sendPlataformGamesRequest();
+  }
+
+  onFiltre() {
+    this.pageNum = 1;
+    this.isFiltring = true;
+    this.sendPlataformGamesRequest();
   }
 
   componentDidMount() {
@@ -66,7 +88,7 @@ class GamesPage extends React.Component {
     SocketObserver.subscribe(DESTINATION_PLATAFORM_GAMES, 'GamesPage', this.updatePlataformGames.bind(this));
     SocketController.send(DESTINATION_CATEGORIES);
     SocketController.send(DESTINATION_PLATAFORMS);
-    SocketController.send(DESTINATION_PLATAFORM_GAMES);
+    this.sendPlataformGamesRequest();
   }
 
   componentWillUnmount() {
@@ -75,10 +97,21 @@ class GamesPage extends React.Component {
     SocketObserver.unsubscribe(DESTINATION_PLATAFORM_GAMES, 'GamesPage');
   }
 
+  sendPlataformGamesRequest() {
+    let params = {};
+    params.pageNum = this.pageNum;
+    params.name = this.state.searchTitle;
+    params.sort = this.state.orderMethod;
+    params.categories = Array.from(this.state.selectedCategories);
+    params.plataforms = Array.from(this.state.selectedPlataforms);
+
+    let request = new SocketRequest();
+    request.setParams(params);
+    request.setMethod('GET');
+    SocketController.sendCustom(request, DESTINATION_PLATAFORM_GAMES);
+  }
+
   render() {
-    let gameItems = this.getGamesItems();
-    let categoryItems = this.getCategories();
-    let plataformItems = this.getPlataforms();
     return (
       <section className='d-flex flex-column flex-lg-row' style={{minHeight: '100%'}}>
         <aside className='border-lg-right border-secondary mh-sm-100 w-15 no-select' style={{minWidth: '15vw'}}>
@@ -103,7 +136,7 @@ class GamesPage extends React.Component {
               <h4 className='m-0 px-2 py-2'>Categories</h4>
             </header>
             <div className='d-flex flex-column mt-2 mb-4'>
-              {categoryItems}
+              {this.getCategories()}
             </div>
           </section>
           <section>
@@ -111,14 +144,16 @@ class GamesPage extends React.Component {
               <h4 className='m-0 px-2 py-2'>Plataforms</h4>
             </header>
             <div className='d-flex flex-column mt-2 mb-4'>
-              {plataformItems}
+              {this.getPlataforms()}
             </div>
           </section>
+          <a className="btn btn-secondary w-100" href="#" onClick={this.onFiltre.bind(this)}>Filtre</a>
         </aside>
-        <article className='border-2 m-4 mw-100 mw-lg-80' style={{flexGrow: 1}}>
-          <div className='row'>
-            {gameItems}
+        <article className='border-2 p-4 mw-100 mw-lg-80' style={{flexGrow: 1}}>
+          <div className='row m-0 p-0'>
+            {this.getGamesItems()}
           </div>
+          {this.getShowButtonView()}
         </article>
       </section>
     );
@@ -126,7 +161,7 @@ class GamesPage extends React.Component {
   
   getGamesItems() {
     let gamesItemsViews = [];
-    for (const plataformGame of this.getSortedPlataformsGames()) {
+    for (const plataformGame of this.state.plataformsGames) {
       gamesItemsViews.push(
         <div key={plataformGame.plataformsId + '-' + plataformGame.games.id} className='col-12 col-sm-6 col-md-3 p-0' style={{minHeight: 'calc(15vw + 10vh)'}}>
           <GameItemComponent plataformGame={plataformGame}/>
@@ -134,43 +169,6 @@ class GamesPage extends React.Component {
       );
     }
     return gamesItemsViews;
-  }
-
-  getSortedPlataformsGames() {
-    let comparator = Comparators.get(this.state.orderMethod);
-    let leakedPlataformsGames = this.getLeakedPlataformsGames();
-    return leakedPlataformsGames.sort(comparator);
-  }
-
-  getLeakedPlataformsGames() {
-    let plataformsGames = this.state.plataformsGames;
-    if (this.state.selectedCategories.size > 0) {
-      plataformsGames = this.leakGamesByCategories(plataformsGames);
-    }
-
-    if (this.state.selectedPlataforms.size > 0) {
-      plataformsGames = this.leakGamesByPlataforms(plataformsGames);
-    }
-    return plataformsGames;
-  }
-
-  leakGamesByCategories(plataformGames) {
-    let categoriesFilter = function(plataformGame) {
-      let result = true;
-      for (const category of this.state.selectedCategories) {
-        let findedGame = Array.from(category.games).find(g => g.id === plataformGame.gamesId);
-        if (findedGame == null) result = false;
-      }
-      return result;
-    };
-    return plataformGames.filter(categoriesFilter.bind(this));
-  }
-
-  leakGamesByPlataforms(plataformGames) {
-    let plataformsFilter = function(plataformGame) {
-      return this.state.selectedPlataforms.has(plataformGame.plataformsId);
-    }
-    return plataformGames.filter(plataformsFilter.bind(this));
   }
 
   getCategories() {
@@ -213,6 +211,10 @@ class GamesPage extends React.Component {
           onChange={this.changePlataformState.bind(this)}/> {plataform.name}
       </label>
     );
+  }
+
+  getShowButtonView() {
+    return (this.hasMore) ? <a className="btn btn-secondary w-100" href="#" onClick={this.onShowMore.bind(this)}>Show More</a> : <></>;
   }
 }
 export default GamesPage;

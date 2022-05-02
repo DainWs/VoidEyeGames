@@ -1,3 +1,4 @@
+import qs from 'qs';
 import { SessionManager } from "../../domain/SessionManager";
 import { API_URL } from "./SocketController";
 
@@ -7,6 +8,10 @@ class SocketRequest {
         this.method = 'GET';
         this.params = {};
         this.headers = {'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json'};
+    }
+
+    paramsSerializer(params) {
+        return qs.stringify(params);
     }
 
     setHeaders(headers) {

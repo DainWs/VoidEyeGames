@@ -78,6 +78,10 @@ class BaseController {
             } catch(Exception $ex) {
                 $this->logger->log("Exception " . $ex->getMessage());
             }
+            
+            if (empty($gamesInCategories)) {
+                return $response->withJson([], 200);
+            }
         }
 
         /* PLATAFORMS */
