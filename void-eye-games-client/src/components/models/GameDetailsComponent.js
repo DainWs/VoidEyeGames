@@ -215,7 +215,7 @@ class GameDetailsComponent extends React.Component {
     prepareCommentView(comment) {
         if (comment.users == undefined) comment.users = { name: null };
         return (
-            <div key={`comment-${comment.id}`} className='d-flex m-3'>
+            <div key={`comment-${comment.id}`} className='d-flex mx-3 my-2 m-sm-3'>
                 <div className='d-flex align-items-start justify-content-center rounded mr-3 mt-2'>
                     <div className='bg-secondary text-primary rounded-circle d-flex align-items-center justify-content-center' style={{ width: '50px', height: '50px' }}>
                         <FontAwesomeIcon icon={faUser} style={{ width: '50%', height: '50%' }} />
@@ -223,7 +223,7 @@ class GameDetailsComponent extends React.Component {
                 </div>
                 <div style={{ flexGrow: 1 }}>
                     <h5>{comment.users.name || <Skeleton width='30%' />}</h5>
-                    <p className='border border-black rounded p-2'>{comment.description || <Skeleton count={5} />}</p>
+                    <p className='border border-black rounded p-2 m-0'>{comment.description || <Skeleton count={5} />}</p>
                 </div>
             </div>
         );

@@ -36,7 +36,7 @@ class EmailManager {
         $this->mailer->Username = base64_decode(SELF::USER_EMAIL);
         $this->mailer->Password = base64_decode(SELF::USER_PASSWORD);
 
-        $this->mailer->setFrom(SELF::USER_EMAIL, SELF::USER_NAME);
+        $this->mailer->setFrom(base64_decode(SELF::USER_EMAIL), SELF::USER_NAME);
     }
 
     public function send($report): void  {
@@ -47,7 +47,7 @@ class EmailManager {
             $email = $report['email'];
 
             $this->logger->log("Send report.");
-            $this->mailer->addAddress(SELF::USER_EMAIL, SELF::USER_NAME);
+            $this->mailer->addAddress(base64_decode(SELF::USER_EMAIL), SELF::USER_NAME);
             $this->mailer->Subject = "User Report - $selectedReason";
 
             $body = "Motivo: $selectedReason<br/>" .
