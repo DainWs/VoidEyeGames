@@ -15,8 +15,8 @@ class EmailManager {
     private const SMTP_AUTH = true;
     private const SMTP_ENCRYPTION = PHPMailer::ENCRYPTION_SMTPS;
     private const USER_NAME = 'Void Eye Support';
-    private const USER_EMAIL = 'void.eye.games@gmail.com';
-    private const USER_PASSWORD = 'Hs%jEozB6&DLvSH^yW8KB7iNe@Uc%0bNi0pigPMnqaU0qU*jLV';
+    private const USER_EMAIL = 'dm9pZC5leWUuZ2FtZXNAZ21haWwuY29t';
+    private const USER_PASSWORD = 'SHMlakVvekI2JkRMdlNIXnlXOEtCN2lOZUBVYyUwYk5pMHBpZ1BNbnFhVTBxVSpqTFY=';
     
     private LogManager $logger;
     private PHPMailer $mailer;
@@ -33,8 +33,8 @@ class EmailManager {
         $this->mailer->SMTPAuth = SELF::SMTP_AUTH;
         $this->mailer->SMTPSecure = SELF::SMTP_ENCRYPTION;
 
-        $this->mailer->Username = SELF::USER_EMAIL;
-        $this->mailer->Password = SELF::USER_PASSWORD;
+        $this->mailer->Username = base64_decode(SELF::USER_EMAIL);
+        $this->mailer->Password = base64_decode(SELF::USER_PASSWORD);
 
         $this->mailer->setFrom(SELF::USER_EMAIL, SELF::USER_NAME);
     }
