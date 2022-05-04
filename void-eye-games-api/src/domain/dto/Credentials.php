@@ -3,10 +3,10 @@
 namespace src\domain\dto;
 
 class Credentials {
-    private string $user;
-    private string $token;
-    private int $expiration;
-    private int $accountType;
+    public string $user;
+    public string $token;
+    public int $expiration;
+    public int $accountType;
 
     public function __construct($builder = ['user' => '', 'token' => '', 'expiration' => 0, 'accountType' => 2]) {
         $this->user = $builder['user'];

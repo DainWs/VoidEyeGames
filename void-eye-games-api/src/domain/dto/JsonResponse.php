@@ -3,12 +3,12 @@
 namespace src\domain\dto;
 
 class JsonResponse {
-    private int|string $status;
-    private Object $body;
+    public $status;
+    public $body;
 
     /**
-     * @param ?int|string $status
-     * @param ?Object $body
+     * @param $status
+     * @param $body
      */
     public function __construct($status = 200, $body = 'Ok') {
         $this->status = $status;
@@ -19,7 +19,7 @@ class JsonResponse {
         $this->status = $status;
     }
 
-    public function getStatus(): String {
+    public function getStatus() {
         return $this->status;
     }
 
@@ -27,7 +27,7 @@ class JsonResponse {
         $this->body = $body;
     }
 
-    public function getBody(): Object {
+    public function getBody() {
         return $this->body;
     }
 }

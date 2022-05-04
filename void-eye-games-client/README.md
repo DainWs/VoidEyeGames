@@ -18,14 +18,14 @@ Final project for 2ºDAW, its a website is intended for support in the search fo
     - [X] Best plataforms to buy
     - [X] A description
     - [X] User comments
-        - [ ] Logged user can add Comments
+        - [X] Logged user can add Comments
 - [X] Support View
     - [X] GeoLocation
     - [X] Report form navigation button
 - [X] Report Form View
 - [X] Login Form View
     - [ ] [Optional] Recovery password
-- [ ] Signin Form View
+- [X] Signin Form View
 
 - [ ] **Admin** Game Form View
     - [ ] Add games.
@@ -34,6 +34,9 @@ Final project for 2ºDAW, its a website is intended for support in the search fo
 - [ ] **Admin** Plataform Form View
     - [ ] Add Plataforms.
     - [ ] Add games to plataform with prices and discount of the plataform.
-- [ ] **Admin** Categories Form View
-    - [ ] Add category.
-    - [ ] Add games to category.
+- [X] **Admin** Categories Form View
+    - [X] Add category.
+    - [X] Add games to category.
+
+## TO FIX
+- [ ] Cuando clicas en cualquier boton te hace un window.toTop

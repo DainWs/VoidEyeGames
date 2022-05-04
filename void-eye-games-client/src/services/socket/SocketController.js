@@ -6,12 +6,10 @@ export const API_URL = 'http://localhost/VoidEyeGames/void-eye-games-api';
 
 class SocketController {
     send(destination, onError = onHandleError) {
-        console.log(new SocketRequest());
         this.sendCustom(new SocketRequest(), destination, onError);
     }
 
     sendCustom(request, destination, onError = onHandleError) {
-        console.log(request);
         axios.request(this.getUrlFor(destination), request)
             .then(response => {
                 SocketDataProvideer.supply(destination, response.data);
@@ -20,7 +18,6 @@ class SocketController {
     }
 
     sendCustomWithCallback(request, destination, callback, onError = onHandleError) {
-        console.log(request);
         axios.request(this.getUrlFor(destination), request)
             .then(response => callback(response))
             .catch(onError);

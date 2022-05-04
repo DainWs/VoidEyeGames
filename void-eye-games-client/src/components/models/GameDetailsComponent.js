@@ -5,16 +5,13 @@ import { faUser } from '@fortawesome/free-solid-svg-icons';
 import Game from '../../domain/models/dtos/Game';
 import Media from '../../domain/models/dtos/Media';
 import { DESTINATION_COMMENT, DESTINATION_GAMES } from '../../services/socket/SocketDestinations';
-import { SocketDataQuery } from '../../services/socket/SocketDataQuery';
 import { SessionManager } from '../../domain/SessionManager';
 import SocketRequest from '../../services/socket/SocketRequest';
 import { SocketController } from '../../services/socket/SocketController';
-import { SocketObserver } from '../../services/socket/SocketObserver';
 import Plataform from '../../domain/models/dtos/Plataform';
 import { SocketDataFilter } from '../../services/socket/SocketDataFilter';
 import Carousel from 'nuka-carousel';
 import { Player } from 'video-react';
-import { SocketDataProvideer } from '../../services/socket/SocketDataProvider';
 
 //TODO check more button
 class GameDetailsComponent extends React.Component {
@@ -26,28 +23,22 @@ class GameDetailsComponent extends React.Component {
 
         this.state = {
             game: defaultGame,
-            plataformsGames: [],
             commentText: '',
             commentError: '',
             numOfComments: 3
         };
     }
 
-    updatePlataformsGames() {
-        let newPlataformsGames = SocketDataQuery.getPlataformsGamesWithGameId(this.gameId);
-        this.setState({ plataformsGames: newPlataformsGames });
-    }
-
-    updateGame() {
-        let newGame = SocketDataProvideer.provide(DESTINATION_GAMES);
-        this.setState({ game: newGame });
-    }
-
     setCommentText(event) {
         this.setState({ commentText: event.target.value });
     }
 
-    doComment() {
+    showMore() {
+        let num = this.state.numOfComments;
+        this.setState({ numOfComments: num + 3 });
+    }
+
+    sendCommentRequest() {
         if (!SessionManager.has()) {
             this.setState({ commentError: 'You have to log in to be able to comment.' });
             return;
@@ -59,25 +50,16 @@ class GameDetailsComponent extends React.Component {
         }
 
         let comment = new Comment();
-        comment.usersId = SessionManager.getSession().user.id;
+        comment.usersId = SessionManager.getSession().user;
         comment.gamesId = this.gameId;
         comment.description = this.state.commentText;
 
         let request = new SocketRequest();
         request.setBody(JSON.stringify(comment));
         request.setMethod('POST');
-        SocketController.sendCustom(request, DESTINATION_COMMENT);
+        SocketController.sendCustomWithCallback(request, DESTINATION_COMMENT, this.sendGamesRequest.bind(this));
 
         this.setState({ commentText: '' });
-    }
-
-    updateComment() {
-        SocketController.send(DESTINATION_GAMES);
-    }
-
-    showMore() {
-        let num = this.state.numOfComments;
-        this.setState({ numOfComments: num + 3 });
     }
 
     sendGamesRequest() {
@@ -87,18 +69,15 @@ class GameDetailsComponent extends React.Component {
         let request = new SocketRequest();
         request.setParams(params);
         request.setMethod('GET');
-        SocketController.sendCustom(request, DESTINATION_GAMES);
+        SocketController.sendCustomWithCallback(request, DESTINATION_GAMES, this.onGamesSuccess.bind(this));
+    }
+
+    onGamesSuccess(response) {
+        this.setState({ game: response.data });
     }
 
     componentDidMount() {
-        SocketObserver.subscribe(DESTINATION_GAMES, 'GameDetailsPage', this.updateGame.bind(this));
-        SocketObserver.subscribe(DESTINATION_COMMENT, 'GameDetailsPage', this.updateComment.bind(this));
         this.sendGamesRequest();
-    }
-
-    componentWillUnmount() {
-        SocketObserver.unsubscribe(DESTINATION_GAMES, 'GameDetailsPage');
-        SocketObserver.unsubscribe(DESTINATION_COMMENT, 'GameDetailsPage');
     }
 
     render() {
@@ -136,16 +115,16 @@ class GameDetailsComponent extends React.Component {
                                 <FontAwesomeIcon icon={faUser} style={{ width: '50%', height: '50%' }} />
                             </div>
                         </div>
-                        <textarea className='no-resize flex-grow-1' rows={5} onChange={this.setCommentText.bind(this)}></textarea>
+                        <textarea className='no-resize flex-grow-1' rows={5} onChange={this.setCommentText.bind(this)} value={this.state.commentText}/>
                     </div>
                     <div className='d-flex flex-column justify-content-center'>
                         <div className='row m-3'>
                             <div className='col-8 col-sm-9 col-md-10 d-none d-sm-block'><hr /></div>
-                            <a className='col-12 col-sm-3 col-md-2 btn btn-quaternary align-self-baseline' onClick={this.doComment.bind(this)}>Comment</a>
+                            <a className='col-12 col-sm-3 col-md-2 btn btn-quaternary align-self-baseline' onClick={this.sendCommentRequest.bind(this)}>Comment</a>
                         </div>
                         <div>
                             <div className='d-flex flex-column'>
-                                {this.getComments() || this.prepareCommentView({ id: 1 })}
+                                {this.getComments()}
                             </div>
                         </div>
                         {this.getShowMoreView()}
@@ -203,7 +182,6 @@ class GameDetailsComponent extends React.Component {
 
     getComments() {
         let comments = this.state.game.comments;
-        if (comments.length <= 0) return null;
         let commentsView = new Set();
         for (let i = 0; i < comments.length && i < this.state.numOfComments; i++) {
             let comment = comments[i];
@@ -213,7 +191,6 @@ class GameDetailsComponent extends React.Component {
     }
 
     prepareCommentView(comment) {
-        if (comment.users == undefined) comment.users = { name: null };
         return (
             <div key={`comment-${comment.id}`} className='d-flex mx-3 my-2 m-sm-3'>
                 <div className='d-flex align-items-start justify-content-center rounded mr-3 mt-2'>
@@ -222,8 +199,8 @@ class GameDetailsComponent extends React.Component {
                     </div>
                 </div>
                 <div style={{ flexGrow: 1 }}>
-                    <h5>{comment.users.name || <Skeleton width='30%' />}</h5>
-                    <p className='border border-black rounded p-2 m-0'>{comment.description || <Skeleton count={5} />}</p>
+                    <h5>{comment.users.name}</h5>
+                    <p className='border border-black rounded p-2 m-0'>{comment.description}</p>
                 </div>
             </div>
         );

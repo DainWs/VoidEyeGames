@@ -11,22 +11,22 @@ class AuthManager {
     private LogManager $logger;
 
     public function __construct() {
-        $this->logger = new LogManager(BaseController::class);
+        $this->logger = new LogManager(AuthManager::class);
     }
     
     /**
      * Registre a username with the specified account type to de credentials cache file.
      * @param String $username
-     * @param int|string $accountType
+     * @param int|string|null $accountType
      * @return Credentials
      */
-    public function registre(String $username, $accountType = ACCOUNT_TYPE_UNKNOWN): Credentials {
-        $this->logger->log("Registering credentials for user $username.");
+    public function registre(String $name, $accountType = ACCOUNT_TYPE_UNKNOWN): Credentials {
+        $this->logger->log("Registering credentials for user $name. $accountType");
         $credentials = new Credentials();
-        $credentials->setUser($username);
+        $credentials->setUser($name);
         $credentials->setToken($this->generateToken());
         $credentials->setExpiration(strtotime(date('Y-m-d H:i:s.u', strtotime('+1 hour'))));
-        $credentials->setAccountType($accountType ?? ACCOUNT_TYPE_UNKNOWN);
+        $credentials->setAccountType($accountType);
         $this->save($credentials);
         return $credentials;
     }

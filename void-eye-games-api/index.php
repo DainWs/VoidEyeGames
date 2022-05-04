@@ -39,13 +39,18 @@ $app->group('/game', function () use ($app) {
          * The url param {plataforms} are the plataforms of the games.
          */
         $app->get('', 'src\controllers\BaseController:getGames');
+
+        $app->get('/listed', 'src\controllers\BaseController:getListOfGames');
     });
 });
 
 // Categories
+$app->get('/category', 'src\controllers\BaseController:getCategory');
+
 $app->group('/categories', function () use ($app) {
     $app->get('', 'src\controllers\BaseController:getCategories');
     $app->post('', 'src\controllers\BaseController:addCategory')->add(new AuthMiddleware());
+    $app->post('/update', 'src\controllers\BaseController:updateCategory')->add(new AuthMiddleware());
 });
 
 // Plataforms

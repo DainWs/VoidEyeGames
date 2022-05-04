@@ -17,6 +17,11 @@ import '../node_modules/react-loading-skeleton/dist/skeleton.css';
 import '../assets/css/App.css';
 import 'bootstrap';
 
+let RouterGamePage = withRouter(GamesPage);
+let RouterGameFormPage = withRouter(GameFormPage);
+let RouterCategoryFormPage = withRouter(CategoryFormPage);
+let RouterPlataformFormPage = withRouter(PlataformFormPage);
+
 export default function Main() {
   return (
     <>
@@ -25,7 +30,7 @@ export default function Main() {
           <Route path="/" element={<LayoutPage />}>
             <Route index element={<HomePage />} />
             <Route path="/games" element={<GamesPage />} />
-            <Route path="/games/:name" element={withRouter(GamesPage)} />
+            <Route path="/games/:name" element={<RouterGamePage/>} />
             <Route path="/details/:id" element={<GameDetailsPage />} />
             <Route path="/signin" element={<SignInFormPage />} />
             <Route path="/login" element={<LogInFormPage />} />
@@ -33,11 +38,11 @@ export default function Main() {
             <Route path="/report" element={<ReportFormPage />} />
             
             <Route path="/admin/game" element={<GameFormPage />} />
-            <Route path="/admin/game/:id" element={withRouter(GameFormPage)} />
+            <Route path="/admin/game/:id" element={<RouterGameFormPage/>} />
             <Route path="/admin/category" element={<CategoryFormPage />} />
-            <Route path="/admin/category/:id" element={withRouter(CategoryFormPage)} />
+            <Route path="/admin/category/:id" element={<RouterCategoryFormPage />} />
             <Route path="/admin/plataform" element={<PlataformFormPage />} />
-            <Route path="/admin/plataform/:id" element={withRouter(PlataformFormPage)} />
+            <Route path="/admin/plataform/:id" element={<RouterPlataformFormPage />} />
             <Route path="*" element={<HomePage />} />
           </Route>
         </Routes>

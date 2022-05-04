@@ -19,7 +19,9 @@ class LayoutPage extends React.Component {
         <Outlet />
         <FooterComponent/>
 
-        <a className="position-fixed p-right-bottom-1 d-flex align-items-center justify-content-center bg-secondary rounded-circle" style={{width: '50px', height: '50px'}} onClick={this.toTopOfView.bind(this)}>
+        <a className="position-fixed p-right-bottom-1 d-flex align-items-center justify-content-center bg-secondary rounded-circle" 
+          style={{width: '50px', height: '50px', zIndex: '200'}} 
+          onClick={this.toTopOfView}>
           <FontAwesomeIcon icon={faAngleUp} style={{ width: '50%', height: '50%' }} />
         </a>
       </>

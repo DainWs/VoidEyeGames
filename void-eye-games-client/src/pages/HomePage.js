@@ -1,12 +1,11 @@
 import Carousel from 'nuka-carousel';
 import React from 'react';
+import Skeleton from 'react-loading-skeleton';
 import GameItemComponent from '../components/models/GameItemComponent';
 import GameItemSliderComponent from '../components/models/GameItemSliderComponent';
 import { SocketController } from '../services/socket/SocketController';
 import { SocketDataFilter } from '../services/socket/SocketDataFilter';
-import { SocketDataProvideer } from '../services/socket/SocketDataProvider';
 import { DESTINATION_PLATAFORM_GAMES } from '../services/socket/SocketDestinations';
-import { SocketObserver } from '../services/socket/SocketObserver';
 import SocketRequest from '../services/socket/SocketRequest';
 
 class HomePage extends React.Component {
@@ -48,18 +47,12 @@ class HomePage extends React.Component {
     this.sendSliderGamesRequest();
   }
 
-  componentWillUnmount() {
-    SocketObserver.unsubscribe(DESTINATION_PLATAFORM_GAMES, 'HomePage');
-  }
-
   render() {
-    let gamesWithDiscount = this.getGamesWithDiscount();
-    let gamesItems = this.getGamesItems();
     return (
       <section className='w-100 h-100'>
         <header className='home--header bg-dark' style={{minHeight: '320px', height: 'calc(20vw + 35vh)'}}>
-          <Carousel className='w-100' animation='zoom' autoplay={true}>
-            {gamesWithDiscount}
+          <Carousel className='w-100' animation='zoom' autoplay={this.state.sliderGames.length > 1}>
+            {this.getSliderItems()}
           </Carousel>
         </header>
         <article className='d-flex flex-column flex-grow-2 m-4 border-2'>
@@ -67,18 +60,25 @@ class HomePage extends React.Component {
             <h1 className='text-center'>News</h1>
           </header>
           <hr/>
-          <div className='d-flex flex-wrap align-content-start'>
-            {gamesItems}
+          <div className='d-flex flex-wrap align-content-start justify-content-center'>
+            {this.getNewsItems()}
           </div>
         </article>
       </section>
     );
   }
 
-  getGamesWithDiscount() {
+  getSliderItems() {
+    if (this.state.sliderGames.length > 0) {
+      return this.getGameSliderItems();
+    }
+    return this.getSkeletonSliderItems();
+  }
+
+  getGameSliderItems() {
     let discountedGames = [];
-    let gamesList = SocketDataFilter.getBestPlataforms(this.state.plataformsGames, true);
-    for (const plataformGame of gamesList) {
+    for (const plataformGame of this.state.sliderGames) {
+      console.log(plataformGame);
       discountedGames.push(
         <div key={plataformGame.plataformsId + '-' + plataformGame.gamesId + '--slider__items'} className='d-flex justify-content-center w-100 h-100'>
           <GameItemSliderComponent plataformGame={plataformGame} showType='discount'/>
@@ -86,6 +86,21 @@ class HomePage extends React.Component {
       );
     }
     return discountedGames;
+  }
+
+  getSkeletonSliderItems() {
+    return [
+      <Skeleton key='slider-skeleton-1' width='90%' height='90%' style={{margin: '2% 5%'}}/>,
+      <Skeleton key='slider-skeleton-1' width='90%' height='90%' style={{margin: '2% 5%'}}/>,
+      <Skeleton key='slider-skeleton-1' width='90%' height='90%' style={{margin: '2% 5%'}}/>
+    ];
+  }
+
+  getNewsItems() {
+    if (this.state.plataformsGames.length > 0) {
+      return this.getGamesItems();
+    }
+    return this.getSkeletonItems();
   }
 
   getGamesItems() {
@@ -97,7 +112,13 @@ class HomePage extends React.Component {
         </div>
       );
     }
-    return gamesItemsViews.slice(0, 7);
+    return gamesItemsViews;
+  }
+
+  getSkeletonItems() {
+    return [
+      <Skeleton key='news-skeleton-1' className='p-0' width='90vw' height='30vh'/>
+    ];
   }
 }
 

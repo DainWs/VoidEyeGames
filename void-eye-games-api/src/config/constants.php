@@ -15,7 +15,7 @@ define('TIME_FORMAT', 'h:m:s');
 /* ACCOUNT TYPES */
 define('ACCOUNT_TYPE_ADMIN', 0);
 define('ACCOUNT_TYPE_LOGGED_USER', 1);
-define('ACCOUNT_TYPE_UNKNOWN', 3);
+define('ACCOUNT_TYPE_UNKNOWN', 2);
 
 /* QUERIES */
 define('QUERY_GAMES_PER_PAGE', 2);

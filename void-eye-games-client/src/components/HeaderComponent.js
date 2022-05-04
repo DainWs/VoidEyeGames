@@ -16,6 +16,7 @@ class HeaderComponent extends React.Component {
   
   update() {
     this.setState({session: SessionManager.getSession()});
+    document.getElementById('navigate-home').click();
   }
   
   closeHamburger() {

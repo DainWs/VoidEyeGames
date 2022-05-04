@@ -10,10 +10,10 @@ class ModelFormPage extends React.Component {
     }
 
     createState(props) {
-        if (props.id === undefined) {
-            return {mode: MODEL_FORM_MODE_NEW};
+        if (props.params === undefined) {
+            return {mode: MODEL_FORM_MODE_NEW, id: null};
         }
-        return {mode: MODEL_FORM_MODE_EDIT};
+        return {mode: MODEL_FORM_MODE_EDIT, id: props.params.id};
     }
 
     render() {

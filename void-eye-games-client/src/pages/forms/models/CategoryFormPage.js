@@ -4,9 +4,8 @@ import GameListItemComponent from '../../../components/models/lists/GameListItem
 import Category from '../../../domain/models/dtos/Category';
 import { withRouter } from '../../../Main';
 import { SocketController } from '../../../services/socket/SocketController';
-import { SocketDataQuery } from '../../../services/socket/SocketDataQuery';
-import { DESTINATION_CATEGORIES, DESTINATION_GAMES } from '../../../services/socket/SocketDestinations';
-import { SocketObserver } from '../../../services/socket/SocketObserver';
+import { SocketDataFilter } from '../../../services/socket/SocketDataFilter';
+import { DESTINATION_CATEGORIES, DESTINATION_CATEGORIES_UPDATES, DESTINATION_CATEGORY, DESTINATION_LIST_OF_GAMES } from '../../../services/socket/SocketDestinations';
 import SocketRequest from '../../../services/socket/SocketRequest';
 import ModelFormPage, { MODEL_FORM_MODE_EDIT } from './ModelFormPage';
 
@@ -14,13 +13,10 @@ import ModelFormPage, { MODEL_FORM_MODE_EDIT } from './ModelFormPage';
 class CategoryFormPage extends ModelFormPage {
 
     createState(props) {
-        let category = new Category();
         let parentState = super.createState(props);
-        if (parentState.mode === MODEL_FORM_MODE_EDIT) {
-            category = SocketDataQuery.getCategoryWithId(props.id);
-        }
-        parentState.category = category;
+        parentState.category = new Category();
         parentState.selectedGame = null;
+        parentState.listedGames = [];
         return parentState;
     }
 
@@ -31,15 +27,18 @@ class CategoryFormPage extends ModelFormPage {
     }
 
     onChangeSelectedGame(event) {
-        console.log(event);
         this.setState({selectedGame: event.value});
     }
 
     addSelectedGame() {
         let selectedGameId = this.state.selectedGame;
         if (!selectedGameId || selectedGameId <= 0) return;
-        let category = this.state.category;
-        category.addGame(SocketDataQuery.getGameWithId(selectedGameId));
+
+        let game = Array.from(this.state.listedGames)
+            .find(v => v.id === selectedGameId);
+
+        let category = new Category(this.state.category);
+        category.addGame(game);
         this.setState({category: category});
     }
 
@@ -52,13 +51,17 @@ class CategoryFormPage extends ModelFormPage {
     submit() {
         let category = this.state.category;
         category.games = [];
-        console.log(JSON.stringify(category));
         let request = new SocketRequest();
         request.setBody(JSON.stringify(category));
         request.setMethod('POST');
+        
+        let destination = DESTINATION_CATEGORIES;
+        if (this.state.mode === MODEL_FORM_MODE_EDIT) {
+            destination = DESTINATION_CATEGORIES_UPDATES;
+        }
+
         SocketController.sendCustomWithCallback(
-            request,
-            DESTINATION_CATEGORIES,
+            request, destination,
             this.onSuccess.bind(this),
             this.onFailed.bind(this)
         );
@@ -73,18 +76,28 @@ class CategoryFormPage extends ModelFormPage {
     }
 
     componentDidMount() {
-        SocketObserver.subscribe(DESTINATION_GAMES, 'CategoryFormPage', this.forceUpdate.bind(this));
-        SocketController.send(DESTINATION_GAMES);
+        SocketController.sendCustomWithCallback(new SocketRequest(), DESTINATION_LIST_OF_GAMES, this.onGameSuccess.bind(this));
+        if (this.state.mode === MODEL_FORM_MODE_EDIT) {
+            let request = new SocketRequest();
+            request.setParams({id: this.state.id});
+            SocketController.sendCustomWithCallback(request, DESTINATION_CATEGORY, this.onCategoryResult.bind(this));
+        }
     }
 
-    componentWillUnmount() {
-        SocketObserver.unsubscribe(DESTINATION_GAMES);
+    onCategoryResult(response) {
+        console.log(response);
+        this.setState({category: response.data});
+    }
+
+    onGameSuccess(response) {
+        console.log(response);
+        this.setState({listedGames: response.data});
     }
 
     render() {
         return (
             <section className='row h-100'>
-                <article className='d-flex flex-column mx-auto p-2 p-sm-0 col-12 col-sm-10'>
+                <article className='d-flex flex-column mx-auto p-2 col-10'>
                     <header>
                         <h1 className='text-center'>Categories Form</h1>
                     </header>
@@ -93,12 +106,12 @@ class CategoryFormPage extends ModelFormPage {
                             <label htmlFor='category-form--name'>Name:</label>
                             <input id='category-form--name' className='w-100' type='text' value={this.state.category.name} onChange={this.onChangeName.bind(this)} autoComplete='false'/>
                         </section>
-                        <section className='d-flex w-100 m-0'>
+                        <section className='row w-100 m-0'>
                             <Select className='flex-grow-1 p-0' options={this.getGamesOptions()} onChange={this.onChangeSelectedGame.bind(this)}/>
-                            <a className='btn btn-form text-dark col-2 ml-2' onClick={this.addSelectedGame.bind(this)}>Add game</a>
+                            <a className='btn btn-form text-dark col-12 col-sm-2 m-0 mt-3 mt-sm-0 ml-sm-2' onClick={this.addSelectedGame.bind(this)}>Add game</a>
                         </section>
                         <hr className='w-100'/>
-                        <fieldset title='Games in category' className='d-flex flex-column flex-grow-1 w-100 border border-dark rounded' style={{overflowY: 'scroll'}}>
+                        <fieldset title='Games in category' className='d-flex flex-column flex-grow-1 w-100 border border-dark rounded' style={{overflowY: 'scroll', minHeight: '100px'}}>
                             {this.getGamesList()}
                         </fieldset>
                         <section className='my-3'>
@@ -112,7 +125,7 @@ class CategoryFormPage extends ModelFormPage {
 
     getGamesOptions() {
         let gamesOptions = [];
-        let leakedGames = SocketDataQuery.getGamesNotIn(this.state.category.games);
+        let leakedGames = SocketDataFilter.getGamesNotIn(this.state.listedGames, this.state.category.games);
         for (const leakedGame of leakedGames) {
             gamesOptions.push({ value: leakedGame.id, label: leakedGame.name });
         }
@@ -128,5 +141,7 @@ class CategoryFormPage extends ModelFormPage {
         return gamesList;
     }
 }
+
+
 
 export default CategoryFormPage;

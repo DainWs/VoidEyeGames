@@ -15,14 +15,6 @@ class GameListItemComponent extends ItemContextMenuComponent {
         return parentState;
     }
 
-    onEditClick() {
-        this.navigate(`/admin/game/${this.state.data.id}`, { replace: true });
-    }
-
-    onRemoveClick() {
-        this.navigate('/', { replace: true });
-    }
-
     getTitle() {
         let game = this.state.data;
         return `${game.id} - ${game.name}`;
@@ -52,7 +44,7 @@ class GameListItemComponent extends ItemContextMenuComponent {
     }
 
     getContextItemView(key, title, data, onclick) {
-        return <a key={key} className='text-dark' onClick={e => onclick(data)}>{title}</a>;
+        return <a key={key} className='w-100 btn btn-primary text-left text-dark' onClick={e => onclick(data)}>{title}</a>;
     }
 }
 

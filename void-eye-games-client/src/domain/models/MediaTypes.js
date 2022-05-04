@@ -44,8 +44,6 @@ export default class MediaTypeEnum {
     static getMediaTypeByType(type) {
         let searchType = type + '';
         let typeOfMedia = searchType.slice(0, searchType.indexOf('/'));
-        console.log(type);
-        console.log(typeOfMedia);
         if (typeOfMedia === 'image') 
             return getMediaTypeFromTypeOf(MEDIAS_TYPES_IMAGES, type);
         if (typeOfMedia === 'video') 

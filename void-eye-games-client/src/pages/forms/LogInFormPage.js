@@ -41,18 +41,17 @@ class LogInFormPage extends React.Component {
     );
   }
 
-  onSuccess(response) {console.log(response);
-    if (response.status !== 200) {
+  onSuccess(response) {
+    console.log(response);
+    if (response.data.status !== 200) {
       this.onFailed(response);
       return;
     }
-    SessionManager.setSession(response.data);
-    EventObserver.notify(EVENT_SESSION_CHANGE);
-    document.getElementById('navigate-home').click();
+    SessionManager.setSession(response.data.body);
   }
 
   onFailed(response) {
-    this.setState({errors: response.data});
+    this.setState({errors: response.data.body});
   }
 
   render() {

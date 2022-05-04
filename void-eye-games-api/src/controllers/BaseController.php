@@ -15,10 +15,13 @@ use classes\Comment\Comment;
 use classes\Category\Category;
 use classes\Plataform\Plataform;
 use classes\CategoriesGame\CategoriesGame;
+use classes\Category\CategoryRecord;
+use classes\Game\GameRecord;
 use classes\PlataformsGame\PlataformsGame;
 use src\domain\providers\AtlasProvider;
 use src\domain\providers\DatabaseProvider;
 use src\domain\AuthManager;
+use src\domain\dto\JsonResponse;
 use src\libraries\EmailManager;
 use src\libraries\LogManager;
 use src\validators\CategoryValidator;
@@ -98,6 +101,7 @@ class BaseController {
             ->joinWith('plataforms')
             ->joinWith('games')
             ->where('games.name LIKE ', "%$search%")
+            ->where('isEnabled =', true)
             ->orderBy(SELF::ORDER_METHODS[$sortBy] ?? 'games.name')
             ->offset($pageStart)
             ->limit(QUERY_GAMES_PER_PAGE);
@@ -116,6 +120,12 @@ class BaseController {
 
         return $response->withJson($query->fetchRecords(), 200);
     }
+    
+    public function getListOfGames(Request $request, Response $response, array $args) {
+        $this->logger->log("[GET] getListOfGames called.");
+        $games = $this->atlas->select(Game::class)->fetchRecords();
+        return $response->withJson($games, 200);
+    }
 
     public function getGame(Request $request, Response $response, array $args) {
         $this->logger->log("[GET] getGame called.");
@@ -131,6 +141,7 @@ class BaseController {
         $plataformsGames = $this->atlas->select(PlataformsGame::class)
             ->with(['plataforms'])
             ->where('gamesId =', $game->id)
+            ->where('isEnabled =', true)
             ->orderBy('discount DESC', '(price - (price * discount))')
             ->fetchRecordSet();
         $game->plataforms_games = $plataformsGames;
@@ -177,6 +188,15 @@ class BaseController {
         return $response->withJson($categories, 200);
     }
 
+    public function getCategory(Request $request, Response $response, array $args) {
+        $this->logger->log("[GET] getCategories called.");
+        $id = $request->getParam('id', 1);
+        $category = $this->atlas->select(Category::class, ['id' =>  $id])
+            ->with(['games'])
+            ->fetchRecord();
+        return $response->withJson($category, 200);
+    }
+
     //----------------------------------------------------------------------------------
     // PLATAFORMS SECTION
     //----------------------------------------------------------------------------------
@@ -203,11 +223,14 @@ class BaseController {
         $validator->setAtlas($this->atlas);
         $validator->validate($body);
         if ($validator->hasErrors()) {
-            return $response->withJson($validator->getErrors(), 400);
+            $jsonResponse = new JsonResponse(400, $validator->getErrors());
+            return $response->withJson($jsonResponse, 200);
         }
         $this->atlas->insert($this->atlas->newRecord(User::class, $body));
-        $credentials = (new AuthManager())->registre($body['name'], 'User');
-        return $response->withJson($credentials, 200);
+
+        $credentials = (new AuthManager())->registre($body['name']);
+        $jsonResponse = new JsonResponse(200, $credentials);
+        return $response->withJson($jsonResponse, 200);
     }
 
     public function logIn(Request $request, Response $response, array $args){
@@ -218,15 +241,15 @@ class BaseController {
             $password = $body->password ?? $body['password'] ?? $_REQUEST['Password'] ?? '';
             $dbUser = $this->atlas->select(User::class, ['name' => $username])->fetchRecord();
             if ($dbUser !== null && $dbUser->password === $password) {
-                $credentials = (new AuthManager())->registre($username, $dbUser->accountType);
-                return $response->withJson($credentials, 200);
+                $credentials = (new AuthManager())->registre($dbUser->name, $dbUser->accountType);
+                $jsonResponse = new JsonResponse(200, $credentials);
+                return $response->withJson($jsonResponse, 200);
             }
         } catch(Exception $ex) { 
             $this->logger->log("Exception in signIn method: " . $ex->getMessage(), Logger::WARNING);
         }
-        $this->resultCode = 403;
-        $this->resultMessage = 'Ivalid Username or Password.';
-        return $this->createJsonResponseMessage($response);
+        $jsonResponse = new JsonResponse(403, 'Ivalid Username or Password.');
+        return $response->withJson($jsonResponse, 200);
     }
 
     //----------------------------------------------------------------------------------
@@ -259,6 +282,7 @@ class BaseController {
         $this->logger->log("[POST] addGame called.");
         try {
             $game = $request->getParsedBody()['data'];
+            $this->logger->log(json_encode($game));
             $validator = new GameValidator();
             $validator->setAtlas($this->atlas);
             $validator->validate($game);
@@ -266,8 +290,8 @@ class BaseController {
                 return $response->withJson($validator->getErrors(), 400);
             }
 
-            $game['categories'] = [];
-            $game['plataforms'] = [];
+            $game['categories'] = null;
+            $game['plataforms'] = null;
             $game['medias'] = $this->parseArrayToRecord($game['medias'], Media::class);
             $game['comments'] = $this->parseArrayToRecord($game['comments'], Comment::class);
             $game['categories_games'] = $this->parseArrayToRecord($game['categories_games'], CategoriesGame::class);
@@ -290,6 +314,7 @@ class BaseController {
         $this->logger->log("[POST] addCategory called.");
         try {
             $category = $request->getParsedBody()['data'];
+            $this->logger->log(json_encode($category));
             $validator = new CategoryValidator();
             $validator->setAtlas($this->atlas);
             $validator->validate($category);
@@ -297,9 +322,8 @@ class BaseController {
                 return $response->withJson($validator->getErrors(), 400);
             }
 
-            $category['games'] = [];
+            $category['games'] = null;
             $category['categories_games'] = $this->parseArrayToRecord($category['categories_games'], CategoriesGame::class);
-
             $record = $this->atlas->newRecord(Category::class, $category);
             $this->atlas->beginTransaction();
             $this->atlas->persist($record);
@@ -325,7 +349,7 @@ class BaseController {
                 return $response->withJson($validator->getErrors(), 400);
             }
 
-            $plataforms['games'] = [];
+            $plataforms['games'] = null;
             $plataforms['plataforms_games'] = $this->parseArrayToRecord($plataforms['plataforms_games'], PlataformsGame::class);
         } catch(Exception $ex) { $this->processException($ex); }
         return $this->createJsonResponseMessage($response);
@@ -338,8 +362,8 @@ class BaseController {
         $this->logger->log("[POST] addComment called.");
         try {
             $comment = $request->getParsedBody()['data'];
-            $comment['games'] = [];
-            $comment['users'] = [];
+            $user = $this->atlas->select(User::class, ['name' => $comment['usersId']])->fetchRecord();
+            $comment['usersId'] = $user->id;
             $record = $this->atlas->newRecord(Comment::class, $comment);
             
             $this->atlas->beginTransaction();
@@ -358,30 +382,52 @@ class BaseController {
     //##################################################################################
     //----------------------------------------------------------------------------------
 
+    //----------------------------------------------------------------------------------
+    // GAMES SECTION
+    //----------------------------------------------------------------------------------
     public function updateGame(Request $request, Response $response, array $args){
         $this->logger->log("[POST] updateGame called.");
         try {
             $game = $request->getParsedBody()['data'];
-            $validator = new GameValidator();
-            $validator->setAtlas($this->atlas);
-            $validator->validate($game);
-            if ($validator->hasErrors()) {
-                return $response->withJson($validator->getErrors(), 400);
-            }
-
-            $game['categories'] = [];
-            $game['plataforms'] = [];
-            $game['medias'] = $this->parseArrayToRecord($game['medias'], Media::class);
-            $game['comments'] = $this->parseArrayToRecord($game['comments'], Comment::class);
-            $game['categories_games'] = $this->parseArrayToRecord($game['categories_games'], CategoriesGame::class);
-            $game['plataforms_games'] = $this->parseArrayToRecord($game['plataforms_games'], PlataformsGame::class);
-            $record = $this->atlas->newRecord(Game::class, $game);
+            /** @var GameRecord $record */
+            $record = $this->atlas->select(Game::class, ['id' => $game['id']])
+                ->with(['medias', 'plataforms_games', 'categories_games'])
+                ->fetchRecord();
+            $record->name = $game['name'];
+            $record->description = $game['description'];
+            $record->updateMedias($game['medias']);
+            $record->updateCategoriesGames($game['categories_games']);
+            $record->updatePlataformsGames($game['plataforms_games']);
             $this->atlas->beginTransaction();
             $this->atlas->persist($record);
             $this->atlas->commit();
         } catch(Exception $ex) {
             $this->atlas->rollBack();
             $this->processException($ex);
+        }
+        return $this->createJsonResponseMessage($response);
+    }
+
+    //----------------------------------------------------------------------------------
+    // CATEGORY SECTION
+    //----------------------------------------------------------------------------------
+    public function updateCategory(Request $request, Response $response, array $args){
+        $this->logger->log("[POST] updateCategory called.");
+        try {
+            $category = $request->getParsedBody()['data'];
+            /** @var CategoryRecord $record */
+            $record = $this->atlas->select(Category::class, ['id' => $category['id']])
+                ->with(['categories_games'])
+                ->fetchRecord();
+            $record->name = $category['name'];
+            $record->updateCategoriesGames($category['categories_games']);
+
+            $this->atlas->beginTransaction();
+            $this->atlas->persist($record);
+            $this->atlas->commit();
+        } catch(Exception $ex) { 
+            $this->atlas->rollBack();
+            $this->processException($ex); 
         }
         return $this->createJsonResponseMessage($response);
     }
@@ -394,7 +440,12 @@ class BaseController {
     public function deleteGameOnPlataform(Request $request, Response $response, array $args){
         $this->logger->log("[DELETE] deleteGameOnPlataform called.");
         try {
-            $this->atlas->delete($this->atlas->newRecord(Game::class, $request->getParsedBody()['data']));
+            $game = $request->getParsedBody()['data'];
+            $record = $this->atlas->select(Game::class, ['id' => $game->id])
+                ->with(['plataforms_games'])
+                ->fetchRecord();
+            
+            
         } catch(Exception $ex) { $this->processException($ex); }
         return $this->createJsonResponseMessage($response);
     }
@@ -419,7 +470,7 @@ class BaseController {
     }
 
     private function createJsonResponseMessage(Response $response) {
-        $messageObject = json_decode('{"code": "'.$this->resultCode.'", "message": "'.$this->resultMessage.'"}');
-        return $response->withJson($messageObject, $this->resultCode);
+        $messageObject = new JsonResponse($this->resultCode, $this->resultMessage);
+        return $response->withJson($messageObject, 200);
     }
 }
