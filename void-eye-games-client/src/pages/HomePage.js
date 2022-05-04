@@ -57,7 +57,7 @@ class HomePage extends React.Component {
     let gamesItems = this.getGamesItems();
     return (
       <section className='w-100 h-100'>
-        <header className='home--header' style={{minHeight: '320px', height: 'calc(20vw + 35vh)'}}>
+        <header className='home--header bg-dark' style={{minHeight: '320px', height: 'calc(20vw + 35vh)'}}>
           <Carousel className='w-100' animation='zoom' autoplay={true}>
             {gamesWithDiscount}
           </Carousel>
