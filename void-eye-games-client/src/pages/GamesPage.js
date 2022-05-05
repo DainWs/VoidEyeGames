@@ -1,5 +1,6 @@
 import React from 'react';
 import GameItemComponent from '../components/models/GameItemComponent';
+import { SessionManager } from '../domain/SessionManager';
 import RequestFactory from '../factories/RequestFactory';
 import { SocketController } from '../services/socket/SocketController';
 import { SocketDataProvideer } from '../services/socket/SocketDataProvider';

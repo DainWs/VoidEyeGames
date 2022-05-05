@@ -322,11 +322,15 @@ class BaseController {
                 return $response->withJson($validator->getErrors(), 400);
             }
 
+            $categoriesGames = $category['categories_games'];
+            $category['id'] = null;
             $category['games'] = null;
-            $category['categories_games'] = $this->parseArrayToRecord($category['categories_games'], CategoriesGame::class);
+            $category['categories_games'] = null;
             $record = $this->atlas->newRecord(Category::class, $category);
+            $record->categories_games = $this->atlas->newRecordSet(CategoriesGame::class);
             $this->atlas->beginTransaction();
             $this->atlas->insert($record);
+            foreach ($categoriesGames as $value) {$record->add($value);}
             $this->atlas->persist($record);
             $this->atlas->commit();
         } catch(Exception $ex) { 
@@ -349,15 +353,13 @@ class BaseController {
             if ($validator->hasErrors()) {
                 return $response->withJson($validator->getErrors(), 400);
             }
-            $this->logger->log(json_encode($plataforms));
-
+            
+            $plataformsGames = $plataforms['plataforms_games'];
             $plataforms['id'] = null;
             $plataforms['games'] = null;
-
-            $plataformsGames = $plataforms['plataforms_games'];
             $plataforms['plataforms_games'] = null;
-
             $record = $this->atlas->newRecord(Plataform::class, $plataforms);
+            $record->plataforms_games = $this->atlas->newRecordSet(PlataformsGame::class);
 
             $this->atlas->beginTransaction();
             $this->atlas->insert($record);

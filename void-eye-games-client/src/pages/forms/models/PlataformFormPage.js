@@ -3,6 +3,7 @@ import Select from 'react-select';
 import GameListItemComponent from '../../../components/models/lists/GameListItemComponent';
 import Plataform from '../../../domain/models/dtos/Plataform';
 import PlataformGame from '../../../domain/models/dtos/PlataformGame';
+import { SessionManager } from '../../../domain/SessionManager';
 import { withRouter } from '../../../Main';
 import { SocketController } from '../../../services/socket/SocketController';
 import { SocketDataFilter } from '../../../services/socket/SocketDataFilter';
@@ -105,7 +106,7 @@ class PlataformFormPage extends ModelFormPage {
     this.setState({ plataformGame: plataformGame });
   }
 
-  onTurnGameEnabled(event) {
+  onTurnGameEnabled() {
     let plataformGame = this.state.plataformGame;
     plataformGame.isEnabled = !plataformGame.isEnabled;
     this.setState({ plataformGame: plataformGame });
@@ -113,9 +114,7 @@ class PlataformFormPage extends ModelFormPage {
 
   onEditClick(id) {
     let plataform = new Plataform(this.state.plataform);
-    console.log(plataform);
     let plataformGame = plataform.getPlataformGame(id);
-    console.log(plataformGame);
     this.setState({ editingGameId: id, plataformGame: plataformGame });
   }
 
@@ -162,7 +161,6 @@ class PlataformFormPage extends ModelFormPage {
   }
 
   onFailed(response) {
-    console.log(response);
     this.setState({ errors: response.data });
   }
 
@@ -171,21 +169,21 @@ class PlataformFormPage extends ModelFormPage {
     if (this.state.mode === MODEL_FORM_MODE_EDIT) {
       let request = new SocketRequest();
       request.setParams({ id: this.state.id });
-      SocketController.sendCustomWithCallback(request, DESTINATION_PLATAFORM, this.onCategoryResult.bind(this));
+      SocketController.sendCustomWithCallback(request, DESTINATION_PLATAFORM, this.onPlataformResult.bind(this));
     }
   }
 
   onPlataformResult(response) {
-    console.log(response);
     this.setState({ plataform: response.data });
   }
 
   onGameSuccess(response) {
-    console.log(response);
     this.setState({ listedGames: response.data });
   }
 
   render() {
+    SessionManager.reload();
+    let plataform = (this.state.plataform) ? this.state.plataform : {};
     return (
       <section className='row h-100'>
         <article className='d-flex flex-column mx-auto p-2 p-sm-0 col-12 col-sm-10'>
@@ -199,18 +197,18 @@ class PlataformFormPage extends ModelFormPage {
               </header>
               <section className='col-12 col-sm-6 col-lg-3 p-0 pr-sm-3'>
                 <label htmlFor='plataform-form--name' className='m-0'>Name:</label>
-                <input id='plataform-form--name' className='form-control w-100' type='text' value={this.state.plataform.name} onChange={this.onChangeName.bind(this)} autoComplete='false' />
+                <input id='plataform-form--name' className='form-control w-100' type='text' value={plataform.name || ''} onChange={this.onChangeName.bind(this)} autoComplete='false' />
               </section>
               <section className='col-12 col-sm-6 col-lg-6 p-0'>
                 <label htmlFor='plataform-form--name' className='m-0'>Web Url:</label>
-                <input id='plataform-form--name' className='form-control w-100' type='text' value={this.state.plataform.url} onChange={this.onChangeUrl.bind(this)} autoComplete='false' />
+                <input id='plataform-form--name' className='form-control w-100' type='text' value={plataform.url || ''} onChange={this.onChangeUrl.bind(this)} autoComplete='false' />
               </section>
-              <section className='col-12 col-sm-6 col-lg-3 p-0'>
+              <section className='col-12 col-lg-3 p-0'>
                 <div className='m-0 mt-3 mt-sm-0 p-0 pl-sm-3'>
                   <label className='type-file m-0'>Filename: {this.state.selectedFile.name || 'None file uploaded'} {this.state.selectedFile.size || ''}</label>
                 </div>
                 <div className='m-0 mt-3 mt-sm-0 p-0'>
-                  <label htmlFor='plataform-form--logo' className='btn btn-form d-block m-0 ml-sm-3'>Upload file</label>
+                  <label htmlFor='plataform-form--logo' className='btn btn-form d-block m-0 ml-lg-3'>Upload file</label>
                   <input id='plataform-form--logo' className='form-control w-100' type="file" accept='image/*' onChange={this.onFileChange.bind(this)} />
                 </div>
               </section>
@@ -252,9 +250,12 @@ class PlataformFormPage extends ModelFormPage {
               </section>
             </section>
 
-            <fieldset title='Games in plataform' className='d-flex flex-column flex-grow-1 w-100 border border-gray rounded' style={{ overflowY: 'scroll' }}>
+            <fieldset title='Games in plataform' className='d-flex flex-column flex-grow-1 w-100 border border-gray rounded' style={{ minHeight: '150px', overflowY: 'scroll' }}>
               {this.getGamesList()}
             </fieldset>
+            
+            {this.getErrorView()}
+
             <section className='my-3'>
               <a className='btn btn-form w-100 text-dark' onClick={this.submit.bind(this)}>Save all</a>
             </section>
@@ -262,6 +263,11 @@ class PlataformFormPage extends ModelFormPage {
         </article>
       </section>
     );
+  }
+
+  getErrorView() {
+    if (!this.state.errors) return;
+    return (<p className='text-error p-3 m-0 mt-3 border border-error rounded'>{this.state.errors.body}</p>);
   }
 
   getEnableButtonView() {
@@ -274,8 +280,9 @@ class PlataformFormPage extends ModelFormPage {
   }
 
   getGamesOptions() {
+    let plataform = (this.state.plataform) ? this.state.plataform : {};
     let gamesOptions = [];
-    let leakedGames = SocketDataFilter.getGamesNotIn(this.state.listedGames, this.state.plataform.games);
+    let leakedGames = SocketDataFilter.getGamesNotIn(this.state.listedGames, plataform.games);
     for (const leakedGame of leakedGames) {
       gamesOptions.push({ value: leakedGame.id, label: leakedGame.name });
     }
@@ -283,9 +290,9 @@ class PlataformFormPage extends ModelFormPage {
   }
 
   getGamesList() {
+    let plataform = (this.state.plataform) ? this.state.plataform : {games: []};
     let gamesList = [];
-    console.log(this.state.plataform);
-    for (const game of this.state.plataform.games) {
+    for (const game of plataform.games) {
       let GameItem = withRouter(GameListItemComponent);
       gamesList.push(
         <GameItem key={`game-item--${game.id}`} data={game}

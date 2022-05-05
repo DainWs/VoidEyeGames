@@ -2,6 +2,7 @@ import React from 'react';
 import Select from 'react-select'
 import GameListItemComponent from '../../../components/models/lists/GameListItemComponent';
 import Category from '../../../domain/models/dtos/Category';
+import { SessionManager } from '../../../domain/SessionManager';
 import { withRouter } from '../../../Main';
 import { SocketController } from '../../../services/socket/SocketController';
 import { SocketDataFilter } from '../../../services/socket/SocketDataFilter';
@@ -99,6 +100,7 @@ class CategoryFormPage extends ModelFormPage {
     }
 
     render() {
+        SessionManager.reload();
         return (
             <section className='row h-100'>
                 <article className='d-flex flex-column mx-auto p-2 col-10'>

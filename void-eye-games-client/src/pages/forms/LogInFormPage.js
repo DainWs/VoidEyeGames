@@ -5,8 +5,6 @@ import { SocketController } from '../../services/socket/SocketController';
 import { DESTINATION_LOGIN } from '../../services/socket/SocketDestinations';
 import SocketRequest from '../../services/socket/SocketRequest';
 import { SessionManager } from '../../domain/SessionManager';
-import { EventObserver } from '../../domain/EventObserver';
-import { EVENT_SESSION_CHANGE } from '../../domain/EventsEnum';
 
 class LogInFormPage extends React.Component {
   constructor(props) {

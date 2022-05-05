@@ -1,5 +1,6 @@
 import React from 'react';
 import Select from 'react-select'
+import { SessionManager } from '../../domain/SessionManager';
 import { SocketController } from '../../services/socket/SocketController';
 import { DESTINATION_REPORT } from '../../services/socket/SocketDestinations';
 import SocketRequest from '../../services/socket/SocketRequest';

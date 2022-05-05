@@ -32,8 +32,8 @@ Final project for 2ºDAW, its a website is intended for support in the search fo
     - [ ] Add categories to game.
     - [ ] Add images to game.
 - [ ] **Admin** Plataform Form View
-    - [ ] Add Plataforms.
-    - [ ] Add games to plataform with prices and discount of the plataform.
+    - [X] Add Plataforms.
+    - [~] Add games to plataform with prices and discount of the plataform.
 - [X] **Admin** Categories Form View
     - [X] Add category.
     - [X] Add games to category.

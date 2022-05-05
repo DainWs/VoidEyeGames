@@ -3,6 +3,7 @@ import React from 'react';
 import Skeleton from 'react-loading-skeleton';
 import GameItemComponent from '../components/models/GameItemComponent';
 import GameItemSliderComponent from '../components/models/GameItemSliderComponent';
+import { SessionManager } from '../domain/SessionManager';
 import { SocketController } from '../services/socket/SocketController';
 import { SocketDataFilter } from '../services/socket/SocketDataFilter';
 import { DESTINATION_PLATAFORM_GAMES } from '../services/socket/SocketDestinations';

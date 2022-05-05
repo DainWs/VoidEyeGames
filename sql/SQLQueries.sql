@@ -21,6 +21,4 @@ SELECT * FROM categories_games;
 
 USE void_eye_games;
 SELECT * FROM plataforms;
-
-USE void_eye_games;
 SELECT * FROM plataforms_games;

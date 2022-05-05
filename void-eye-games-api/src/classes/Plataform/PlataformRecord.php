@@ -17,7 +17,7 @@ class PlataformRecord extends Record
         $gamePlataform['plataformsGames'] = $this->id;
         $gamePlataform['games'] = null;
         $gamePlataform['plataforms'] = null;
-        $this->plataformGames->appendNew($gamePlataform);
+        $this->plataforms_games->appendNew($gamePlataform);
     }
 
     public function updatePlataformsGames(Array $plataformGames) {

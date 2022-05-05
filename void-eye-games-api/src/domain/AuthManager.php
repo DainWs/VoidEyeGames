@@ -25,7 +25,7 @@ class AuthManager {
         $credentials = new Credentials();
         $credentials->setUser($name);
         $credentials->setToken($this->generateToken());
-        $credentials->setExpiration(strtotime(date('Y-m-d H:i:s.u', strtotime('+1 hour'))));
+        $credentials->setExpiration(strtotime(date('Y-m-d H:i:s', strtotime('+1 hour'))) * 1000);
         $credentials->setAccountType($accountType);
         $this->save($credentials);
         return $credentials;

@@ -1,5 +1,6 @@
 import React from 'react';
 import Game from '../../../domain/models/dtos/Game';
+import { SessionManager } from '../../../domain/SessionManager';
 import { SocketDataQuery } from '../../../services/socket/SocketDataQuery';
 import ModelFormPage, { MODEL_FORM_MODE_EDIT } from './ModelFormPage';
 
@@ -16,6 +17,7 @@ class GameFormPage extends ModelFormPage {
   }
 
   render() {
+    SessionManager.reload();
     return (
         <section>
 

@@ -40,6 +40,9 @@ class SessionManager {
 
     reload() {
         let expiration = this.session.expiration;
+        console.log(new Date(expiration));
+        console.log(new Date(Date.now()));
+        console.log(expiration < Date.now());
         if (!expiration || expiration < Date.now()) {
             this.setSession(DEFAULT_SESSION);
         }
