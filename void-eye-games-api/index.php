@@ -54,10 +54,12 @@ $app->group('/categories', function () use ($app) {
 });
 
 // Plataforms
+
+$app->get('/plataform', 'src\controllers\BaseController:getCategory');
 $app->group('/plataforms', function () use ($app) {
     $app->get('', 'src\controllers\BaseController:getPlataforms');
     $app->post('', 'src\controllers\BaseController:addPlataform')->add(new AuthMiddleware());
-    $app->put('', 'src\controllers\BaseController:updatePlataform')->add(new AuthMiddleware());
+    $app->post('/update', 'src\controllers\BaseController:updatePlataform')->add(new AuthMiddleware());
 });
 
 // Comments

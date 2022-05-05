@@ -68,6 +68,10 @@ class CategoryFormPage extends ModelFormPage {
     }
 
     onSuccess(response) {
+        if (response.data.status !== 200) {
+            this.onFailed(response);
+            return;
+        }
         document.getElementById('navigate-home').click();
     }
 
@@ -104,14 +108,14 @@ class CategoryFormPage extends ModelFormPage {
                     <form className='d-flex flex-column flex-grow-1'>
                         <section className='mb-3'>
                             <label htmlFor='category-form--name'>Name:</label>
-                            <input id='category-form--name' className='w-100' type='text' value={this.state.category.name} onChange={this.onChangeName.bind(this)} autoComplete='false'/>
+                            <input id='category-form--name' className='w-100 form-control' type='text' value={this.state.category.name} onChange={this.onChangeName.bind(this)} autoComplete='false'/>
                         </section>
                         <section className='row w-100 m-0'>
                             <Select className='flex-grow-1 p-0' options={this.getGamesOptions()} onChange={this.onChangeSelectedGame.bind(this)}/>
-                            <a className='btn btn-form text-dark col-12 col-sm-2 m-0 mt-3 mt-sm-0 ml-sm-2' onClick={this.addSelectedGame.bind(this)}>Add game</a>
+                            <a className='btn btn-form  text-dark col-12 col-sm-2 m-0 mt-3 mt-sm-0 ml-sm-2' onClick={this.addSelectedGame.bind(this)}>Add game</a>
                         </section>
                         <hr className='w-100'/>
-                        <fieldset title='Games in category' className='d-flex flex-column flex-grow-1 w-100 border border-dark rounded' style={{overflowY: 'scroll', minHeight: '100px'}}>
+                        <fieldset title='Games in category' className='d-flex flex-column flex-grow-1 w-100 border border-gray rounded' style={{overflowY: 'scroll', minHeight: '100px'}}>
                             {this.getGamesList()}
                         </fieldset>
                         <section className='my-3'>

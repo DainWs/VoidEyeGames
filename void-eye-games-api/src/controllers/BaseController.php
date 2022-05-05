@@ -326,6 +326,7 @@ class BaseController {
             $category['categories_games'] = $this->parseArrayToRecord($category['categories_games'], CategoriesGame::class);
             $record = $this->atlas->newRecord(Category::class, $category);
             $this->atlas->beginTransaction();
+            $this->atlas->insert($record);
             $this->atlas->persist($record);
             $this->atlas->commit();
         } catch(Exception $ex) { 
@@ -348,9 +349,21 @@ class BaseController {
             if ($validator->hasErrors()) {
                 return $response->withJson($validator->getErrors(), 400);
             }
+            $this->logger->log(json_encode($plataforms));
 
+            $plataforms['id'] = null;
             $plataforms['games'] = null;
-            $plataforms['plataforms_games'] = $this->parseArrayToRecord($plataforms['plataforms_games'], PlataformsGame::class);
+
+            $plataformsGames = $plataforms['plataforms_games'];
+            $plataforms['plataforms_games'] = null;
+
+            $record = $this->atlas->newRecord(Plataform::class, $plataforms);
+
+            $this->atlas->beginTransaction();
+            $this->atlas->insert($record);
+            foreach ($plataformsGames as $value) {$record->add($value);}
+            $this->atlas->persist($record);
+            $this->atlas->commit();
         } catch(Exception $ex) { $this->processException($ex); }
         return $this->createJsonResponseMessage($response);
     }

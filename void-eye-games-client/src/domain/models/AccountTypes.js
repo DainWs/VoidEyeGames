@@ -24,9 +24,14 @@ ACCOUNT_TYPES.set(ACCOUNT_TYPE_ADMIN.getName(), ACCOUNT_TYPE_ADMIN);
 ACCOUNT_TYPES.set(ACCOUNT_TYPE_USER.getName(), ACCOUNT_TYPE_USER);
 ACCOUNT_TYPES.set(ACCOUNT_TYPE_UNKNOWN.getName(), ACCOUNT_TYPE_UNKNOWN);
 
-export function getTypeFromName(name) {
-    if (!ACCOUNT_TYPES.has(name)) {
-        return ACCOUNT_TYPE_UNKNOWN;
+class AccountTypeEnum {
+    getTypeFromName(name) {
+        if (!ACCOUNT_TYPES.has(name)) {
+            return ACCOUNT_TYPE_UNKNOWN;
+        }
+        return ACCOUNT_TYPES.get(name);
     }
-    return ACCOUNT_TYPES.get(name);
 }
+
+const AccountTypeEnumInstance = new AccountTypeEnum();
+export { AccountTypeEnumInstance as AccountTypeEnum };

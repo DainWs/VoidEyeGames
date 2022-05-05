@@ -40,3 +40,4 @@ Final project for 2ºDAW, its a website is intended for support in the search fo
 
 ## TO FIX
 - [ ] Cuando clicas en cualquier boton te hace un window.toTop
+- [ ] Cuando se inserta un objeto correctamente, deberia redirigirte a la misma pagina pero con el id con el que se inserto

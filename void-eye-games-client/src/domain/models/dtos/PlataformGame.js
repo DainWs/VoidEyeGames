@@ -9,6 +9,7 @@ class PlataformGame {
         this.priceUnit = builder.priceUnit;
         this.discount = builder.discount;
         this.isEnabled = builder.isEnabled;
+        console.log(builder);
         this.games = new Game(builder.games);
         this.plataforms = new Plataform(builder.plataforms);
     }

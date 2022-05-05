@@ -1,30 +1,47 @@
 import { ResourceManger } from "../../ResourceManager";
-import Game from "./Game";
 import PlataformGame from "./PlataformGame";
 
 class Plataform {
-    constructor(builder = {id: -1, name: '', url: '', games: [], plataformsGames: []}) {
+    constructor(builder = {id: -1, name: '', url: '', games: [], plataforms_games: []}) {
         this.id = builder.id;
         this.name = builder.name;
         this.url = builder.url;
         this.games = builder.games;
-        this.plataformsGames = builder.plataformsGames;
+        this.plataforms_games = builder.plataforms_games;
     }
 
     addGame(game) {
+        if (!game) return;
         this.games.push(game);
-        let gamePlataform = new PlataformGame();
-        gamePlataform.gamesId = game.id;
-        gamePlataform.plataformId = this.id;
-        this.plataformsGames.push(gamePlataform);
+    }
+    
+    removeGame(id) {
+        let gameIndex = this.games.findIndex(v => v.id === id);
+        this.games.splice(gameIndex, 1);
+
+        let plataformGameIndex = this.plataforms_games.findIndex(v => v.gamesId === id);
+        this.plataforms_games.splice(plataformGameIndex, 1);
+    }
+
+    addPlataformGame(gamePlataform) {
+        if (!gamePlataform) return;
+        gamePlataform.plataformsId = this.id;
+        this.plataforms_games.push(gamePlataform);
     }
     
     hasGame(id) {
-        return this.getGame(id) !== undefined;
+        return this.games[id] !== undefined;
     }
 
     getGame(id) {
         return this.games.find(v => v.id === id);
+    }
+
+    setPlataformGame(plataformGame) {
+        if (this.hasPlataformGame(plataformGame.gamesId)) {
+            let index = this.plataforms_games.findIndex(v => v.gamesId == plataformGame.gamesId);
+            this.plataforms_games[index] = plataformGame;
+        }
     }
 
     hasPlataformGame(id) {
@@ -32,7 +49,7 @@ class Plataform {
     }
 
     getPlataformGame(id) {
-        return this.plataformsGames.find(v => v.gamesId === id);
+        return this.plataforms_games.find(v => v.gamesId === id);
     }
 
     getLogo() {

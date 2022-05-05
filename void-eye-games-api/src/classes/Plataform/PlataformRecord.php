@@ -13,6 +13,13 @@ class PlataformRecord extends Record
 {
     use PlataformFields;
 
+    public function add(Array $gamePlataform) {
+        $gamePlataform['plataformsGames'] = $this->id;
+        $gamePlataform['games'] = null;
+        $gamePlataform['plataforms'] = null;
+        $this->plataformGames->appendNew($gamePlataform);
+    }
+
     public function updatePlataformsGames(Array $plataformGames) {
         $this->plataforms_games->setDelete();
         foreach ($plataformGames as $value) {

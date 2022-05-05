@@ -64,11 +64,11 @@ class LogInFormPage extends React.Component {
         <form id='login-form' className='w-100'>
           <section className='w-100'>
             <label htmlFor='login-form--username'>Username:</label>
-            <input id='login-form--username' className='w-100' type='text' value={this.state.username} onChange={this.onChangeUsername.bind(this)} autoComplete='false'/>
+            <input id='login-form--username' className='form-control w-100' type='text' value={this.state.username} onChange={this.onChangeUsername.bind(this)} autoComplete='false'/>
           </section>
           <section className='w-100'>
             <label htmlFor='login-form--password'>Password:</label>
-            <input id='login-form--password' className='w-100' type='password' value={this.state.password} onChange={this.onChangePassword.bind(this)} autoComplete='false'/>
+            <input id='login-form--password' className='form-control w-100' type='password' value={this.state.password} onChange={this.onChangePassword.bind(this)} autoComplete='false'/>
           </section>
           {this.getErrorView()}
           <section className='d-flex flex-column w-100 text-center'>

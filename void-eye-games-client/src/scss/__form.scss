@@ -1,0 +1,25 @@
+//------------------------------------------------------------------
+// FORMS
+//------------------------------------------------------------------
+
+label {
+    &.type-file {
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow-x: hidden;
+        max-width: 100%;
+    }
+}
+
+input{
+    &[type=file] {display: none;}
+
+    &#search:hover {
+        cursor: pointer;
+        background: linear-gradient(rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05));
+    }
+
+    &.form-control:focus {
+        border-color: $secondary;
+    }
+}
