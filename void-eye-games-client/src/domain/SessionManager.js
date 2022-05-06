@@ -39,13 +39,13 @@ class SessionManager {
     }
 
     reload() {
-        let expiration = this.session.expiration;
-        console.log(new Date(expiration));
-        console.log(new Date(Date.now()));
-        console.log(expiration < Date.now());
-        if (!expiration || expiration < Date.now()) {
+        if (this.check()) {
             this.setSession(DEFAULT_SESSION);
         }
+    }
+
+    check() {
+        return (!this.session.expiration || this.session.expiration < Date.now());
     }
 
     close() {

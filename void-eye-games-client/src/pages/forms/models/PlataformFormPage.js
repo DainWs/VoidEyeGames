@@ -1,4 +1,7 @@
+import { faUpload } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
+import { Navigate } from 'react-router-dom';
 import Select from 'react-select';
 import GameListItemComponent from '../../../components/models/lists/GameListItemComponent';
 import Plataform from '../../../domain/models/dtos/Plataform';
@@ -128,6 +131,13 @@ class PlataformFormPage extends ModelFormPage {
     }
   }
 
+  onGameContextClick(id) {
+    let gamesElements = document.getElementById('games-list');
+    for(const element of gamesElements.children) {
+      if (element.id !== id) element.blur();
+    }
+  }
+
   onRemoveGameItemClick(id) {
     let plataform = new Plataform(this.state.plataform);
     plataform.removeGame(id);
@@ -186,6 +196,7 @@ class PlataformFormPage extends ModelFormPage {
     let plataform = (this.state.plataform) ? this.state.plataform : {};
     return (
       <section className='row h-100'>
+        {this.checkSession()}
         <article className='d-flex flex-column mx-auto p-2 p-sm-0 col-12 col-sm-10'>
           <header>
             <h1 className='text-center'>Plataforms Form</h1>
@@ -208,7 +219,7 @@ class PlataformFormPage extends ModelFormPage {
                   <label className='type-file m-0'>Filename: {this.state.selectedFile.name || 'None file uploaded'} {this.state.selectedFile.size || ''}</label>
                 </div>
                 <div className='m-0 mt-3 mt-sm-0 p-0'>
-                  <label htmlFor='plataform-form--logo' className='btn btn-form d-block m-0 ml-lg-3'>Upload file</label>
+                  <label htmlFor='plataform-form--logo' className='btn btn-form d-block m-0 ml-lg-3'><FontAwesomeIcon icon={faUpload} /> Upload file</label>
                   <input id='plataform-form--logo' className='form-control w-100' type="file" accept='image/*' onChange={this.onFileChange.bind(this)} />
                 </div>
               </section>
@@ -250,7 +261,7 @@ class PlataformFormPage extends ModelFormPage {
               </section>
             </section>
 
-            <fieldset title='Games in plataform' className='d-flex flex-column flex-grow-1 w-100 border border-gray rounded' style={{ minHeight: '150px', overflowY: 'scroll' }}>
+            <fieldset id='games-list' title='Games in plataform' className='d-flex flex-column flex-grow-1 w-100 border border-gray rounded' style={{ minHeight: '150px', overflowY: 'scroll' }}>
               {this.getGamesList()}
             </fieldset>
             
@@ -263,6 +274,10 @@ class PlataformFormPage extends ModelFormPage {
         </article>
       </section>
     );
+  }
+
+  checkSession() {
+    return (SessionManager.check()) ? <Navigate replace to="/home" /> : <></>;
   }
 
   getErrorView() {

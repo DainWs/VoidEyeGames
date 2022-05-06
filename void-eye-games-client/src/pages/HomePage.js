@@ -3,6 +3,8 @@ import React from 'react';
 import Skeleton from 'react-loading-skeleton';
 import GameItemComponent from '../components/models/GameItemComponent';
 import GameItemSliderComponent from '../components/models/GameItemSliderComponent';
+import { EventObserver } from '../domain/EventObserver';
+import { EVENT_SESSION_CHANGE } from '../domain/EventsEnum';
 import { SessionManager } from '../domain/SessionManager';
 import { SocketController } from '../services/socket/SocketController';
 import { SocketDataFilter } from '../services/socket/SocketDataFilter';
@@ -46,6 +48,9 @@ class HomePage extends React.Component {
     this.sendGamesRequest(1);
     this.sendGamesRequest(2);
     this.sendSliderGamesRequest();
+    if (SessionManager.check()) {
+      EventObserver.notify(EVENT_SESSION_CHANGE);
+    }
   }
 
   render() {

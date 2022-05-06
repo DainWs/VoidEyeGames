@@ -14,7 +14,7 @@ class PlataformRecord extends Record
     use PlataformFields;
 
     public function add(Array $gamePlataform) {
-        $gamePlataform['plataformsGames'] = $this->id;
+        $gamePlataform['plataformsId'] = $this->id;
         $gamePlataform['games'] = null;
         $gamePlataform['plataforms'] = null;
         $this->plataforms_games->appendNew($gamePlataform);

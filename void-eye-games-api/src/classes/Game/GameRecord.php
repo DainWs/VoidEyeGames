@@ -13,6 +13,27 @@ class GameRecord extends Record
 {
     use GameFields;
 
+    public function addMedia(Array $media) {
+        $media['src'] = null;
+        $media['id'] = null;
+        $media['gamesId'] = $this->id;
+        $this->medias->appendNew($media);
+    }
+
+    public function addCategoriesGames(Array $categoriesGames) {
+        $categoriesGames['games'] = null;
+        $categoriesGames['categories'] = null;
+        $categoriesGames['gamesId'] = $this->id;
+        $this->categories_games->appendNew($categoriesGames);
+    }
+
+    public function addPlataformsGames(Array $gamePlataform) {
+        $gamePlataform['gamesId'] = $this->id;
+        $gamePlataform['games'] = null;
+        $gamePlataform['plataforms'] = null;
+        $this->plataforms_games->appendNew($gamePlataform);
+    }
+
     public function updateMedias(Array $medias) {
         $this->medias->setDelete();
         foreach ($medias as $value) {
@@ -20,6 +41,9 @@ class GameRecord extends Record
             if ($record) {
                 $record->setDelete(false);
             } else {
+                $value['src'] = null;
+                $value['id'] = null;
+                $value['gamesId'] = $this->id;
                 $record = $this->atlas->newRecord(Media::class, $value);
                 $this->medias->appendNew($value, $record);
             }

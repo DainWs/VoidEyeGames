@@ -75,6 +75,7 @@ ALTER TABLE plataforms_games ADD CONSTRAINT fk_plataforms_games_plataforms FOREI
 CREATE TABLE IF NOT EXISTS medias(
 	id          INT(255) auto_increment NOT NULL,
 	gamesId		INT(255) NOT NULL,
+	name		VARCHAR(100) NOT NULL,
 	mediaType	VARCHAR(100) NOT NULL DEFAULT "image/png",
 	CONSTRAINT pk_medias PRIMARY KEY(id, gamesId)
 );

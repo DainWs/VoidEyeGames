@@ -111,28 +111,34 @@ class ReportFormPage extends React.Component {
             <label htmlFor='report-form--reason'>Reason:</label>
             <Select id='report-form--reason' options={REASONS} onChange={this.onChangeReason.bind(this)}/>
           </section>
+
           <section className='d-flex flex-column'>
             <label htmlFor='report-form--issue'>Case/Issue:</label>
             <input id='report-form--issue' className='form-control' type='text' value={this.state.issue} onChange={this.onChangeIssue.bind(this)}/>
           </section>
+
           <section className='d-flex flex-column'>
             <label htmlFor='report-form--description'>Description:</label>
             <textarea id='report-form--description' className='form-control no-resize' rows={10} value={this.state.description} onChange={this.onChangeDescription.bind(this)}/>
           </section>
+
           <section className='d-flex flex-column'>
             <label htmlFor='report-form--email'>Contact email:</label>
             <input id='report-form--email' type='email' className='form-control' value={this.state.email} onChange={this.onChangeEmail.bind(this)}/>
           </section>
+
           <section className='d-flex flex-column'>
             <label htmlFor='report-form--email-confirmation'>Contact email confirmation:</label>
             <input id='report-form--email-confirmation' className='form-control' type='email' value={this.state.emailConfirmation} onChange={this.onChangeEmailConfirmation.bind(this)}/>
           </section>
+
           <section className='my-3'>
             <label htmlFor='report-form--terms'>
               <span className='text-error'>*</span>
               <input id='report-form--terms' className='form-control' type='checkbox' checked={this.state.terms} onChange={this.onChangeTerms.bind(this)}/> Accept terms and conditions.
             </label>
           </section>
+          
           {this.getErrorView()}
           <section className='d-flex justify-content-between mb-3'>
             <a className='btn btn-primary border' onClick={this.cancel.bind(this)}>Cancel</a>

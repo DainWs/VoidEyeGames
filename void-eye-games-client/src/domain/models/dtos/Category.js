@@ -24,10 +24,10 @@ class Category {
         if (!game) return;
         this.games.push(game);
 
-        let newCategoryName = new CategoryGame();
-        newCategoryName.gamesId = game.id;
-        newCategoryName.categoriesId = this.id;
-        this.categories_games.push(newCategoryName);
+        let newCategoryGame = new CategoryGame();
+        newCategoryGame.gamesId = game.id;
+        newCategoryGame.categoriesId = this.id;
+        this.categories_games.push(newCategoryGame);
     }
 
     getGame(id) {

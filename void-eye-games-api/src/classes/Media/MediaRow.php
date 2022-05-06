@@ -17,6 +17,7 @@ class MediaRow extends Row
 {
     protected $cols = [
         'id' => null,
+        'name' => null,
         'gamesId' => null,
         'mediaType' => 'image/png',
     ];

@@ -26,11 +26,10 @@ $app->post('/logIn', 'src\controllers\BaseController:logIn');
 // Games
 $app->group('/game', function () use ($app) {
     $app->get('', 'src\controllers\BaseController:getGame');
+    $app->post('', 'src\controllers\BaseController:addGame')->add(new AuthMiddleware());
+    $app->post('/update', 'src\controllers\BaseController:updateGame')->add(new AuthMiddleware());
 
     $app->group('s', function () use ($app) {
-        $app->post('', 'src\controllers\BaseController:addGame')->add(new AuthMiddleware());
-        $app->put('', 'src\controllers\BaseController:updateGame')->add(new AuthMiddleware());
-
         /**
          * The url param {pageNum} is the page num that you are loading.
          * The url param {name} is used to search for specific game names.
@@ -49,6 +48,7 @@ $app->get('/category', 'src\controllers\BaseController:getCategory');
 
 $app->group('/categories', function () use ($app) {
     $app->get('', 'src\controllers\BaseController:getCategories');
+    $app->get('/listed', 'src\controllers\BaseController:getListOfCategories');
     $app->post('', 'src\controllers\BaseController:addCategory')->add(new AuthMiddleware());
     $app->post('/update', 'src\controllers\BaseController:updateCategory')->add(new AuthMiddleware());
 });

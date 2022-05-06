@@ -1,4 +1,5 @@
 import React from 'react';
+import { Navigate } from 'react-router-dom';
 import Select from 'react-select'
 import GameListItemComponent from '../../../components/models/lists/GameListItemComponent';
 import Category from '../../../domain/models/dtos/Category';
@@ -21,11 +22,19 @@ class CategoryFormPage extends ModelFormPage {
         return parentState;
     }
 
+    //---------------------------------------------------------------------------------------------
+    // CATEGORIES FORM
+    //---------------------------------------------------------------------------------------------
+
     onChangeName(event) {
         let category = this.state.category;
         category.name = event.target.value;
         this.setState({category:category});
     }
+
+    //---------------------------------------------------------------------------------------------
+    // GAMES FORM
+    //---------------------------------------------------------------------------------------------
 
     onChangeSelectedGame(event) {
         this.setState({selectedGame: event.value});
@@ -48,6 +57,17 @@ class CategoryFormPage extends ModelFormPage {
         category.removeGame(id);
         this.setState({category: category});
     }
+
+    onGameContextClick(id) {
+        let gamesElements = document.getElementById('games-list');
+        for(const element of gamesElements.children) {
+            if (element.id !== id) element.blur();
+        }
+    }
+
+    //---------------------------------------------------------------------------------------------
+    // SUBMIT
+    //---------------------------------------------------------------------------------------------
 
     submit() {
         let category = this.state.category;
@@ -103,6 +123,7 @@ class CategoryFormPage extends ModelFormPage {
         SessionManager.reload();
         return (
             <section className='row h-100'>
+                {this.checkSession()}
                 <article className='d-flex flex-column mx-auto p-2 col-10'>
                     <header>
                         <h1 className='text-center'>Categories Form</h1>
@@ -117,7 +138,7 @@ class CategoryFormPage extends ModelFormPage {
                             <a className='btn btn-form  text-dark col-12 col-sm-2 m-0 mt-3 mt-sm-0 ml-sm-2' onClick={this.addSelectedGame.bind(this)}>Add game</a>
                         </section>
                         <hr className='w-100'/>
-                        <fieldset title='Games in category' className='d-flex flex-column flex-grow-1 w-100 border border-gray rounded' style={{overflowY: 'scroll', minHeight: '100px'}}>
+                        <fieldset id='games-list' title='Games in category' className='d-flex flex-column flex-grow-1 w-100 border border-gray rounded' style={{overflowY: 'scroll', minHeight: '100px'}}>
                             {this.getGamesList()}
                         </fieldset>
                         <section className='my-3'>
@@ -127,6 +148,10 @@ class CategoryFormPage extends ModelFormPage {
                 </article>
             </section>
         );
+    }
+
+    checkSession() {
+        return (SessionManager.check()) ? <Navigate replace to="/home" /> : <></>;
     }
 
     getGamesOptions() {
@@ -147,7 +172,5 @@ class CategoryFormPage extends ModelFormPage {
         return gamesList;
     }
 }
-
-
 
 export default CategoryFormPage;

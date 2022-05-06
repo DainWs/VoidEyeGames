@@ -17,6 +17,8 @@ use classes\Plataform\Plataform;
 use classes\CategoriesGame\CategoriesGame;
 use classes\Category\CategoryRecord;
 use classes\Game\GameRecord;
+use classes\Media\MediaRecord;
+use classes\Plataform\PlataformRecord;
 use classes\PlataformsGame\PlataformsGame;
 use src\domain\providers\AtlasProvider;
 use src\domain\providers\DatabaseProvider;
@@ -197,6 +199,12 @@ class BaseController {
         return $response->withJson($category, 200);
     }
 
+    public function getListOfCategories(Request $request, Response $response, array $args) {
+        $this->logger->log("[GET] getListOfCategories called.");
+        $categories = $this->atlas->select(Category::class)->fetchRecords();
+        return $response->withJson($categories, 200);
+    }
+
     //----------------------------------------------------------------------------------
     // PLATAFORMS SECTION
     //----------------------------------------------------------------------------------
@@ -283,23 +291,53 @@ class BaseController {
         try {
             $game = $request->getParsedBody()['data'];
             $this->logger->log(json_encode($game));
+            /*
             $validator = new GameValidator();
             $validator->setAtlas($this->atlas);
             $validator->validate($game);
             if ($validator->hasErrors()) {
                 return $response->withJson($validator->getErrors(), 400);
             }
+            */
 
+            $this->logger->log(json_encode($game));
+
+            $medias = $game['medias'] ?? [];
+            $mainImage = $game['mainImage'];
+            $categoriesGames = $game['categories_games'] ?? [];
+            $plataformsGames = $game['plataforms_games'] ?? [];
+            $game['id'] = null;
             $game['categories'] = null;
             $game['plataforms'] = null;
-            $game['medias'] = $this->parseArrayToRecord($game['medias'], Media::class);
-            $game['comments'] = $this->parseArrayToRecord($game['comments'], Comment::class);
-            $game['categories_games'] = $this->parseArrayToRecord($game['categories_games'], CategoriesGame::class);
-            $game['plataforms_games'] = $this->parseArrayToRecord($game['plataforms_games'], PlataformsGame::class);
+            $game['comments'] = null;
+            $game['categories_games'] = null;
+            $game['plataforms_games'] = null;
+            /** @var GameRecord $record */
             $record = $this->atlas->newRecord(Game::class, $game);
             $this->atlas->beginTransaction();
             $this->atlas->insert($record);
+            foreach ($medias as $value) {
+                $this->logger->log(json_encode($value));
+                $src = $value['src'];
+                $value['src'] = null;
+                $value['id'] = null;
+                $value['gamesId'] = $record->id;
+                /** @var MediaRecord $media */
+                $media = $this->atlas->newRecord(Media::class, $value);
+                $extension = substr($media->mediaType, strpos($media->mediaType, '/')); 
+                $filename = $record->id . '-' . $media->id . ".$extension";
+                $this->logger->log($filename);
+                $this->uploadImage($src, $filename);
+                $this->atlas->insert($media);
+            }
+            if ($record->categories_games == null) $record->categories_games = $this->atlas->newRecordSet(CategoriesGame::class);
+            foreach ($categoriesGames as $value) { $record->addCategoriesGames($value); }
+            if ($record->plataforms_games == null) $record->plataforms_games = $this->atlas->newRecordSet(PlataformsGame::class);
+            foreach ($plataformsGames as $value) { $record->addPlataformsGames($value); }
+            $this->atlas->persist($record);
             $this->atlas->commit();
+
+            $this->uploadImage($mainImage['src'], $record->name . '.png', 'games');
         } catch(Exception $ex) {
             $this->atlas->rollBack();
             $this->processException($ex);
@@ -378,6 +416,7 @@ class BaseController {
         try {
             $comment = $request->getParsedBody()['data'];
             $user = $this->atlas->select(User::class, ['name' => $comment['usersId']])->fetchRecord();
+            $comment['id'] = null;
             $comment['usersId'] = $user->id;
             $record = $this->atlas->newRecord(Comment::class, $comment);
             
@@ -408,11 +447,16 @@ class BaseController {
             $record = $this->atlas->select(Game::class, ['id' => $game['id']])
                 ->with(['medias', 'plataforms_games', 'categories_games'])
                 ->fetchRecord();
-            $record->name = $game['name'];
-            $record->description = $game['description'];
-            $record->updateMedias($game['medias']);
-            $record->updateCategoriesGames($game['categories_games']);
-            $record->updatePlataformsGames($game['plataforms_games']);
+
+            if ($game['name']) $record->name = $game['name'];
+            if ($game['descripcion']) $record->descripcion = $game['descripcion'];
+            if (!$record->medias)  $record->medias = $this->atlas->newRecordSet(Media::class);
+            $record->updateMedias($game['medias'] ?? []);
+            if (!$record->categories_games)  $record->categories_games = $this->atlas->newRecordSet(CategoriesGame::class);
+            $record->updateCategoriesGames($game['categories_games'] ?? []);
+            if (!$record->plataforms_games)  $record->plataforms_games = $this->atlas->newRecordSet(PlataformsGame::class);
+            $record->updatePlataformsGames($game['plataforms_games'] ?? []);
+
             $this->atlas->beginTransaction();
             $this->atlas->persist($record);
             $this->atlas->commit();
@@ -434,8 +478,10 @@ class BaseController {
             $record = $this->atlas->select(Category::class, ['id' => $category['id']])
                 ->with(['categories_games'])
                 ->fetchRecord();
-            $record->name = $category['name'];
-            $record->updateCategoriesGames($category['categories_games']);
+
+            if ($category['name']) $record->name = $category['name'];
+            if (!$record->categories_games) $record->categories_games = $this->atlas->newRecordSet(CategoriesGame::class);
+            $record->updateCategoriesGames($category['categories_games'] ?? []);
 
             $this->atlas->beginTransaction();
             $this->atlas->persist($record);
@@ -443,6 +489,33 @@ class BaseController {
         } catch(Exception $ex) { 
             $this->atlas->rollBack();
             $this->processException($ex); 
+        }
+        return $this->createJsonResponseMessage($response);
+    }
+
+    //----------------------------------------------------------------------------------
+    // PLATAFORMS SECTION
+    //----------------------------------------------------------------------------------
+    public function updatePlataform(Request $request, Response $response, array $args){
+        $this->logger->log("[POST] updateGame called.");
+        try {
+            $plataform = $request->getParsedBody()['data'];
+            /** @var PlataformRecord $record */
+            $record = $this->atlas->select(Plataform::class, ['id' => $plataform['id']])
+                ->with(['medias', 'plataforms_games', 'categories_games'])
+                ->fetchRecord();
+
+            if ($plataform['name']) $record->name = $plataform['name'];
+            if ($plataform['url']) $record->url = $plataform['url'];
+            if (!$record->plataforms_games) $record->plataforms_games = $this->atlas->newRecordSet(PlataformsGame::class);
+            $record->updatePlataformsGames($plataform['plataforms_games'] ?? []);
+
+            $this->atlas->beginTransaction();
+            $this->atlas->persist($record);
+            $this->atlas->commit();
+        } catch(Exception $ex) {
+            $this->atlas->rollBack();
+            $this->processException($ex);
         }
         return $this->createJsonResponseMessage($response);
     }
@@ -470,12 +543,10 @@ class BaseController {
     // UTILS
     //##################################################################################
     //----------------------------------------------------------------------------------
-    private function parseArrayToRecord($array, $class) {
-        $gameSet = $this->atlas->newRecordSet($class);
-        foreach ($array as $value) {
-            $gameSet->appendNew($value);
-        }
-        return $gameSet;
+    private function uploadImage($base64_string, $name, $type = 'games') {
+        $data = explode( ',', $base64_string );
+        $file = $_SERVER['APP_BASE_PATH'] . "/assets/images/$type/$name";
+        file_put_contents($file, base64_decode($data[1]));
     }
 
     private function processException(Exception $ex) {

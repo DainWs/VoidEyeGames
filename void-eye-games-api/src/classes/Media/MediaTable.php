@@ -46,6 +46,17 @@ class MediaTable extends Table
             'primary' => true,
             'options' => NULL,
         ),
+        'name' => array(
+            'name' => 'name',
+            'type' => 'varchar',
+            'size' => 100,
+            'scale' => NULL,
+            'notnull' => true,
+            'default' => NULL,
+            'autoinc' => false,
+            'primary' => false,
+            'options' => NULL,
+        ),
         'mediaType' => array(
             'name' => 'mediaType',
             'type' => 'varchar',
@@ -62,12 +73,14 @@ class MediaTable extends Table
     const COLUMN_NAMES = [
         'id',
         'gamesId',
+        'name',
         'mediaType',
     ];
 
     const COLUMN_DEFAULTS = [
         'id' => null,
         'gamesId' => null,
+        'name' => null,
         'mediaType' => 'image/png',
     ];
 
