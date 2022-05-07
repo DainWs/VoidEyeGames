@@ -23,7 +23,10 @@ class PlataformValidator extends BaseValidator {
     public function validate($plataform): void {
         try {
             if ($plataform === null) throw new InvalidArgumentException("Plataform is null, invalid argument");
-            $this->validateName($plataform['name']);
+            if (($plataform['mainImage'] ?? null) == null) {
+                $this->errors['mainImage'] = 'La imagen principal es obligatoria.';
+            }
+            $this->validateName($plataform['name'] ?? null);
         } catch(Exception $ex) {
             $this->logger->log($ex->getMessage(), Logger::WARNING);
             $this->errors['others'] = 'Ha ocurrido un error inesperado, intentelo de nuevo mas tarde.';
@@ -31,12 +34,12 @@ class PlataformValidator extends BaseValidator {
     }
 
     private function validateName($name): void {
-        if (!$name) {
+        if ($name === null || empty($name)) {
             $this->errors['name'] = 'El campo "name" es obligatorio.';
         } else {
             $dbPlataform = $this->atlas->select(Plataform::class, ['name' => $name])->fetchRecord();
-            if ($dbPlataform) {
-                $this->errors['others'] = 'Ya existe una categoria con este nombre.';
+            if ($dbPlataform !== null) {
+                $this->errors['others'] = 'Ya existe una plataforma con este nombre.';
             }
         }
     }

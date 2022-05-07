@@ -21,7 +21,7 @@ class AuthMiddleware {
     public function __invoke(Request $request, Response $response, $next){
         try {
             $body = $request->getParsedBody();
-            $credentials = $body['credentials'];
+            $credentials = $body['credentials'] ?? null;
             $this->validateCredentials($credentials);
             $this->validateRequiredLevel($credentials);
             return $next($request, $response);
@@ -31,13 +31,15 @@ class AuthMiddleware {
         }
     }
 
-    private function validateCredentials(Array $credentials): void {
+    private function validateCredentials(?Array $credentials): void {
+        if ($credentials == null) throw new Exception('Not Allowed');
         $authManager = new AuthManager();
         $areValid = $authManager->validate($credentials);
         if (!$areValid) throw new Exception('Not Allowed');
     }
 
-    private function validateRequiredLevel(Array $credentials): void {
+    private function validateRequiredLevel(?Array $credentials): void {
+        if ($credentials == null) throw new Exception('Not Allowed');
         $accountType = $credentials['accountType'];
         $areValid = $accountType <= $this->requiredAccountLevel;
         if (!$areValid) throw new Exception('Not Allowed');

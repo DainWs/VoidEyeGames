@@ -23,7 +23,7 @@ class CategoryValidator extends BaseValidator {
     public function validate($category): void {
         try {
             if ($category === null) throw new InvalidArgumentException("Category is null, invalid argument");
-            $this->validateName($category['name']);
+            $this->validateName($category['name'] ?? null);
         } catch(Exception $ex) {
             $this->logger->log($ex->getMessage(), Logger::WARNING);
             $this->errors['others'] = 'Ha ocurrido un error inesperado, intentelo de nuevo mas tarde.';
@@ -31,11 +31,11 @@ class CategoryValidator extends BaseValidator {
     }
 
     private function validateName($name): void {
-        if (!$name) {
+        if ($name === null || empty($name)) {
             $this->errors['name'] = 'El campo "name" es obligatorio.';
         } else {
             $dbCategory = $this->atlas->select(Category::class, ['name' => $name])->fetchRecord();
-            if ($dbCategory) {
+            if ($dbCategory !== null) {
                 $this->errors['others'] = 'Ya existe una categoria con este nombre.';
             }
         }

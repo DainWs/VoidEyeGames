@@ -16,20 +16,14 @@ class LogUserValidator extends UserValidator {
             if ($user === null) throw new InvalidArgumentException("User is null, invalid argument");
 
             $dbUser = $this->atlas->select(User::class, ['name' => $user['username']])->fetchRecord();
-            $this->validateLogDBUser($dbUser);
-
             if ($dbUser !== null) {
+                $this->errors['others'] = 'Usuario o contrase&ntilde;a no validos';
+            } else {
                 $this->validateLogPassword($dbUser['password'], $user['password']);
             }
         } catch(Exception $ex) {
             $this->logger->log($ex->getMessage(), Logger::WARNING);
             $this->errors['others'] = 'Ha ocurrido un error inesperado, intentelo de nuevo mas tarde.';
-        }
-    }
-    
-    private function validateLogDBUser($dbUser): void {
-        if (!$dbUser) {
-            $this->errors['others'] = 'Usuario o contrase&ntilde;a no validos';
         }
     }
 

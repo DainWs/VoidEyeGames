@@ -20,13 +20,13 @@ class AuthManager {
      * @param int|string|null $accountType
      * @return Credentials
      */
-    public function registre(String $name, $accountType = ACCOUNT_TYPE_UNKNOWN): Credentials {
+    public function registre(String $name, $accountType): Credentials {
         $this->logger->log("Registering credentials for user $name. $accountType");
         $credentials = new Credentials();
         $credentials->setUser($name);
         $credentials->setToken($this->generateToken());
         $credentials->setExpiration(strtotime(date('Y-m-d H:i:s', strtotime('+1 hour'))) * 1000);
-        $credentials->setAccountType($accountType);
+        $credentials->setAccountType($accountType ?? ACCOUNT_TYPE_UNKNOWN);
         $this->save($credentials);
         return $credentials;
     }
@@ -54,8 +54,9 @@ class AuthManager {
      * @param Array $credentials the credentials data as array
      * @return true if the credentials are valid, false otherwise
      */
-    public function validate(Array $credentialsData): bool {
+    public function validate(?Array $credentialsData): bool {
         try {
+            if ($credentialsData == null) return false;
             $credentials = new Credentials($credentialsData);
             $cachedCredentials = $this->search($credentials->user);
             if ($cachedCredentials == null) return false;

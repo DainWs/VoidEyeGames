@@ -41,7 +41,7 @@ class EmailManager {
 
     public function send($report): void  {
         try {
-            $selectedReason = $report['selectedReason'];
+            $selectedReason = $report['reason'];
             $issue = $report['issue'];
             $description = $report['description'];
             $email = $report['email'];

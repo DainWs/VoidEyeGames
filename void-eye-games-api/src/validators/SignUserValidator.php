@@ -30,14 +30,14 @@ class SignUserValidator extends UserValidator {
 
     private function validateSignName($name): void {
         $dbUser = $this->atlas->select(User::class, ['name' => $name])->fetchRecord();
-        if ($dbUser) {
+        if ($dbUser !== null) {
             $this->errors['name'] = "Ya existe un usuario con este nombre.";
         }
     }
     
     private function validateSignEmail($email): void {
         $dbUser = $this->atlas->select(User::class, ['email' => $email])->fetchRecord();
-        if ($dbUser) {
+        if ($dbUser !== null) {
             $this->errors['email'] = 'Ya existe un usuario con este correo.';
         }
     }

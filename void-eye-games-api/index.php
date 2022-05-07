@@ -20,14 +20,14 @@ $app->post('/', function(Request $request, Response $response, array $args) {
     return $response->withJson($jsonResponse, 404);
 });
 
-$app->post('/signIn', 'src\controllers\BaseController:signIn');
-$app->post('/logIn', 'src\controllers\BaseController:logIn');
+$app->post('/signIn', 'src\controllers\SessionController:signIn');
+$app->post('/logIn', 'src\controllers\SessionController:logIn');
 
 // Games
 $app->group('/game', function () use ($app) {
-    $app->get('', 'src\controllers\BaseController:getGame');
-    $app->post('', 'src\controllers\BaseController:addGame')->add(new AuthMiddleware());
-    $app->post('/update', 'src\controllers\BaseController:updateGame')->add(new AuthMiddleware());
+    $app->get('', 'src\controllers\SelectController:getGame');
+    $app->post('', 'src\controllers\InsertController:addGame')->add(new AuthMiddleware());
+    $app->post('/update', 'src\controllers\UpdateController:updateGame')->add(new AuthMiddleware());
 
     $app->group('s', function () use ($app) {
         /**
@@ -37,36 +37,37 @@ $app->group('/game', function () use ($app) {
          * The url param {categories} are the categories of the games.
          * The url param {plataforms} are the plataforms of the games.
          */
-        $app->get('', 'src\controllers\BaseController:getGames');
+        $app->get('', 'src\controllers\SelectController:getGames');
 
-        $app->get('/listed', 'src\controllers\BaseController:getListOfGames');
+        $app->get('/listed', 'src\controllers\SelectController:getListOfGames');
     });
 });
 
 // Categories
-$app->get('/category', 'src\controllers\BaseController:getCategory');
+$app->get('/category', 'src\controllers\SelectController:getCategory');
 
 $app->group('/categories', function () use ($app) {
-    $app->get('', 'src\controllers\BaseController:getCategories');
-    $app->get('/listed', 'src\controllers\BaseController:getListOfCategories');
-    $app->post('', 'src\controllers\BaseController:addCategory')->add(new AuthMiddleware());
-    $app->post('/update', 'src\controllers\BaseController:updateCategory')->add(new AuthMiddleware());
+    $app->get('', 'src\controllers\SelectController:getCategories');
+    $app->get('/listed', 'src\controllers\SelectController:getListOfCategories');
+    $app->post('', 'src\controllers\InsertController:addCategory')->add(new AuthMiddleware());
+    $app->post('/update', 'src\controllers\UpdateController:updateCategory')->add(new AuthMiddleware());
 });
 
 // Plataforms
 
-$app->get('/plataform', 'src\controllers\BaseController:getCategory');
+$app->get('/plataform', 'src\controllers\SelectController:getPlataform');
 $app->group('/plataforms', function () use ($app) {
-    $app->get('', 'src\controllers\BaseController:getPlataforms');
-    $app->post('', 'src\controllers\BaseController:addPlataform')->add(new AuthMiddleware());
-    $app->post('/update', 'src\controllers\BaseController:updatePlataform')->add(new AuthMiddleware());
+    $app->get('', 'src\controllers\SelectController:getPlataforms');
+    $app->post('', 'src\controllers\InsertController:addPlataform')->add(new AuthMiddleware());
+    $app->post('/update', 'src\controllers\UpdateController:updatePlataform')->add(new AuthMiddleware());
+    $app->get('/listed', 'src\controllers\SelectController:getListOfPlataforms');
 });
 
 // Comments
-$app->post('/comment', 'src\controllers\BaseController:addComment')->add(new AuthMiddleware());
+$app->post('/comment', 'src\controllers\InsertController:addComment')->add(new AuthMiddleware());
 
 // Send Reports
-$app->post('/report', 'src\controllers\BaseController:sendReport');
+$app->post('/report', 'src\controllers\SessionController:sendReport');
 
 $container = $app->getContainer();
 DatabaseProvider::newInstance($container);
