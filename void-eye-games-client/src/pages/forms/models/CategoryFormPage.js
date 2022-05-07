@@ -97,7 +97,7 @@ class CategoryFormPage extends ModelFormPage {
     }
 
     onFailed(response) {
-        this.setState({errors: response.data});
+        this.setState({errors: response.data.body });
     }
 
     componentDidMount() {
@@ -138,13 +138,16 @@ class CategoryFormPage extends ModelFormPage {
                             <a className='btn btn-form  text-dark col-12 col-sm-2 m-0 mt-3 mt-sm-0 ml-sm-2' onClick={this.addSelectedGame.bind(this)}>Add game</a>
                         </section>
                         <hr className='w-100'/>
-                        <fieldset id='games-list' title='Games in category' className='d-flex flex-column flex-grow-1 w-100 border border-gray rounded' style={{overflowY: 'scroll', minHeight: '100px'}}>
-                            {this.getGamesList()}
+                        <fieldset id='games-list' title='Games in category' className='d-flex flex-column flex-grow-1 w-100 border border-gray rounded' style={{ overflowX: 'hidden',overflowY: 'scroll', minHeight: '100px'}}>
+                            <div className='d-flex flex-column flex-grow-1 w-100 h-100' style={{ overflowX: 'hidden', overflowY: 'scroll', minHeight: '200px' }}>
+                                {this.getGamesList()}
+                            </div>
                         </fieldset>
                         <section className='my-3'>
                             <a className='btn btn-form w-100 text-dark' onClick={this.submit.bind(this)}>Save all</a>
                         </section>
                     </form>
+                    {this.getErrorView()}
                 </article>
             </section>
         );

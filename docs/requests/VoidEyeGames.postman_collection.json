@@ -726,6 +726,50 @@
 							"response": []
 						}
 					]
+				},
+				{
+					"name": "sendReport",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response is 200\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.status).to.eql(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"data\": {\r\n        \"reason\": \"aa\",\r\n        \"issue\": \"aaa\",\r\n        \"description\": \"aaaaaaaaa aaaaaaaaa aaaaaaaaaaaaaaaaa\",\r\n        \"email\": \"void.eye.games@gmail.com\",\r\n        \"terms\": true\r\n    }\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost/VoidEyeGames/void-eye-games-api/report",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"VoidEyeGames",
+								"void-eye-games-api",
+								"report"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		}

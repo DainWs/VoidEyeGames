@@ -10,7 +10,7 @@ import { SessionManager } from '../../../domain/SessionManager';
 import { withRouter } from '../../../Main';
 import { SocketController } from '../../../services/socket/SocketController';
 import { SocketDataFilter } from '../../../services/socket/SocketDataFilter';
-import { DESTINATION_LIST_OF_GAMES, DESTINATION_PLATAFORM, DESTINATION_PLATAFORMS } from '../../../services/socket/SocketDestinations';
+import { DESTINATION_LIST_OF_GAMES, DESTINATION_PLATAFORM, DESTINATION_PLATAFORMS, DESTINATION_PLATAFORMS_UPDATES } from '../../../services/socket/SocketDestinations';
 import SocketRequest from '../../../services/socket/SocketRequest';
 import ModelFormPage, { MODEL_FORM_MODE_EDIT } from './ModelFormPage';
 
@@ -59,7 +59,7 @@ class PlataformFormPage extends ModelFormPage {
     let game = Array.from(this.state.listedGames)
       .find(v => v.id === selectedGameId);
 
-    let plataform = this.state.plataform;
+    let plataform = new Plataform(this.state.plataform);
     plataform.addGame(game);
     let plataformGame = this.state.plataformGame;
     plataformGame.gamesId = selectedGameId;
@@ -154,9 +154,10 @@ class PlataformFormPage extends ModelFormPage {
     let request = new SocketRequest();
     request.setBody(JSON.stringify(plataform));
     request.setMethod('POST');
+    let destination = (this.state.mode === MODEL_FORM_MODE_EDIT) ? DESTINATION_PLATAFORMS_UPDATES : DESTINATION_PLATAFORM;
     SocketController.sendCustomWithCallback(
       request,
-      DESTINATION_PLATAFORMS,
+      destination,
       this.onSuccess.bind(this),
       this.onFailed.bind(this)
     );
@@ -171,19 +172,22 @@ class PlataformFormPage extends ModelFormPage {
   }
 
   onFailed(response) {
-    this.setState({ errors: response.data });
+    this.setState({ errors: response.data.body });
   }
 
   componentDidMount() {
     SocketController.sendCustomWithCallback(new SocketRequest(), DESTINATION_LIST_OF_GAMES, this.onGameSuccess.bind(this));
+    console.log(this.state.mode);
     if (this.state.mode === MODEL_FORM_MODE_EDIT) {
       let request = new SocketRequest();
       request.setParams({ id: this.state.id });
+      console.log(request);
       SocketController.sendCustomWithCallback(request, DESTINATION_PLATAFORM, this.onPlataformResult.bind(this));
     }
   }
 
   onPlataformResult(response) {
+    console.log(response.data);
     this.setState({ plataform: response.data });
   }
 
@@ -261,16 +265,18 @@ class PlataformFormPage extends ModelFormPage {
               </section>
             </section>
 
-            <fieldset id='games-list' title='Games in plataform' className='d-flex flex-column flex-grow-1 w-100 border border-gray rounded' style={{ minHeight: '150px', overflowY: 'scroll' }}>
-              {this.getGamesList()}
+            <fieldset id='games-list' title='Games in plataform' className='d-flex flex-column flex-grow-1 w-100 border border-gray rounded' style={{ overflowX: 'hidden', minHeight: '150px', overflowY: 'scroll' }}>
+              <div className='d-flex flex-column flex-grow-1 w-100 h-100' style={{ overflowX: 'hidden', overflowY: 'scroll', minHeight: '200px' }}>
+                {this.getGamesList()}
+              </div>
             </fieldset>
-            
-            {this.getErrorView()}
 
             <section className='my-3'>
               <a className='btn btn-form w-100 text-dark' onClick={this.submit.bind(this)}>Save all</a>
             </section>
           </form>
+          
+          {this.getErrorView()}
         </article>
       </section>
     );
@@ -278,11 +284,6 @@ class PlataformFormPage extends ModelFormPage {
 
   checkSession() {
     return (SessionManager.check()) ? <Navigate replace to="/home" /> : <></>;
-  }
-
-  getErrorView() {
-    if (!this.state.errors) return;
-    return (<p className='text-error p-3 m-0 mt-3 border border-error rounded'>{this.state.errors.body}</p>);
   }
 
   getEnableButtonView() {
@@ -305,7 +306,8 @@ class PlataformFormPage extends ModelFormPage {
   }
 
   getGamesList() {
-    let plataform = (this.state.plataform) ? this.state.plataform : {games: []};
+    let plataform = (this.state.plataform) ? this.state.plataform : {games: null};
+    if (!plataform.games) return;
     let gamesList = [];
     for (const game of plataform.games) {
       let GameItem = withRouter(GameListItemComponent);

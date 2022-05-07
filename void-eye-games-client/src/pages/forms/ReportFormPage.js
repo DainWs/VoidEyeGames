@@ -95,7 +95,7 @@ class ReportFormPage extends React.Component {
     }
 
     let request = new SocketRequest();
-    request.setBody(`{"selectedReason": "${selectedReason}", "issue": "${issue}", "description": "${description}", "email": "${email}", "emailConfirmation": "${emailConfirmation}"}`);
+    request.setBody(JSON.stringify({reason: selectedReason, issue: issue, description: description, email: email, emailConfirmation: emailConfirmation}));
     request.setMethod('POST');
     SocketController.sendCustomWithCallback( request, DESTINATION_REPORT, () => {} );
   }

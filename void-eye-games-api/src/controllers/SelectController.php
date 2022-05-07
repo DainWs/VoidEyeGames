@@ -193,10 +193,10 @@ class SelectController extends BaseController
     {
         $this->logger->log("[GET] getPlataform called.");
         $id = $request->getParam('id', -1);
-        $plataforms = $this->atlas->select(Plataform::class, ['id' => $id])
+        $plataform = $this->atlas->select(Plataform::class, ['id' => $id])
             ->with(['games', 'plataforms_games'])
-            ->fetchRecords();
-        return $response->withJson($plataforms, 200);
+            ->fetchRecord();
+        return $response->withJson($plataform, 200);
     }
 
     public function getListOfPlataforms(Request $request, Response $response, array $args)

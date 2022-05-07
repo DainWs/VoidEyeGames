@@ -32,7 +32,7 @@ class ItemContextMenuComponent extends React.Component {
                 className='list--item btn btn-primary text-left position-relative p-0 py-2 border-botton border-form'
                 onClick={this.onContextMenu.bind(this)}
                 onContextMenu={this.onContextMenu.bind(this)}>
-                <span className='col-12 p-0 py-2 pl-3'>{this.getTitle()}</span>
+                <span className='col-12 p-0 py-2 pl-3 text-nowrap text-truncate'>{this.getTitle()}</span>
                 <ul id={this.key} 
                     className='position-absolute bg-primary border border-top-0 rounded-bottom d-none col-12 col-xm-10 col-sm-8 col-md-6 col-lg-4 col-xl-2 m-0 p-0 py-2'
                     style={{top: '100%', right: 0, zIndex: 100}}>

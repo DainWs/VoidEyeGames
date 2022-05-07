@@ -29,7 +29,7 @@ class LogInFormPage extends React.Component {
     let password = this.state.password;
 
     let request = new SocketRequest();
-    request.setBody(`{"username": "${username}", "password": "${md5(password)}"}`);
+    request.setBody(JSON.stringify({username: username, password: md5(password)+''}));
     request.setMethod('POST');
     SocketController.sendCustomWithCallback(
       request,

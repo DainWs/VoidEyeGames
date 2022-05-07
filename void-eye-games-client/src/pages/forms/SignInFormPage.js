@@ -80,7 +80,7 @@ class SignInFormPage extends React.Component {
     let publicity = this.state.publicity;
 
     let request = new SocketRequest();
-    request.setBody(`{"name": "${username}", "email": "${email}", "password": "${md5(password)}", "confirmationPassword": "${md5(confirmationPassword)}", "terms": ${terms}, "publicity": ${publicity}}`);
+    request.setBody(JSON.stringify({name: username, email: email, password: md5(password)+'', confirmationPassword: md5(confirmationPassword), terms: terms, publicity: publicity}));
     request.setMethod('POST');
     SocketController.sendCustomWithCallback(
       request,

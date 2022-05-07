@@ -12,6 +12,7 @@ import Plataform from '../../domain/models/dtos/Plataform';
 import { SocketDataFilter } from '../../services/socket/SocketDataFilter';
 import Carousel from 'nuka-carousel';
 import { Player } from 'video-react';
+import Comment from '../../domain/models/dtos/Comment';
 
 //TODO check more button
 class GameDetailsComponent extends React.Component {
@@ -49,25 +50,17 @@ class GameDetailsComponent extends React.Component {
             return;
         }
 
-        let comment = new Comment();
-        comment.usersId = SessionManager.getSession().user;
-        comment.gamesId = this.gameId;
-        comment.description = this.state.commentText;
-
         let request = new SocketRequest();
-        request.setBody(JSON.stringify(comment));
+        request.setBody(JSON.stringify({id: null, usersId: usersId, gamesId: gamesId, description: description}));
         request.setMethod('POST');
         SocketController.sendCustomWithCallback(request, DESTINATION_COMMENT, this.sendGamesRequest.bind(this));
 
         this.setState({ commentText: '' });
     }
 
-    sendGamesRequest() {
-        let params = {};
-        params.id = this.gameId;
-    
+    sendGamesRequest() {    
         let request = new SocketRequest();
-        request.setParams(params);
+        request.setParams({id: this.gameId});
         request.setMethod('GET');
         SocketController.sendCustomWithCallback(request, DESTINATION_GAMES, this.onGamesSuccess.bind(this));
     }

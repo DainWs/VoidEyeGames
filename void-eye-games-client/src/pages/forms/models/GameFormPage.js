@@ -125,7 +125,7 @@ class GameFormPage extends ModelFormPage {
           media.name = image.name;
           media.mediaType = image.type;
           media.src = reader.result;
-          medias.push(attachment);
+          medias.push(media);
 
           if (index == (filesUpload.length - 1)) {
             this.setState({ medias: medias, isDragingOver: false });
@@ -192,7 +192,7 @@ class GameFormPage extends ModelFormPage {
     let game = new Game(this.state.game);
     game.categories = [];
     game.mainImage = this.state.mainImage;
-    game.medias = this.state.media;
+    game.medias = this.state.medias;
     let request = new SocketRequest();
     request.setBody(JSON.stringify(game));
     request.setMethod('POST');
@@ -209,11 +209,11 @@ class GameFormPage extends ModelFormPage {
       this.onFailed(response);
       return;
     }
-    media.getElementById('navigate-home').click();
+    document.getElementById('navigate-home').click();
   }
 
   onFailed(response) {
-    this.setState({ errors: response.data });
+    this.setState({ errors: response.data.body });
   }
 
   componentDidMount() {
@@ -265,7 +265,7 @@ class GameFormPage extends ModelFormPage {
               </section>
 
               <fieldset id='categories-list' title='Categories in game' className='w-100 border mt-3 border-gray rounded'>
-                <div className='d-flex flex-column flex-grow-1 w-100 h-100' style={{ overflowY: 'scroll', minHeight: '200px' }}>
+                <div className='d-flex flex-column flex-grow-1 w-100 h-100' style={{ overflowX: 'hidden', overflowY: 'scroll', minHeight: '200px' }}>
                   {this.getCategoriesList()}
                 </div>
               </fieldset>
@@ -286,19 +286,19 @@ class GameFormPage extends ModelFormPage {
 
             <section className='d-flex flex-column col-12 col-lg-4 mb-3 p-0 px-lg-3 order-4'>
               <hr className='d-none d-lg-block w-100 border-0' />
-              <fieldset id='medias-list' title='Medias in game' className='d-flex flex-column flex-grow-1 w-100 border border-gray rounded' style={{ overflowY: 'scroll', minHeight: '100px' }}>
-                <div className='d-flex flex-column flex-grow-1 w-100 h-100' style={{ overflowY: 'scroll', minHeight: '200px' }}>
+              <fieldset id='medias-list' title='Medias in game' className='d-flex flex-column flex-grow-1 w-100 border border-gray rounded' style={{ overflowX: 'hidden', overflowY: 'scroll', minHeight: '100px' }}>
+                <div className='d-flex flex-column flex-grow-1 w-100 h-100' style={{ overflowX: 'hidden', overflowY: 'scroll', minHeight: '200px' }}>
                   {this.getMediasList()}
                 </div>
               </fieldset>
               <a className='btn btn-form w-100 mt-3 text-dark' onClick={this.submit.bind(this)}>Save all</a>
             </section>
           </form>
+          {this.getErrorView()}
         </article>
       </section>
     );
   }
-
   checkSession() {
     return (SessionManager.check()) ? <Navigate replace to="/home" /> : <></>;
   }
@@ -334,10 +334,10 @@ class GameFormPage extends ModelFormPage {
     return (
       <div className='d-flex flex-column flex-grow-1'>
         <label>Medias</label>
-        <div className="d-none d-lg-block flex-grow-1" onDragEnter={this.onDragEnter.bind(this)}>
+        <div className="d-none d-lg-block flex-grow-1 position-relative" onDragEnter={this.onDragEnter.bind(this)}>
           <div className={'dropzone p-1 text-center d-flex flex-column justify-content-center ' + this.getDraggingOverClass()}>
             <div>
-              <div onDragOver={(e) => e.preventDefault()} onDragLeave={this.onDragLeave.bind(this)} onDrop={this.onDrop.bind(this)}></div>
+              <div className='position-absolute p-left-top-0 w-100 h-100' onDragOver={(e) => e.preventDefault()} onDragLeave={this.onDragLeave.bind(this)} onDrop={this.onDrop.bind(this)}></div>
               <FontAwesomeIcon icon={faUpload} />
               <h1>Upload File</h1>
               <p>Drag & Drop files here or click to upload</p>

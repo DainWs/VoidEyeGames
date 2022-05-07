@@ -15,7 +15,7 @@ class MediaListItemComponent extends ItemContextMenuComponent {
 
     getTitle() {
         let media = this.state.data;
-        return `${media.id} - ${media.name}`;
+        return `${media.name}`;
     }
 
     getContextMenuItemsList() {

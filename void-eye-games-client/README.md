@@ -27,16 +27,19 @@ Final project for 2ºDAW, its a website is intended for support in the search fo
     - [ ] [Optional] Recovery password
 - [X] Signin Form View
 
-- [ ] **Admin** Game Form View
-    - [ ] Add games.
+- [X] **Admin** Game Form View
+    - [X] Add games.
     - [ ] Add categories to game.
     - [ ] Add images to game.
+    - [ ] Edit Games
 - [ ] **Admin** Plataform Form View
     - [X] Add Plataforms.
     - [~] Add games to plataform with prices and discount of the plataform.
+    - [ ] Edit plataforms
 - [X] **Admin** Categories Form View
     - [X] Add category.
     - [X] Add games to category.
+    - [ ] Edit categories
 
 ## TO FIX
 - [ ] Cuando clicas en cualquier boton te hace un window.toTop

@@ -90,15 +90,15 @@ class SessionController extends BaseController
         $this->logger->log("[POST] sendReport called.");
         try {
             $report = $request->getParsedBody()['data'] ?? null;
-            if (!($report['reason'] ?? null)) throw new AppException('The reason is required.');
-            if (!($report['issue'] ?? null)) throw new AppException('The issue is required.');
-            if (!($report['description'] ?? null)) throw new AppException('The description is required.');
-            if (!($report['email'] ?? null)) throw new AppException('The email is required.');
-            if (!($report['terms'] ?? null) || $report['terms'] !== true) throw new AppException('Accept the terms to continue.');
+            if (($report['reason'] ?? null)==null) throw new AppException('The reason is required.');
+            if (($report['issue'] ?? null)==null) throw new AppException('The issue is required.');
+            if (($report['description'] ?? null)==null) throw new AppException('The description is required.');
+            if (($report['email'] ?? null)==null) throw new AppException('The email is required.');
+            if (($report['terms'] ?? null)==null || $report['terms'] !== true) throw new AppException('Accept the terms to continue.');
 
             $mailSender = new EmailManager();
             $mailSender->send($report);
-            $this->logger->log("[POST] sendReport was successfully. object : " + json_encode($report));
+            $this->logger->log("[POST] sendReport was successfully. object : " . json_encode($report));
         } catch(AppException $ex) {
             $this->processException($ex);
         } catch (Exception $ex) {
