@@ -79,4 +79,8 @@ __¡¡¡Importante!!! los requisitos marcados los puedes encontrar en la rama `R
 - [ ] Cuando clicas en cualquier boton te hace un window.toTop
 
 - [ ] Compatibilidad entre web y android
-    - [ ] Css files not allowed in react native
+    - [ ] Css/Stylesheets/Sass/Scss files not allowed in react native
+    - [ ] JQuery not allowed, because react-native has their own DOM-Like native system.
+    - [ ] LocalStorage not allowed, we have to use a community package (most are abandoned) to do a correct implementation of AsyncStorage.
+    - [ ] Errors finded packaging Android/IOS app, Conversion of some React components are not possible to do.
+    - [ ] AsyncStorage (the localstorage alternative for React-Native) is not supported in most versions of the web.
