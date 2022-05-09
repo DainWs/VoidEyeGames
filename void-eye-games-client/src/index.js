@@ -1,9 +1,10 @@
 import '../node_modules/video-react/dist/video-react.css';
 import '../node_modules/react-loading-skeleton/dist/skeleton.css';
-import './assets/scss/App.scss';
+import './scss/App.scss';
 import 'bootstrap';
 
 import React from 'react';
+import ReactDOM from "react-dom";
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import GamesPage from './pages/GamesPage';
@@ -23,7 +24,7 @@ let RouterGameFormPage = withRouter(GameFormPage);
 let RouterCategoryFormPage = withRouter(CategoryFormPage);
 let RouterPlataformFormPage = withRouter(PlataformFormPage);
 
-export default function Main() {
+export default function App() {
   return (
     <>
       <BrowserRouter>
@@ -51,3 +52,5 @@ export default function Main() {
     </>
   );
 }
+
+ReactDOM.render(<App/>, document.getElementById("root"));
