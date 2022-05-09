@@ -6,7 +6,7 @@ import { Navigate } from 'react-router-dom';
 import Game from '../../../domain/models/dtos/Game';
 import { SessionManager } from '../../../domain/SessionManager';
 import ModelFormPage, { MODEL_FORM_MODE_EDIT } from './ModelFormPage';
-import { DESTINATION_GAMES, DESTINATION_LIST_OF_CATEGORIES } from '../../../services/socket/SocketDestinations';
+import { DESTINATION_GAMES, DESTINATION_LIST_OF_CATEGORIES, DESTINATION_PLATAFORM_UPDATES } from '../../../services/socket/SocketDestinations';
 import { SocketDataFilter } from '../../../services/socket/SocketDataFilter';
 import { SocketController } from '../../../services/socket/SocketController';
 import SocketRequest from '../../../services/socket/SocketRequest';
@@ -196,6 +196,12 @@ class GameFormPage extends ModelFormPage {
     let request = new SocketRequest();
     request.setBody(JSON.stringify(game));
     request.setMethod('POST');
+
+    let destination = DESTINATION_GAMES;
+    if (this.state.mode === MODEL_FORM_MODE_EDIT) {
+        destination = DESTINATION_PLATAFORM_UPDATES;
+    }
+
     SocketController.sendCustomWithCallback(
       request,
       DESTINATION_GAMES,

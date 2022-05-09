@@ -154,7 +154,12 @@ class PlataformFormPage extends ModelFormPage {
     let request = new SocketRequest();
     request.setBody(JSON.stringify(plataform));
     request.setMethod('POST');
-    let destination = (this.state.mode === MODEL_FORM_MODE_EDIT) ? DESTINATION_PLATAFORMS_UPDATES : DESTINATION_PLATAFORM;
+
+    let destination = DESTINATION_PLATAFORM;
+    if (this.state.mode === MODEL_FORM_MODE_EDIT) {
+        destination = DESTINATION_PLATAFORMS_UPDATES;
+    }
+
     SocketController.sendCustomWithCallback(
       request,
       destination,
