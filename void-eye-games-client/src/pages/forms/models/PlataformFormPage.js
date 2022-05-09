@@ -7,7 +7,7 @@ import GameListItemComponent from '../../../components/models/lists/GameListItem
 import Plataform from '../../../domain/models/dtos/Plataform';
 import PlataformGame from '../../../domain/models/dtos/PlataformGame';
 import { SessionManager } from '../../../domain/SessionManager';
-import { withRouter } from '../../../Main';
+import { withRouter } from '../../../routes/Routes';
 import { SocketController } from '../../../services/socket/SocketController';
 import { SocketDataFilter } from '../../../services/socket/SocketDataFilter';
 import { DESTINATION_LIST_OF_GAMES, DESTINATION_PLATAFORM, DESTINATION_PLATAFORMS, DESTINATION_PLATAFORMS_UPDATES } from '../../../services/socket/SocketDestinations';

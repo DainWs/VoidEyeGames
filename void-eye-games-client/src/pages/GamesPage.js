@@ -1,13 +1,10 @@
 import React from 'react';
 import GameItemComponent from '../components/models/GameItemComponent';
-import { SessionManager } from '../domain/SessionManager';
-import RequestFactory from '../factories/RequestFactory';
 import { SocketController } from '../services/socket/SocketController';
 import { SocketDataProvideer } from '../services/socket/SocketDataProvider';
 import { DESTINATION_CATEGORIES, DESTINATION_PLATAFORMS, DESTINATION_PLATAFORM_GAMES } from '../services/socket/SocketDestinations';
 import { SocketObserver } from '../services/socket/SocketObserver';
 import SocketRequest from '../services/socket/SocketRequest';
-import { Comparators } from '../utils/Comparators';
 
 /**
  * TODO check big ones

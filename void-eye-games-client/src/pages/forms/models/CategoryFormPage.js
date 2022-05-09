@@ -4,7 +4,7 @@ import Select from 'react-select'
 import GameListItemComponent from '../../../components/models/lists/GameListItemComponent';
 import Category from '../../../domain/models/dtos/Category';
 import { SessionManager } from '../../../domain/SessionManager';
-import { withRouter } from '../../../Main';
+import { withRouter } from '../../../routes/Routes';
 import { SocketController } from '../../../services/socket/SocketController';
 import { SocketDataFilter } from '../../../services/socket/SocketDataFilter';
 import { DESTINATION_CATEGORIES, DESTINATION_CATEGORIES_UPDATES, DESTINATION_CATEGORY, DESTINATION_LIST_OF_GAMES } from '../../../services/socket/SocketDestinations';
