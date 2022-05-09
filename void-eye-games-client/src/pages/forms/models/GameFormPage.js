@@ -12,8 +12,8 @@ import { SocketController } from '../../../services/socket/SocketController';
 import SocketRequest from '../../../services/socket/SocketRequest';
 import CategoryListItemComponent from '../../../components/models/lists/CategoryListItemComponent copy';
 import MediaListItemComponent from '../../../components/models/lists/MediaListItemComponent copy 2';
-import { withRouter } from '../../../Main';
 import Media from '../../../domain/models/dtos/Media';
+import { withRouter } from '../../../routes/Routes';
 
 class GameFormPage extends ModelFormPage {
   createState(props) {

@@ -49,7 +49,7 @@ class HeaderComponent extends React.Component {
         <nav className="nav justify-content-between bg-secondary" style={{ height: '3rem', fontSize: '1.4rem', fontFamily: 'Arial' }}>
           <div className='nav h-100 d-none d-sm-flex'>
             <Link to="/" className="h-100 mr-3" href="#">
-              <img src={require('../../assets/images/logo.png')} alt="logo" className='h-100' />
+              <img src={require('../assets/images/logo.png')} alt="logo" className='h-100' />
             </Link>
             {this.getHomeLink('home-link')}
             {this.getGamesLink('games-link')}

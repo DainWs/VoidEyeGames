@@ -7,7 +7,6 @@ import { EventObserver } from '../domain/EventObserver';
 import { EVENT_SESSION_CHANGE } from '../domain/EventsEnum';
 import { SessionManager } from '../domain/SessionManager';
 import { SocketController } from '../services/socket/SocketController';
-import { SocketDataFilter } from '../services/socket/SocketDataFilter';
 import { DESTINATION_PLATAFORM_GAMES } from '../services/socket/SocketDestinations';
 import SocketRequest from '../services/socket/SocketRequest';
 
