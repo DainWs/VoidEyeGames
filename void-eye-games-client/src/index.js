@@ -1,10 +1,17 @@
 import '../node_modules/video-react/dist/video-react.css';
 import '../node_modules/react-loading-skeleton/dist/skeleton.css';
+<<<<<<< HEAD
 import './scss/App.scss';
 import 'bootstrap';
 
 import React from 'react';
 import ReactDOM from "react-dom";
+=======
+import './assets/scss/App.scss';
+import 'bootstrap';
+
+import React from 'react';
+>>>>>>> master/Removing-Expo
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import GamesPage from './pages/GamesPage';
@@ -51,6 +58,10 @@ export default function App() {
       </BrowserRouter>
     </>
   );
+<<<<<<< HEAD
 }
 
 ReactDOM.render(<App/>, document.getElementById("root"));
+=======
+}
+>>>>>>> master/Removing-Expo
