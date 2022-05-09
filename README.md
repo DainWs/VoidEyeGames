@@ -76,8 +76,6 @@ __¡¡¡Importante!!! los requisitos marcados los puedes encontrar en la rama `R
     - [ ] Edit categories **(need to be checked one last time)**
 
 ## TO FIX
-- [ ] Cuando clicas en cualquier boton te hace un window.toTop
-
 - [ ] Compatibilidad entre web y android
     - [ ] Css/Stylesheets/Sass/Scss files not allowed in react native
     - [ ] JQuery not allowed, because react-native has their own DOM-Like native system.
