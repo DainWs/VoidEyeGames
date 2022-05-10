@@ -7,11 +7,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-<<<<<<< HEAD
     "sass": "node-sass -w scss/ -o src/assets/css/ --output-style compressed",
-=======
-    "sass": "node-sass --source-map src/assets/css -w src/assets/scss/ -o assets/assets/css/ --output-style compressed",
->>>>>>> master/Removing-Expo
     "watch": "npm-watch"
   },
   "dependencies": {
@@ -36,7 +32,6 @@
     "react-scripts": "^5.0.0",
     "react-select": "^5.3.1",
     "redux": "^4.2.0",
-<<<<<<< HEAD
     "sass": "^1.49.9",
     "video-react": "^0.15.0"
   },
@@ -47,17 +42,6 @@
     "node-sass": "^7.0.1",
     "npm-watch": "^0.11.0"
   },
-=======
-    "sass": "^1.50.1",
-    "sass-loader": "^12.6.0",
-    "video-react": "^0.15.0"
-  },
-  "devDependencies": {
-    "@babel/core": "^7.12.9",
-    "node-sass": "^7.0.1",
-    "npm-watch": "^0.11.0"
-  },
->>>>>>> master/Removing-Expo
   "watch": {
     "build": {
       "patterns": [
@@ -67,15 +51,6 @@
       "extensions": "js, html, scss"
     }
   },
-<<<<<<< HEAD
-=======
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
->>>>>>> master/Removing-Expo
   "browserslist": {
     "production": [
       ">0.2%",
