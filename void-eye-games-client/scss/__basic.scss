@@ -2,6 +2,11 @@
 // BASIC
 //------------------------------------------------------------------
 body {
+    & * {
+        margin: 0;
+        padding: 0;
+    }
+
     overflow-x: hidden;
 
     & .p {
@@ -59,6 +64,115 @@ body {
         &--item {
             &:hover {
                 transition: background 0.2s ease-in-out;
+            }
+        }
+    }
+
+    & .details--header {
+        display: flex;
+        justify-content: center;
+
+        max-width: 960px;
+        height: unset;
+
+        &__img img {
+            height: 80vw;
+        }
+
+        &__info {
+            overflow-y: visible;
+        }
+
+        @include media-breakpoint-up(xm) { 
+            height: auto;
+        }
+
+        @include media-breakpoint-up(sm) { 
+            height: 25%;
+
+            &__info {
+                max-height: 200px;
+                height: 200px;
+            }
+
+            &__img {
+                height: inherit;
+                img {
+                    height: 100%;
+                }
+            }
+        }
+
+        @include media-breakpoint-up(md) { 
+            height: 60vh;
+
+            &__info {
+                overflow-y: hidden;
+            }
+
+            &__img {
+                min-width: 100%;
+                img {
+                    height: 100%;
+                }
+            }
+        }
+
+        @include media-breakpoint-up(md) {
+            &__info {
+                min-height: 100%;
+            }
+            
+            &__img {
+                min-width: unset;
+            }
+        }
+
+        @include media-breakpoint-up(xl) { 
+            height: 50vh;
+        }
+    }
+
+    & .slider {
+        &--dynamic {
+            display: flex;
+            flex-direction: column;
+
+            min-height: 200px;
+
+            & .nav-tabs {
+                height: 50px !important;
+
+                & .nav-item {
+
+                    & > * {
+                        height: 100%;
+                    }
+                }
+            }
+
+            & .tab-content {
+                display: flex;
+                align-items: center;
+                flex-grow: 1;
+
+                background-color: black;
+
+                & > * {
+                    width: 100%;
+                }
+            }
+
+            @include media-breakpoint-up(sm) { 
+                height: 50vh;
+            }
+
+            @include media-breakpoint-up(md) { 
+                height: 60vh;
+            }
+
+            @include media-breakpoint-up(xl) { 
+                height: 50vh;
             }
         }
     }

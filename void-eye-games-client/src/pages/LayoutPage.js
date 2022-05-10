@@ -14,7 +14,7 @@ class LayoutPage extends React.Component {
     return (
       <>
         <HeaderComponent/>
-        <Outlet />
+        <div className="flex-grow-1"><Outlet /></div>
         <FooterComponent/>
 
         <a className="position-fixed p-right-bottom-1 d-flex align-items-center justify-content-center bg-secondary rounded-circle" 

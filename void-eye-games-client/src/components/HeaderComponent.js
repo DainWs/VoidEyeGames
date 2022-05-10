@@ -72,7 +72,7 @@ class HeaderComponent extends React.Component {
             {this.getSessionDropdownView()}
           </div>
           <div className="d-block d-sm-none w-100" style={{zIndex: 3}}>
-            <nav className="navbar-light d-flex">
+            <nav className="navbar-light d-flex justify-content-start">
               <a id="hamburger-menu" className="nav-link" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
                 <FontAwesomeIcon icon={faBars} />
               </a>
