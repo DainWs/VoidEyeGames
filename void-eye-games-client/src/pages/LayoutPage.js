@@ -1,7 +1,6 @@
 import { Outlet } from "react-router-dom";
 import FooterComponent from "../components/FooterComponent";
 import HeaderComponent from "../components/HeaderComponent";
-import { StatusBar } from "expo-status-bar";
 import React from "react";
 import { faAngleUp } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -14,7 +13,6 @@ class LayoutPage extends React.Component {
   render() {
     return (
       <>
-        <StatusBar style="auto" />
         <HeaderComponent/>
         <Outlet />
         <FooterComponent/>
