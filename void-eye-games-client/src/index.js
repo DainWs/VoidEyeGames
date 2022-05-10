@@ -1,6 +1,6 @@
 import '../node_modules/video-react/dist/video-react.css';
 import '../node_modules/react-loading-skeleton/dist/skeleton.css';
-import './scss/App.scss';
+import './assets/css/App.css';
 import 'bootstrap';
 
 import React from 'react';

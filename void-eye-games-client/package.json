@@ -7,7 +7,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "sass": "node-sass -w scss/ -o src/assets/css/ --output-style compressed",
+    "sass": "node-sass --source-map src/assets/css -w scss/ -o src/assets/css/ --output-style compressed",
     "watch": "npm-watch"
   },
   "dependencies": {
@@ -48,7 +48,7 @@
         "src",
         "public"
       ],
-      "extensions": "js, html, scss"
+      "extensions": "js, html, scss, css, png, ico"
     }
   },
   "browserslist": {
