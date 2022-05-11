@@ -160,9 +160,9 @@ class HeaderComponent extends React.Component {
     let session = SessionManager.getSession();
     if (ACCOUNT_TYPE_ADMIN.getId() === session.accountType) {
       return [
-        this.getAdminGameLink('hamburger-admin-new-game-link'),
-        this.getAdminPlataformLink('hamburger-admin-new-plataform-link'),
-        this.getAdminCategoryLink('hamburger-admin-new-category-link')
+        this.getAdminGameLink('hamburger-admin-new-game-link', this.closeHamburger.bind(this)  ),
+        this.getAdminPlataformLink('hamburger-admin-new-plataform-link', this.closeHamburger.bind(this)),
+        this.getAdminCategoryLink('hamburger-admin-new-category-link', this.closeHamburger.bind(this))
       ];
     }
     return;

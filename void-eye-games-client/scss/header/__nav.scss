@@ -1,0 +1,15 @@
+.nav {
+    &-link {
+        color: $text-primary !important;
+        font-size: 1.4rem;
+        font-family: 'Arial';
+
+        &.active,
+        &:focus,
+        &:hover {
+            background-color: $primary !important;
+            color: $text-secondary !important;
+            border-color: #343a40 !important;
+        }
+    }
+}

@@ -157,6 +157,7 @@ class GameDetailsComponent extends React.Component {
     preparePlataformView(plataformGame) {
         let plataform = new Plataform(plataformGame.plataforms);
         let discount = (plataformGame.discount > 0) ? `(-${plataformGame.discount * 100}%)` : '';
+        let discountView = (plataformGame.discount > 0) ? (<span style={{fontSize: '.8rem'}}><br/>{discount}</span>) : <></>;
         return (
             <div key={`${plataformGame.gamesId}-${plataformGame.plataformsId}__price-tag`}
                 className='d-flex border border-black rounded m-0 mt-2 mt-md-0 w-100'>
@@ -171,7 +172,7 @@ class GameDetailsComponent extends React.Component {
                         {plataform.name}
                     </div>
                     <div className='w-50 d-flex align-items-center justify-content-center bg-quinary border-left border-black rounded-right font-weight-bold text-primary'>
-                        <span>{plataformGame.price} {plataformGame.priceUnit} {discount}</span>
+                        <span className='text-center' style={{lineHeight: '.8rem'}}>{plataformGame.price} {plataformGame.priceUnit} {discountView}</span>
                     </div>
                 </div>
             </div>

@@ -8,7 +8,7 @@ class FooterComponent extends React.Component {
     return (
       <footer className='p-4 pb-5 px-sm-2 pt-sm-4 pb-sm-5 bg-white border border-top-dark mt-auto'>
         <article className='d-block d-sm-flex justify-content-between'>
-          <section className='d-block d-sm-flex flex-column justify-content-start align-items-center mx-0 mx-sm-4 flex-grow-1'>
+          <section className='d-block d-sm-flex flex-column justify-content-start align-items-center mx-0 mx-sm-4 pb-3 p-sm-0 flex-grow-1'>
               <h6 className='text-decoration-link'>About Us</h6>
               <ul className='pl-0' style={{listStyle: 'none'}}>
                   <li><Link to='/support' className='text-decoration-none text-links'>Cookie policy</Link></li>
@@ -16,7 +16,7 @@ class FooterComponent extends React.Component {
                   <li><Link to='/support' className='text-decoration-none text-links'>Terms of use</Link></li>
               </ul>
           </section>
-          <section className='d-block d-sm-flex flex-column justify-content-start align-items-center mx-0 mx-sm-4 flex-grow-1'>
+          <section className='d-block d-sm-flex flex-column justify-content-start align-items-center mx-0 mx-sm-4 pb-3 p-sm-0 flex-grow-1'>
               <h6>Contact Us</h6>
               <ul className='pl-2' style={{listStyle: 'none'}}>
                   <li><strong>Mail:</strong> void.eye.games@gmail.com</li>

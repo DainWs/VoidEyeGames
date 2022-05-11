@@ -40,7 +40,6 @@ class LogInFormPage extends React.Component {
   }
 
   onSuccess(response) {
-    console.log(response);
     if (response.data.status !== 200) {
       this.onFailed(response);
       return;

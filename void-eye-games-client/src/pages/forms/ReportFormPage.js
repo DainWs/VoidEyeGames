@@ -24,7 +24,7 @@ class ReportFormPage extends React.Component {
       email: '',
       emailConfirmation: '',
       terms: false,
-      erros: ''
+      errors: ''
     };
   }
   
@@ -69,34 +69,58 @@ class ReportFormPage extends React.Component {
     let description = this.state.description.replace(/\n/g, '<br/>');
     let email = this.state.email;
     let emailConfirmation = this.state.emailConfirmation;
+    let terms = this.state.terms;
 
-    if (!this.state.terms) {
-      this.setState({erros: 'Los terminos son obligatorios para mandar el reporte.'});
+    console.log(terms);
+    if (!terms) {
+      this.setState({errors: 'Los terminos son obligatorios para mandar el reporte.'});
       return;
     }
 
-    if (this.state.email.length <= 0 || this.state.emailConfirmation.length <= 0) {
-      this.setState({erros: 'Los campos de correo y confirmacion de correo son obligatorios para mandar el reporte.'});
+    console.log(terms);
+    if (email.length <= 0 || emailConfirmation.length <= 0) {
+      this.setState({errors: 'Los campos de correo y confirmacion de correo son obligatorios para mandar el reporte.'});
       return;
-    } else if (this.state.email !== this.state.emailConfirmation) {
-      this.setState({erros: 'Los campos de correo y confirmacion deben ser el mismo correo.'});
-      return;
-    }
-
-    if (this.state.issue.length <= 0 || this.state.description.length <= 0) {
-      this.setState({erros: 'El issue y description son obligatorios para resolver el problema.'});
+    } else if (email !== emailConfirmation) {
+      this.setState({errors: 'Los campos de correo y confirmacion deben ser el mismo correo.'});
       return;
     }
 
-    if (!this.state.selectedReason) {
-      this.setState({erros: 'Los terminos son obligatorios para mandar el reporte.'});
+    console.log(terms);
+    if (issue.length <= 0 || description.length <= 0) {
+      this.setState({errors: 'El issue y description son obligatorios para resolver el problema.'});
+      return;
+    }
+
+    console.log(terms);
+    if (!selectedReason) {
+      this.setState({errors: 'Los terminos son obligatorios para mandar el reporte.'});
       return;
     }
 
     let request = new SocketRequest();
-    request.setBody(JSON.stringify({reason: selectedReason, issue: issue, description: description, email: email, emailConfirmation: emailConfirmation}));
+    request.setBody(JSON.stringify({
+      reason: selectedReason, 
+      issue: issue, 
+      description: description, 
+      email: email, 
+      emailConfirmation: emailConfirmation,
+      terms: terms
+    }));
     request.setMethod('POST');
-    SocketController.sendCustomWithCallback( request, DESTINATION_REPORT, () => {} );
+    SocketController.sendCustomWithCallback( request, DESTINATION_REPORT, this.onSuccess.bind(this));
+  }
+
+  onSuccess() {
+    if (response.data.status !== 200) {
+      this.onFailed(response);
+      return;
+    }
+    document.getElementById('navigate-home').click();
+  }
+
+  onFailed(response) {
+    this.setState({errors: response.data.body});
   }
 
   render() {
@@ -134,15 +158,16 @@ class ReportFormPage extends React.Component {
           <section className='my-3'>
             <label htmlFor='report-form--terms'>
               <span className='text-error'>*</span>
-              <input id='report-form--terms' className='form-control' type='checkbox' checked={this.state.terms} onChange={this.onChangeTerms.bind(this)}/> Accept terms and conditions.
+              <input id='report-form--terms' type='checkbox' value={this.state.terms} onChange={this.onChangeTerms.bind(this)}/> Accept terms and conditions.
             </label>
           </section>
           
-          {this.getErrorView()}
           <section className='d-flex justify-content-between mb-3'>
             <a className='btn btn-primary border' onClick={this.cancel.bind(this)}>Cancel</a>
             <a className='btn btn-quaternary' onClick={this.submit.bind(this)}>Submit</a>
           </section>
+
+          {this.getErrorView()}
         </form>
       </article>
     );
@@ -150,8 +175,9 @@ class ReportFormPage extends React.Component {
 
   getErrorView() {
     let error = this.state.errors;
-    if (error == null || error.length > 0) return (<></>);
-    return (<section><p className='text-error'>{error}</p></section>);
+    console.log(error);
+    if (error == null || error.length <= 0) return (<></>);
+    return (<section><p className='text-error'>* {error}</p></section>);
   }
 }
 

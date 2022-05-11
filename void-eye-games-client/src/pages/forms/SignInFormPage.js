@@ -82,22 +82,19 @@ class SignInFormPage extends React.Component {
     let request = new SocketRequest();
     request.setBody(JSON.stringify({name: username, email: email, password: md5(password)+'', confirmationPassword: md5(confirmationPassword), terms: terms, publicity: publicity}));
     request.setMethod('POST');
-    SocketController.sendCustomWithCallback(
-      request,
-      DESTINATION_SIGNIN,
-      this.onSuccess.bind(this),
-      this.onFailed.bind(this)
-    );
+    SocketController.sendCustomWithCallback( request, DESTINATION_SIGNIN, this.onSuccess.bind(this));
   }
 
   onSuccess(response) {
-    console.log(response);
+    if (response.data.status !== 200) {
+      this.onFailed(response);
+      return;
+    }
     SessionManager.setSession(response.data);
     document.getElementById('navigate-home').click();
   }
 
   onFailed(response) {
-    console.log(JSON.stringify(response));
     this.setState({errors: "Ha ocurrido un error, vuelva a intentarlo mas tarde."});
   }
 
