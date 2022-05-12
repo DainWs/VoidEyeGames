@@ -6,7 +6,7 @@ import { Navigate } from 'react-router-dom';
 import Game from '../../../domain/models/dtos/Game';
 import { SessionManager } from '../../../domain/SessionManager';
 import ModelFormPage, { MODEL_FORM_MODE_EDIT } from './ModelFormPage';
-import { DESTINATION_GAMES, DESTINATION_LIST_OF_CATEGORIES, DESTINATION_PLATAFORM_UPDATES } from '../../../services/socket/SocketDestinations';
+import { DESTINATION_GAMES, DESTINATION_LIST_OF_CATEGORIES, DESTINATION_LIST_OF_GAMES, DESTINATION_PLATAFORM_UPDATES } from '../../../services/socket/SocketDestinations';
 import { SocketDataFilter } from '../../../services/socket/SocketDataFilter';
 import { SocketController } from '../../../services/socket/SocketController';
 import SocketRequest from '../../../services/socket/SocketRequest';
@@ -21,10 +21,16 @@ class GameFormPage extends ModelFormPage {
     parentState.game = new Game();
     parentState.selectedCategory = null;
     parentState.listedCategories = [];
+    parentState.listedGames = [];
     parentState.mainImage = {};
     parentState.isDragingOver = false;
     parentState.medias = [];
     return parentState;
+  }
+
+  onChangeEditingGame(newOne) {
+    this.navigate(`/admin/game/${newOne.value}`, { replace: true });
+    this.requestGame(newOne.value);
   }
 
   //---------------------------------------------------------------------------------------------
@@ -39,7 +45,7 @@ class GameFormPage extends ModelFormPage {
 
   onChangeDescription(event) {
     let game = this.state.game;
-    game.description = event.target.value;
+    game.descripcion = event.target.value;
     this.setState({ game: game });
   }
 
@@ -223,25 +229,39 @@ class GameFormPage extends ModelFormPage {
   }
 
   componentDidMount() {
+    SocketController.sendCustomWithCallback(new SocketRequest(), DESTINATION_LIST_OF_GAMES, this.onGameSuccess.bind(this));
     SocketController.sendCustomWithCallback(new SocketRequest(), DESTINATION_LIST_OF_CATEGORIES, this.onCategorySuccess.bind(this));
-    if (this.state.mode === MODEL_FORM_MODE_EDIT) {
+    this.requestGame();
+  }
+
+  requestGame(id = this.state.id) {
+    console.log(id);
+    if (this.state.mode === MODEL_FORM_MODE_EDIT && (this.state.id)) {
       let request = new SocketRequest();
-      request.setParams({ id: this.state.id });
+      request.setParams({id: id});
+      console.log("entro");
       SocketController.sendCustomWithCallback(request, DESTINATION_GAMES, this.onGameResult.bind(this));
     }
   }
 
   onGameResult(response) {
     console.log(response);
-    this.setState({ game: response.data });
+    this.setState({ game: response.data, medias: response.data.medias });
+  }
+
+  onGameSuccess(response) {
+    this.setState({ listedGames: response.data});
   }
 
   onCategorySuccess(response) {
-    console.log(response);
     this.setState({ listedCategories: response.data });
   }
 
   render() {
+    let game = this.state.game;
+    if (!game) {
+      game = new Game();
+    }
     console.log(this.state.medias);
     return (
       <section className='row h-100 p-3 p-lg-0 m-0'>
@@ -253,12 +273,22 @@ class GameFormPage extends ModelFormPage {
           <form className='row w-100 m-0'>
             <section className='col-12 col-lg-8 mb-3 p-0 px-lg-3 order-1'>
               <section className='mb-3'>
+                <label htmlFor='selected-category-form'>Editing:</label>
+                <Select id='selected-category-form' className='flex-grow-1 p-0 pt-2 pt-sm-0 pl-sm-2' 
+                  placeholder={game.name || 'New Game'}
+                  isOptionSelected={opt => opt.value == game.id}
+                  hideSelectedOptions={true}
+                  options={this.getGamesOptions()} 
+                  onChange={this.onChangeEditingGame.bind(this)}/>    
+              </section>
+
+              <section className='mb-3'>
                 <label htmlFor='game-form--name'>Name:</label>
                 <input id='game-form--name' className='w-100 form-control' type='text' value={this.state.game.name || ''} onChange={this.onChangeName.bind(this)} autoComplete='false' />
               </section>
               <section className='d-flex flex-column'>
                 <label htmlFor='game-form--description'>Descripti&oacute;n:</label>
-                <textarea id='game-form--description' className='form-control no-resize' rows={10} value={this.state.game.description || ''} onChange={this.onChangeDescription.bind(this)} />
+                <textarea id='game-form--description' className='form-control no-resize' rows={10} value={this.state.game.descripcion || ''} onChange={this.onChangeDescription.bind(this)} />
               </section>
             </section>
 
@@ -309,7 +339,18 @@ class GameFormPage extends ModelFormPage {
     return (SessionManager.check()) ? <Navigate replace to="/home" /> : <></>;
   }
 
+  getGamesOptions() {
+    if ( !this.state.listedGames) return [];
+    let gamesOptions = [{value: -1, label: 'New game'}];
+    let listedGames = this.state.listedGames;
+    for (const game of listedGames) {
+      gamesOptions.push({ value: game.id, label: game.name });
+    }
+    return gamesOptions;
+  }
+
   getCategoriesOptions() {
+    if ( !this.state.game || !this.state.listedCategories ) return [];
     let categoriesOptions = [];
     let leakedCategories = SocketDataFilter.getGamesNotIn(this.state.listedCategories, this.state.game.categories);
     for (const leakedCategory of leakedCategories) {
@@ -319,6 +360,8 @@ class GameFormPage extends ModelFormPage {
   }
 
   getCategoriesList() {
+    console.log(this.state.game);
+    if ( !this.state.game || !this.state.game.categories ) return [];
     let categoriesList = [];
     for (const category of this.state.game.categories) {
       let CategoryItem = withRouter(CategoryListItemComponent);
@@ -328,6 +371,8 @@ class GameFormPage extends ModelFormPage {
   }
 
   getMediasList() {
+    console.log(this.state.game);
+    if ( !this.state.game || !this.state.game.medias ) return [];
     let mediasList = [];
     for (const media of this.state.medias) {
       let MediaItem = withRouter(MediaListItemComponent);

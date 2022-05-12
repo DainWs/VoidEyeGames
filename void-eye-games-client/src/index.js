@@ -31,7 +31,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<LayoutPage />}>
             <Route index element={<HomePage />} />
-            <Route path="/games" element={<GamesPage />} />
+            <Route path="/games" element={<RouterGamePage />} />
             <Route path="/games/:name" element={<RouterGamePage/>} />
             <Route path="/details/:id" element={<GameDetailsPage />} />
             <Route path="/signin" element={<SignInFormPage />} />
@@ -39,11 +39,11 @@ export default function App() {
             <Route path="/support" element={<SupportPage />} />
             <Route path="/report" element={<ReportFormPage />} />
             
-            <Route path="/admin/game" element={<GameFormPage />} />
+            <Route path="/admin/game" element={<RouterGameFormPage />} />
             <Route path="/admin/game/:id" element={<RouterGameFormPage/>} />
-            <Route path="/admin/category" element={<CategoryFormPage />} />
+            <Route path="/admin/category" element={<RouterCategoryFormPage />} />
             <Route path="/admin/category/:id" element={<RouterCategoryFormPage />} />
-            <Route path="/admin/plataform" element={<PlataformFormPage />} />
+            <Route path="/admin/plataform" element={<RouterPlataformFormPage />} />
             <Route path="/admin/plataform/:id" element={<RouterPlataformFormPage />} />
             <Route path="*" element={<HomePage />} />
           </Route>

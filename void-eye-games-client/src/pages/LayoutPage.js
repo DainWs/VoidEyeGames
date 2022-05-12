@@ -4,10 +4,16 @@ import HeaderComponent from "../components/HeaderComponent";
 import React from "react";
 import { faAngleUp } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { SessionManager } from "../domain/SessionManager";
 
 class LayoutPage extends React.Component {
   toTopOfView() {
     window.scrollTo(0, 0);
+  }
+
+  componentDidMount() {
+    console.log("reloading");
+    SessionManager.reload();
   }
 
   render() {

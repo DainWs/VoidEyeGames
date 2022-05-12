@@ -35,10 +35,7 @@ class SocketDataFilter {
     getGamesWithoutCategory(gamesList, categoryId) {
         if (!gamesList) return [];
         return Array.from(gamesList)
-            .filter( v => {
-                console.log(v);
-                return !(new Game(v)).hasCategory(categoryId);
-            });
+            .filter( v => !(new Game(v)).hasCategory(categoryId));
     }
 
     getGamesNotIn(games, excludedGames) {
@@ -47,10 +44,7 @@ class SocketDataFilter {
         return Array.from(games)
             .filter( game => {
                 var searchGame = game;
-                return excluded.find( v => {
-                    console.log(v);
-                    return v.id === searchGame.id;
-                 } ) !== null;
+                return excluded.find( v => v.id === searchGame.id ) !== null;
             });
     }
 }

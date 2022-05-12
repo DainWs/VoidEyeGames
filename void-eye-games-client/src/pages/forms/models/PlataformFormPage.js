@@ -10,7 +10,7 @@ import { SessionManager } from '../../../domain/SessionManager';
 import { withRouter } from '../../../routes/Routes';
 import { SocketController } from '../../../services/socket/SocketController';
 import { SocketDataFilter } from '../../../services/socket/SocketDataFilter';
-import { DESTINATION_LIST_OF_GAMES, DESTINATION_PLATAFORM, DESTINATION_PLATAFORMS, DESTINATION_PLATAFORMS_UPDATES } from '../../../services/socket/SocketDestinations';
+import { DESTINATION_LIST_OF_GAMES, DESTINATION_LIST_OF_PLATAFORMS, DESTINATION_PLATAFORM, DESTINATION_PLATAFORMS, DESTINATION_PLATAFORMS_UPDATES } from '../../../services/socket/SocketDestinations';
 import SocketRequest from '../../../services/socket/SocketRequest';
 import ModelFormPage, { MODEL_FORM_MODE_EDIT } from './ModelFormPage';
 
@@ -29,7 +29,13 @@ class PlataformFormPage extends ModelFormPage {
     parentState.selectedGame = null;
     parentState.selectedFile = {};
     parentState.listedGames = [];
+    parentState.listedPlataforms = [];
     return parentState;
+  }
+
+  onChangeEditingPlataform(newOne) {
+    this.navigate(`/admin/plataform/${newOne.value}`, { replace: true });
+    this.requestPlataform(newOne.value);
   }
 
   //---------------------------------------------------------------------------------------------
@@ -82,7 +88,7 @@ class PlataformFormPage extends ModelFormPage {
         attachment.src = reader.result;
 
         console.log(attachment);
-        this.setState({selectedFile: attachment});
+        this.setState({ selectedFile: attachment });
       }.bind(this);
     }
   };
@@ -127,13 +133,13 @@ class PlataformFormPage extends ModelFormPage {
     if (this.state.editingGameId) {
       let plataformGame = this.state.plataformGame;
       plataform.setPlataformGame(plataformGame);
-      this.setState({editingGameId: null, plataform: plataform, plataformGame: new PlataformGame() });
+      this.setState({ editingGameId: null, plataform: plataform, plataformGame: new PlataformGame() });
     }
   }
 
   onGameContextClick(id) {
     let gamesElements = document.getElementById('games-list');
-    for(const element of gamesElements.children) {
+    for (const element of gamesElements.children) {
       if (element.id !== id) element.blur();
     }
   }
@@ -157,7 +163,7 @@ class PlataformFormPage extends ModelFormPage {
 
     let destination = DESTINATION_PLATAFORM;
     if (this.state.mode === MODEL_FORM_MODE_EDIT) {
-        destination = DESTINATION_PLATAFORMS_UPDATES;
+      destination = DESTINATION_PLATAFORMS_UPDATES;
     }
 
     SocketController.sendCustomWithCallback(
@@ -170,8 +176,8 @@ class PlataformFormPage extends ModelFormPage {
 
   onSuccess(response) {
     if (response.data.status !== 200) {
-        this.onFailed(response);
-        return;
+      this.onFailed(response);
+      return;
     }
     document.getElementById('navigate-home').click();
   }
@@ -181,19 +187,26 @@ class PlataformFormPage extends ModelFormPage {
   }
 
   componentDidMount() {
+    SocketController.sendCustomWithCallback(new SocketRequest(), DESTINATION_LIST_OF_PLATAFORMS, this.onPlataformSuccess.bind(this));
     SocketController.sendCustomWithCallback(new SocketRequest(), DESTINATION_LIST_OF_GAMES, this.onGameSuccess.bind(this));
-    console.log(this.state.mode);
+    this.requestPlataform();
+  }
+
+  requestPlataform(id = this.state.id) {
     if (this.state.mode === MODEL_FORM_MODE_EDIT) {
       let request = new SocketRequest();
-      request.setParams({ id: this.state.id });
+      request.setParams({ id: id });
       console.log(request);
       SocketController.sendCustomWithCallback(request, DESTINATION_PLATAFORM, this.onPlataformResult.bind(this));
     }
   }
 
   onPlataformResult(response) {
-    console.log(response.data);
     this.setState({ plataform: response.data });
+  }
+
+  onPlataformSuccess(response) {
+    this.setState({ listedPlataforms: response.data });
   }
 
   onGameSuccess(response) {
@@ -211,10 +224,16 @@ class PlataformFormPage extends ModelFormPage {
             <h1 className='text-center'>Plataforms Form</h1>
           </header>
           <form className='d-flex flex-column flex-grow-1 w-100 p-3 p-sm-0'>
+            <section className='mb-3'>
+              <label htmlFor='selected-plataform-form'>Editing:</label>
+              <Select id='selected-plataform-form' className='flex-grow-1 p-0 pt-2 pt-sm-0 pl-sm-2'
+                placeholder={plataform.name || 'New Plataform'}
+                isOptionSelected={opt => opt.value == plataform.id}
+                hideSelectedOptions={true}
+                options={this.getPlataformsOptions()}
+                onChange={this.onChangeEditingPlataform.bind(this)} />
+            </section>
             <section className='row w-100 m-0 p-0'>
-              <header className='col-12 p-0'>
-                <h2>Plataform data</h2>
-              </header>
               <section className='col-12 col-sm-6 col-lg-3 p-0 pr-sm-3'>
                 <label htmlFor='plataform-form--name' className='m-0'>Name:</label>
                 <input id='plataform-form--name' className='form-control w-100' type='text' value={plataform.name || ''} onChange={this.onChangeName.bind(this)} autoComplete='false' />
@@ -263,7 +282,7 @@ class PlataformFormPage extends ModelFormPage {
                 {this.getEnableButtonView()}
               </section>
               <section className='col-12 col-sm-3 col-lg-2 p-0 mt-2 mt-sm-0'>
-                <label className='m-0'/>
+                <label className='m-0' />
                 <div className='m-0 mt-3 mt-sm-0 p-0'>
                   <a className='btn btn-form text-dark d-flex align-items-center justify-content-center ml-sm-3' onClick={this.onSaveClick.bind(this)}>Save game</a>
                 </div>
@@ -280,7 +299,7 @@ class PlataformFormPage extends ModelFormPage {
               <a className='btn btn-form w-100 text-dark' onClick={this.submit.bind(this)}>Save all</a>
             </section>
           </form>
-          
+
           {this.getErrorView()}
         </article>
       </section>
@@ -289,6 +308,15 @@ class PlataformFormPage extends ModelFormPage {
 
   checkSession() {
     return (SessionManager.check()) ? <Navigate replace to="/home" /> : <></>;
+  }
+
+  getPlataformsOptions() {
+    let plataformsOptions = [{ value: -1, label: 'New plataform' }];
+    let listedPlataforms = this.state.listedPlataforms;
+    for (const plataform of listedPlataforms) {
+      plataformsOptions.push({ value: plataform.id, label: plataform.name });
+    }
+    return plataformsOptions;
   }
 
   getEnableButtonView() {
@@ -311,7 +339,7 @@ class PlataformFormPage extends ModelFormPage {
   }
 
   getGamesList() {
-    let plataform = (this.state.plataform) ? this.state.plataform : {games: null};
+    let plataform = (this.state.plataform) ? this.state.plataform : { games: null };
     if (!plataform.games) return;
     let gamesList = [];
     for (const game of plataform.games) {

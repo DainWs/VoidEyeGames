@@ -48,24 +48,36 @@ Final project for 2ºDAW, its a website is intended for support in the search fo
     - [X] Best plataforms to buy
     - [X] A description
     - [X] User comments
-        - [ ] Logged user can add Comments
+        - [X] Logged user can add Comments
 - [X] Support View
     - [X] GeoLocation
     - [X] Report form navigation button
 - [X] Report Form View
 - [X] Login Form View
     - [ ] [Optional] Recovery password
-- [ ] Signin Form View
+- [X] Signin Form View
 
-- [ ] **Admin** Game Form View
-    - [ ] Add games.
+- [X] **Admin** Game Form View
+    - [ ] A list of games to select which one do you want to edit
+    - [X] Add games.
     - [ ] Add categories to game.
     - [ ] Add images to game.
+    - [ ] Edit Games
 - [ ] **Admin** Plataform Form View
-    - [ ] Add Plataforms.
-    - [ ] Add games to plataform with prices and discount of the plataform.
-- [ ] **Admin** Categories Form View
-    - [ ] Add category.
-    - [ ] Add games to category.
+    - [X] A list of Plataforms to select which one do you want to edit
+    - [X] Add Plataforms.
+    - [~] Add games to plataform with prices and discount of the plataform.
+    - [ ] Edit plataforms
+- [X] **Admin** Categories Form View
+    - [X] A list of categories to select which one do you want to edit
+    - [X] Add category.
+    - [X] Add games to category.
+    - [X] Edit categories
+
+# fix
+- [ ] Cuando un juego o una plataforma se esta editando, dice que el campo de la imagen es requerido, en caso de editar, que este no lo sea.
+- [ ] Hay problemas con la edicion de juegos, y tal vez con la insercion de los mismos
+
+- [ ] Es posible que haya que checkear otra vez la seccion de admin.
 
 ## Structure

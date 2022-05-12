@@ -6,6 +6,7 @@ export const MODEL_FORM_MODE_EDIT = 1;
 class ModelFormPage extends React.Component {
     constructor(props) {
         super(props);
+        this.navigate = props.navigate;
         this.state = this.createState(props);
     }
 
@@ -13,7 +14,8 @@ class ModelFormPage extends React.Component {
         if (props.params === undefined) {
             return {mode: MODEL_FORM_MODE_NEW, id: null};
         }
-        return {mode: MODEL_FORM_MODE_EDIT, id: props.params.id};
+        let id = (props.params.id == 'null') ? null : props.params.id;
+        return {mode: MODEL_FORM_MODE_EDIT, id: id};
     }
 
     render() {

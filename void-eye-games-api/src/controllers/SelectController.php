@@ -106,7 +106,7 @@ class SelectController extends BaseController
         $gameId = $request->getParam('id', 1);
 
         $game = $this->atlas->select(Game::class)
-            ->with(['medias', 'plataforms_games' => ['plataforms']])
+            ->with(['medias', 'plataforms_games' => ['plataforms'], 'categories'])
             ->where('id =', $gameId)
             ->fetchRecord();
 
