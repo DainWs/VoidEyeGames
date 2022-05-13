@@ -44,7 +44,7 @@ class SocketDataFilter {
         return Array.from(games)
             .filter( game => {
                 var searchGame = game;
-                return excluded.find( v => v.id === searchGame.id ) !== null;
+                return (excluded.find( v => v.id == searchGame.id )) !== null;
             });
     }
 }

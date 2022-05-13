@@ -9,7 +9,7 @@ import { SocketController } from '../../../services/socket/SocketController';
 import { SocketDataFilter } from '../../../services/socket/SocketDataFilter';
 import { DESTINATION_CATEGORIES, DESTINATION_CATEGORIES_UPDATES, DESTINATION_CATEGORY, DESTINATION_LIST_OF_CATEGORIES, DESTINATION_LIST_OF_GAMES } from '../../../services/socket/SocketDestinations';
 import SocketRequest from '../../../services/socket/SocketRequest';
-import ModelFormPage, { MODEL_FORM_MODE_EDIT } from './ModelFormPage';
+import ModelFormPage, { MODEL_FORM_MODE_EDIT, MODEL_FORM_MODE_NEW } from './ModelFormPage';
 
 // TODO check multi games context menu
 class CategoryFormPage extends ModelFormPage {
@@ -25,7 +25,13 @@ class CategoryFormPage extends ModelFormPage {
 
     onChangeEditingCategory(newOne) {
         this.navigate(`/admin/category/${newOne.value}`, { replace: true });
-        this.requestCategory(newOne.value);
+        if (newOne.value == -1) {
+            this.setState({mode: MODEL_FORM_MODE_NEW});
+            this.requestCategory(newOne.value);
+        } else {
+            this.setState({mode: MODEL_FORM_MODE_EDIT});
+            this.requestCategory(newOne.value, MODEL_FORM_MODE_EDIT);
+        }
     }
 
     //---------------------------------------------------------------------------------------------
@@ -112,8 +118,8 @@ class CategoryFormPage extends ModelFormPage {
         this.requestCategory();
     }
 
-    requestCategory(id = this.state.id) {
-        if (this.state.mode === MODEL_FORM_MODE_EDIT && (this.state.id)) {
+    requestCategory(id = this.state.id, mode = this.state.mode) {
+        if (mode === MODEL_FORM_MODE_EDIT && (id)) {
             let request = new SocketRequest();
             request.setParams({id: id});
             SocketController.sendCustomWithCallback(request, DESTINATION_CATEGORY, this.onCategoryResult.bind(this));
@@ -121,23 +127,25 @@ class CategoryFormPage extends ModelFormPage {
     }
 
     onCategoryResult(response) {
-        this.setState({category: response.data});
+        console.log(response);
+        let category = response.data;
+        if (!category) category = new Category();
+        this.setState({category: category});
     }
 
     onCategoriesResult(response) {
-        this.setState({listedCategories: response.data});
+        let listedCategories = response.data;
+        if (!listedCategories) listedCategories = [];
+        this.setState({listedCategories: listedCategories});
     }
 
     onGameSuccess(response) {
-        this.setState({listedGames: response.data});
+        let listedGames = response.data;
+        if (!listedGames) listedGames = [];
+        this.setState({listedGames: listedGames});
     }
 
     render() {
-        let category = this.state.category;
-        if (category == null) {
-            category = new Category();
-        }
-        console.log(this.state.category);
         SessionManager.reload();
         return (
             <section className='row h-100'>
@@ -149,9 +157,9 @@ class CategoryFormPage extends ModelFormPage {
                     <form className='d-flex flex-column flex-grow-1'>
                         <section className='mb-3'>
                             <label htmlFor='selected-category-form'>Editing:</label>
-                            <Select id='selected-category-form' className='flex-grow-1 p-0 pt-2 pt-sm-0 pl-sm-2' 
-                                placeholder={category.name || 'New Category'}
-                                isOptionSelected={opt => opt.value == category.id}
+                            <Select id='selected-category-form' className='flex-grow-1 p-0 pt-2 pt-sm-0' 
+                                placeholder={this.state.category.name || 'New Category'}
+                                isOptionSelected={opt => opt.value == this.state.category.id}
                                 hideSelectedOptions={true}
                                 options={this.getCategoriesOptions()} 
                                 onChange={this.onChangeEditingCategory.bind(this)}/>    
@@ -159,15 +167,15 @@ class CategoryFormPage extends ModelFormPage {
 
                         <section className='mb-3'>
                             <label htmlFor='category-form--name'>Name:</label>
-                            <input id='category-form--name' className='w-100 form-control' type='text' value={category.name || ''} onChange={this.onChangeName.bind(this)} autoComplete='false'/>
+                            <input id='category-form--name' className='w-100 form-control' type='text' value={this.state.category.name || ''} onChange={this.onChangeName.bind(this)} autoComplete='false'/>
                         </section>
                         <section className='row w-100 m-0'>
                             <Select className='flex-grow-1 p-0' options={this.getGamesOptions()} onChange={this.onChangeSelectedGame.bind(this)}/>
                             <a className='btn btn-form  text-dark col-12 col-sm-2 m-0 mt-3 mt-sm-0 ml-sm-2' onClick={this.addSelectedGame.bind(this)}>Add game</a>
                         </section>
-                        <hr className='w-100'/>
-                        <fieldset id='games-list' title='Games in category' className='d-flex flex-column flex-grow-1 w-100 border border-gray rounded' style={{ overflowX: 'hidden',overflowY: 'scroll', minHeight: '100px'}}>
-                            <div className='d-flex flex-column flex-grow-1 w-100 h-100' style={{ overflowX: 'hidden', overflowY: 'scroll', minHeight: '200px' }}>
+                        <hr className='w-100 my-3'/>
+                        <fieldset id='games-list' title='Games in category' className='d-flex flex-column flex-grow-1 w-100 border border-gray rounded' style={{ minHeight: '200px'}}>
+                            <div className='d-flex flex-column flex-grow-1 w-100 h-100' style={{ minHeight: '200px' }}>
                                 {this.getGamesList()}
                             </div>
                         </fieldset>
@@ -195,7 +203,6 @@ class CategoryFormPage extends ModelFormPage {
     }
 
     getGamesOptions() {
-        if (!this.state.category) return [];
         let gamesOptions = [];
         let leakedGames = SocketDataFilter.getGamesNotIn(this.state.listedGames, this.state.category.games);
         for (const leakedGame of leakedGames) {
@@ -205,7 +212,6 @@ class CategoryFormPage extends ModelFormPage {
     }
 
     getGamesList() {
-        if (!this.state.category) return [];
         let gamesList = [];
         for (const game of this.state.category.games) {
             let GameItem = withRouter(GameListItemComponent);

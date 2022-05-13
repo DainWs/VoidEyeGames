@@ -8,6 +8,9 @@ class Plataform {
         this.url = builder.url;
         this.games = builder.games;
         this.plataforms_games = builder.plataforms_games;
+        if (builder.src) {
+            this.src = builder.src;
+        }
     }
 
     addGame(game) {

@@ -6,9 +6,13 @@ class Media {
         this.id = builder.id;
         this.gamesId = builder.gamesId;
         this.mediaType = builder.mediaType;
+        if (builder.src) {
+            this.src = builder.src;
+        }
     }
     
     getUrl() {
+        if (this.src) return this.src;
         try {
             let type = MediaTypeEnum.getMediaTypeByType(this.mediaType);
             return ResourceManger.getImageUrl(`games/medias/${this.gamesId}-${this.id}.${type.getExtension()}`);

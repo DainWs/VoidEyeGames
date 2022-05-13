@@ -32,6 +32,7 @@
     "react-router-dom": "^6.2.1",
     "react-scripts": "^5.0.0",
     "react-select": "^5.3.1",
+    "react-tooltip": "^4.2.21",
     "redux": "^4.2.0",
     "sass": "^1.49.9",
     "video-react": "^0.15.0"

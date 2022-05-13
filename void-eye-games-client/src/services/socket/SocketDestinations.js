@@ -1,5 +1,5 @@
 const DESTINATION_GAMES = '/game';
-const DESTINATION_PLATAFORM_UPDATES = '/games/updates';
+const DESTINATION_PLATAFORM_UPDATES = '/game/update';
 const DESTINATION_PLATAFORM_GAMES = '/games';
 const DESTINATION_LIST_OF_GAMES = '/games/listed';
 

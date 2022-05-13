@@ -28,21 +28,25 @@ Final project for 2ºDAW, its a website is intended for support in the search fo
 - [X] Signin Form View
 
 - [X] **Admin** Game Form View
-    - [ ] A list of games to select which one do you want to edit
+    - [X] A list of games to select which one do you want to edit
     - [X] Add games.
     - [ ] Add categories to game.
-    - [ ] Add images to game.
+    - [X] Add images to game.
     - [ ] Edit Games
 - [ ] **Admin** Plataform Form View
-    - [ ] A list of Plataforms to select which one do you want to edit
+    - [X] A list of Plataforms to select which one do you want to edit
     - [X] Add Plataforms.
     - [~] Add games to plataform with prices and discount of the plataform.
     - [ ] Edit plataforms
 - [X] **Admin** Categories Form View
-    - [ ] A list of categories to select which one do you want to edit
+    - [X] A list of categories to select which one do you want to edit
     - [X] Add category.
     - [X] Add games to category.
     - [X] Edit categories
 
-## TO FIX
-- [ ] Cuando se inserta un objeto correctamente, deberia redirigirte a la misma pagina pero con el id con el que se inserto
+# fix
+- [ ] Cuando un juego o una plataforma se esta editando, dice que el campo de la imagen es requerido, en caso de editar, que este no lo sea. (SOLO EN PLATAFORMA CREO)
+- [ ] Faltan cositas en la edicion de plataformas.
+- [ ] Hay problemas con la edicion de juegos, y tal vez con la insercion de los mismos
+
+- [ ] Es posible que haya que checkear otra vez la seccion de admin.

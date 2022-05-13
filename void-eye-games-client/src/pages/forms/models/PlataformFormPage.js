@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { Navigate } from 'react-router-dom';
 import Select from 'react-select';
+import ReactTooltip from 'react-tooltip';
 import GameListItemComponent from '../../../components/models/lists/GameListItemComponent';
 import Plataform from '../../../domain/models/dtos/Plataform';
 import PlataformGame from '../../../domain/models/dtos/PlataformGame';
@@ -35,7 +36,13 @@ class PlataformFormPage extends ModelFormPage {
 
   onChangeEditingPlataform(newOne) {
     this.navigate(`/admin/plataform/${newOne.value}`, { replace: true });
-    this.requestPlataform(newOne.value);
+    if (newOne.value == -1) {
+        this.setState({mode: MODEL_FORM_MODE_NEW});
+        this.requestPlataform(newOne.value);
+    } else {
+        this.setState({mode: MODEL_FORM_MODE_EDIT});
+        this.requestPlataform(newOne.value, MODEL_FORM_MODE_EDIT);
+    }
   }
 
   //---------------------------------------------------------------------------------------------
@@ -192,30 +199,35 @@ class PlataformFormPage extends ModelFormPage {
     this.requestPlataform();
   }
 
-  requestPlataform(id = this.state.id) {
-    if (this.state.mode === MODEL_FORM_MODE_EDIT) {
+  requestPlataform(id = this.state.id, mode = this.state.mode) {
+    if (mode === MODEL_FORM_MODE_EDIT && (id)) {
       let request = new SocketRequest();
       request.setParams({ id: id });
-      console.log(request);
       SocketController.sendCustomWithCallback(request, DESTINATION_PLATAFORM, this.onPlataformResult.bind(this));
     }
   }
 
   onPlataformResult(response) {
-    this.setState({ plataform: response.data });
+    let plataform = response.data;
+    if (!plataform) plataform = new Plataform();
+    let selectedFile = {name: plataform.name, src: plataform.getLogo()};
+    this.setState({ plataform: plataform, selectedFile: selectedFile });
   }
 
   onPlataformSuccess(response) {
-    this.setState({ listedPlataforms: response.data });
+    let listedPlataforms = response.data;
+    if (!listedPlataforms) listedPlataforms = [];
+    this.setState({ listedPlataforms: listedPlataforms });
   }
 
   onGameSuccess(response) {
-    this.setState({ listedGames: response.data });
+    let listedGames = response.data;
+    if (!listedGames) listedGames = [];
+    this.setState({ listedGames: listedGames });
   }
 
   render() {
     SessionManager.reload();
-    let plataform = (this.state.plataform) ? this.state.plataform : {};
     return (
       <section className='row h-100'>
         {this.checkSession()}
@@ -226,25 +238,26 @@ class PlataformFormPage extends ModelFormPage {
           <form className='d-flex flex-column flex-grow-1 w-100 p-3 p-sm-0'>
             <section className='mb-3'>
               <label htmlFor='selected-plataform-form'>Editing:</label>
-              <Select id='selected-plataform-form' className='flex-grow-1 p-0 pt-2 pt-sm-0 pl-sm-2'
-                placeholder={plataform.name || 'New Plataform'}
-                isOptionSelected={opt => opt.value == plataform.id}
+              <Select id='selected-plataform-form' className='flex-grow-1 p-0 pt-2 pt-sm-0'
+                placeholder={this.state.plataform.name || 'New Plataform'}
+                isOptionSelected={opt => opt.value == this.state.plataform.id}
                 hideSelectedOptions={true}
                 options={this.getPlataformsOptions()}
                 onChange={this.onChangeEditingPlataform.bind(this)} />
             </section>
             <section className='row w-100 m-0 p-0'>
               <section className='col-12 col-sm-6 col-lg-3 p-0 pr-sm-3'>
-                <label htmlFor='plataform-form--name' className='m-0'>Name:</label>
-                <input id='plataform-form--name' className='form-control w-100' type='text' value={plataform.name || ''} onChange={this.onChangeName.bind(this)} autoComplete='false' />
+                <label htmlFor='plataform-form--name' className='m-0 mb-sm-2'>Name:</label>
+                <input id='plataform-form--name' className='form-control w-100' type='text' value={this.state.plataform.name || ''} onChange={this.onChangeName.bind(this)} autoComplete='false' />
               </section>
-              <section className='col-12 col-sm-6 col-lg-6 p-0'>
-                <label htmlFor='plataform-form--name' className='m-0'>Web Url:</label>
-                <input id='plataform-form--name' className='form-control w-100' type='text' value={plataform.url || ''} onChange={this.onChangeUrl.bind(this)} autoComplete='false' />
+              <section className='col-12 col-sm-6 col-lg-4 p-0'>
+                <label htmlFor='plataform-form--name' className='m-0 mb-sm-2'>Web Url:</label>
+                <input id='plataform-form--name' className='form-control w-100' type='text' value={this.state.plataform.url || ''} onChange={this.onChangeUrl.bind(this)} autoComplete='false' />
               </section>
-              <section className='col-12 col-lg-3 p-0'>
-                <div className='m-0 mt-3 mt-sm-0 p-0 pl-sm-3'>
-                  <label className='type-file m-0'>Filename: {this.state.selectedFile.name || 'None file uploaded'} {this.state.selectedFile.size || ''}</label>
+              <section className='col-12 col-lg-5 p-0'>
+                <div className='row m-0 mt-3 mt-sm-0 mb-sm-2 p-0'>
+                  <label className='col-12 col-sm-6 type-file m-0'>Filename: {this.state.selectedFile.name || 'None file uploaded'} {this.state.selectedFile.size || ''}</label>
+                  <a className='col-12 col-sm-6 p-sm-0 btn btn-secondary w-100 text-priamry' data-tip={this.getImageView()}>Show image</a>
                 </div>
                 <div className='m-0 mt-3 mt-sm-0 p-0'>
                   <label htmlFor='plataform-form--logo' className='btn btn-form d-block m-0 ml-lg-3'><FontAwesomeIcon icon={faUpload} /> Upload file</label>
@@ -259,7 +272,7 @@ class PlataformFormPage extends ModelFormPage {
               </section>
             </section>
 
-            <hr className='w-100' />
+            <hr className='w-100 my-3' />
 
             <section className='row w-100 m-0 p-0 mb-3'>
               <header className='col-12 p-0'>
@@ -289,8 +302,8 @@ class PlataformFormPage extends ModelFormPage {
               </section>
             </section>
 
-            <fieldset id='games-list' title='Games in plataform' className='d-flex flex-column flex-grow-1 w-100 border border-gray rounded' style={{ overflowX: 'hidden', minHeight: '150px', overflowY: 'scroll' }}>
-              <div className='d-flex flex-column flex-grow-1 w-100 h-100' style={{ overflowX: 'hidden', overflowY: 'scroll', minHeight: '200px' }}>
+            <fieldset id='games-list' title='Games in plataform' className='d-flex flex-column flex-grow-1 w-100 border border-gray rounded' style={{ minHeight: '200px' }}>
+              <div className='d-flex flex-column flex-grow-1 w-100 h-100' style={{ minHeight: '200px' }}>
                 {this.getGamesList()}
               </div>
             </fieldset>
@@ -302,12 +315,17 @@ class PlataformFormPage extends ModelFormPage {
 
           {this.getErrorView()}
         </article>
+        <ReactTooltip html={true} place={'top'} />
       </section>
     );
   }
 
   checkSession() {
     return (SessionManager.check()) ? <Navigate replace to="/home" /> : <></>;
+  }
+
+  getImageView() {
+    return `<img src="${this.state.selectedFile.src}" alt="Main image" style="max-width: 200px" />`;
   }
 
   getPlataformsOptions() {

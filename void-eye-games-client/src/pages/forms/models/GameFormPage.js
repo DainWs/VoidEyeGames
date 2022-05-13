@@ -1,6 +1,7 @@
 import { faUpload } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
+import ReactTooltip from 'react-tooltip'
 import Select from 'react-select'
 import { Navigate } from 'react-router-dom';
 import Game from '../../../domain/models/dtos/Game';
@@ -10,8 +11,8 @@ import { DESTINATION_GAMES, DESTINATION_LIST_OF_CATEGORIES, DESTINATION_LIST_OF_
 import { SocketDataFilter } from '../../../services/socket/SocketDataFilter';
 import { SocketController } from '../../../services/socket/SocketController';
 import SocketRequest from '../../../services/socket/SocketRequest';
-import CategoryListItemComponent from '../../../components/models/lists/CategoryListItemComponent copy';
-import MediaListItemComponent from '../../../components/models/lists/MediaListItemComponent copy 2';
+import CategoryListItemComponent from '../../../components/models/lists/CategoryListItemComponent';
+import MediaListItemComponent from '../../../components/models/lists/MediaListItemComponent';
 import Media from '../../../domain/models/dtos/Media';
 import { withRouter } from '../../../routes/Routes';
 
@@ -30,7 +31,13 @@ class GameFormPage extends ModelFormPage {
 
   onChangeEditingGame(newOne) {
     this.navigate(`/admin/game/${newOne.value}`, { replace: true });
-    this.requestGame(newOne.value);
+    if (newOne.value == -1) {
+        this.setState({mode: MODEL_FORM_MODE_NEW});
+        this.requestGame(newOne.value);
+    } else {
+        this.setState({mode: MODEL_FORM_MODE_EDIT});
+        this.requestGame(newOne.value, MODEL_FORM_MODE_EDIT);
+    }
   }
 
   //---------------------------------------------------------------------------------------------
@@ -210,7 +217,7 @@ class GameFormPage extends ModelFormPage {
 
     SocketController.sendCustomWithCallback(
       request,
-      DESTINATION_GAMES,
+      destination,
       this.onSuccess.bind(this),
       this.onFailed.bind(this)
     );
@@ -234,19 +241,19 @@ class GameFormPage extends ModelFormPage {
     this.requestGame();
   }
 
-  requestGame(id = this.state.id) {
-    console.log(id);
-    if (this.state.mode === MODEL_FORM_MODE_EDIT && (this.state.id)) {
+  requestGame(id = this.state.id, mode = this.state.mode) {
+    if (mode === MODEL_FORM_MODE_EDIT && (id)) {
       let request = new SocketRequest();
       request.setParams({id: id});
-      console.log("entro");
       SocketController.sendCustomWithCallback(request, DESTINATION_GAMES, this.onGameResult.bind(this));
     }
   }
 
   onGameResult(response) {
     console.log(response);
-    this.setState({ game: response.data, medias: response.data.medias });
+    let game = new Game(response.data);
+    let mainImage = {name: game.name, href: game.getImageUrl()};
+    this.setState({ game: game, medias: game.medias, mainImage: mainImage });
   }
 
   onGameSuccess(response) {
@@ -271,19 +278,18 @@ class GameFormPage extends ModelFormPage {
             <h1 className='text-center'>Games Form</h1>
           </header>
           <form className='row w-100 m-0'>
+            <section className='col-12 mb-3'>
+              <label htmlFor='selected-game-form'>Editing:</label>
+              <Select id='selected-game-form' className='flex-grow-1 p-0 pt-2 pt-sm-0' 
+                placeholder={game.name || 'New Game'}
+                isOptionSelected={opt => opt.value == game.id}
+                hideSelectedOptions={true}
+                options={this.getGamesOptions()} 
+                onChange={this.onChangeEditingGame.bind(this)}/>    
+            </section>
             <section className='col-12 col-lg-8 mb-3 p-0 px-lg-3 order-1'>
               <section className='mb-3'>
-                <label htmlFor='selected-category-form'>Editing:</label>
-                <Select id='selected-category-form' className='flex-grow-1 p-0 pt-2 pt-sm-0 pl-sm-2' 
-                  placeholder={game.name || 'New Game'}
-                  isOptionSelected={opt => opt.value == game.id}
-                  hideSelectedOptions={true}
-                  options={this.getGamesOptions()} 
-                  onChange={this.onChangeEditingGame.bind(this)}/>    
-              </section>
-
-              <section className='mb-3'>
-                <label htmlFor='game-form--name'>Name:</label>
+                <label htmlFor='game-form--name' className='mb-sm-2'>Name:</label>
                 <input id='game-form--name' className='w-100 form-control' type='text' value={this.state.game.name || ''} onChange={this.onChangeName.bind(this)} autoComplete='false' />
               </section>
               <section className='d-flex flex-column'>
@@ -293,7 +299,7 @@ class GameFormPage extends ModelFormPage {
             </section>
 
             <section className='col-12 col-lg-8 mb-3 p-0 px-lg-3 order-2 order-lg-3'>
-              <hr className='w-100' />
+              <hr className='w-100 my-3' />
 
               <section className='row w-100 m-0'>
                 <Select className='flex-grow-1 p-0' options={this.getCategoriesOptions()} onChange={this.onChangeSelectedCategory.bind(this)} />
@@ -301,7 +307,7 @@ class GameFormPage extends ModelFormPage {
               </section>
 
               <fieldset id='categories-list' title='Categories in game' className='w-100 border mt-3 border-gray rounded'>
-                <div className='d-flex flex-column flex-grow-1 w-100 h-100' style={{ overflowX: 'hidden', overflowY: 'scroll', minHeight: '200px' }}>
+                <div className='d-flex flex-column flex-grow-1 w-100 h-100' style={{ minHeight: '200px' }}>
                   {this.getCategoriesList()}
                 </div>
               </fieldset>
@@ -309,8 +315,9 @@ class GameFormPage extends ModelFormPage {
 
             <section className='col-12 col-lg-4 d-flex flex-column mb-3 p-0 px-lg-3 order-3 order-lg-2'>
               <div className='mb-3'>
-                <div className='m-0 mt-3 mt-sm-0 p-0'>
-                  <label className='type-file m-0'>Filename: {this.state.mainImage.name || 'None image uploaded'} {this.state.mainImage.size || ''}</label>
+                <div className='row m-0 mt-3 mt-sm-0 mb-sm-2 p-0'>
+                  <label className='col-12 col-sm-6 type-file m-0 my-sm-auto p-0'>Filename: {this.state.mainImage.name || 'None image uploaded'} {this.state.mainImage.size || ''}</label>
+                  <a className='col-12 col-sm-6 p-sm-0 btn btn-secondary w-100 text-priamry' data-tip={this.getMainImageView()}>Show image</a>
                 </div>
                 <div className='m-0 mt-3 mt-sm-0 p-0'>
                   <label htmlFor='image-form--logo' className='btn btn-form d-block m-0'>Upload main game image</label>
@@ -322,8 +329,8 @@ class GameFormPage extends ModelFormPage {
 
             <section className='d-flex flex-column col-12 col-lg-4 mb-3 p-0 px-lg-3 order-4'>
               <hr className='d-none d-lg-block w-100 border-0' />
-              <fieldset id='medias-list' title='Medias in game' className='d-flex flex-column flex-grow-1 w-100 border border-gray rounded' style={{ overflowX: 'hidden', overflowY: 'scroll', minHeight: '100px' }}>
-                <div className='d-flex flex-column flex-grow-1 w-100 h-100' style={{ overflowX: 'hidden', overflowY: 'scroll', minHeight: '200px' }}>
+              <fieldset id='medias-list' title='Medias in game' className='d-flex flex-column flex-grow-1 w-100 border border-gray rounded' style={{ minHeight: '200px' }}>
+                <div className='d-flex flex-column flex-grow-1 w-100 h-100' style={{ minHeight: '200px' }}>
                   {this.getMediasList()}
                 </div>
               </fieldset>
@@ -332,11 +339,17 @@ class GameFormPage extends ModelFormPage {
           </form>
           {this.getErrorView()}
         </article>
+        <ReactTooltip html={true} place={'top'} />
       </section>
     );
   }
+
   checkSession() {
     return (SessionManager.check()) ? <Navigate replace to="/home" /> : <></>;
+  }
+
+  getMainImageView() {
+    return `<img src="${this.state.mainImage.href}" alt="Main image" style="max-width: 200px" />`;
   }
 
   getGamesOptions() {
