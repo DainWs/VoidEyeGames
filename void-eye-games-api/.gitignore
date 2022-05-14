@@ -2,3 +2,4 @@
 /logs/*
 vendor
 cache/*
+cache/credentials.json
