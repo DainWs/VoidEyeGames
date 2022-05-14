@@ -1,6 +1,8 @@
 //------------------------------------------------------------------
 // BASIC
 //------------------------------------------------------------------
+html { overflow-y: scroll; }
+
 body {
     & * {
         margin: 0;
@@ -9,28 +11,25 @@ body {
 
     overflow-x: hidden;
 
-    & .p {
-        &-right-top-0,
-        &-left-top-0,
-        &-top-0 {top: 0;}
-        
-        &-right-bottom-0,
-        &-left-bottom-0,
-        &-bottom-0 {bottom: 0;}
-    
-        &-right-bottom-1,
-        &-left-bottom-1,
-        &-bottom-1 {bottom: 1rem;}
-    
-        &-left-bottom-0,
-        &-left-top-0,
-        &-left-0 {left: 0;}
-        
-        &-right-bottom-0,
-        &-right-top-0,
-        &-right-0 {right: 0;}
+    $sizePosition: 0, 1;
+    $verticalPositions: none, top, bottom;
+    $horizontalPositions: right, left;
+    @each $sizePos in $sizePosition {
+        @each $horizontalPos in $horizontalPositions {
+            @include fix-position($sizePos, $horizontalPos);
+        }
 
-        &-right-bottom-1 {right: 1rem;}
+        @each $verticalPos in $verticalPositions {
+            @include fix-position($sizePos, $verticalPos);
+        }
+
+        @each $horizontalPos in $horizontalPositions {
+            @each $verticalPos in $verticalPositions {
+                @each $sizePos in $sizePosition {
+                    @include fix-position($sizePos, $horizontalPos, $verticalPos);
+                }
+            }
+        }
     }
 
     & .no {
@@ -62,9 +61,7 @@ body {
     
     & .list {
         &--item {
-            &:hover {
-                transition: background 0.2s ease-in-out;
-            }
+            @include btn-transition;
         }
     }
 

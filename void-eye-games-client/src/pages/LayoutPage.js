@@ -5,6 +5,9 @@ import React from "react";
 import { faAngleUp } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { SessionManager } from "../domain/SessionManager";
+import { withRouter } from "../routes/Routes";
+
+const RouterHeaderComponent = withRouter(HeaderComponent);
 
 class LayoutPage extends React.Component {
   toTopOfView() {
@@ -19,7 +22,7 @@ class LayoutPage extends React.Component {
   render() {
     return (
       <>
-        <HeaderComponent/>
+        <RouterHeaderComponent/>
         <div className="flex-grow-1"><Outlet /></div>
         <FooterComponent/>
 

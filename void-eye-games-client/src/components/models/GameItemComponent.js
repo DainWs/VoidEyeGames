@@ -17,7 +17,6 @@ class GameItemComponent extends React.Component {
   }
 
   render() {
-    console.log(this.state.plataformGame);
     this.linkId = `${this.state.plataformGame.plataformsId}-${this.state.plataformGame.games.id}__link-navigation`;
     return (
       <div className={this.getContainerClasses()}>

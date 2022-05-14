@@ -53,27 +53,29 @@ class LogInFormPage extends React.Component {
 
   render() {
     return (
-      <article className='m-auto p-2 p-sm-0 w-100' style={{maxWidth: '400px'}}>
+      <article className='p-2 p-sm-0 mt-5'>
         {this.getHasSession()}
-        <header>
-          <h1 className='text-align-center'>Log in</h1>
-        </header>
-        <form id='login-form' className='w-100'>
-          <section className='w-100'>
-            <label htmlFor='login-form--username'>Username:</label>
-            <input id='login-form--username' className='form-control w-100' type='text' value={this.state.username} onChange={this.onChangeUsername.bind(this)} autoComplete='false'/>
-          </section>
-          <section className='w-100'>
-            <label htmlFor='login-form--password'>Password:</label>
-            <input id='login-form--password' className='form-control w-100' type='password' value={this.state.password} onChange={this.onChangePassword.bind(this)} autoComplete='false'/>
-          </section>
-          {this.getErrorView()}
-          <section className='d-flex flex-column w-100 text-center'>
-            <a className='btn btn-quaternary w-100 text-primary' onClick={this.submit.bind(this)}>Log in</a>
-            <span>or register if you don't have an account yet</span>
-            <NavLink className='btn btn-secondary w-100 text-primary' to='/signin'>Sign in</NavLink>
-          </section>
-        </form>
+        <section className='m-auto' style={{maxWidth: '400px'}}>
+          <header>
+            <h1 className='text-align-center'>Log in</h1>
+          </header>
+          <form id='login-form' className='w-100'>
+            <section className='w-100 my-3'>
+              <label htmlFor='login-form--username'>Username:</label>
+              <input id='login-form--username' className='form-control w-100' type='text' value={this.state.username} onChange={this.onChangeUsername.bind(this)} autoComplete='false'/>
+            </section>
+            <section className='w-100 my-3'>
+              <label htmlFor='login-form--password'>Password:</label>
+              <input id='login-form--password' className='form-control w-100' type='password' value={this.state.password} onChange={this.onChangePassword.bind(this)} autoComplete='false'/>
+            </section>
+            {this.getErrorView()}
+            <section className='d-flex flex-column w-100 text-center my-3'>
+              <a className='btn btn-quaternary w-100 text-primary' onClick={this.submit.bind(this)}>Log in</a>
+              <span className='my-3'>or register if you don't have an account yet</span>
+              <NavLink className='btn btn-secondary w-100 text-primary' to='/signin'>Sign in</NavLink>
+            </section>
+          </form>
+        </section>
       </article>
     );
   }

@@ -4,20 +4,22 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMagnifyingGlass, faUser, faRightFromBracket, faBars, faArrowRightToBracket } from '@fortawesome/free-solid-svg-icons'
 import { SessionManager } from '../domain/SessionManager';
 import { EventObserver } from '../domain/EventObserver';
-import { EVENT_SESSION_CHANGE } from '../domain/EventsEnum';
-import { AccountTypeEnum, ACCOUNT_TYPE_ADMIN } from '../domain/models/AccountTypes';
+import { EVENT_SEARCH_GAME, EVENT_SESSION_CHANGE } from '../domain/EventsEnum';
+import { ACCOUNT_TYPE_ADMIN } from '../domain/models/AccountTypes';
 
 class HeaderComponent extends React.Component {
   constructor(props) {
     super(props);
+    this.navigate = props.navigate;
     this.state = {
-      session: SessionManager.getSession()
+      session: SessionManager.getSession(),
+      search: ""
     }
   }
   
   update() {
     this.setState({session: SessionManager.getSession()});
-    document.getElementById('navigate-home').click();
+    this.navigate('/home', {replace: true});
   }
   
   closeHamburger() {
@@ -30,8 +32,19 @@ class HeaderComponent extends React.Component {
     this.setState({session: SessionManager.getSession()});
   }
 
+  onChangeSearch(event) {
+    let newData = event.target.value;
+    console.log(newData);
+    if (newData !== this.state.search) {
+      EventObserver.notify(EVENT_SEARCH_GAME, newData + '');
+      this.setState({search: newData});
+    }
+  }
+
   onKeyDown(event) {
-    console.log(event); //13
+    if (event.keyCode == 13) {
+      this.navigate('/games', {replace: true});
+    }
   }
 
   componentDidMount() {
@@ -55,19 +68,22 @@ class HeaderComponent extends React.Component {
             {this.getGamesLink('games-link')}
             {this.getSupportLink('support-link')}
           </div>
-          <form className="form-inline d-none d-lg-flex" style={{width: '40%'}}>
+          <div className="form-inline d-none d-lg-flex" style={{width: '40vw'}}>
             <div className="input-group w-75">
               <div className="input-group-prepend">
-                <span className="input-group-text bg-primary border-0" id="search"><FontAwesomeIcon icon={faMagnifyingGlass} /></span>
+              <span className="input-group-text bg-primary border-0" id="search">
+                  <FontAwesomeIcon icon={faMagnifyingGlass} />
+                </span>
               </div>
               <input type="text" 
                 className="form-control border-0" 
-                placeholder="Search..." 
-                aria-label="Username" 
-                aria-describedby="search" 
+                placeholder="Search..."
+                style={{boxShadow: 'none', outline: 'none'}}
+                value={this.state.search} 
+                onChange={this.onChangeSearch.bind(this)}
                 onKeyDown={this.onKeyDown.bind(this)} />
             </div>
-          </form>
+          </div>
           <div className="dropdown d-none d-sm-block">
             {this.getSessionDropdownView()}
           </div>
@@ -81,7 +97,7 @@ class HeaderComponent extends React.Component {
               {this.getHomeLink('hamburger-4-home-link', this.closeHamburger)}
               {this.getGamesLink('hamburger-w-games-link', this.closeHamburger)}
               {this.getSupportLink('hamburger-6-support-link', this.closeHamburger)}
-              <hr/>
+              <hr className='bg-primary mx-3'/>
               {this.getSessionHamburgerView()}
             </div>
           </div>
@@ -115,6 +131,7 @@ class HeaderComponent extends React.Component {
         </a>
         <div className="dropdown-menu dropdown-menu-right mt-0 p-0 pb-1 border-none" style={{ top: "-5px !important", transform: "translate3d(-115px, 50px, 0px)", width: "250px"}} aria-labelledby="dropdownMenuLink">
           {this.getAdminDropdownView()}
+          <hr className='bg-primary'/>
           <a className="nav-link pr-4" href="#" onClick={this.closeHamburgerAndSession.bind(this)}><FontAwesomeIcon icon={faRightFromBracket} /> Sign out</a>
         </div>
       </>

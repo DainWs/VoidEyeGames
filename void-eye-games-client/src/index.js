@@ -32,7 +32,6 @@ export default function App() {
           <Route path="/" element={<LayoutPage />}>
             <Route index element={<HomePage />} />
             <Route path="/games" element={<RouterGamePage />} />
-            <Route path="/games/:name" element={<RouterGamePage/>} />
             <Route path="/details/:id" element={<GameDetailsPage />} />
             <Route path="/signin" element={<SignInFormPage />} />
             <Route path="/login" element={<LogInFormPage />} />

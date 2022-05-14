@@ -56,7 +56,7 @@ class HomePage extends React.Component {
     return (
       <section className='w-100 h-100'>
         <header className='home--header bg-dark' style={{minHeight: '320px', height: 'calc(20vw + 35vh)'}}>
-          <Carousel className='w-100' animation='zoom' autoplay={this.state.sliderGames.length > 1}>
+          <Carousel className='w-100' animation='zoom' autoplay={this.state.sliderGames.length > 1} renderBottomCenterControls={false}>
             {this.getSliderItems()}
           </Carousel>
         </header>
@@ -64,7 +64,7 @@ class HomePage extends React.Component {
           <header>
             <h1 className='text-center'>News</h1>
           </header>
-          <hr/>
+          <hr className='my-3'/>
           <div className='d-flex flex-wrap align-content-start justify-content-center'>
             {this.getNewsItems()}
           </div>

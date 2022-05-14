@@ -11,5 +11,7 @@
             color: $text-secondary !important;
             border-color: #343a40 !important;
         }
+
+        @include btn-transition;
     }
 }

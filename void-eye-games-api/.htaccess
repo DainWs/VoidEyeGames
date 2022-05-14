@@ -28,3 +28,8 @@
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteRule ^ index.php [QSA,L]
 </IfModule>
+
+# On File not found
+<FilesMatch ".*\.(jpg|png|jpeg)$">
+    ErrorDocument 404 "./assets/images/not-found.png"
+</FilesMatch>

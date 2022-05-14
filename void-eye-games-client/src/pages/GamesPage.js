@@ -1,5 +1,7 @@
 import React from 'react';
 import GameItemComponent from '../components/models/GameItemComponent';
+import { EventObserver } from '../domain/EventObserver';
+import { EVENT_SEARCH_GAME } from '../domain/EventsEnum';
 import { SocketController } from '../services/socket/SocketController';
 import { SocketDataProvideer } from '../services/socket/SocketDataProvider';
 import { DESTINATION_CATEGORIES, DESTINATION_PLATAFORMS, DESTINATION_PLATAFORM_GAMES } from '../services/socket/SocketDestinations';
@@ -17,10 +19,8 @@ class GamesPage extends React.Component {
     this.pageNum = 1;
     this.isFiltring = false;
     this.hasMore = true;
-
-    let searchTitle = (props.searchTitle) ? props.searchTitle : '';
+    this.searchTitle = null;
     this.state = {
-      searchTitle: searchTitle,
       orderMethod: 'name',
       plataformsGames: [],
       categories: [],
@@ -31,7 +31,13 @@ class GamesPage extends React.Component {
   }
 
   setOrder(event) {
-    this.setState({orderMethod: event.target.value})
+    this.setState({orderMethod: event.target.value});
+  }
+
+  updateSearchedGame(newData) {
+    console.log(newData);
+    this.searchTitle = newData;
+    this.onFiltre();
   }
 
   updatePlataformGames() {
@@ -81,15 +87,18 @@ class GamesPage extends React.Component {
   }
 
   componentDidMount() {
+    EventObserver.subscribe(EVENT_SEARCH_GAME, 'GamesPage', this.updateSearchedGame.bind(this));
     SocketObserver.subscribe(DESTINATION_CATEGORIES, 'GamesPage', this.updateCategories.bind(this));
     SocketObserver.subscribe(DESTINATION_PLATAFORMS, 'GamesPage', this.updatePlataforms.bind(this));
     SocketObserver.subscribe(DESTINATION_PLATAFORM_GAMES, 'GamesPage', this.updatePlataformGames.bind(this));
+    
     SocketController.send(DESTINATION_CATEGORIES);
     SocketController.send(DESTINATION_PLATAFORMS);
     this.sendPlataformGamesRequest();
   }
 
   componentWillUnmount() {
+    EventObserver.unsubscribe(EVENT_SEARCH_GAME, 'GamesPage');
     SocketObserver.unsubscribe(DESTINATION_CATEGORIES, 'GamesPage');
     SocketObserver.unsubscribe(DESTINATION_PLATAFORMS, 'GamesPage');
     SocketObserver.unsubscribe(DESTINATION_PLATAFORM_GAMES, 'GamesPage');
@@ -98,11 +107,11 @@ class GamesPage extends React.Component {
   sendPlataformGamesRequest() {
     let params = {};
     params.pageNum = this.pageNum;
-    params.name = this.state.searchTitle;
+    params.name = this.searchTitle;
     params.sort = this.state.orderMethod;
     params.categories = Array.from(this.state.selectedCategories);
     params.plataforms = Array.from(this.state.selectedPlataforms);
-
+    console.log(params);
     let request = new SocketRequest();
     request.setParams(params);
     request.setMethod('GET');

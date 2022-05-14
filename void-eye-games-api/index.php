@@ -8,8 +8,16 @@ use src\domain\providers\AtlasProvider;
 use src\domain\providers\DatabaseProvider;
 include_once('autoload.php');
 
-$config = include('./SlimSettings.php');
-$app = new Slim\App(["settings" => $config]);
+$container = [];
+$container["settings"] = include('./SlimSettings.php');
+$container['notFoundHandler'] = function ($config) {
+    return function ($request, $response) use ($config) {
+        return $response
+            ->withHeader('Location', $_SERVER['APP_BASE_URL'].'/assets/images/not-found.png')
+            ->withStatus(302);
+    };
+};
+$app = new Slim\App($container);
 
 /*==== MIDDLEWARES ====*/
 $app->add(new HeadersMiddleware());
