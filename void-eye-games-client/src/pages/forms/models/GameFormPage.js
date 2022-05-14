@@ -33,7 +33,7 @@ class GameFormPage extends ModelFormPage {
     this.navigate(`/admin/game/${newOne.value}`, { replace: true });
     if (newOne.value == -1) {
         this.setState({mode: MODEL_FORM_MODE_NEW});
-        this.requestGame(newOne.value);
+        this.requestGame(newOne.value, MODEL_FORM_MODE_NEW);
     } else {
         this.setState({mode: MODEL_FORM_MODE_EDIT});
         this.requestGame(newOne.value, MODEL_FORM_MODE_EDIT);

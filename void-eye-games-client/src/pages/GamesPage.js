@@ -1,5 +1,6 @@
 import React from 'react';
 import GameItemComponent from '../components/models/GameItemComponent';
+import { EventDataProvider } from '../domain/EventDataProvider';
 import { EventObserver } from '../domain/EventObserver';
 import { EVENT_SEARCH_GAME } from '../domain/EventsEnum';
 import { SocketController } from '../services/socket/SocketController';
@@ -19,7 +20,7 @@ class GamesPage extends React.Component {
     this.pageNum = 1;
     this.isFiltring = false;
     this.hasMore = true;
-    this.searchTitle = null;
+    this.searchTitle = EventDataProvider.provide(EVENT_SEARCH_GAME);
     this.state = {
       orderMethod: 'name',
       plataformsGames: [],

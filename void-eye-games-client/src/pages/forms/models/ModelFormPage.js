@@ -25,13 +25,16 @@ class ModelFormPage extends React.Component {
     getErrorView() {
         let error = this.state.errors;
         if (error === undefined || error === null || error.length <= 0) return (<section><br/></section>);
-        let errorObject = JSON.parse(error);
-        let errorList = [];
-        for (const iterator in errorObject) {
-            console.log(iterator);
-            errorList.push(<p key={iterator} className='text-error m-0'>{errorObject[iterator]}</p>)
+        try {
+            let errorObject = JSON.parse(error);
+            let errorList = [];
+            for (const iterator in errorObject) {
+                errorList.push(<p key={iterator} className='text-error m-0'>{errorObject[iterator]}</p>)
+            }
+            return (<section className='my-2'><p className='text-error mb-1'>Warning:</p>{errorList}</section>);
+        }catch (ex) {
+            return (<section className='text-error my-2'><p className='mb-1'>Warning:</p>{error}</section>);
         }
-        return (<section className='my-2'><p className='text-error mb-1'>Warning:</p>{errorList}</section>);
     }
 }
 

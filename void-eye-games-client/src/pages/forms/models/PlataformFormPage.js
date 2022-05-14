@@ -38,7 +38,7 @@ class PlataformFormPage extends ModelFormPage {
     this.navigate(`/admin/plataform/${newOne.value}`, { replace: true });
     if (newOne.value == -1) {
         this.setState({mode: MODEL_FORM_MODE_NEW});
-        this.requestPlataform(newOne.value);
+        this.requestPlataform(newOne.value, MODEL_FORM_MODE_NEW);
     } else {
         this.setState({mode: MODEL_FORM_MODE_EDIT});
         this.requestPlataform(newOne.value, MODEL_FORM_MODE_EDIT);
@@ -164,6 +164,7 @@ class PlataformFormPage extends ModelFormPage {
   submit() {
     let plataform = this.state.plataform;
     plataform.games = [];
+    console.log(plataform);
     let request = new SocketRequest();
     request.setBody(JSON.stringify(plataform));
     request.setMethod('POST');

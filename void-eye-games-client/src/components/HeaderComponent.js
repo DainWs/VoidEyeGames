@@ -6,6 +6,7 @@ import { SessionManager } from '../domain/SessionManager';
 import { EventObserver } from '../domain/EventObserver';
 import { EVENT_SEARCH_GAME, EVENT_SESSION_CHANGE } from '../domain/EventsEnum';
 import { ACCOUNT_TYPE_ADMIN } from '../domain/models/AccountTypes';
+import { EventDataProvider } from '../domain/EventDataProvider';
 
 class HeaderComponent extends React.Component {
   constructor(props) {
@@ -36,6 +37,7 @@ class HeaderComponent extends React.Component {
     let newData = event.target.value;
     console.log(newData);
     if (newData !== this.state.search) {
+      EventDataProvider.supply(EVENT_SEARCH_GAME, newData + '');
       EventObserver.notify(EVENT_SEARCH_GAME, newData + '');
       this.setState({search: newData});
     }

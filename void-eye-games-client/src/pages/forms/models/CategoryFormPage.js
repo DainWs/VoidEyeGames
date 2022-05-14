@@ -20,6 +20,7 @@ class CategoryFormPage extends ModelFormPage {
         parentState.selectedGame = null;
         parentState.listedGames = [];
         parentState.listedCategories = [];
+        parentState.errors = null;
         return parentState;
     }
 
@@ -27,7 +28,7 @@ class CategoryFormPage extends ModelFormPage {
         this.navigate(`/admin/category/${newOne.value}`, { replace: true });
         if (newOne.value == -1) {
             this.setState({mode: MODEL_FORM_MODE_NEW});
-            this.requestCategory(newOne.value);
+            this.requestCategory(newOne.value, MODEL_FORM_MODE_NEW);
         } else {
             this.setState({mode: MODEL_FORM_MODE_EDIT});
             this.requestCategory(newOne.value, MODEL_FORM_MODE_EDIT);
@@ -89,7 +90,7 @@ class CategoryFormPage extends ModelFormPage {
         request.setMethod('POST');
         
         let destination = DESTINATION_CATEGORIES;
-        if (this.state.mode === MODEL_FORM_MODE_EDIT) {
+        if (category.id && category.id !== -1) {
             destination = DESTINATION_CATEGORIES_UPDATES;
         }
 
@@ -105,7 +106,8 @@ class CategoryFormPage extends ModelFormPage {
             this.onFailed(response);
             return;
         }
-        document.getElementById('navigate-home').click();
+        this.setState({category: new Category(), errors: null});
+        this.navigate('/admin/category', {replace: true});
     }
 
     onFailed(response) {
@@ -127,7 +129,6 @@ class CategoryFormPage extends ModelFormPage {
     }
 
     onCategoryResult(response) {
-        console.log(response);
         let category = response.data;
         if (!category) category = new Category();
         this.setState({category: category});
