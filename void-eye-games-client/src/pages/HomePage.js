@@ -10,6 +10,19 @@ import { SocketController } from '../services/socket/SocketController';
 import { DESTINATION_PLATAFORM_GAMES } from '../services/socket/SocketDestinations';
 import SocketRequest from '../services/socket/SocketRequest';
 
+const CAROUSER_CONTROLS_CONFIG = {
+  containerClassName: '',
+  nextButtonClassName: 'slider--control',
+  nextButtonStyle: {height: 'calc(calc(20vw + 35vh)/2)'}, 
+  nextButtonText: '>',
+  pagingDotsClassName: '',
+  pagingDotsContainerClassName: '',
+  pagingDotsStyle: {}, 
+  prevButtonClassName: 'slider--control',
+  prevButtonStyle: {height: 'calc(calc(20vw + 35vh)/2)'}, 
+  prevButtonText: '<',
+};
+
 class HomePage extends React.Component {
   constructor(props) {
     super(props);
@@ -56,7 +69,13 @@ class HomePage extends React.Component {
     return (
       <section className='w-100 h-100'>
         <header className='home--header bg-dark' style={{minHeight: '320px', height: 'calc(20vw + 35vh)'}}>
-          <Carousel className='w-100' animation='zoom' autoplay={this.state.sliderGames.length > 1} renderBottomCenterControls={false}>
+          <Carousel 
+            className='w-100' 
+            animation='zoom' 
+            autoplay={this.state.sliderGames.length > 1} 
+            renderBottomCenterControls={false} 
+            defaultControlsConfig={CAROUSER_CONTROLS_CONFIG}
+            wrapAround={true}>
             {this.getSliderItems()}
           </Carousel>
         </header>

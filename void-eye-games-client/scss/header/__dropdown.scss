@@ -1,9 +1,30 @@
 .dropdown {
     &-menu{
+        position: absolute !important;
         top: -2px !important;
+
+        overflow: hidden;
+        display: block;
+        
         border: none !important;
         border-radius: 0 !important;
-        background-color: $secondary !important;
+        height: auto;
+        max-height: 0px;
+        
+        transition: max-height .125s linear;
+
+        &.header-menu {    
+            transform: translate3d(-198px, 50px, 0px) !important;
+            left: 0px !important;
+            width: 250px;
+            background-color: $secondary !important;
+
+            &.show {
+                max-height: 300px;
+                padding-bottom: 0.15rem !important;
+                border-bottom: 0.1rem solid $primary !important;
+            }
+        }
     }
 
     &-item {

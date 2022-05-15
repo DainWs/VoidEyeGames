@@ -121,7 +121,7 @@ class GamesPage extends React.Component {
 
   render() {
     return (
-      <section className='d-flex flex-column flex-lg-row' style={{minHeight: '100%'}}>
+      <section className='d-flex flex-column flex-lg-row pb-3' style={{minHeight: '100%'}}>
         <aside className='border-lg-right border-secondary mh-sm-100 w-15 no-select' style={{minWidth: '15vw'}}>
           <section>
             <header className='bg-secondary text-primary'>
@@ -157,9 +157,11 @@ class GamesPage extends React.Component {
           </section>
           <a className="btn btn-secondary w-100" href="#" onClick={this.onFiltre.bind(this)}>Filtre</a>
         </aside>
-        <article className='border-2 p-4 mw-100 mw-lg-80' style={{flexGrow: 1}}>
-          <div className='row m-0 p-0'>
-            {this.getGamesItems()}
+        <article className='d-flex flex-column border-2 pt-4 px-4 pb-0 mw-100 mw-lg-80' style={{flexGrow: 1}}>
+          <div className='flex-grow-1'>
+            <div className='row m-0 p-0'>
+              {this.getGamesItems()}
+            </div>
           </div>
           {this.getShowButtonView()}
         </article>

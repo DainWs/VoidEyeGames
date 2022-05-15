@@ -2,7 +2,8 @@
 @import './utils/__variables.scss';
 @import 'node_modules/bootstrap/scss/bootstrap.scss';
 @import '__basic.scss';
-@import '__header.scss';
+@import 'header/__header.scss';
+@import 'slider/__slider.scss';
 @import '__form.scss';
 @import '__game.scss';
 @import '__skeleton.scss';

@@ -8,6 +8,19 @@ import { EVENT_SEARCH_GAME, EVENT_SESSION_CHANGE } from '../domain/EventsEnum';
 import { ACCOUNT_TYPE_ADMIN } from '../domain/models/AccountTypes';
 import { EventDataProvider } from '../domain/EventDataProvider';
 
+const TEXT_HOME = 'Home';
+const TEXT_GAMES = 'Juegos';
+const TEXT_SUPPORT = 'Soporte';
+
+const TEXT_LOGOUT = <>Cerrar sessi&oacute;n</>;
+const TEXT_LOGIN = <>Iniciar sessi&oacute;n</>;
+
+const TEXT_ADMIN = <>Administraci&oacute;n</>;
+const TEXT_ADMIN_GAME = TEXT_GAMES;
+const TEXT_ADMIN_PLATAFORM = 'Plataformas';
+const TEXT_ADMIN_CATEGORY = <>Categor&iacute;as</>;
+
+
 class HeaderComponent extends React.Component {
   constructor(props) {
     super(props);
@@ -95,11 +108,10 @@ class HeaderComponent extends React.Component {
                 <FontAwesomeIcon icon={faBars} />
               </a>
             </nav>
-            <div className="collapse bg-secondary pb-3" id="navbarToggleExternalContent">
+            <div className="collapse bg-secondary pb-1" id="navbarToggleExternalContent">
               {this.getHomeLink('hamburger-4-home-link', this.closeHamburger)}
               {this.getGamesLink('hamburger-w-games-link', this.closeHamburger)}
               {this.getSupportLink('hamburger-6-support-link', this.closeHamburger)}
-              <hr className='bg-primary mx-3'/>
               {this.getSessionHamburgerView()}
             </div>
           </div>
@@ -122,7 +134,12 @@ class HeaderComponent extends React.Component {
   }
 
   getUnsignedSessionDropdownView() {
-    return (<NavLink className="nav-link pr-4" to='/login' onClick={this.closeHamburger.bind(this)}><FontAwesomeIcon icon={faArrowRightToBracket} /> Log in</NavLink>);
+    return (
+      <NavLink className="nav-link pr-4" to='/login' onClick={this.closeHamburger.bind(this)}>
+        <FontAwesomeIcon icon={faArrowRightToBracket} className='mr-2'/>
+        {TEXT_LOGIN}
+      </NavLink>
+    );
   }
 
   getSignedSessionDropdownView() {
@@ -131,10 +148,13 @@ class HeaderComponent extends React.Component {
         <a className="nav-link" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <FontAwesomeIcon icon={faUser} />
         </a>
-        <div className="dropdown-menu dropdown-menu-right mt-0 p-0 pb-1 border-none" style={{ top: "-5px !important", transform: "translate3d(-115px, 50px, 0px)", width: "250px"}} aria-labelledby="dropdownMenuLink">
+        <div className="dropdown-menu header-menu mt-0 p-0 border-top" 
+          aria-labelledby="dropdownMenuLink">
           {this.getAdminDropdownView()}
-          <hr className='bg-primary'/>
-          <a className="nav-link pr-4" href="#" onClick={this.closeHamburgerAndSession.bind(this)}><FontAwesomeIcon icon={faRightFromBracket} /> Sign out</a>
+          <a className="nav-link pr-4" href="#" onClick={this.closeHamburgerAndSession.bind(this)}>
+            <FontAwesomeIcon icon={faRightFromBracket} className='mr-2'/>
+            {TEXT_LOGOUT}
+          </a>
         </div>
       </>
     );
@@ -142,12 +162,14 @@ class HeaderComponent extends React.Component {
 
   getAdminDropdownView() {
     let session = SessionManager.getSession();
-    console.log(session);
     if (ACCOUNT_TYPE_ADMIN.getId() === session.accountType) {
       return [
-        this.getAdminGameLink('dropdown-new-game-link'),
-        this.getAdminPlataformLink('dropdown-new-plataform-link'),
-        this.getAdminCategoryLink('dropdown-new-category-link')
+        <div key='dropdown-admin-title' className='bg-primary pl-2 py-2 m-0 h5'><span className='text-black no-select'>{TEXT_ADMIN}</span></div>,
+        <hr key='dropdown-admin-start-spliter' className='bg-primary'/>,
+        this.getAdminGameLink('dropdown-admin-game-link'),
+        this.getAdminPlataformLink('dropdown-admin-plataform-link'),
+        this.getAdminCategoryLink('dropdown-admin-category-link'),
+        <hr key='dropdown-admin-end-spliter' className='bg-primary'/>
       ];
     }
     return;
@@ -165,13 +187,24 @@ class HeaderComponent extends React.Component {
   }
 
   getUnsignedSessionHamburgerView() {
-    return (<NavLink className="nav-link pr-4" to='/login' onClick={this.closeHamburger.bind(this)}><FontAwesomeIcon icon={faArrowRightToBracket} /> Log in</NavLink>);
+    return (
+      <NavLink className="nav-link pr-4" to='/login' onClick={this.closeHamburger.bind(this)}>
+        <FontAwesomeIcon icon={faArrowRightToBracket} className='mr-2' /> 
+        {TEXT_LOGIN}
+      </NavLink>
+    );
   }
 
   getSignedSessionHamburgerView() {
     return ([
-        this.getAdminHamburgerView(),
-        <a key={'hamburger-close-link'} className="nav-link" href="#" onClick={this.closeHamburgerAndSession.bind(this)}><FontAwesomeIcon icon={faRightFromBracket} /> Sign out</a>
+      <div key='hamburger-admin-title' className='pl-1 pt-2'><span className='text-primary no-select'>{TEXT_ADMIN}</span></div>,
+      <hr key='hamburger-admin-start-spliter' className='bg-primary'/>,
+      this.getAdminHamburgerView(),
+      <hr key='hamburger-admin-end-spliter' className='bg-primary'/>,
+      <a key='hamburger-close-link' className="nav-link" href="#" onClick={this.closeHamburgerAndSession.bind(this)}>
+        <FontAwesomeIcon icon={faRightFromBracket} className='mr-2' />
+        {TEXT_LOGOUT}
+      </a>
     ]);
   }
 
@@ -191,15 +224,15 @@ class HeaderComponent extends React.Component {
   // ADMIN NAV LINKS
   //---------------------------------------------------------------------------------------------
   getAdminGameLink(key = 'new-game-link', onClick = function() {}) {
-    return this.getNavLink(key, 'New game', '/admin/game', onClick);
+    return this.getNavLink(key, TEXT_ADMIN_GAME, '/admin/game', onClick);
   }
 
   getAdminPlataformLink(key = 'new-plataform-link', onClick = function() {}) {
-    return this.getNavLink(key, 'New plataform', '/admin/plataform', onClick);
+    return this.getNavLink(key, TEXT_ADMIN_PLATAFORM, '/admin/plataform', onClick);
   }
 
   getAdminCategoryLink(key = 'new-category-link', onClick = function() {}) {
-    return this.getNavLink(key, 'New category', '/admin/category', onClick);
+    return this.getNavLink(key, TEXT_ADMIN_CATEGORY, '/admin/category', onClick);
   }
 
   //---------------------------------------------------------------------------------------------
@@ -207,21 +240,25 @@ class HeaderComponent extends React.Component {
   //---------------------------------------------------------------------------------------------
 
   getHomeLink(key = 'home-link', onClick = function() {}) {
-    return this.getNavLink(key, 'Home', '/', onClick);
+    return this.getNavLink(key, TEXT_HOME, '/', onClick);
   }
 
   getGamesLink(key = 'games-link', onClick = function() {}) {
-    return this.getNavLink(key, 'Juegos', '/games', onClick);
+    return this.getNavLink(key, TEXT_GAMES, '/games', onClick);
   }
 
   getSupportLink(key = 'support-link', onClick = function() {}) {
-    return this.getNavLink(key, 'Soporte', '/support', onClick);
+    return this.getNavLink(key, TEXT_SUPPORT, '/support', onClick);
   }
 
   //---------------------------------------------------------------------------------------------
 
   getNavLink(key, title, path, onClick = function() {}) {
-    return (<NavLink key={key} className="nav-link pr-4" activeclassname="active" to={path} onClick={onClick}>{title}</NavLink>);
+    return (
+      <NavLink key={key} className="nav-link pr-4" activeclassname="active" to={path} onClick={onClick}>
+        {title}
+      </NavLink>
+    );
   }
 }
 
