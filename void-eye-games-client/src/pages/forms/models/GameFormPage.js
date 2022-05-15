@@ -7,7 +7,7 @@ import { Navigate } from 'react-router-dom';
 import Game from '../../../domain/models/dtos/Game';
 import { SessionManager } from '../../../domain/SessionManager';
 import ModelFormPage, { MODEL_FORM_MODE_EDIT } from './ModelFormPage';
-import { DESTINATION_GAMES, DESTINATION_LIST_OF_CATEGORIES, DESTINATION_LIST_OF_GAMES, DESTINATION_PLATAFORM_UPDATES } from '../../../services/socket/SocketDestinations';
+import { DESTINATION_GAMES, DESTINATION_LIST_OF_CATEGORIES, DESTINATION_LIST_OF_GAMES, DESTINATION_GAMES_UPDATE } from '../../../services/socket/SocketDestinations';
 import { SocketDataFilter } from '../../../services/socket/SocketDataFilter';
 import { SocketController } from '../../../services/socket/SocketController';
 import SocketRequest from '../../../services/socket/SocketRequest';
@@ -32,10 +32,9 @@ class GameFormPage extends ModelFormPage {
   onChangeEditingGame(newOne) {
     this.navigate(`/admin/game/${newOne.value}`, { replace: true });
     if (newOne.value == -1) {
-        this.setState({mode: MODEL_FORM_MODE_NEW});
-        this.requestGame(newOne.value, MODEL_FORM_MODE_NEW);
+        this.setState({id: newOne.value, mode: MODEL_FORM_MODE_NEW, game: new Game(), medias: [], mainImage: {}});
     } else {
-        this.setState({mode: MODEL_FORM_MODE_EDIT});
+        this.setState({id: newOne.value, mode: MODEL_FORM_MODE_EDIT});
         this.requestGame(newOne.value, MODEL_FORM_MODE_EDIT);
     }
   }
@@ -212,12 +211,11 @@ class GameFormPage extends ModelFormPage {
 
     let destination = DESTINATION_GAMES;
     if (game.id && game.id !== -1) {
-        destination = DESTINATION_PLATAFORM_UPDATES;
+        destination = DESTINATION_GAMES_UPDATE;
     }
 
     SocketController.sendCustomWithCallback(
-      request,
-      destination,
+      request, destination,
       this.onSuccess.bind(this),
       this.onFailed.bind(this)
     );
@@ -228,7 +226,9 @@ class GameFormPage extends ModelFormPage {
       this.onFailed(response);
       return;
     }
-    document.getElementById('navigate-home').click();
+    this.requestListedGames();
+    this.setState({game: new Game(), errors: null});
+    this.navigate('/admin/game', {replace: true});
   }
 
   onFailed(response) {
@@ -236,13 +236,25 @@ class GameFormPage extends ModelFormPage {
   }
 
   componentDidMount() {
-    SocketController.sendCustomWithCallback(new SocketRequest(), DESTINATION_LIST_OF_GAMES, this.onGameSuccess.bind(this));
     SocketController.sendCustomWithCallback(new SocketRequest(), DESTINATION_LIST_OF_CATEGORIES, this.onCategorySuccess.bind(this));
+    this.requestListedGames();
     this.requestGame();
   }
 
+  onCategorySuccess(response) {
+    this.setState({ listedCategories: response.data });
+  }
+
+  requestListedGames() {
+    SocketController.sendCustomWithCallback(new SocketRequest(), DESTINATION_LIST_OF_GAMES, this.onGameListedSuccess.bind(this));
+  }
+
+  onGameListedSuccess(response) {
+    this.setState({ listedGames: response.data});
+  }
+
   requestGame(id = this.state.id, mode = this.state.mode) {
-    if (mode === MODEL_FORM_MODE_EDIT && (id)) {
+    if (mode === MODEL_FORM_MODE_EDIT && (id && id != -1)) {
       let request = new SocketRequest();
       request.setParams({id: id});
       SocketController.sendCustomWithCallback(request, DESTINATION_GAMES, this.onGameResult.bind(this));
@@ -250,25 +262,14 @@ class GameFormPage extends ModelFormPage {
   }
 
   onGameResult(response) {
-    console.log(response);
     let game = new Game(response.data);
+    if (!game) game = new Game();
     let mainImage = {name: game.name, href: game.getImageUrl()};
     this.setState({ game: game, medias: game.medias, mainImage: mainImage });
   }
 
-  onGameSuccess(response) {
-    this.setState({ listedGames: response.data});
-  }
-
-  onCategorySuccess(response) {
-    this.setState({ listedCategories: response.data });
-  }
-
   render() {
-    let game = this.state.game;
-    if (!game) {
-      game = new Game();
-    }
+    SessionManager.reload();
     console.log(this.state.medias);
     return (
       <section className='row h-100 p-3 p-lg-0 m-0'>
@@ -281,8 +282,8 @@ class GameFormPage extends ModelFormPage {
             <section className='col-12 mb-3'>
               <label htmlFor='selected-game-form'>Editing:</label>
               <Select id='selected-game-form' className='flex-grow-1 p-0 pt-2 pt-sm-0' 
-                placeholder={game.name || 'New Game'}
-                isOptionSelected={opt => opt.value == game.id}
+                placeholder={this.state.game.name || 'New Game'}
+                isOptionSelected={opt => opt.value == this.state.game.id}
                 hideSelectedOptions={true}
                 options={this.getGamesOptions()} 
                 onChange={this.onChangeEditingGame.bind(this)}/>    
@@ -316,7 +317,7 @@ class GameFormPage extends ModelFormPage {
             <section className='col-12 col-lg-4 d-flex flex-column mb-3 p-0 px-lg-3 order-3 order-lg-2'>
               <div className='mb-3'>
                 <div className='row m-0 mt-3 mt-sm-0 mb-sm-2 p-0'>
-                  <label className='col-12 col-sm-6 type-file m-0 my-sm-auto p-0'>Filename: {this.state.mainImage.name || 'None image uploaded'} {this.state.mainImage.size || ''}</label>
+                  <label className='col-12 col-sm-6 type-file m-0 my-sm-auto p-0'>Filename: {this.state.mainImage.name || 'None image uploaded'}</label>
                   <a className='col-12 col-sm-6 p-sm-0 btn btn-secondary w-100 text-priamry' data-tip={this.getMainImageView()}>Show image</a>
                 </div>
                 <div className='m-0 mt-3 mt-sm-0 p-0'>

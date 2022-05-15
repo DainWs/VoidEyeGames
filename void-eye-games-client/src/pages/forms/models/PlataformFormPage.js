@@ -7,19 +7,14 @@ import ReactTooltip from 'react-tooltip';
 import GameListItemComponent from '../../../components/models/lists/GameListItemComponent';
 import Plataform from '../../../domain/models/dtos/Plataform';
 import PlataformGame from '../../../domain/models/dtos/PlataformGame';
+import PriceUnitEnum from '../../../domain/models/PriceUnits';
 import { SessionManager } from '../../../domain/SessionManager';
 import { withRouter } from '../../../routes/Routes';
 import { SocketController } from '../../../services/socket/SocketController';
 import { SocketDataFilter } from '../../../services/socket/SocketDataFilter';
 import { DESTINATION_LIST_OF_GAMES, DESTINATION_LIST_OF_PLATAFORMS, DESTINATION_PLATAFORM, DESTINATION_PLATAFORMS, DESTINATION_PLATAFORMS_UPDATES } from '../../../services/socket/SocketDestinations';
 import SocketRequest from '../../../services/socket/SocketRequest';
-import ModelFormPage, { MODEL_FORM_MODE_EDIT } from './ModelFormPage';
-
-const CURRENCY_TYPES = [
-  { value: 'EURO', label: 'Euro' },
-  { value: 'DOLAR', label: 'Dolar' },
-  { value: 'BITCOIN', label: 'Bitcoin' }
-]
+import ModelFormPage, { MODEL_FORM_MODE_EDIT, MODEL_FORM_MODE_NEW } from './ModelFormPage';
 
 class PlataformFormPage extends ModelFormPage {
   createState(props) {
@@ -27,7 +22,7 @@ class PlataformFormPage extends ModelFormPage {
     parentState.plataform = new Plataform();
     parentState.plataformGame = new PlataformGame();
     parentState.editingGameId = null;
-    parentState.selectedGame = null;
+    parentState.selectedGameId = null;
     parentState.selectedFile = {};
     parentState.listedGames = [];
     parentState.listedPlataforms = [];
@@ -37,10 +32,9 @@ class PlataformFormPage extends ModelFormPage {
   onChangeEditingPlataform(newOne) {
     this.navigate(`/admin/plataform/${newOne.value}`, { replace: true });
     if (newOne.value == -1) {
-        this.setState({mode: MODEL_FORM_MODE_NEW});
-        this.requestPlataform(newOne.value, MODEL_FORM_MODE_NEW);
+        this.setState({id: newOne.value, mode: MODEL_FORM_MODE_NEW, plataform: new Plataform(), selectedFile: {}});
     } else {
-        this.setState({mode: MODEL_FORM_MODE_EDIT});
+        this.setState({id: newOne.value, mode: MODEL_FORM_MODE_EDIT});
         this.requestPlataform(newOne.value, MODEL_FORM_MODE_EDIT);
     }
   }
@@ -62,11 +56,12 @@ class PlataformFormPage extends ModelFormPage {
   }
 
   onChangeSelectedGame(event) {
-    this.setState({ plataformGame: new PlataformGame(), selectedGame: event.value });
+    let id = event.value;
+    this.setState({ plataformGame: new PlataformGame(), selectedGameId: id, editingGameId: id });
   }
 
   addSelectedGame() {
-    let selectedGameId = this.state.selectedGame;
+    let selectedGameId = this.state.selectedGameId;
     if (!selectedGameId || selectedGameId <= 0) return;
 
     let game = Array.from(this.state.listedGames)
@@ -77,7 +72,7 @@ class PlataformFormPage extends ModelFormPage {
     let plataformGame = this.state.plataformGame;
     plataformGame.gamesId = selectedGameId;
     plataform.addPlataformGame(plataformGame);
-    this.setState({ plataformGame: new PlataformGame(), selectedGame: null, plataform: plataform });
+    this.setState({ plataformGame: new PlataformGame(), selectedGameId: null, editingGameId: null, plataform: plataform });
   }
 
   onFileChange(e) {
@@ -90,11 +85,10 @@ class PlataformFormPage extends ModelFormPage {
       reader.onloadend = function (e) {
         let attachment = {};
         attachment.name = image.name;
-        attachment.type = image.type;
+        attachment.mediaType = image.type;
         attachment.size = image.size;
         attachment.src = reader.result;
 
-        console.log(attachment);
         this.setState({ selectedFile: attachment });
       }.bind(this);
     }
@@ -124,19 +118,19 @@ class PlataformFormPage extends ModelFormPage {
 
   onTurnGameEnabled() {
     let plataformGame = this.state.plataformGame;
-    plataformGame.isEnabled = !plataformGame.isEnabled;
+    let isEnabled = (plataformGame.isEnabled == true || plataformGame.isEnabled == "1");
+    plataformGame.isEnabled = !isEnabled;
     this.setState({ plataformGame: plataformGame });
   }
 
   onEditClick(id) {
     let plataform = new Plataform(this.state.plataform);
     let plataformGame = plataform.getPlataformGame(id);
-    this.setState({ editingGameId: id, plataformGame: plataformGame });
+    this.setState({ editingGameId: id, selectedGameId: null, plataformGame: plataformGame });
   }
 
   onSaveClick() {
     let plataform = new Plataform(this.state.plataform);
-    console.log(plataform);
     if (this.state.editingGameId) {
       let plataformGame = this.state.plataformGame;
       plataform.setPlataformGame(plataformGame);
@@ -162,9 +156,10 @@ class PlataformFormPage extends ModelFormPage {
   //---------------------------------------------------------------------------------------------
 
   submit() {
-    let plataform = this.state.plataform;
+    let plataform = Object.assign({}, this.state.plataform);
     plataform.games = [];
-    console.log(plataform);
+    plataform.mainImage = this.state.selectedFile;
+    
     let request = new SocketRequest();
     request.setBody(JSON.stringify(plataform));
     request.setMethod('POST');
@@ -173,12 +168,9 @@ class PlataformFormPage extends ModelFormPage {
     if (plataform.id && plataform.id !== -1) {
       destination = DESTINATION_PLATAFORMS_UPDATES;
     }
-    console.log(plataform.id);
-    console.log(destination);
 
     SocketController.sendCustomWithCallback(
-      request,
-      destination,
+      request, destination,
       this.onSuccess.bind(this),
       this.onFailed.bind(this)
     );
@@ -189,7 +181,9 @@ class PlataformFormPage extends ModelFormPage {
       this.onFailed(response);
       return;
     }
-    document.getElementById('navigate-home').click();
+    this.requestListedPlataforms();
+    this.setState({plataform: new Plataform(), editingGameId: null, errors: null});
+    this.navigate('/admin/plataform', {replace: true});
   }
 
   onFailed(response) {
@@ -197,13 +191,17 @@ class PlataformFormPage extends ModelFormPage {
   }
 
   componentDidMount() {
-    SocketController.sendCustomWithCallback(new SocketRequest(), DESTINATION_LIST_OF_PLATAFORMS, this.onPlataformSuccess.bind(this));
     SocketController.sendCustomWithCallback(new SocketRequest(), DESTINATION_LIST_OF_GAMES, this.onGameSuccess.bind(this));
+    this.requestListedPlataforms();
     this.requestPlataform();
   }
 
+  requestListedPlataforms() {
+    SocketController.sendCustomWithCallback(new SocketRequest(), DESTINATION_LIST_OF_PLATAFORMS, this.onPlataformSuccess.bind(this));
+  }
+
   requestPlataform(id = this.state.id, mode = this.state.mode) {
-    if (mode === MODEL_FORM_MODE_EDIT && (id)) {
+    if (mode === MODEL_FORM_MODE_EDIT && (id && id != -1)) {
       let request = new SocketRequest();
       request.setParams({ id: id });
       SocketController.sendCustomWithCallback(request, DESTINATION_PLATAFORM, this.onPlataformResult.bind(this));
@@ -211,8 +209,10 @@ class PlataformFormPage extends ModelFormPage {
   }
 
   onPlataformResult(response) {
-    let plataform = response.data;
-    if (!plataform) plataform = new Plataform();
+    let plataform = new Plataform();
+    try { plataform = new Plataform(response.data); }
+    catch (ex) {}
+
     let selectedFile = {name: plataform.name, src: plataform.getLogo()};
     this.setState({ plataform: plataform, selectedFile: selectedFile });
   }
@@ -259,7 +259,7 @@ class PlataformFormPage extends ModelFormPage {
               </section>
               <section className='col-12 col-lg-5 p-0'>
                 <div className='row m-0 mt-3 mt-sm-0 mb-sm-2 p-0'>
-                  <label className='col-12 col-sm-6 type-file m-0'>Filename: {this.state.selectedFile.name || 'None file uploaded'} {this.state.selectedFile.size || ''}</label>
+                  <label className='col-12 col-sm-6 type-file m-0'>Filename: {this.state.selectedFile.name || 'None file uploaded'}</label>
                   <a className='col-12 col-sm-6 p-sm-0 btn btn-secondary w-100 text-priamry' data-tip={this.getImageView()}>Show image</a>
                 </div>
                 <div className='m-0 mt-3 mt-sm-0 p-0'>
@@ -268,7 +268,10 @@ class PlataformFormPage extends ModelFormPage {
                 </div>
               </section>
               <section className='col-12 row w-100 m-0 p-0 pt-3'>
-                <Select className='col-12 col-sm-9 p-0' options={this.getGamesOptions()} onChange={this.onChangeSelectedGame.bind(this)} />
+                <Select className='col-12 col-sm-9 p-0'
+                  hideSelectedOptions={true}
+                  options={this.getGamesOptions()} 
+                  onChange={this.onChangeSelectedGame.bind(this)} />
                 <div className='col-12 col-sm-3 m-0 mt-3 mt-sm-0 p-0'>
                   <a className='btn btn-form text-dark d-flex align-items-center justify-content-center ml-sm-3' onClick={this.addSelectedGame.bind(this)}>Add game</a>
                 </div>
@@ -278,20 +281,34 @@ class PlataformFormPage extends ModelFormPage {
             <hr className='w-100 my-3' />
 
             <section className='row w-100 m-0 p-0 mb-3'>
-              <header className='col-12 p-0'>
-                <h2>Game data in plataform</h2>
-              </header>
+              <section className='col-12 pb-3 pt-0 px-0'>
+                {this.getEditingGameInfo()}
+              </section>
               <section className='col-12 col-sm-6 col-lg-3 p-0 pr-sm-3 m-0 mt-2 mt-sm-0'>
                 <label htmlFor='plataform-form--price' className='m-0'>Price:</label>
-                <input id='plataform-form--price' className='form-control w-100' type='number' value={this.state.plataformGame.price} onChange={this.onChangePrice.bind(this)} autoComplete='false' />
+                <input id='plataform-form--price' 
+                  className='form-control w-100' type='number' 
+                  value={this.state.plataformGame.price} 
+                  onChange={this.onChangePrice.bind(this)} 
+                  autoComplete='false' 
+                  disabled={this.state.editingGameId == null}/>
               </section>
               <section className='col-12 col-sm-6 col-lg-3 p-0 pr-lg-3 m-0 mt-2 mt-sm-0'>
                 <label htmlFor='plataform-form--price' className='m-0'>Currency type:</label>
-                <Select className='p-0' options={CURRENCY_TYPES} onChange={this.onChangeConcurrencyType.bind(this)} />
+                <Select className='p-0' options={PriceUnitEnum.getOptions()} 
+                  hideSelectedOptions={true}
+                  placeholder={this.state.plataformGame.priceUnit || 'Select...'}
+                  onChange={this.onChangeConcurrencyType.bind(this)} 
+                  isDisabled={this.state.editingGameId == null}/>
               </section>
               <section className='col-12 col-sm-6 col-lg-2 p-0 pr-sm-3 m-0 mt-2 mt-sm-0'>
                 <label htmlFor='plataform-form--discount' className='m-0'>Discount:</label>
-                <input id='plataform-form--discount' className='form-control w-100' type='text' value={this.state.plataformGame.discount} onChange={this.onChangeDiscount.bind(this)} autoComplete='false' />
+                <input id='plataform-form--discount' 
+                  className='form-control w-100' type='text' 
+                  value={this.state.plataformGame.discount} 
+                  onChange={this.onChangeDiscount.bind(this)} 
+                  autoComplete='false' 
+                  disabled={this.state.editingGameId == null}/>
               </section>
               <section className='col-12 col-sm-3 col-lg-2 p-0 mt-2 mt-sm-0'>
                 <label htmlFor='plataform-form--enabled' className='m-0'>Its on sale:</label>
@@ -300,7 +317,7 @@ class PlataformFormPage extends ModelFormPage {
               <section className='col-12 col-sm-3 col-lg-2 p-0 mt-2 mt-sm-0'>
                 <label className='m-0' />
                 <div className='m-0 mt-3 mt-sm-0 p-0'>
-                  <a className='btn btn-form text-dark d-flex align-items-center justify-content-center ml-sm-3' onClick={this.onSaveClick.bind(this)}>Save game</a>
+                  <a className={this.getGameButtonClasses()} onClick={this.onSaveClick.bind(this)}>Save game</a>
                 </div>
               </section>
             </section>
@@ -342,8 +359,11 @@ class PlataformFormPage extends ModelFormPage {
 
   getEnableButtonView() {
     let isEnabled = this.state.plataformGame.isEnabled;
+    isEnabled = (isEnabled == true || isEnabled == "1");
+    let classes = (isEnabled) ? "w-100 btn btn-quaternary" : "w-100 btn btn-error ";
+    classes = (this.state.editingGameId == null) ? classes + ' disabled' : classes
     return (
-      <a type="button" className={(isEnabled) ? "w-100 btn btn-quaternary" : "w-100 btn btn-error "} onClick={this.onTurnGameEnabled.bind(this)}>
+      <a type="button" className={classes} onClick={this.onTurnGameEnabled.bind(this)}>
         {(isEnabled) ? 'Enabled' : 'Disabled'}
       </a>
     );
@@ -372,6 +392,19 @@ class PlataformFormPage extends ModelFormPage {
       );
     }
     return gamesList;
+  }
+
+  getGameButtonClasses() {
+    let classes = 'btn btn-form text-dark d-flex align-items-center justify-content-center ml-sm-3';
+    return (this.state.editingGameId == null || this.state.selectedGameId != null) ? classes + ' disabled' : classes;
+  }
+
+  getEditingGameInfo() {
+    if (this.state.editingGameId == null ) {
+      return (<p className='text-error font-weight-bold'>(Right now you are not editing any game.)</p>);
+    }
+    let game = Array.from(this.state.listedGames).find(g => g.id == this.state.editingGameId);
+    return (<p className='text-quaternary font-weight-bold'>(Right now you are editing '{game.name}'.)</p>);
   }
 }
 

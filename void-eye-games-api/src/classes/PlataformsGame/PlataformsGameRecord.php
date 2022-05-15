@@ -36,7 +36,11 @@ class PlataformsGameRecord extends Record
     public function updatePriceUnit($priceUnit): void
     {
         if (!$priceUnit || empty($priceUnit)) return;
-        if (!array_search($priceUnit, ['EUR', 'USD'])) throw new AppException('The currency type is not correct.');
+        $founded = false;
+        foreach (["EUR", "USD"] as $value) {
+            if ($value == $priceUnit) $founded = true;
+        }
+        if (!$founded) throw new AppException('The currency type is not correct. ' . json_encode($priceUnit));
         $this->priceUnit = $priceUnit;
     }
 
@@ -48,9 +52,9 @@ class PlataformsGameRecord extends Record
         $this->discount = $discount;
     }
 
-    public function updateIsEnabled(?bool $isEnabled): void
+    public function updateIsEnabled($isEnabled): void
     {
         if ($isEnabled === null) return;
-        $this->isEnabled = $isEnabled;
+        $this->isEnabled = ($isEnabled == 1) ? true : false;;
     }
 }

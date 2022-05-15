@@ -12,8 +12,8 @@ const TEXT_HOME = 'Home';
 const TEXT_GAMES = 'Juegos';
 const TEXT_SUPPORT = 'Soporte';
 
-const TEXT_LOGOUT = <>Cerrar sessi&oacute;n</>;
-const TEXT_LOGIN = <>Iniciar sessi&oacute;n</>;
+const TEXT_LOGOUT = <>Cerrar sesi&oacute;n</>;
+const TEXT_LOGIN = <>Iniciar sesi&oacute;n</>;
 
 const TEXT_ADMIN = <>Administraci&oacute;n</>;
 const TEXT_ADMIN_GAME = TEXT_GAMES;
@@ -48,7 +48,6 @@ class HeaderComponent extends React.Component {
 
   onChangeSearch(event) {
     let newData = event.target.value;
-    console.log(newData);
     if (newData !== this.state.search) {
       EventDataProvider.supply(EVENT_SEARCH_GAME, newData + '');
       EventObserver.notify(EVENT_SEARCH_GAME, newData + '');

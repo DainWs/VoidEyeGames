@@ -22,7 +22,6 @@ class ItemContextMenuComponent extends React.Component {
     }
 
     onContextMenuNotification(itemClickedKey) {
-        console.log(itemClickedKey);
         if (itemClickedKey != this.key && this.isShowing) {
             this.hide();
         }

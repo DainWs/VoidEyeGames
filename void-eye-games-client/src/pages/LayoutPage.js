@@ -15,7 +15,6 @@ class LayoutPage extends React.Component {
   }
 
   componentDidMount() {
-    console.log("reloading");
     SessionManager.reload();
   }
 

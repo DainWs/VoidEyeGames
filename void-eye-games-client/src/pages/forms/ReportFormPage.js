@@ -71,13 +71,11 @@ class ReportFormPage extends React.Component {
     let emailConfirmation = this.state.emailConfirmation;
     let terms = this.state.terms;
 
-    console.log(terms);
     if (!terms) {
       this.setState({errors: 'Los terminos son obligatorios para mandar el reporte.'});
       return;
     }
 
-    console.log(terms);
     if (email.length <= 0 || emailConfirmation.length <= 0) {
       this.setState({errors: 'Los campos de correo y confirmacion de correo son obligatorios para mandar el reporte.'});
       return;
@@ -86,13 +84,11 @@ class ReportFormPage extends React.Component {
       return;
     }
 
-    console.log(terms);
     if (issue.length <= 0 || description.length <= 0) {
       this.setState({errors: 'El issue y description son obligatorios para resolver el problema.'});
       return;
     }
 
-    console.log(terms);
     if (!selectedReason) {
       this.setState({errors: 'Los terminos son obligatorios para mandar el reporte.'});
       return;
@@ -175,7 +171,6 @@ class ReportFormPage extends React.Component {
 
   getErrorView() {
     let error = this.state.errors;
-    console.log(error);
     if (error == null || error.length <= 0) return (<></>);
     return (<section><p className='text-error'>* {error}</p></section>);
   }

@@ -172,4 +172,14 @@ body {
             }
         }
     }
+
+    .plataform-link {
+        &:hover {
+            background-color: $form;
+
+            .plataform-price {
+                background-color: #976c00 !important;
+            }
+        }
+    }
 }

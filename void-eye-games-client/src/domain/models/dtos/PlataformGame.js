@@ -8,7 +8,7 @@ class PlataformGame {
         this.price = builder.price;
         this.priceUnit = builder.priceUnit;
         this.discount = builder.discount;
-        this.isEnabled = builder.isEnabled;
+        this.isEnabled = (builder.isEnabled == true || builder.isEnabled == "1");
         this.games = new Game(builder.games);
         this.plataforms = new Plataform(builder.plataforms);
     }

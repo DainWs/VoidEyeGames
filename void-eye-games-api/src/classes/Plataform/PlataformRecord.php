@@ -26,13 +26,21 @@ class PlataformRecord extends Record
         $plataformGame['plataformsId'] =  $this->id;
         $plataformGame['games'] = null;
         $plataformGame['plataforms'] = null;
+
+        $founded = false;
+        foreach (["EUR", "USD"] as $value) {
+            if ($value == $plataformGame['priceUnit']) $founded = true;
+        }
+        if (!$founded) $plataformGame['priceUnit'] = 'EUR';
+        
         $this->plataforms_games->appendNew($plataformGame);
     }
 
     public function update(Array $updatedPlataform, Atlas $atlas): void
     {
         $this->updateName($updatedPlataform['name'] ?? null, $atlas);
-        $this->updateUrl($updatedPlataform['name'] ?? null, $atlas);
+        $this->updateUrl($updatedPlataform['url'] ?? null, $atlas);
+        $this->updatePlataformsGames($updatedPlataform['plataforms_games'] ?? null, $atlas);
     }
 
     public function updateName(?string $name, Atlas $atlas): void

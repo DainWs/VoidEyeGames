@@ -27,10 +27,9 @@ class CategoryFormPage extends ModelFormPage {
     onChangeEditingCategory(newOne) {
         this.navigate(`/admin/category/${newOne.value}`, { replace: true });
         if (newOne.value == -1) {
-            this.setState({mode: MODEL_FORM_MODE_NEW});
-            this.requestCategory(newOne.value, MODEL_FORM_MODE_NEW);
+            this.setState({id: newOne.value, mode: MODEL_FORM_MODE_NEW, category: new Category()});
         } else {
-            this.setState({mode: MODEL_FORM_MODE_EDIT});
+            this.setState({id: newOne.value, mode: MODEL_FORM_MODE_EDIT});
             this.requestCategory(newOne.value, MODEL_FORM_MODE_EDIT);
         }
     }
@@ -106,6 +105,7 @@ class CategoryFormPage extends ModelFormPage {
             this.onFailed(response);
             return;
         }
+        this.requestListedCategories();
         this.setState({category: new Category(), errors: null});
         this.navigate('/admin/category', {replace: true});
     }
@@ -116,12 +116,28 @@ class CategoryFormPage extends ModelFormPage {
 
     componentDidMount() {
         SocketController.sendCustomWithCallback(new SocketRequest(), DESTINATION_LIST_OF_GAMES, this.onGameSuccess.bind(this));
-        SocketController.sendCustomWithCallback(new SocketRequest(), DESTINATION_LIST_OF_CATEGORIES, this.onCategoriesResult.bind(this));
+        this.requestListedCategories();
         this.requestCategory();
     }
 
+    onGameSuccess(response) {
+        let listedGames = response.data;
+        if (!listedGames) listedGames = [];
+        this.setState({listedGames: listedGames});
+    }
+
+    requestListedCategories() {
+        SocketController.sendCustomWithCallback(new SocketRequest(), DESTINATION_LIST_OF_CATEGORIES, this.onCategoriesListedResult.bind(this));
+    }
+
+    onCategoriesListedResult(response) {
+        let listedCategories = response.data;
+        if (!listedCategories) listedCategories = [];
+        this.setState({listedCategories: listedCategories});
+    }
+
     requestCategory(id = this.state.id, mode = this.state.mode) {
-        if (mode === MODEL_FORM_MODE_EDIT && (id)) {
+        if (mode === MODEL_FORM_MODE_EDIT && (id && id != -1)) {
             let request = new SocketRequest();
             request.setParams({id: id});
             SocketController.sendCustomWithCallback(request, DESTINATION_CATEGORY, this.onCategoryResult.bind(this));
@@ -132,18 +148,6 @@ class CategoryFormPage extends ModelFormPage {
         let category = response.data;
         if (!category) category = new Category();
         this.setState({category: category});
-    }
-
-    onCategoriesResult(response) {
-        let listedCategories = response.data;
-        if (!listedCategories) listedCategories = [];
-        this.setState({listedCategories: listedCategories});
-    }
-
-    onGameSuccess(response) {
-        let listedGames = response.data;
-        if (!listedGames) listedGames = [];
-        this.setState({listedGames: listedGames});
     }
 
     render() {

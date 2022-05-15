@@ -10,7 +10,7 @@ class PriceUnit {
     }
 
     getDescription() {
-        return description;
+        return this.description;
     }
 
     getSymbol() {
@@ -35,4 +35,9 @@ export default class PriceUnitEnum {
     static getPriceUnitById(id) {
         return CONCURRENCY_TYPES.get(id);
     }
+
+    static getOptions() {
+        var list = [];
+        CONCURRENCY_TYPES.forEach(v => list.push({value: v.getId(), label: v.getDescription()}));
+        return list;    }
 }

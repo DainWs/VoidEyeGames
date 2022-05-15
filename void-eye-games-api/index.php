@@ -52,23 +52,27 @@ $app->group('/game', function () use ($app) {
 });
 
 // Categories
-$app->get('/category', 'src\controllers\SelectController:getCategory');
-
-$app->group('/categories', function () use ($app) {
-    $app->get('', 'src\controllers\SelectController:getCategories');
-    $app->get('/listed', 'src\controllers\SelectController:getListOfCategories');
+$app->group('/category', function () use ($app) {
+    $app->get('', 'src\controllers\SelectController:getCategory');
     $app->post('', 'src\controllers\InsertController:addCategory')->add(new AuthMiddleware());
     $app->post('/update', 'src\controllers\UpdateController:updateCategory')->add(new AuthMiddleware());
 });
 
-// Plataforms
+$app->group('/categories', function () use ($app) {
+    $app->get('', 'src\controllers\SelectController:getCategories');
+    $app->get('/listed', 'src\controllers\SelectController:getListOfCategories');
+});
 
-$app->get('/plataform', 'src\controllers\SelectController:getPlataform');
-$app->group('/plataforms', function () use ($app) {
-    $app->get('', 'src\controllers\SelectController:getPlataforms');
+// Plataforms
+$app->group('/plataform', function () use ($app) {
+    $app->get('', 'src\controllers\SelectController:getPlataform');
     $app->post('', 'src\controllers\InsertController:addPlataform')->add(new AuthMiddleware());
     $app->post('/update', 'src\controllers\UpdateController:updatePlataform')->add(new AuthMiddleware());
-    $app->get('/listed', 'src\controllers\SelectController:getListOfPlataforms');
+
+    $app->group('s', function () use ($app) {
+        $app->get('', 'src\controllers\SelectController:getPlataforms');
+        $app->get('/listed', 'src\controllers\SelectController:getListOfPlataforms');
+    });
 });
 
 // Comments

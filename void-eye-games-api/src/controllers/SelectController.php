@@ -29,8 +29,6 @@ class SelectController extends BaseController
     //----------------------------------------------------------------------------------
     public function getGames(Request $request, Response $response, array $args)
     {
-        $this->logger->log("[GET] getGames called.");
-
         /* PAGE */
         $pageNum = $request->getParam('pageNum', []);
         $pageNum = ($pageNum < 1) ? 1 : $pageNum;
@@ -93,15 +91,12 @@ class SelectController extends BaseController
 
     public function getListOfGames(Request $request, Response $response, array $args)
     {
-        $this->logger->log("[GET] getListOfGames called.");
         $games = $this->atlas->select(Game::class)->fetchRecords();
         return $response->withJson($games, 200);
     }
 
     public function getGame(Request $request, Response $response, array $args)
     {
-        $this->logger->log("[GET] getGame called.");
-
         /* ID */
         $gameId = $request->getParam('id', 1);
 
@@ -133,8 +128,6 @@ class SelectController extends BaseController
     //----------------------------------------------------------------------------------
     public function getComments(Request $request, Response $response, array $args)
     {
-        $this->logger->log("[GET] getComments called.");
-
         /* PAGE */
         $pageNum = $request->getParam('pageNum', []);
         $pageNum = ($pageNum < 1) ? 1 : $pageNum;
@@ -157,14 +150,12 @@ class SelectController extends BaseController
     //----------------------------------------------------------------------------------
     public function getCategories(Request $request, Response $response, array $args)
     {
-        $this->logger->log("[GET] getCategories called.");
         $categories = $this->atlas->select(Category::class)->fetchRecords();
         return $response->withJson($categories, 200);
     }
 
     public function getCategory(Request $request, Response $response, array $args)
     {
-        $this->logger->log("[GET] getCategories called.");
         $id = $request->getParam('id', -1);
         $category = $this->atlas->select(Category::class, ['id' =>  $id])
             ->with(['games'])
@@ -174,7 +165,6 @@ class SelectController extends BaseController
 
     public function getListOfCategories(Request $request, Response $response, array $args)
     {
-        $this->logger->log("[GET] getListOfCategories called.");
         $categories = $this->atlas->select(Category::class)->fetchRecords();
         return $response->withJson($categories, 200);
     }
@@ -184,14 +174,12 @@ class SelectController extends BaseController
     //----------------------------------------------------------------------------------
     public function getPlataforms(Request $request, Response $response, array $args)
     {
-        $this->logger->log("[GET] getPlataforms called.");
         $plataforms = $this->atlas->select(Plataform::class)->fetchRecords();
         return $response->withJson($plataforms, 200);
     }
 
     public function getPlataform(Request $request, Response $response, array $args)
     {
-        $this->logger->log("[GET] getPlataform called.");
         $id = $request->getParam('id', -1);
         $plataform = $this->atlas->select(Plataform::class, ['id' => $id])
             ->with(['games', 'plataforms_games'])
@@ -201,7 +189,6 @@ class SelectController extends BaseController
 
     public function getListOfPlataforms(Request $request, Response $response, array $args)
     {
-        $this->logger->log("[GET] getListOfPlataforms called.");
         $plataforms = $this->atlas->select(Plataform::class)->fetchRecords();
         return $response->withJson($plataforms, 200);
     }

@@ -159,8 +159,9 @@ class GameDetailsComponent extends React.Component {
         let discount = (plataformGame.discount > 0) ? `(-${plataformGame.discount * 100}%)` : '';
         let discountView = (plataformGame.discount > 0) ? (<span style={{fontSize: '.8rem'}}><br/>{discount}</span>) : <></>;
         return (
-            <div key={`${plataformGame.gamesId}-${plataformGame.plataformsId}__price-tag`}
-                className='d-flex border border-black rounded m-0 mt-2 mt-md-0 w-100'>
+            <a key={`${plataformGame.gamesId}-${plataformGame.plataformsId}__price-tag`}
+                className='plataform-link d-flex border border-black rounded m-0 mt-2 mt-md-0 w-100 text-decoration-none' 
+                href={plataform.url} target="_blank">
 
                 <div className='border border-black rounded-left p-0'>
                     <div className='m-2'>
@@ -168,14 +169,14 @@ class GameDetailsComponent extends React.Component {
                     </div>
                 </div>
                 <div className='d-flex flex-grow-1'>
-                    <div className='w-50 d-flex align-items-center justify-content-center'>
+                    <div className='w-50 d-flex align-items-center justify-content-center text-dark'>
                         {plataform.name}
                     </div>
-                    <div className='w-50 d-flex align-items-center justify-content-center bg-quinary border-left border-black rounded-right font-weight-bold text-primary'>
+                    <div className='plataform-price w-50 d-flex align-items-center justify-content-center bg-quinary border-left border-black rounded-right font-weight-bold text-primary'>
                         <span className='text-center' style={{lineHeight: '.8rem'}}>{plataformGame.price} {plataformGame.priceUnit} {discountView}</span>
                     </div>
                 </div>
-            </div>
+            </a>
         );
     }
 

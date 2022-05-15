@@ -102,7 +102,6 @@ class HomePage extends React.Component {
   getGameSliderItems() {
     let discountedGames = [];
     for (const plataformGame of this.state.sliderGames) {
-      console.log(plataformGame);
       discountedGames.push(
         <div key={plataformGame.plataformsId + '-' + plataformGame.gamesId + '--slider__items'} className='d-flex justify-content-center w-100 h-100'>
           <GameItemSliderComponent plataformGame={plataformGame} showType='discount'/>

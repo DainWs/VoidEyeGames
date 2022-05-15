@@ -36,7 +36,6 @@ class GamesPage extends React.Component {
   }
 
   updateSearchedGame(newData) {
-    console.log(newData);
     this.searchTitle = newData;
     this.onFiltre();
   }
@@ -112,7 +111,7 @@ class GamesPage extends React.Component {
     params.sort = this.state.orderMethod;
     params.categories = Array.from(this.state.selectedCategories);
     params.plataforms = Array.from(this.state.selectedPlataforms);
-    console.log(params);
+    
     let request = new SocketRequest();
     request.setParams(params);
     request.setMethod('GET');
@@ -122,7 +121,7 @@ class GamesPage extends React.Component {
   render() {
     return (
       <section className='d-flex flex-column flex-lg-row pb-3' style={{minHeight: '100%'}}>
-        <aside className='border-lg-right border-secondary mh-sm-100 w-15 no-select' style={{minWidth: '15vw'}}>
+        <aside className='border-lg-right border-secondary mh-sm-100 w-15 no-select' style={{minWidth: '15vw', maxWidth: '20vw'}}>
           <section>
             <header className='bg-secondary text-primary'>
               <h4 className='m-0 px-2 py-2'>Order by</h4>
@@ -191,7 +190,7 @@ class GamesPage extends React.Component {
 
   getCategoryView(category) {
     return (
-      <label className='m-0 pl-3' key={'category-key-' + category.id} htmlFor={'category-' + category.id}>
+      <label className='m-0 pl-3 text-nowrap text-truncate overflow-hidden' key={'category-key-' + category.id} htmlFor={'category-' + category.id}>
         <input 
           id={'category-' + category.id} 
           className="mr-1" 
@@ -212,7 +211,7 @@ class GamesPage extends React.Component {
 
   getPlataformView(plataform) {
     return (
-      <label className='m-0 pl-3' key={'plataform-key-' + plataform.id} htmlFor={'plataform-' + plataform.id}>
+      <label className='m-0 pl-3 text-nowrap text-truncate overflow-hidden' key={'plataform-key-' + plataform.id} htmlFor={'plataform-' + plataform.id}>
         <input 
           id={'plataform-' + plataform.id} 
           className="mr-1" 

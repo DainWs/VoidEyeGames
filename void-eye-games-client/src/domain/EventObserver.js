@@ -21,9 +21,7 @@ class EventObserver {
     }
 
     notify(event, args = null) {
-        console.log(args);
         if (this.listeners.has(event)) {
-            console.log(args);
             this.listeners
                 .get(event)
                 .forEach(callback => callback(args));
