@@ -211,7 +211,7 @@ class GameFormPage extends ModelFormPage {
     request.setMethod('POST');
 
     let destination = DESTINATION_GAMES;
-    if (this.state.mode === MODEL_FORM_MODE_EDIT) {
+    if (game.id && game.id !== -1) {
         destination = DESTINATION_PLATAFORM_UPDATES;
     }
 

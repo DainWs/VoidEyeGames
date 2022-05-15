@@ -170,9 +170,11 @@ class PlataformFormPage extends ModelFormPage {
     request.setMethod('POST');
 
     let destination = DESTINATION_PLATAFORM;
-    if (this.state.mode === MODEL_FORM_MODE_EDIT) {
+    if (plataform.id && plataform.id !== -1) {
       destination = DESTINATION_PLATAFORMS_UPDATES;
     }
+    console.log(plataform.id);
+    console.log(destination);
 
     SocketController.sendCustomWithCallback(
       request,
@@ -371,23 +373,6 @@ class PlataformFormPage extends ModelFormPage {
     }
     return gamesList;
   }
-
-  getFileData() {
-    if (this.state.selectedFile) {
-      return (
-        <div className=''>
-          <h2>File Details:</h2>
-          <p>File Name: {this.state.selectedFile.name}</p>
-          <p>File Type: {this.state.selectedFile.type}</p>
-          <p>
-            Last Modified:{" "}
-            {this.state.selectedFile.lastModifiedDate.toDateString()}
-          </p>
-        </div>
-      );
-    }
-    return;
-  };
 }
 
 export default PlataformFormPage;

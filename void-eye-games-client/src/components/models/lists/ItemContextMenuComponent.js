@@ -1,8 +1,11 @@
 import React from 'react';
+import { EventObserver } from '../../../domain/EventObserver';
+import { EVENT_CONTEXT_MENU_CLICK } from '../../../domain/EventsEnum';
 
 class ItemContextMenuComponent extends React.Component {
     constructor(props) {
         super(props);
+        this.isShowing = false;
         this.navigate = props.navigate;
         this.state = this.createState(props);
     }
@@ -14,15 +17,40 @@ class ItemContextMenuComponent extends React.Component {
     onContextMenu(event) {
         event.preventDefault();
         let contextMenu = document.getElementById(`${this.key}`);
-        if (contextMenu.className.match('d-none')) {
-            contextMenu.className = contextMenu.className.replace('d-none', 'd-block');
-            contextMenu.parentElement.className = contextMenu.parentElement.className + ' active';
-            contextMenu.parentElement.focus();
-            return;
+        if (contextMenu.className.match('d-none')) this.show();
+        else this.hide();
+    }
+
+    onContextMenuNotification(itemClickedKey) {
+        console.log(itemClickedKey);
+        if (itemClickedKey != this.key && this.isShowing) {
+            this.hide();
         }
+    }
+
+    show() {
+        let contextMenu = document.getElementById(`${this.key}`);
+        contextMenu.className = contextMenu.className.replace('d-none', 'd-block');
+        contextMenu.parentElement.className = contextMenu.parentElement.className + ' active';
+        contextMenu.parentElement.focus();
+        this.isShowing = true;
+        EventObserver.notify(EVENT_CONTEXT_MENU_CLICK, this.key);
+    }
+
+    hide() {
+        let contextMenu = document.getElementById(`${this.key}`);
         contextMenu.className = contextMenu.className.replace('d-block', 'd-none');
         contextMenu.parentElement.className = contextMenu.parentElement.className.replace('active', '');
         contextMenu.parentElement.blur();
+        this.isShowing = false;
+    }
+
+    componentDidMount() {
+        EventObserver.subscribe(EVENT_CONTEXT_MENU_CLICK, this.key, this.onContextMenuNotification.bind(this));
+    }
+
+    componentWillUnmount() {
+        EventObserver.unsubscribe(EVENT_CONTEXT_MENU_CLICK, this.key);
     }
 
     render() {
@@ -46,6 +74,7 @@ class ItemContextMenuComponent extends React.Component {
         return this.state.data;
     }
 
+    /** Childerns classes must Override this method **/
     getContextMenuItemsList() {
         return (<></>);
     }

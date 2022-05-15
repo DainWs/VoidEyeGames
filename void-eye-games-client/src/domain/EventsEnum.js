@@ -1,7 +1,8 @@
 import { DESTINATION_CATEGORIES, DESTINATION_GAMES, DESTINATION_LOGIN, DESTINATION_PLATAFORMS, DESTINATION_PLATAFORM_GAMES, DESTINATION_SIGNIN } from "../services/socket/SocketDestinations";
 
 
-export const EVENT_SEARCH_GAME = 'SEARCH_GAME';
+export const EVENT_SEARCH_GAME = 'searchGame';
+export const EVENT_CONTEXT_MENU_CLICK = 'contextMenuClick';
 
 export const EVENT_SESSION_CHANGE = 'SessionChangeEvent';
 export const EVENT_SESSION_LOGIN = DESTINATION_LOGIN;
