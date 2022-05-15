@@ -44,6 +44,9 @@
     "node-sass": "^7.0.1",
     "npm-watch": "^0.11.0"
   },
+  "resolutions": {
+    "react-scripts/eslint-webpack-plugin": "2.3.0"
+  },
   "watch": {
     "build": {
       "patterns": [
