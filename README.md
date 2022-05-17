@@ -58,16 +58,16 @@ Final project for 2ºDAW, its a website is intended for support in the search fo
 - [X] Signin Form View
 
 - [X] **Admin** Game Form View
-    - [ ] A list of games to select which one do you want to edit
+    - [X] A list of games to select which one do you want to edit
     - [X] Add games.
-    - [ ] Add categories to game.
-    - [ ] Add images to game.
+    - [X] Add categories to game.
+    - [X] Add images to game.
     - [ ] Edit Games
-- [ ] **Admin** Plataform Form View
+- [X] **Admin** Plataform Form View
     - [X] A list of Plataforms to select which one do you want to edit
     - [X] Add Plataforms.
-    - [~] Add games to plataform with prices and discount of the plataform.
-    - [ ] Edit plataforms
+    - [X] Add games to plataform with prices and discount of the plataform.
+    - [X] Edit plataforms
 - [X] **Admin** Categories Form View
     - [X] A list of categories to select which one do you want to edit
     - [X] Add category.
@@ -75,7 +75,13 @@ Final project for 2ºDAW, its a website is intended for support in the search fo
     - [X] Edit categories
 
 # fix
-- [ ] Cuando un juego o una plataforma se esta editando, dice que el campo de la imagen es requerido, en caso de editar, que este no lo sea.
+- [X] Ha dejado de mostrarse la imagen principal en el formulario de juegos.
+- [X] El texto de la lista de medias sobresale, ponerle un overflow.
+- [X] El boton de eliminar media no parece funcionar.
+- [X] La descripcion se borra cuando se añade el juego a una categoria
+
+    - [ ] Al añadir un juego a una plataforma, deberia habilitarse solo.
+
 - [ ] Hay problemas con la edicion de juegos, y tal vez con la insercion de los mismos
 
 - [ ] Es posible que haya que checkear otra vez la seccion de admin.
