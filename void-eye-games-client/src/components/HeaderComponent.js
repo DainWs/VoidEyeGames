@@ -82,10 +82,10 @@ class HeaderComponent extends React.Component {
             {this.getGamesLink('games-link')}
             {this.getSupportLink('support-link')}
           </div>
-          <div className="form-inline d-none d-lg-flex" style={{width: '40vw'}}>
+          <div className="form-inline d-none d-lg-flex" style={{width: '35vw'}}>
             <div className="input-group w-75">
               <div className="input-group-prepend">
-              <span className="input-group-text bg-primary border-0" id="search">
+                <span className="input-group-text bg-primary border-0" id="search">
                   <FontAwesomeIcon icon={faMagnifyingGlass} />
                 </span>
               </div>

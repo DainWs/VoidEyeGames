@@ -2,10 +2,10 @@ import { ResourceManger } from "../../ResourceManager";
 import CategoryGame from "./CategoryGame";
 
 class Game {
-    constructor(builder = {id: -1, name: null, description: null, plataforms: [], plataforms_games: [], categories: [], categories_games:[], comments: [], medias: []}) {
+    constructor(builder = {id: -1, name: null, descripcion: null, plataforms: [], plataforms_games: [], categories: [], categories_games:[], comments: [], medias: []}) {
         this.id = builder.id;
         this.name = builder.name;
-        this.description = builder.description;
+        this.descripcion = builder.descripcion;
         this.plataforms = builder.plataforms;
         this.plataforms_games = builder.plataforms_games;
         this.categories = builder.categories;

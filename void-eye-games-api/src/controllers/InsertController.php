@@ -181,7 +181,7 @@ class InsertController extends BaseController
         $this->logger->log("[POST] addComment called.");
         try {
             $comment = $request->getParsedBody()['data'] ?? null;
-            $user = $this->atlas->select(User::class, ['id' => $comment['usersId']])->fetchRecord();
+            $user = $this->atlas->select(User::class, ['name' => $comment['usersId']])->fetchRecord();
             if ($user == null) throw new AppException('This user does not exist');
             
             $comment['id'] = null;

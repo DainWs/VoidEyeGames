@@ -46,13 +46,15 @@ class GameDetailsComponent extends React.Component {
             return;
         }
 
-        if (this.state.commentText.length <= 0) {
+        let usersId = SessionManager.getSession().user
+        let description = this.state.commentText;
+        if (description.length <= 0) {
             this.setState({ commentError: 'The comment field is empty' });
             return;
         }
 
         let request = new SocketRequest();
-        request.setBody(JSON.stringify({id: null, usersId: usersId, gamesId: gamesId, description: description}));
+        request.setBody(JSON.stringify({id: null, usersId: usersId, gamesId: this.gameId, description: description}));
         request.setMethod('POST');
         SocketController.sendCustomWithCallback(request, DESTINATION_COMMENT, this.sendGamesRequest.bind(this));
 
@@ -136,7 +138,7 @@ class GameDetailsComponent extends React.Component {
         if (this.state.numOfComments + 1 >= this.state.game.comments.length) {
             return (<></>);
         }
-        return (<a className='col-2 btn btn-secondary' onClick={this.showMore.bind(this)}>Show More</a>);
+        return (<a className='col-12 col-lg-6 mx-auto mt-3 py-2 btn btn-secondary' onClick={this.showMore.bind(this)}>Show More</a>);
     }
 
     getGameImageView() {

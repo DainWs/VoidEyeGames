@@ -96,9 +96,10 @@ class GameFormPage extends ModelFormPage {
     }
   }
 
-  onRemoveDocumentItemClick(id) {
+  onRemoveDocumentItemClick(data) {
     let medias = Array.from(this.state.medias);
-    medias.find(v => v.id === id);
+    let mediaIndex = medias.findIndex(v => v.id == data.id || v.name == data.name);
+    medias.splice(mediaIndex, 1);
     this.setState({ medias: medias });
   }
 
@@ -127,7 +128,7 @@ class GameFormPage extends ModelFormPage {
 
       // Read each dropped file and make a "Document" array of object
       var instance = this;
-      var medias = [];
+      var medias = this.state.medias;
       Array.from(filesUpload).forEach((image, index) => {
         var reader = new FileReader();
         reader.readAsDataURL(image);
@@ -193,7 +194,7 @@ class GameFormPage extends ModelFormPage {
   removeDocument(id) {
     let medias = Array.from(this.state.medias);
     let mediaIndex = medias.findIndex(v => v.name === id);
-    medias.slice(mediaIndex, 1);
+    medias.splice(mediaIndex, 1);
     this.setState({ medias: medias });
   }
 
@@ -307,7 +308,7 @@ class GameFormPage extends ModelFormPage {
                 <a className='btn btn-form text-dark col-12 col-sm-3 m-0 mt-3 mt-sm-0 ml-sm-2' onClick={this.addSelectedCategory.bind(this)}>Add category</a>
               </section>
 
-              <fieldset id='categories-list' title='Categories in game' className='w-100 border mt-3 border-gray rounded'>
+              <fieldset id='categories-list' title='Categories in game' className='d-flex flex-column flex-grow-1 w-100 border mt-3 border-gray rounded' style={{ minHeight: '200px' }}>
                 <div className='d-flex flex-column flex-grow-1 w-100 h-100' style={{ minHeight: '200px' }}>
                   {this.getCategoriesList()}
                 </div>
@@ -350,7 +351,7 @@ class GameFormPage extends ModelFormPage {
   }
 
   getMainImageView() {
-    return `<img src="${this.state.mainImage.href}" alt="Main image" style="max-width: 200px" />`;
+    return `<img src="${this.state.mainImage.src}" alt="Main image" style="max-width: 200px" />`;
   }
 
   getGamesOptions() {

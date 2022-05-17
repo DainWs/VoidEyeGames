@@ -24,13 +24,17 @@ class MediaListItemComponent extends ItemContextMenuComponent {
         this.key = Math.random() * (new Date().getTime());
         return (
             <div key={this.key}
-                data-tip={this.getImageView()} 
-                className='list--item btn btn-primary text-left position-relative p-0 py-2 border-botton border-form'
+                className='list--item btn btn-primary text-left position-relative p-0 border-botton border-form' 
+                style={{maxWidth: '100%', overflow: 'visible !important'}}
                 onClick={this.onContextMenu.bind(this)}
                 onContextMenu={this.onContextMenu.bind(this)}>
-                <span className='col-12 p-0 py-2 pl-3 text-nowrap text-truncate'>{this.getTitle()}</span>
+                <div className='col-12 p-0 py-2 pl-3 text-nowrap text-truncate'
+                    style={{whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflowX: 'hidden'}}
+                    data-tip={this.getImageView()} >
+                    <span>{this.getTitle()}</span>
+                </div>
                 <ul id={this.key} 
-                    className='position-absolute bg-primary border border-top-0 rounded-bottom d-none col-12 col-xm-10 col-sm-8 col-md-6 m-0 p-0 py-2'
+                    className='position-absolute bg-primary border border-top-0 rounded-bottom d-none col-12 col-xm-10 col-sm-8 col-md-6 m-0 p-0'
                     style={{top: '100%', right: 0, zIndex: 100}}>
                     {this.getContextMenuItemsList()}
                 </ul>
@@ -56,7 +60,8 @@ class MediaListItemComponent extends ItemContextMenuComponent {
     getRemoveContextMenuItem() {
         if (this.state.isRemoveEnable) {
             let id = this.state.data.id;
-            return (this.getContextItemView(`remove-${id}`, 'Remove', id, this.onRemoveClick))
+            let name = this.state.data.name;
+            return (this.getContextItemView(`remove-${id}`, 'Remove', {id: id, name: name}, this.onRemoveClick))
         }
         return [];
     }

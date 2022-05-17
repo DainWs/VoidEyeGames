@@ -116,7 +116,6 @@ class SelectController extends BaseController
         $comments = $this->atlas->select(Comment::class)
             ->with(['users'])
             ->where('gamesId =', $game->id)
-            ->limit(QUERY_COMMENTS_PER_GAME)
             ->fetchRecordSet();
         $game->comments = $comments;
 
