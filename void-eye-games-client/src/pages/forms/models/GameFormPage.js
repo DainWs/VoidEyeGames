@@ -265,7 +265,7 @@ class GameFormPage extends ModelFormPage {
   onGameResult(response) {
     let game = new Game(response.data);
     if (!game) game = new Game();
-    let mainImage = {name: game.name, href: game.getImageUrl()};
+    let mainImage = {name: game.name, src: game.getImageUrl()};
     this.setState({ game: game, medias: game.medias, mainImage: mainImage });
   }
 

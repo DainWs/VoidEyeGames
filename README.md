@@ -62,7 +62,7 @@ Final project for 2ºDAW, its a website is intended for support in the search fo
     - [X] Add games.
     - [X] Add categories to game.
     - [X] Add images to game.
-    - [ ] Edit Games
+    - [X] Edit Games
 - [X] **Admin** Plataform Form View
     - [X] A list of Plataforms to select which one do you want to edit
     - [X] Add Plataforms.
@@ -73,6 +73,9 @@ Final project for 2ºDAW, its a website is intended for support in the search fo
     - [X] Add category.
     - [X] Add games to category.
     - [X] Edit categories
+
+- [ ] Poner la app en producción.
+
 
 # fix
 - [X] Ha dejado de mostrarse la imagen principal en el formulario de juegos.
@@ -85,5 +88,3 @@ Final project for 2ºDAW, its a website is intended for support in the search fo
 - [ ] Hay problemas con la edicion de juegos, y tal vez con la insercion de los mismos
 
 - [ ] Es posible que haya que checkear otra vez la seccion de admin.
-
-## Structure
