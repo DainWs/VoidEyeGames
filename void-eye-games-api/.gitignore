@@ -4,9 +4,9 @@ vendor
 cache/*
 cache/credentials.json
 !assets/images/not-found.png
-!assets/images/games/GTA_V.png
-!assets/images/games/Minecraft.png
-!assets/images/games/Rocket_League.png
+!assets/images/games/game-1.png
+!assets/images/games/game-2.png
+!assets/images/games/game-3.png
 !assets/images/games/medias/1-1.png
 !assets/images/games/medias/1-2.mp4
 !assets/images/games/medias/2-3.webm
@@ -14,9 +14,9 @@ cache/credentials.json
 !assets/images/games/medias/2-6.png
 !assets/images/games/medias/3-5.jpg
 !assets/images/games/medias/3-10.png
-!assets/images/plataforms/Epic_games.png
-!assets/images/plataforms/Gamivo.png
-!assets/images/plataforms/Steam.png
-!assets/images/plataforms/Microsoft.png
-!assets/images/plataforms/Instant_gaming.png
+!assets/images/plataforms/plataform-1.png
+!assets/images/plataforms/plataform-2.png
+!assets/images/plataforms/plataform-3.png
+!assets/images/plataforms/plataform-4.png
+!assets/images/plataforms/plataform-5.png
 assets/images/*

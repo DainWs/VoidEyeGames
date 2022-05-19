@@ -50,7 +50,7 @@ class Game {
 
     getImageUrl() {
         try {
-            return ResourceManger.getImageUrl(`games/${this.name}.png`);
+            return ResourceManger.getImageUrl(`games/game-${this.id}.png`);
         } catch(ex) {
             return ResourceManger.getImageUrl('not-found.png');
         }

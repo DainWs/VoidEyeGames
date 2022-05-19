@@ -63,9 +63,8 @@ class InsertController extends BaseController
             foreach ($categoriesGames as $value) $record->addCategoriesGames($value, $this->atlas);
             foreach ($plataformsGames as $value) $record->addPlataformsGames($value, $this->atlas);
 
-            $recordName = $record->name;
-            $mainImageName = preg_replace('/[\s]+/', '_', $recordName);
-            $this->uploadImage($mainImage['src'], $mainImageName . '.png', 'games');
+            $recordid = $record->id;
+            $this->uploadImage($mainImage['src'], "game-$recordid.png", 'games');
 
             $this->atlas->persist($record);
             $this->atlas->commit();
@@ -155,10 +154,9 @@ class InsertController extends BaseController
             $plataformId = $record->id;
             foreach ($plataformsGames as $value) $record->addPlataformGame($value, $this->atlas);
 
-            $recordName = $record->name;
-            $mainImageName = preg_replace('/[\s]+/', '_', $recordName);
-            $this->uploadImage($mainImage['src'], $mainImageName . '.png', 'plataforms');
-
+            $recordid = $record->id;
+            $this->uploadImage($mainImage['src'], "plataform-$recordid.png", 'plataforms');
+            
             $this->atlas->persist($record);
             $this->atlas->commit();
 

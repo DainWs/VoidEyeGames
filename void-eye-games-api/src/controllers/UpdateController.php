@@ -40,8 +40,8 @@ class UpdateController extends BaseController
             
             $mainImage = $game['mainImage'] ?? null;
             if ($mainImage !== null && $mainImage['src'] !== null) {
-                $mainImageName = preg_replace('/[\s]+/', '_', $record->name);
-                $this->uploadImage($mainImage['src'], $mainImageName . '.png', 'games');
+                $recordid = $record->id;
+                $this->uploadImage($mainImage['src'], "game-$recordid.png", 'games');
             }
             $this->logger->log("[POST] updateGame was successfully. object : " . json_encode($record->jsonSerialize()));
         } catch (AppException $ex) {
@@ -105,8 +105,8 @@ class UpdateController extends BaseController
             
             $mainImage = $game['mainImage'] ?? null;
             if ($mainImage !== null && $mainImage['src'] !== null) {
-                $mainImageName = preg_replace('/[\s]+/', '_', $record->name);
-                $this->uploadImage($mainImage['src'], $mainImageName . '.png', 'plataforms');
+                $recordid = $record->id;
+                $this->uploadImage($mainImage['src'], "plataform-$recordid.png", 'plataforms');
             }
             $this->logger->log("[POST] updatePlataform was successfully. object : " . json_encode($record->jsonSerialize()));
         } catch (AppException $ex) {

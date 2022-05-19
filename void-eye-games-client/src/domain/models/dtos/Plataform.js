@@ -57,7 +57,7 @@ class Plataform {
 
     getLogo() {
         try {   
-            return ResourceManger.getImageUrl(`plataforms/${this.name}.png`);
+            return ResourceManger.getImageUrl(`plataforms/plataform-${this.id}.png`);
         } catch(ex) {
             return ResourceManger.getImageUrl('not-found.png');
         }
