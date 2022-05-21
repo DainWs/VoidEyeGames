@@ -1,81 +1,147 @@
 import Carousel from 'nuka-carousel';
 import React from 'react';
+import Skeleton from 'react-loading-skeleton';
 import GameItemComponent from '../components/models/GameItemComponent';
 import GameItemSliderComponent from '../components/models/GameItemSliderComponent';
+import { EventObserver } from '../domain/EventObserver';
+import { EVENT_SESSION_CHANGE } from '../domain/EventsEnum';
+import { SessionManager } from '../domain/SessionManager';
 import { SocketController } from '../services/socket/SocketController';
-import { SocketDataProvideer } from '../services/socket/SocketDataProvider';
 import { DESTINATION_PLATAFORM_GAMES } from '../services/socket/SocketDestinations';
-import { SocketObserver } from '../services/socket/SocketObserver';
+import SocketRequest from '../services/socket/SocketRequest';
+
+const CAROUSER_CONTROLS_CONFIG = {
+  containerClassName: '',
+  nextButtonClassName: 'slider--control',
+  nextButtonStyle: {height: 'calc(calc(20vw + 35vh)/2)'}, 
+  nextButtonText: '>',
+  pagingDotsClassName: '',
+  pagingDotsContainerClassName: '',
+  pagingDotsStyle: {}, 
+  prevButtonClassName: 'slider--control',
+  prevButtonStyle: {height: 'calc(calc(20vw + 35vh)/2)'}, 
+  prevButtonText: '<',
+};
 
 class HomePage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      sliderGames: [],
       plataformsGames: []
     }
   }
   
-  updatePlataformGames() {
-    let plataformsGames = SocketDataProvideer.provide(DESTINATION_PLATAFORM_GAMES);
-    console.log(plataformsGames);
+  updateSliderGames(response) {
+    this.setState({sliderGames: response.data});
+  }
+
+  updatePlataformGames(response) {
+    let plataformsGames = this.state.plataformsGames;
+    plataformsGames.push(...response.data);
     this.setState({plataformsGames: plataformsGames});
   }
 
-  componentDidMount() {
-    SocketObserver.subscribe(DESTINATION_PLATAFORM_GAMES, 'HomePage', this.updatePlataformGames.bind(this));
-    SocketController.send(DESTINATION_PLATAFORM_GAMES);
+  sendSliderGamesRequest() {
+    let request = new SocketRequest();
+    request.setParams({pageNum: 1, discount: true});
+    request.setMethod('GET');
+    SocketController.sendCustomWithCallback(request, DESTINATION_PLATAFORM_GAMES, this.updateSliderGames.bind(this));
   }
 
-  componentWillUnmount() {
-    SocketObserver.unsubscribe(DESTINATION_PLATAFORM_GAMES, 'HomePage');
+  sendGamesRequest(page = 1) {
+    let request = new SocketRequest();
+    request.setParams({pageNum: page});
+    request.setMethod('GET');
+    SocketController.sendCustomWithCallback(request, DESTINATION_PLATAFORM_GAMES, this.updatePlataformGames.bind(this));
+  }
+
+  componentDidMount() {
+    this.sendGamesRequest(1);
+    this.sendGamesRequest(2);
+    this.sendSliderGamesRequest();
+    if (SessionManager.check()) {
+      EventObserver.notify(EVENT_SESSION_CHANGE);
+    }
   }
 
   render() {
-    let gamesWithDiscount = this.getGamesWithDiscount();
-    let gamesItems = this.getGamesItems();
     return (
-      <section>
-        <header>
-          <Carousel className='w-100' animation='zoom' autoplayInterval={5}>
-            {gamesWithDiscount}
+      <section className='w-100 h-100'>
+        <header className='home--header bg-dark' style={{minHeight: '320px', height: 'calc(20vw + 35vh)'}}>
+          <Carousel 
+            className='w-100' 
+            animation='zoom' 
+            autoplay={this.state.sliderGames.length > 1} 
+            renderBottomCenterControls={false} 
+            defaultControlsConfig={CAROUSER_CONTROLS_CONFIG}
+            wrapAround={true}>
+            {this.getSliderItems()}
           </Carousel>
         </header>
-        <article className='border-2 m-4'>
+        <article className='d-flex flex-column flex-grow-2 m-4 border-2'>
           <header>
             <h1 className='text-center'>News</h1>
           </header>
-          <hr/>
-          <div className='row'>
-            {gamesItems}
+          <hr className='my-3'/>
+          <div className='d-flex flex-wrap align-content-start justify-content-center'>
+            {this.getNewsItems()}
           </div>
         </article>
       </section>
     );
   }
 
-  getGamesWithDiscount() {
+  getSliderItems() {
+    if (this.state.sliderGames.length > 0) {
+      return this.getGameSliderItems();
+    }
+    return this.getSkeletonSliderItems();
+  }
+
+  getGameSliderItems() {
     let discountedGames = [];
-    for (const game of this.state.plataformsGames) {
-      console.log(game.plataformsId + '-' + game.gamesId);
+    for (const plataformGame of this.state.sliderGames) {
       discountedGames.push(
-        <div key={game.plataformsId + '-' + game.gamesId + '--slider__items'} className='d-flex justify-content-center' style={{maxHeight: '60vh'}}>
-          <GameItemSliderComponent plataformGame={game} showType='discount'/>
+        <div key={plataformGame.plataformsId + '-' + plataformGame.gamesId + '--slider__items'} className='d-flex justify-content-center w-100 h-100'>
+          <GameItemSliderComponent plataformGame={plataformGame} showType='discount'/>
         </div>
       );
     }
     return discountedGames;
   }
 
+  getSkeletonSliderItems() {
+    return [
+      <Skeleton key='slider-skeleton-1' width='90%' height='90%' style={{margin: '2% 5%'}}/>,
+      <Skeleton key='slider-skeleton-1' width='90%' height='90%' style={{margin: '2% 5%'}}/>,
+      <Skeleton key='slider-skeleton-1' width='90%' height='90%' style={{margin: '2% 5%'}}/>
+    ];
+  }
+
+  getNewsItems() {
+    if (this.state.plataformsGames.length > 0) {
+      return this.getGamesItems();
+    }
+    return this.getSkeletonItems();
+  }
+
   getGamesItems() {
     let gamesItemsViews = [];
-    for (const game of this.state.plataformsGames) {
+    for (const plataformGame of this.state.plataformsGames) {
       gamesItemsViews.push(
-        <div key={game.plataformsId + '-' + game.gamesId + '--items'} className='col-12 col-sm-6 col-md-3 p-0'>
-          <GameItemComponent plataformGame={game}/>
+        <div key={plataformGame.plataformsId + '-' + plataformGame.gamesId + '--items'} className='p-2' style={{flex: '1 1 30vh', minHeight: '30vh', maxHeight: '255px'}}>
+          <GameItemComponent plataformGame={plataformGame}/>
         </div>
       );
     }
     return gamesItemsViews;
+  }
+
+  getSkeletonItems() {
+    return [
+      <Skeleton key='news-skeleton-1' className='p-0' width='90vw' height='30vh'/>
+    ];
   }
 }
 

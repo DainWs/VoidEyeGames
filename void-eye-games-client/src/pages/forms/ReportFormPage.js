@@ -24,7 +24,7 @@ class ReportFormPage extends React.Component {
       email: '',
       emailConfirmation: '',
       terms: false,
-      erros: ''
+      errors: ''
     };
   }
   
@@ -69,74 +69,102 @@ class ReportFormPage extends React.Component {
     let description = this.state.description.replace(/\n/g, '<br/>');
     let email = this.state.email;
     let emailConfirmation = this.state.emailConfirmation;
+    let terms = this.state.terms;
 
-    if (!this.state.terms) {
-      this.setState({erros: 'Los terminos son obligatorios para mandar el reporte.'});
+    if (!terms) {
+      this.setState({errors: 'Los terminos son obligatorios para mandar el reporte.'});
       return;
     }
 
-    if (this.state.email.length <= 0 || this.state.emailConfirmation.length <= 0) {
-      this.setState({erros: 'Los campos de correo y confirmacion de correo son obligatorios para mandar el reporte.'});
+    if (email.length <= 0 || emailConfirmation.length <= 0) {
+      this.setState({errors: 'Los campos de correo y confirmacion de correo son obligatorios para mandar el reporte.'});
       return;
-    } else if (this.state.email !== this.state.emailConfirmation) {
-      this.setState({erros: 'Los campos de correo y confirmacion deben ser el mismo correo.'});
-      return;
-    }
-
-    if (this.state.issue.length <= 0 || this.state.description.length <= 0) {
-      this.setState({erros: 'El issue y description son obligatorios para resolver el problema.'});
+    } else if (email !== emailConfirmation) {
+      this.setState({errors: 'Los campos de correo y confirmacion deben ser el mismo correo.'});
       return;
     }
 
-    if (!this.state.selectedReason) {
-      this.setState({erros: 'Los terminos son obligatorios para mandar el reporte.'});
+    if (issue.length <= 0 || description.length <= 0) {
+      this.setState({errors: 'El issue y description son obligatorios para resolver el problema.'});
+      return;
+    }
+
+    if (!selectedReason) {
+      this.setState({errors: 'Los terminos son obligatorios para mandar el reporte.'});
       return;
     }
 
     let request = new SocketRequest();
-    request.setBody(`{"selectedReason": "${selectedReason}", "issue": "${issue}", "description": "${description}", "email": "${email}", "emailConfirmation": "${emailConfirmation}"}`);
+    request.setBody(JSON.stringify({
+      reason: selectedReason, 
+      issue: issue, 
+      description: description, 
+      email: email, 
+      emailConfirmation: emailConfirmation,
+      terms: terms
+    }));
     request.setMethod('POST');
-    SocketController.sendCustomWithCallback( request, DESTINATION_REPORT, () => {} );
+    SocketController.sendCustomWithCallback( request, DESTINATION_REPORT, this.onSuccess.bind(this));
+  }
+
+  onSuccess() {
+    if (response.data.status !== 200) {
+      this.onFailed(response);
+      return;
+    }
+    document.getElementById('navigate-home').click();
+  }
+
+  onFailed(response) {
+    this.setState({errors: response.data.body});
   }
 
   render() {
     return (
-      <article className='m-auto p-2 p-sm-0 w-100' style={{maxWidth: '450px'}}>
+      <article className='m-auto p-2 p-sm-0 w-100' style={{minHeight: '1000px', maxWidth: '800px'}}>
         <header>
           <h1 className='text-align-center'>Report form</h1>
         </header>
         <form id='report-form'>
-          <section className='d-flex flex-column'>
+          <section className='py-2 d-flex flex-column'>
             <label htmlFor='report-form--reason'>Reason:</label>
             <Select id='report-form--reason' options={REASONS} onChange={this.onChangeReason.bind(this)}/>
           </section>
-          <section className='d-flex flex-column'>
+
+          <section className='py-2 d-flex flex-column'>
             <label htmlFor='report-form--issue'>Case/Issue:</label>
-            <input id='report-form--issue' type='text' value={this.state.issue} onChange={this.onChangeIssue.bind(this)}/>
+            <input id='report-form--issue' className='form-control' type='text' value={this.state.issue} onChange={this.onChangeIssue.bind(this)}/>
           </section>
-          <section className='d-flex flex-column'>
+
+          <section className='py-2 d-flex flex-column'>
             <label htmlFor='report-form--description'>Description:</label>
-            <textarea id='report-form--description' className='no-resize' rows={10} value={this.state.description} onChange={this.onChangeDescription.bind(this)}/>
+            <textarea id='report-form--description' className='form-control no-resize' rows={10} value={this.state.description} onChange={this.onChangeDescription.bind(this)}/>
           </section>
-          <section className='d-flex flex-column'>
+
+          <section className='py-2 d-flex flex-column'>
             <label htmlFor='report-form--email'>Contact email:</label>
-            <input id='report-form--email' type='email' value={this.state.email} onChange={this.onChangeEmail.bind(this)}/>
+            <input id='report-form--email' type='email' className='form-control' value={this.state.email} onChange={this.onChangeEmail.bind(this)}/>
           </section>
-          <section className='d-flex flex-column'>
+
+          <section className='py-2 d-flex flex-column'>
             <label htmlFor='report-form--email-confirmation'>Contact email confirmation:</label>
-            <input id='report-form--email-confirmation' type='email' value={this.state.emailConfirmation} onChange={this.onChangeEmailConfirmation.bind(this)}/>
+            <input id='report-form--email-confirmation' className='form-control' type='email' value={this.state.emailConfirmation} onChange={this.onChangeEmailConfirmation.bind(this)}/>
           </section>
-          <section className='my-3'>
-            <label htmlFor='report-form--terms'>
-              <span className='text-error'>*</span>
-              <input id='report-form--terms' type='checkbox' checked={this.state.terms} onChange={this.onChangeTerms.bind(this)}/> Accept terms and conditions.
+
+          <section className='py-2 required'>
+            <label className='check-form ml-3' htmlFor='report-form--terms'>
+              Accept terms and conditions.
+              <input id='report-form--terms' type='checkbox' value={this.state.terms} onChange={this.onChangeTerms.bind(this)}/>
+              <span className="checkmark"></span>
             </label>
           </section>
-          {this.getErrorView()}
+          
           <section className='d-flex justify-content-between mb-3'>
             <a className='btn btn-primary border' onClick={this.cancel.bind(this)}>Cancel</a>
             <a className='btn btn-quaternary' onClick={this.submit.bind(this)}>Submit</a>
           </section>
+
+          {this.getErrorView()}
         </form>
       </article>
     );
@@ -144,8 +172,8 @@ class ReportFormPage extends React.Component {
 
   getErrorView() {
     let error = this.state.errors;
-    if (error == null || error.length > 0) return (<></>);
-    return (<section><p className='text-error'>{error}</p></section>);
+    if (error == null || error.length <= 0) return (<></>);
+    return (<section><p className='text-error'>* {error}</p></section>);
   }
 }
 

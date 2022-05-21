@@ -1,0 +1,21 @@
+.slider{
+    &--control {
+        width: 3.125rem;
+        font-size: 2rem;
+        color: $text-primary !important;
+        background-color: $secondary !important;
+
+        @include btn-transition;
+
+        &:focus,
+        &:hover {
+            color: $text-secondary !important;
+            background-color: $primary !important;   
+        }
+    }
+
+    &-list {
+        display: flex;
+        align-items: center;
+    }
+}

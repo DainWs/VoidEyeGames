@@ -1,25 +1,28 @@
 import Game from "../../domain/models/dtos/Game";
-import { IMAGE_ALLOWED_MEDIAS_TYPES, VIDEO_ALLOWED_MEDIAS_TYPES } from "../../domain/models/MediaTypes";
+import MediaTypeEnum from "../../domain/models/MediaTypes";
 import { Comparators } from "../../utils/Comparators";
 
 class SocketDataFilter {
     getVideoMediasFrom(list) {
         if (!list) return [];
         return Array.from(list)
-            .filter( v => VIDEO_ALLOWED_MEDIAS_TYPES.has(v.mediaType) );
+            .filter( v => MediaTypeEnum.isVideoMediaType(v.mediaType) );
     }
 
     getImageMediasFrom(list) {
         if (!list) return [];
         return Array.from(list)
-            .filter( v => IMAGE_ALLOWED_MEDIAS_TYPES.has(v.mediaType) );
+            .filter( v => MediaTypeEnum.isImageMediaType(v.mediaType) );
     }
 
-    getBestPlataforms(list) {
+    getBestPlataforms(list, requireDiscount = false) {
         if (!list) return [];
-        return Array.from(list)
-            .sort(Comparators.get('priceAndDiscount'))
-            .slice(0, 3);
+        let result = Array.from(list)
+            .sort(Comparators.get('priceAndDiscount'));
+        if (requireDiscount) {
+            result = result.filter(v => v.discount > 0);
+        }
+        return result.slice(0, 3);
     }
 
     getPlataformsOfList(plataformList, keyList) {
@@ -32,10 +35,7 @@ class SocketDataFilter {
     getGamesWithoutCategory(gamesList, categoryId) {
         if (!gamesList) return [];
         return Array.from(gamesList)
-            .filter( v => {
-                console.log(v);
-                return !(new Game(v)).hasCategory(categoryId);
-            });
+            .filter( v => !(new Game(v)).hasCategory(categoryId));
     }
 
     getGamesNotIn(games, excludedGames) {
@@ -44,10 +44,7 @@ class SocketDataFilter {
         return Array.from(games)
             .filter( game => {
                 var searchGame = game;
-                return excluded.find( v => {
-                    console.log(v);
-                    return v.id === searchGame.id;
-                 } ) !== null;
+                return !(excluded.find( v => v.id == searchGame.id ));
             });
     }
 }

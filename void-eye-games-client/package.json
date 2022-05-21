@@ -2,15 +2,14 @@
   "name": "void-eye-games-client",
   "author": "Jose Antonio Duarte Perez",
   "version": "1.0.0",
-  "main": "node_modules/expo/AppEntry.js",
+  "main": "src/App.js",
+  "homepage": ".",
+  "private": true,
   "scripts": {
-    "build": "expo build:web && expo build:android",
-    "start": "expo start",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
-    "web": "expo start --web",
-    "eject": "expo eject",
-    "sass": "node-sass -w src/scss/ -o assets/css/ --output-style compressed"
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "sass": "node-sass --source-map src/assets/css -w scss/ -o src/assets/css/ --output-style compressed",
+    "watch": "npm-watch"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.1.1",
@@ -18,31 +17,57 @@
     "@fortawesome/free-regular-svg-icons": "^6.1.1",
     "@fortawesome/free-solid-svg-icons": "^6.1.1",
     "@fortawesome/react-fontawesome": "^0.1.18",
+    "@testing-library/jest-dom": "^5.16.2",
+    "@testing-library/react": "^12.1.3",
+    "@testing-library/user-event": "^13.5.0",
     "axios": "^0.26.1",
     "bootstrap": "^4.0.0",
     "crypto-js": "^4.1.1",
-    "expo": "~44.0.0",
-    "expo-navigation-bar": "^1.1.2",
-    "expo-splash-screen": "~0.14.1",
-    "expo-status-bar": "~1.2.0",
-    "expo-system-ui": "^1.1.1",
-    "expo-updates": " ~0.11.7",
     "nuka-carousel": "^5.0.13",
-    "react": "17.0.1",
+    "qs": "^6.10.3",
+    "react": "^17.0.2",
     "react-bootstrap": "^2.3.0",
-    "react-dom": "17.0.1",
+    "react-dom": "^17.0.2",
     "react-loading-skeleton": "^3.1.0",
-    "react-native": "0.64.3",
-    "react-native-web": "0.17.1",
+    "react-player": "^2.10.1",
     "react-router-dom": "^6.2.1",
+    "react-scripts": "^5.0.0",
     "react-select": "^5.3.1",
+    "react-tooltip": "^4.2.21",
     "redux": "^4.2.0",
-    "sass": "^1.50.1",
+    "sass": "^1.49.9",
     "video-react": "^0.15.0"
   },
-  "devDependencies": {
-    "@babel/core": "^7.12.9",
-    "node-sass": "^7.0.1"
+  "overrides": {
+    "autoprefixer": "10.4.5"
   },
-  "private": true
+  "devDependencies": {
+    "env-cmd": "^10.1.0",
+    "node-sass": "^7.0.1",
+    "npm-watch": "^0.11.0"
+  },
+  "resolutions": {
+    "react-scripts/eslint-webpack-plugin": "2.3.0"
+  },
+  "watch": {
+    "build": {
+      "patterns": [
+        "src",
+        "public"
+      ],
+      "extensions": "js, html, scss, css, png, ico"
+    }
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
 }

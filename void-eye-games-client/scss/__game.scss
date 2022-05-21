@@ -1,0 +1,108 @@
+.game {
+    &-comment-icon {
+        @include media-breakpoint-up(sm) { 
+            width: 25px;
+            height: 25px;
+        }
+
+        @include media-breakpoint-up(md) { 
+            width: 60px;
+            height: 60px;
+        }
+
+        @include media-breakpoint-up(lg) { 
+            width: 75px;
+            height: 75px;
+        }
+    }
+
+    &-item {
+        position: relative;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+
+        &__container {
+            width: 100% !important;
+            height: 100% !important;
+
+            &.game-slider {
+                min-width: 320px !important;
+                width: 80vw !important;
+            }
+        }
+
+        &::after,
+        &::before {
+            cursor: pointer;
+            content: " ";
+            opacity: 0;
+            width: 0;
+            position: absolute;
+            visibility: hidden;
+        }
+
+        &::after {
+            z-index: 4;
+            
+            top: 20%;
+            bottom: 20%;
+            left: 20%;
+            right: 20%;
+
+            height: 60%;
+            padding: 1rem;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 2rem;
+            color: $text-primary;
+            text-shadow: 0px 0px 10px black;
+            background-color: rgba($color: $secondary, $alpha: 0.3);
+
+            @include game-item-transition(.1s, .15s);
+        }
+
+        &::before {
+            z-index: 3;
+            right: 0;
+            height: 100%;
+            background-color: $text-secondary;
+
+            @include game-item-transition(.1s, .15s);
+        }
+
+        &:hover,
+        &:focus {
+            &::before {
+                width: 100% !important;
+                opacity: 0.5;
+                visibility: visible;
+                background-color: $primary;
+            }
+
+            &::after {
+                content: "Detalles";
+                width: 60% !important;
+                opacity: 1;
+                visibility: visible;
+                background-color: $secondary;
+                text-shadow: unset;
+            }
+        }
+    }
+
+    &-details {
+        max-width: 960px;
+        @include media-breakpoint-up(lg) { 
+            max-width: 80vw;
+        }
+
+        & > hr {
+            margin: calc(1px + 3vh) 0;
+        }
+    }
+    
+}

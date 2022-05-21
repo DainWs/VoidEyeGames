@@ -1,6 +1,6 @@
 import { SocketDataFilter } from "./SocketDataFilter";
 import { SocketDataProvideer } from "./SocketDataProvider";
-import { DESTINATION_CATEGORIES, DESTINATION_GAMES, DESTINATION_PLATAFORMS, DESTINATION_PLATAFORM_GAMES } from "./SocketDestinations";
+import { DESTINATION_CATEGORIES, DESTINATION_GAMES, DESTINATION_LIST_OF_GAMES, DESTINATION_PLATAFORMS, DESTINATION_PLATAFORM_GAMES } from "./SocketDestinations";
 
 class SocketDataQuery {
     getGameWithId(id) {
@@ -10,7 +10,7 @@ class SocketDataQuery {
     }
 
     getGamesNotIn(gamesList) {
-        let games = SocketDataProvideer.provide(DESTINATION_GAMES);
+        let games = SocketDataProvideer.provide(DESTINATION_LIST_OF_GAMES);
         return SocketDataFilter.getGamesNotIn(games, gamesList);
     }
 
@@ -28,7 +28,6 @@ class SocketDataQuery {
 
     getPlataformsGamesWithGameId(gameId) {
         let plataformsGames = SocketDataProvideer.provide(DESTINATION_PLATAFORM_GAMES);
-        console.log(plataformsGames);
         if (plataformsGames === null) return [];
         return Array.from(plataformsGames)
             .filter(v => v.gamesId = gameId);

@@ -1,0 +1,16 @@
+.home--header {
+    & .slider {
+        &-frame,
+        &-container {
+            width: 100% !important;
+            height: 100% !important;
+        }
+
+        &-list {
+            height: 100% !important;
+        }
+    }
+}
+
+@import './__nav.scss';
+@import './__dropdown.scss';

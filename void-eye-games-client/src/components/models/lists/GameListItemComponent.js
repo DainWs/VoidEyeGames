@@ -1,7 +1,7 @@
 import React from 'react';
-import ListItemComponent from './ListItemComponent';
+import ItemContextMenuComponent from './ItemContextMenuComponent';
 
-class GameListItemComponent extends ListItemComponent {
+class GameListItemComponent extends ItemContextMenuComponent {
     constructor(props) {
         super(props);
         this.onEditClick = props.onEditClick;
@@ -13,14 +13,6 @@ class GameListItemComponent extends ListItemComponent {
         parentState.isEditEnable = (props.canEdit);
         parentState.isRemoveEnable = (props.canRemove);
         return parentState;
-    }
-
-    onEditClick() {
-        this.navigate(`/admin/game/${this.state.data.id}`, { replace: true });
-    }
-
-    onRemoveClick() {
-        this.navigate('/', { replace: true });
     }
 
     getTitle() {
@@ -52,7 +44,7 @@ class GameListItemComponent extends ListItemComponent {
     }
 
     getContextItemView(key, title, data, onclick) {
-        return <a key={key} className='text-dark' onClick={e => onclick(data)}>{title}</a>;
+        return <a key={key} className='w-100 btn btn-primary text-left text-dark' onClick={e => onclick(data)}>{title}</a>;
     }
 }
 

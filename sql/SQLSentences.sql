@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS users(
 	email		VARCHAR(255) NOT NULL UNIQUE,
 	imageUrl	VARCHAR(255),
 	publicityAccepted BOOLEAN DEFAULT 0,
-	accountType	VARCHAR(255) DEFAULT 1,
+	accountType	INT(1) DEFAULT 1 CHECK (accountType IN (0, 1, 2)),
 	CONSTRAINT pk_users PRIMARY KEY(id)
 );
 
@@ -64,7 +64,7 @@ CREATE TABLE IF NOT EXISTS plataforms_games(
 	gamesId			INT(255) NOT NULL,
 	price			FLOAT(100,2) NOT NULL,
 	priceUnit		VARCHAR(100) NOT NULL,
-	discount		FLOAT(3,2) NOT NULL,
+	discount		FLOAT(3,2) NOT NULL CHECK (discount >= 0.0 AND discount <= 1.0),
 	isEnabled		BOOLEAN NOT NULL DEFAULT 1,
 	CONSTRAINT pk_plataforms_games PRIMARY KEY(plataformsId, gamesId)
 );
@@ -75,6 +75,7 @@ ALTER TABLE plataforms_games ADD CONSTRAINT fk_plataforms_games_plataforms FOREI
 CREATE TABLE IF NOT EXISTS medias(
 	id          INT(255) auto_increment NOT NULL,
 	gamesId		INT(255) NOT NULL,
+	name		VARCHAR(100) NOT NULL,
 	mediaType	VARCHAR(100) NOT NULL DEFAULT "image/png",
 	CONSTRAINT pk_medias PRIMARY KEY(id, gamesId)
 );

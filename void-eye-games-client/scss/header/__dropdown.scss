@@ -1,0 +1,46 @@
+.dropdown {
+    &-menu{
+        position: absolute !important;
+        top: -2px !important;
+
+        overflow: hidden;
+        display: block;
+        
+        border: none !important;
+        border-radius: 0 !important;
+        height: auto;
+        max-height: 0px;
+        
+        transition: max-height .125s linear;
+
+        &.header-menu {    
+            transform: translate3d(-278px, calc(50px + 1vh + 2px), 0px) !important;
+            left: 0px !important;
+            width: 350px;
+            background-color: $secondary !important;
+
+            &.show {
+                max-height: 500px;
+                padding-bottom: 0.15rem !important;
+                border-bottom: 0.1rem solid gray !important;
+            }
+
+            .nav-link {
+                height: $headerHeight;
+            }
+        }
+    }
+
+    &-item {
+        color: $primary !important;
+        font-size: 1.2rem !important;
+        font-family: 'Arial' !important;
+
+        &.active,
+        &:focus,
+        &:hover {
+            background-color: $primary !important;
+            color: $text-secondary !important;
+        }
+    }
+}

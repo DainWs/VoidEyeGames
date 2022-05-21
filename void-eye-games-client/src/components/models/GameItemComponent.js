@@ -1,63 +1,74 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import PlataformGame from '../../domain/models/dtos/PlataformGame';
-import { ResourceManger } from '../../domain/ResourceManager';
+import PriceUnitEnum from '../../domain/models/PriceUnits';
 
 class GameItemComponent extends React.Component {
   constructor(props) {
     super(props);
-    this.plataformGame = new PlataformGame(props.plataformGame);
     this.state = {
+      plataformGame: new PlataformGame(props.plataformGame),
       showType: props.showType
     };
   }
 
-  componentDidMount() {
+  navigate() {
+    document.getElementById(this.linkId).click();
   }
 
   render() {
+    this.linkId = `${this.state.plataformGame.plataformsId}-${this.state.plataformGame.games.id}__link-navigation`;
     return (
-      <Link to={'details/' + this.plataformGame.gamesId}>
-        <div className='game-item noselect position-relative p-0 m-1 border border-secondary mw-100 mh-100'>
-          {this.getGameImageView()}
-          <span className='position-absolute w-50 bg-secondary pl-2 border border-secondary text-primary font-weight-bold p-left-top-0'>{this.plataformGame.games.name}</span>
-          <div className='position-absolute bg-quinary border border-secondary d-flex align-items-center p-right-bottom-0' style={{minWidth: '20%'}}>
-            <div className='bg-primary p-1 h-100' style={{maxWidth: '2.125rem'}}>{this.getPlataformImageView()}</div>
+      <div className={this.getContainerClasses()}>
+        <Link id={this.linkId} to={'/details/' + this.state.plataformGame.games.id}></Link>
+        <div style={this.getGameImageView()}  onClick={this.navigate.bind(this)}
+          className='game-item noselect position-relative p-0 m-0 border border-secondary mw-100 mh-100 w-100 h-100'>
+          <span className='position-absolute w-100 bg-secondary pl-2 border border-secondary text-primary font-weight-bold p-left-top-0' style={{fontSize: 'calc(1vw + 0.5rem)'}}>{this.state.plataformGame.games.name}</span>
+          <div className='position-absolute bg-quinary border border-secondary d-flex align-items-center p-right-bottom-0' style={{fontSize: 'calc(1vw + 0.5rem)', minWidth: '20%'}}>
+            <div className='bg-primary p-1 h-100' style={{maxWidth: 'calc(1vw + 2rem)'}}>{this.getPlataformImageView()}</div>
             <div className='flex-grow-1 d-flex align-items-center justify-content-center'><span className='px-2 text-primary font-weight-bold'>{this.getShowTypeView()}</span></div>
           </div>
         </div>
-      </Link>
+      </div>
     );
   }
+  // Can be override by childs classes
+  getContainerClasses() {
+    return 'game-item__container p-1';
+  }
 
+  // Can be override by childs classes
   getGameImageView() {
-    return (<img src={this.getGameImageUrl()} alt={this.plataformGame.games.name} style={this.getGameImageStyle()}/>);
+    return {backgroundImage: `url(${this.getGameImageUrl()})`}
   }
 
+  // Can be override by childs classes
   getGameImageUrl() {
-    let imageUrl = this.plataformGame.games.getMainImage();
-    return ResourceManger.getImageUrl(imageUrl);
+    return this.state.plataformGame.games.getImageUrl();
   }
 
-  getGameImageStyle() {
-    return {maxHeight: '100%', maxWidth: '100%'};
-  }
-
+  // Can be override by childs classes
   getPlataformImageView() {
-    return (<img src={this.getPlataformImageUrl()} alt={this.plataformGame.plataforms.name} className='mw-100' />);
+    return (<img src={this.getPlataformImageUrl()} alt={this.state.plataformGame.plataforms.name} className='mw-100' />);
   }
 
+  // Can be override by childs classes
   getPlataformImageUrl() {
-    let logoUrl = this.plataformGame.plataforms.getLogo();
-    return ResourceManger.getImageUrl(logoUrl);
+    return this.state.plataformGame.plataforms.getLogo();
   }
 
+  // Can be override by childs classes
   getShowTypeView() {
-    if (this.state.showType === 'discount' && this.plataformGame.discount > 0) {
-      let formattedDiscount = this.plataformGame.discount * 100;
-      return `-${formattedDiscount}%`;
+    if (this.state.showType === 'discount' && this.state.plataformGame.discount > 0) {
+      return `-${(this.state.plataformGame.discount * 100)}%`;
     }
-    return `${this.plataformGame.price} ${this.plataformGame.priceUnit}`;
+    let price = this.state.plataformGame.price;
+    if (price == 0) {
+      return `FREE`;
+    }
+
+    let priceUnit = PriceUnitEnum.getPriceUnitById(this.state.plataformGame.priceUnit);
+    return `${price} ${priceUnit.getSymbol()}`;
   }
 }
 

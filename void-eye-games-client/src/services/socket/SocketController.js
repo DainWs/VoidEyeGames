@@ -2,23 +2,22 @@ import axios from 'axios';
 import { SocketDataProvideer } from './SocketDataProvider';
 import SocketRequest from './SocketRequest';
 
-export const API_URL = 'http://localhost/VoidEyeGames/void-eye-games-api';
+export const API_URL = process.env.REACT_APP_PUBLIC_API;
 
 class SocketController {
-    send(destination, onError = this.onError) {
-        console.log(new SocketRequest());
-        this.sendCustom(new SocketRequest(), destination);
+    send(destination, onError = onHandleError) {
+        this.sendCustom(new SocketRequest(), destination, onError);
     }
 
-    sendCustom(request, destination, onError = this.onError) {
-        console.log(new SocketRequest());
+    sendCustom(request, destination, onError = onHandleError) {
         axios.request(this.getUrlFor(destination), request)
-            .then(response => SocketDataProvideer.supply(destination, response.data))
+            .then(response => {
+                SocketDataProvideer.supply(destination, response.data);
+            })
             .catch(onError);
     }
 
-    sendCustomWithCallback(request, destination, callback, onError = this.onError) {
-        console.log(request);
+    sendCustomWithCallback(request, destination, callback, onError = onHandleError) {
         axios.request(this.getUrlFor(destination), request)
             .then(response => callback(response))
             .catch(onError);
@@ -29,7 +28,7 @@ class SocketController {
     }
 }
 
-function onError(error) {
+function onHandleError(error) {
     console.error(error);
 }
 

@@ -1,0 +1,2 @@
+RedirectMatch "^/VoidEyeGames/[Aa][Pp][Ii]/?(.*)$" /VoidEyeGames/void-eye-games-api/$1
+RedirectMatch "^/VoidEyeGames/(?!void-eye-games-api|void-eye-games-client)/?(.*)" /VoidEyeGames/void-eye-games-client/build/$1

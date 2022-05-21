@@ -4,6 +4,7 @@ import { SessionManager } from '../../domain/SessionManager';
 import { SocketController } from '../../services/socket/SocketController';
 import SocketRequest from '../../services/socket/SocketRequest';
 import {  DESTINATION_SIGNIN } from '../../services/socket/SocketDestinations';
+import { NavLink } from 'react-router-dom';
 
 class SignInFormPage extends React.Component {
   constructor(props) {
@@ -80,68 +81,78 @@ class SignInFormPage extends React.Component {
     let publicity = this.state.publicity;
 
     let request = new SocketRequest();
-    request.setBody(`{"name": "${username}", "email": "${email}", "password": "${md5(password)}", "confirmationPassword": "${md5(confirmationPassword)}", "terms": ${terms}, "publicity": ${publicity}}`);
+    request.setBody(JSON.stringify({
+      name: username, 
+      email: email, 
+      password: md5(password)+'', 
+      confirmationPassword: md5(confirmationPassword)+'', 
+      terms: terms, 
+      publicity: publicity
+    }));
     request.setMethod('POST');
-    SocketController.sendCustomWithCallback(
-      request,
-      DESTINATION_SIGNIN,
-      this.onSuccess.bind(this),
-      this.onFailed.bind(this)
-    );
+    SocketController.sendCustomWithCallback( request, DESTINATION_SIGNIN, this.onSuccess.bind(this));
   }
 
   onSuccess(response) {
-    console.log(response);
+    if (response.data.status !== 200) {
+      this.onFailed(response);
+      return;
+    }
     SessionManager.setSession(response.data);
-    document.getElementById('navigate-home').click();
   }
 
   onFailed(response) {
-    console.log(JSON.stringify(response));
-    this.setState({errors: "Ha ocurrido un error, vuelva a intentarlo mas tarde."});
+    this.setState({errors: response.data.body});
   }
 
   render() {
     return (
-      <article className='m-auto p-2 p-sm-0 w-100' style={{ maxWidth: '400px' }}>
+      <article className='p-2 p-sm-0 pb-sm-5 mt-5'>
         {this.getHasSession()}
-        <header>
-          <h1 className='text-align-center'>Sign in</h1>
-        </header>
-        <form id='login-form' className='w-100'>
-          <section className='w-100'>
-            <label htmlFor='login-form--username'>Username:</label>
-            <input id='login-form--username' className='w-100' type='text' value={this.state.username} onChange={this.onChangeUsername.bind(this)} autoComplete='false'/>
-          </section>
-          <section className='w-100'>
-            <label htmlFor='login-form--email'>Email:</label>
-            <input id='login-form--email' className='w-100' type='email' value={this.state.email} onChange={this.onChangeEmail.bind(this)} autoComplete='false'/>
-          </section>
-          <section className='w-100'>
-            <label htmlFor='login-form--password'>Password:</label>
-            <input id='login-form--password' className='w-100' type='password' value={this.state.password} onChange={this.onChangePassword.bind(this)} autoComplete='false'/>
-          </section>
-          <section className='w-100'>
-            <label htmlFor='login-form--password-confirmation'>Confirmation password:</label>
-            <input id='login-form--password-confirmation' className='w-100' type='password' value={this.state.confirmationPassword} onChange={this.onChangeConfirmationPassword.bind(this)} autoComplete='false'/>
-          </section>
-          <section>
-            <label htmlFor='report-form--terms'>
-              <span className='text-error'>*</span>
-              <input id='report-form--terms' type='checkbox' checked={this.state.terms} onChange={this.onChangeTerms.bind(this)}/> Accept terms and conditions.
-            </label>
-          </section>
-          <section>
-            <label htmlFor='report-form--publicity'>
-              <span className='text-error'>*</span>
-              <input id='report-form--publicity' type='checkbox' checked={this.state.publicity} onChange={this.onChangePublicity.bind(this)}/> I agree to receive advertising in my email.
-            </label>
-          </section>
-          {this.getErrorView()}
-          <section className='d-flex flex-column w-100 text-center'>
-            <a className='btn btn-secondary w-100 text-primary' onClick={this.submit.bind(this)}>Sign in</a>
-          </section>
-        </form>
+        <section className='m-auto' style={{maxWidth: '800px'}}>
+          <header>
+            <h1 className='text-align-center'>Sign in</h1>
+          </header>
+          <form id='login-form' className='w-100 my-2'>
+            <section className='w-100 py-3'>
+              <label htmlFor='login-form--username' className='mb-2'><span className='text-error'>* </span>Username:</label>
+              <input id='login-form--username' className='form-control w-100' type='text' value={this.state.username} onChange={this.onChangeUsername.bind(this)} autoComplete='false'/>
+            </section>
+            <section className='w-100 py-3'>
+              <label htmlFor='login-form--email' className='mb-2'><span className='text-error'>* </span>Email:</label>
+              <input id='login-form--email' className='form-control w-100' type='email' value={this.state.email} onChange={this.onChangeEmail.bind(this)} autoComplete='false'/>
+            </section>
+            <section className='w-100 py-3'>
+              <label htmlFor='login-form--password' className='mb-2'><span className='text-error'>* </span>Password:</label>
+              <input id='login-form--password' className='form-control w-100' type='password' value={this.state.password} onChange={this.onChangePassword.bind(this)} autoComplete='false'/>
+            </section>
+            <section className='w-100 py-3'>
+              <label htmlFor='login-form--password-confirmation' className='mb-2'><span className='text-error'>* </span>Confirmation password:</label>
+              <input id='login-form--password-confirmation' className='form-control w-100' type='password' value={this.state.confirmationPassword} onChange={this.onChangeConfirmationPassword.bind(this)} autoComplete='false'/>
+            </section>
+            <section className='py-2 required'>
+              <label className='check-form mb-0 ml-3' htmlFor='report-form--terms'>
+                Accept terms and conditions.
+                <input id='report-form--terms' type='checkbox' checked={this.state.terms} onChange={this.onChangeTerms.bind(this)}/>
+                <span className="checkmark"></span>
+              </label>
+            </section>
+            <section className='py-2'>
+              <label className='check-form mb-0 ml-3' htmlFor='report-form--publicity'>
+                I agree to receive advertising in my email.
+                <input id='report-form--publicity' type='checkbox' checked={this.state.publicity} onChange={this.onChangePublicity.bind(this)}/>
+                <span className="checkmark"></span>
+              </label>
+            </section>
+            {this.getErrorView()}
+            <section className='d-flex flex-column w-100 text-center py-3'>
+              <a className='btn btn-quaternary w-100 text-primary' onClick={this.submit.bind(this)}>Sign in</a>
+            </section>
+            <section className='d-flex flex-column w-100 text-center py-3'>
+              <NavLink className='btn btn-secondary w-100 text-primary' to='/login'>Back to log in</NavLink>
+            </section>
+          </form>
+        </section>
       </article>
     );
   }
@@ -153,7 +164,7 @@ class SignInFormPage extends React.Component {
 
   getErrorView() {
     let error = this.state.errors;
-    if (error && error.length > 0) return (<></>);
+    if (error === undefined || error === null || error.length <= 0) return (<></>);
     return (<section><p className='text-error'>{error}</p></section>);
   }
 }

@@ -5,19 +5,18 @@ define('DB_DEFAULT_NAME', 'void_eye_games');
 define('DB_DEFAULT_USER', 'root');
 define('DB_DEFAULT_PASSWORD', '');
 
-/* DB ORDER METHODS */
-define('SQL_ORDER_ASC', 'ASC');
-define('SQL_ORDER_DESC', 'DESC');
-
-/* Controllers Error identifies */
-define('GET_USERS_PATH', '/users');
-define('GET_GAME_PATH', '/game/id');
-define('GET_GAMES_PATH', '/games');
-define('GET_CATEGORIES_PATH', '/cateogies');
-define('GET_PLATAFORMS_PATH', '/plataforms');
-
-
+/* TOKEN */
+define('TOKEN_NUM_BYTES', 16);
 
 /* Others */
 define('DATE_FORMAT', 'd/m/Y');
 define('TIME_FORMAT', 'h:m:s');
+
+/* ACCOUNT TYPES */
+define('ACCOUNT_TYPE_ADMIN', 0);
+define('ACCOUNT_TYPE_LOGGED_USER', 1);
+define('ACCOUNT_TYPE_UNKNOWN', 2);
+
+/* QUERIES */
+define('QUERY_GAMES_PER_PAGE', 12);
+define('QUERY_COMMENTS_PER_GAME', 3);

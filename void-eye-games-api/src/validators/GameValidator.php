@@ -23,7 +23,10 @@ class GameValidator extends BaseValidator {
     public function validate($game): void {
         try {
             if ($game === null) throw new InvalidArgumentException("Game is null, invalid argument");
-            $this->validateName($game['name']);
+            if (($game['mainImage'] ?? null) == null) {
+                $this->errors['mainImage'] = 'La imagen principal es obligatoria.';
+            }
+            $this->validateName($game['name'] ?? null);
         } catch(Exception $ex) {
             $this->logger->log($ex->getMessage(), Logger::WARNING);
             $this->errors['others'] = 'Ha ocurrido un error inesperado, intentelo de nuevo mas tarde.';
@@ -31,11 +34,11 @@ class GameValidator extends BaseValidator {
     }
 
     private function validateName($name): void {
-        if (!$name) {
+        if ($name === null || empty($name)) {
             $this->errors['name'] = 'El campo "name" es obligatorio.';
         } else {
             $dbGame = $this->atlas->select(Game::class, ['name' => $name])->fetchRecord();
-            if ($dbGame) {
+            if ($dbGame !== null) {
                 $this->errors['others'] = 'Ya existe un juego con este nombre.';
             }
         }

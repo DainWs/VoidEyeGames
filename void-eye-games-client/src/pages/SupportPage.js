@@ -1,5 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import { SessionManager } from '../domain/SessionManager';
 
 /**
  * FINISED. DO NOT TOUCH
@@ -10,10 +11,10 @@ class SupportPage extends React.Component {
     return (
       <article className='d-flex flex-column m-3'>
         <section className='overflow-hidden'>
-          <h1>Support</h1>
+          <h1 className='pb-2'>Support</h1>
           <section className='row vh-40' style={{overflow: 'hidden'}}>
             <div className='col-12 col-sm-6 col-lg-8'>
-              <p className='text-justify m-0 my-2 my-sm-0'>
+              <p className='text-justify p-2'>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor 
                 incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
                 exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute 
@@ -41,15 +42,15 @@ class SupportPage extends React.Component {
                 consectetur.</span>
               </p>
             </div>
-            <div className='col-12 col-sm-6 col-lg-4'>
-              <div className='w-100 h-100'>
+            <div className='col-12 col-sm-6 col-lg-4 pl-4 pb-4 pt-2'>
+              <div className='w-100 h-100 no-select'>
                 <iframe style={{width: '100%', height: '100%'}} scrolling="no" src="https://maps.google.com/maps?q=41.376279,2.176939&t=&z=13&ie=UTF8&iwloc=&output=embed"><a href="https://www.gps.ie/car-satnav-gps/">Sat Navs</a></iframe>
               </div>
             </div>
           </section>
           <section className='row'>
             <div className='col-12'>
-              <p className='text-justify'>
+              <p className='text-justify pb-4'>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor 
                 incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
                 exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute 
@@ -67,10 +68,10 @@ class SupportPage extends React.Component {
         </section>
         <section><hr/></section>
         <section>
-          <h3>Report</h3>
+          <h3 className='pt-2'>Report</h3>
           <section className='row' >
             <div className='col-12'>
-              <p className='text-justify'>
+              <p className='text-justify py-3 px-2'>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor 
                 incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
                 exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute 

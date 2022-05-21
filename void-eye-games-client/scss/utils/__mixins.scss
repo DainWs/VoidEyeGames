@@ -1,0 +1,52 @@
+//---------------------------------------------------------------------------------------------
+// Mixins
+//---------------------------------------------------------------------------------------------
+@mixin btn-transition {
+    -webkit-transition: 
+        color .25s linear,
+        background-color .25s linear;
+
+    -moz-transition:
+        color .25s linear,
+        background-color .25s linear;
+
+    -o-transition: 
+        color .25s linear,
+        background-color .25s linear;
+    
+    transition: 
+        color .25s linear,
+        background-color .25s linear;
+}
+
+@mixin game-item-transition($inTime: .7s, $secondTime: 0s) {
+    -webkit-transition: 
+        all $inTime linear,
+        background-color $inTime linear $secondTime;
+
+    -moz-transition:
+        all $inTime linear,
+        background-color $inTime linear $secondTime;
+
+    -o-transition: 
+        all $inTime linear,
+        background-color $inTime linear $secondTime;
+    
+    transition: 
+        all $inTime linear,
+        background-color $inTime linear $secondTime;
+}
+
+@mixin fix-position($size, $first, $second: none) {
+    $calcSize: $size * 1rem;
+    @if $second == none {
+        .p-#{$first}-#{$size} {
+            #{$first}: $calcSize;
+        }
+    } @else {
+        .p-#{$first}-#{$second}-#{$size} {
+            #{$first}: $calcSize;
+            #{$second}: $calcSize;
+        }
+    }
+}

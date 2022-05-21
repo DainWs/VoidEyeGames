@@ -11,12 +11,14 @@ use Atlas\Table\Row;
 /**
  * @property mixed $id int(10,0) NOT NULL
  * @property mixed $gamesId int(10,0) NOT NULL
+ * @property mixed $name varchar(100) NOT NULL
  * @property mixed $mediaType varchar(100) NOT NULL
  */
 class MediaRow extends Row
 {
     protected $cols = [
         'id' => null,
+        'name' => null,
         'gamesId' => null,
         'mediaType' => 'image/png',
     ];

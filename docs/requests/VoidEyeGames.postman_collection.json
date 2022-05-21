@@ -1,0 +1,777 @@
+{
+	"info": {
+		"_postman_id": "dc6c0b08-61f4-4c9a-bc02-efa65fa0b089",
+		"name": "VoidEyeGames",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "gets",
+			"item": [
+				{
+					"name": "getGame",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/VoidEyeGames/void-eye-games-api/game?id=4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"VoidEyeGames",
+								"void-eye-games-api",
+								"game"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "4"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getGames",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost/VoidEyeGames/void-eye-games-api/games?pageNum=2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"VoidEyeGames",
+								"void-eye-games-api",
+								"games"
+							],
+							"query": [
+								{
+									"key": "pageNum",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getGamesList",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/VoidEyeGames/void-eye-games-api/games/listed",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"VoidEyeGames",
+								"void-eye-games-api",
+								"games",
+								"listed"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getCategory",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/VoidEyeGames/void-eye-games-api/category?id=7",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"VoidEyeGames",
+								"void-eye-games-api",
+								"category"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "7"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getCategories",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/VoidEyeGames/void-eye-games-api/categories",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"VoidEyeGames",
+								"void-eye-games-api",
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getCategoriesList",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/VoidEyeGames/void-eye-games-api/categories/listed",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"VoidEyeGames",
+								"void-eye-games-api",
+								"categories",
+								"listed"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getPlataform",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/VoidEyeGames/void-eye-games-api/plataform?id=6",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"VoidEyeGames",
+								"void-eye-games-api",
+								"plataform"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "6"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getPlataforms",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/VoidEyeGames/void-eye-games-api/plataforms",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"VoidEyeGames",
+								"void-eye-games-api",
+								"plataforms"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getPlataformsList",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/VoidEyeGames/void-eye-games-api/plataforms/listed",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"VoidEyeGames",
+								"void-eye-games-api",
+								"plataforms",
+								"listed"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "posts",
+			"item": [
+				{
+					"name": "insert",
+					"item": [
+						{
+							"name": "addGame",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Response is 200\", function () {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData.status).to.eql(200);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"credentials\": {\r\n        \"user\": \"permanent\",\r\n        \"token\": \"a\",\r\n        \"expiration\": 1999990082000,\r\n        \"accountType\": 0\r\n    },\r\n    \"data\": {\r\n        \"id\":4,\r\n        \"name\":\"Prueba\",\r\n        \"descripcion\":\"sasdasd\",\r\n        \"plataforms\":[],\r\n        \"plataforms_games\":[\r\n            {\r\n                \"gamesId\": 1,\r\n                \"plataformsId\": 2,\r\n                \"price\": 12.4,\r\n                \"priceUnit\": \"USD\",\r\n                \"discount\": 0,\r\n                \"isEnabled\": true\r\n            }\r\n        ],\r\n        \"categories\":[],\r\n        \"categories_games\":[\r\n            {\r\n                \"gamesId\":-1,\r\n                \"categoriesId\":\"1\",\r\n                \"games\":null,\r\n                \"categories\":null\r\n            },\r\n            {\r\n                \"gamesId\":-1,\r\n                \"categoriesId\":\"3\",\r\n                \"games\":null,\r\n                \"categories\":null\r\n            }\r\n        ],\r\n        \"comments\":[],\r\n        \"medias\": [\r\n            {\r\n                \"id\":6,\r\n                \"gamesId\":2,\r\n                \"mediaType\":\"image\\/png\",\r\n                \"name\":\"perfil-icon-modified.png\",\r\n                \"src\":\"data:image\\/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGgAAABoCAYAAAAdHLWhAAAAAXNSR0IArs4c6QAAB8hJREFUeF7tnTuoHUUYx\\/83WNkIXos0pghKFCP4gBQ+uCgIPoooaqEkNoJvIZ2aiKLEaBlQNGqnooVKCKjRRolRi4AGUYnBEEhuE\\/CFhe298l9nz909Z2bnsfPYc\\/eb5tzkzM7OfL+dPTPffI8FzE+5BMBWAFsAbAZwMYCNAC5Sf+tGchbAnwDOAVgGcBrASQA\\/Azg1D0NfGHAnbwCwBICf2wBcGLmvfwE4BuAbAEfUZ+Rb9G9uaIDuBrAdwO0AFvsPz6sFzrTPABwC8LHXlQkrDwHQdQB2AngYwBD6Q3GvAngTwLsAvksof2vTJQWyA8CjAAhoyIWA3gDwXolOlgDEmbILwGUlBtzjnr8C2K9mVo9m\\/C7NCeg+ALvVSsyvl8OqzRXgPgAf5OhWDkDXANgL4LYcA8p4j8MAngXwQ8p7pgb0AoDnUg5gAG2\\/COD5VP1IBYiz5tU5WADEkisXEk+mmE0pAD2iVj2xBj9P7XBVeiBmh2MD4qx5ImYH57Ct19RsitL1WIAuAPC+0gBE6dicN0KNxP0A\\/uk7jhiAqLj8EAB\\/d6SsSeA4gHuUgjZYLn0BXaH0V5uCe7C+L6Q2nXrFX0KH2QeQwHGTei9IoYD4WvsKgH3mPPM7sGEV2LACLPBT\\/b2BqtEVYI+9CTc5JKr140HV52bfV9VYVoDN\\/KmxFkK6KeR1FwKICwLCudraLVYQQLWYqHG42XfhEALoU6\\/VmgBqPsdc3d3h9GCrSr6A\\/Pc5Amiah9c+yQdQmIZAAOkmjLPGwRUQ9zjf+0zNSV0BZBLbtS66O1dA3wYrPgWQCRAVrNfbHnoXQP2ODARQFwPrUYUNUPirzfZo1N+\\/fKaxN6r3GvVeaRV4PPHJ+NdfNPY5K7N7nqvudB1JaL3OV50NEJeFaU9CBRBPZqkO0pYuQLQhoIY6bRFAlC\\/VEVobhy5AP2Ux8BBABERDlCt1M8EEiKZRUU8GjdNQANWi4T6TxpKtYgJ0IpvdmgCqgdDu7nIXQLT4pMlrniKAmnKmCXTLglU3g8I3pSFIBVBTajOb12lAtJMmoHjFtlGtzoca+57pf0\\/OkBp1qv\\/T7FladR3r8Eyqqw+mNus+uJ0H+ciT2oWJwf40IBqJ88cqXhFAvrLk4ozK1KpMA1qJ7gIigHwB0fWF580zgOg89ZFva9b6AsgqIk0FWgNVTmTNGfSOcqQKadB8jQAKkSdX0Q9MA\\/ojiduhAAoBRHdMOkdPZhAddY+GtGS9RgBZRWSocCMdm+tX3B7lwxPamLzi4kuOvkcv1YCo8r416B6P\\/bu2J9HtWZp7jBC7uNdPzO5TYu6Dlm7pHrbNLm4yvoatXPP\\/Fh8MEiuAz3nUUwPiOy8sDoEAWnuAdA9OOCDGcVgkIEbw+C0UMwRQKkBEcikB8Uz3oAAySKDcK44duouAngLwigAaJKCnCYiHRA8JoEECeouA+hmGyG9Qyt+gwwREq3s3TwXdQyaAUgI6TkBnOv18dkyt71t7GZ3PTMf5jm4fNO\\/nQbZ9UOvcSp09NfeL59F731iWCYjqbXMRQN0OXGkBVbo4AdTnRFUAacyBY6p6+h55CyABJK84ecV1eHnLKq5zjcZFAl3EGeJYX2QVV3IVd9a+UbUBOnB+t5Zo7Ceqf79tOM9Sv63d+6Bqo9qt6hFA\\/QJZ9ANUqXq6laUCqCSgSlnafdwggEoCqo4bug\\/sBFBJQNWBXfeRtwAqCag68mYxG40IoFKAJkYjBGQ2uxJApQC1zK7MhoupAa33eHHhy+yW4aLZ9FcAlZpBLdNfvub0xvMCqASgGeN5AtK7nwigEoC07id6By4BVAKQ1oGLs2jWBVIA5QZkdIEkoFknYgGUG1CnE\\/GsG74Ayg2o0w2fs2hYgSxscRJ2WjISfHK0fR4zHffAZjSSPl5c8zzNGsiClYcVCmZcgJxCwRDScIIpjQeQczAlAhpOOLLxAPIKR0ZIwwjoNw5A3gH9CGgYITHHASgoJCYh9fMd6rb3+f9bWziy9Q8oOKgsxVc+LPP6B9QrLDMh9Qts7jKLxlund2DzWnR5N6\\/jABYtNUCeV904oDRHGTW5BhsOS08zPsG7jDh6epr6pv4Jnly6O646yRI81WL0S5E2LuHbRps8RRo7wCSDX0piWxuLme+Z+JaZIL2yE9uyn5h64Z6m03sc6\\/KCrGk6awlKolu3Z6lIoluBlAEObxH6imt2j687hnMODyfjNth5q8UQO\\/eGZB9uDjQGoHrhwGRQxkxS8ybdnv3lao0aaq8Fge6esQDJPmlNul77HNuDEBvQ2DUOzhoCG5j6+xSA2DaPKah1oBnXGAoVnwxbxd+dqCUVoLqTYziqsB4Z9CGWGlA9m\\/YmT\\/fZRwph1\\/IklD480WdNilWcyxBp47A7S2ZJl96E16GBxz5TWs3wZvVX5phB03emSdeubEkM40mMdmv7dZka491itqUSgOpe0IKVq56hLyS4AKBTQSv5X0oopV5xpjEREE1eObNKPjDN\\/tEFhBFY6Eg1ySeXC8rQADX7Qyey7UojsZhZIHQ7pAbgUJ39KvP9tbcbyhOr6xwdm5cA8HNbcPIPs5QZh+AYc\\/QAOKI+h8Ck1YchA5oWFiOibAWwBQAVtIxxt1FlDdtkkOyyco4+B4B\\/nwZwUuXOPjU4GpoO\\/QcvpNTqKr+tBQAAAABJRU5ErkJggg==\"\r\n            },\r\n            {\r\n                \"id\":7,\r\n                \"gamesId\":2,\r\n                \"mediaType\":\"image\\/jpeg\",\r\n                \"name\":\"perfil-icon-modified.png\",\r\n                \"src\":\"data:image\\/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGgAAABoCAYAAAAdHLWhAAAAAXNSR0IArs4c6QAAB8hJREFUeF7tnTuoHUUYx\\/83WNkIXos0pghKFCP4gBQ+uCgIPoooaqEkNoJvIZ2aiKLEaBlQNGqnooVKCKjRRolRi4AGUYnBEEhuE\\/CFhe298l9nz909Z2bnsfPYc\\/eb5tzkzM7OfL+dPTPffI8FzE+5BMBWAFsAbAZwMYCNAC5Sf+tGchbAnwDOAVgGcBrASQA\\/Azg1D0NfGHAnbwCwBICf2wBcGLmvfwE4BuAbAEfUZ+Rb9G9uaIDuBrAdwO0AFvsPz6sFzrTPABwC8LHXlQkrDwHQdQB2AngYwBD6Q3GvAngTwLsAvksof2vTJQWyA8CjAAhoyIWA3gDwXolOlgDEmbILwGUlBtzjnr8C2K9mVo9m\\/C7NCeg+ALvVSsyvl8OqzRXgPgAf5OhWDkDXANgL4LYcA8p4j8MAngXwQ8p7pgb0AoDnUg5gAG2\\/COD5VP1IBYiz5tU5WADEkisXEk+mmE0pAD2iVj2xBj9P7XBVeiBmh2MD4qx5ImYH57Ct19RsitL1WIAuAPC+0gBE6dicN0KNxP0A\\/uk7jhiAqLj8EAB\\/d6SsSeA4gHuUgjZYLn0BXaH0V5uCe7C+L6Q2nXrFX0KH2QeQwHGTei9IoYD4WvsKgH3mPPM7sGEV2LACLPBT\\/b2BqtEVYI+9CTc5JKr140HV52bfV9VYVoDN\\/KmxFkK6KeR1FwKICwLCudraLVYQQLWYqHG42XfhEALoU6\\/VmgBqPsdc3d3h9GCrSr6A\\/Pc5Amiah9c+yQdQmIZAAOkmjLPGwRUQ9zjf+0zNSV0BZBLbtS66O1dA3wYrPgWQCRAVrNfbHnoXQP2ODARQFwPrUYUNUPirzfZo1N+\\/fKaxN6r3GvVeaRV4PPHJ+NdfNPY5K7N7nqvudB1JaL3OV50NEJeFaU9CBRBPZqkO0pYuQLQhoIY6bRFAlC\\/VEVobhy5AP2Ux8BBABERDlCt1M8EEiKZRUU8GjdNQANWi4T6TxpKtYgJ0IpvdmgCqgdDu7nIXQLT4pMlrniKAmnKmCXTLglU3g8I3pSFIBVBTajOb12lAtJMmoHjFtlGtzoca+57pf0\\/OkBp1qv\\/T7FladR3r8Eyqqw+mNus+uJ0H+ciT2oWJwf40IBqJ88cqXhFAvrLk4ozK1KpMA1qJ7gIigHwB0fWF580zgOg89ZFva9b6AsgqIk0FWgNVTmTNGfSOcqQKadB8jQAKkSdX0Q9MA\\/ojiduhAAoBRHdMOkdPZhAddY+GtGS9RgBZRWSocCMdm+tX3B7lwxPamLzi4kuOvkcv1YCo8r416B6P\\/bu2J9HtWZp7jBC7uNdPzO5TYu6Dlm7pHrbNLm4yvoatXPP\\/Fh8MEiuAz3nUUwPiOy8sDoEAWnuAdA9OOCDGcVgkIEbw+C0UMwRQKkBEcikB8Uz3oAAySKDcK44duouAngLwigAaJKCnCYiHRA8JoEECeouA+hmGyG9Qyt+gwwREq3s3TwXdQyaAUgI6TkBnOv18dkyt71t7GZ3PTMf5jm4fNO\\/nQbZ9UOvcSp09NfeL59F731iWCYjqbXMRQN0OXGkBVbo4AdTnRFUAacyBY6p6+h55CyABJK84ecV1eHnLKq5zjcZFAl3EGeJYX2QVV3IVd9a+UbUBOnB+t5Zo7Ceqf79tOM9Sv63d+6Bqo9qt6hFA\\/QJZ9ANUqXq6laUCqCSgSlnafdwggEoCqo4bug\\/sBFBJQNWBXfeRtwAqCag68mYxG40IoFKAJkYjBGQ2uxJApQC1zK7MhoupAa33eHHhy+yW4aLZ9FcAlZpBLdNfvub0xvMCqASgGeN5AtK7nwigEoC07id6By4BVAKQ1oGLs2jWBVIA5QZkdIEkoFknYgGUG1CnE\\/GsG74Ayg2o0w2fs2hYgSxscRJ2WjISfHK0fR4zHffAZjSSPl5c8zzNGsiClYcVCmZcgJxCwRDScIIpjQeQczAlAhpOOLLxAPIKR0ZIwwjoNw5A3gH9CGgYITHHASgoJCYh9fMd6rb3+f9bWziy9Q8oOKgsxVc+LPP6B9QrLDMh9Qts7jKLxlund2DzWnR5N6\\/jABYtNUCeV904oDRHGTW5BhsOS08zPsG7jDh6epr6pv4Jnly6O646yRI81WL0S5E2LuHbRps8RRo7wCSDX0piWxuLme+Z+JaZIL2yE9uyn5h64Z6m03sc6\\/KCrGk6awlKolu3Z6lIoluBlAEObxH6imt2j687hnMODyfjNth5q8UQO\\/eGZB9uDjQGoHrhwGRQxkxS8ybdnv3lao0aaq8Fge6esQDJPmlNul77HNuDEBvQ2DUOzhoCG5j6+xSA2DaPKah1oBnXGAoVnwxbxd+dqCUVoLqTYziqsB4Z9CGWGlA9m\\/YmT\\/fZRwph1\\/IklD480WdNilWcyxBp47A7S2ZJl96E16GBxz5TWs3wZvVX5phB03emSdeubEkM40mMdmv7dZka491itqUSgOpe0IKVq56hLyS4AKBTQSv5X0oopV5xpjEREE1eObNKPjDN\\/tEFhBFY6Eg1ySeXC8rQADX7Qyey7UojsZhZIHQ7pAbgUJ39KvP9tbcbyhOr6xwdm5cA8HNbcPIPs5QZh+AYc\\/QAOKI+h8Ck1YchA5oWFiOibAWwBQAVtIxxt1FlDdtkkOyyco4+B4B\\/nwZwUuXOPjU4GpoO\\/QcvpNTqKr+tBQAAAABJRU5ErkJggg==\"\r\n            }\r\n        ],\r\n        \"mainImage\":{\r\n            \"id\":-1,\r\n            \"gamesId\":null,\r\n            \"mediaType\":\"image\\/png\",\r\n            \"name\":\"perfil-icon-modified.png\",\r\n            \"src\":\"data:image\\/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGgAAABoCAYAAAAdHLWhAAAAAXNSR0IArs4c6QAAB8hJREFUeF7tnTuoHUUYx\\/83WNkIXos0pghKFCP4gBQ+uCgIPoooaqEkNoJvIZ2aiKLEaBlQNGqnooVKCKjRRolRi4AGUYnBEEhuE\\/CFhe298l9nz909Z2bnsfPYc\\/eb5tzkzM7OfL+dPTPffI8FzE+5BMBWAFsAbAZwMYCNAC5Sf+tGchbAnwDOAVgGcBrASQA\\/Azg1D0NfGHAnbwCwBICf2wBcGLmvfwE4BuAbAEfUZ+Rb9G9uaIDuBrAdwO0AFvsPz6sFzrTPABwC8LHXlQkrDwHQdQB2AngYwBD6Q3GvAngTwLsAvksof2vTJQWyA8CjAAhoyIWA3gDwXolOlgDEmbILwGUlBtzjnr8C2K9mVo9m\\/C7NCeg+ALvVSsyvl8OqzRXgPgAf5OhWDkDXANgL4LYcA8p4j8MAngXwQ8p7pgb0AoDnUg5gAG2\\/COD5VP1IBYiz5tU5WADEkisXEk+mmE0pAD2iVj2xBj9P7XBVeiBmh2MD4qx5ImYH57Ct19RsitL1WIAuAPC+0gBE6dicN0KNxP0A\\/uk7jhiAqLj8EAB\\/d6SsSeA4gHuUgjZYLn0BXaH0V5uCe7C+L6Q2nXrFX0KH2QeQwHGTei9IoYD4WvsKgH3mPPM7sGEV2LACLPBT\\/b2BqtEVYI+9CTc5JKr140HV52bfV9VYVoDN\\/KmxFkK6KeR1FwKICwLCudraLVYQQLWYqHG42XfhEALoU6\\/VmgBqPsdc3d3h9GCrSr6A\\/Pc5Amiah9c+yQdQmIZAAOkmjLPGwRUQ9zjf+0zNSV0BZBLbtS66O1dA3wYrPgWQCRAVrNfbHnoXQP2ODARQFwPrUYUNUPirzfZo1N+\\/fKaxN6r3GvVeaRV4PPHJ+NdfNPY5K7N7nqvudB1JaL3OV50NEJeFaU9CBRBPZqkO0pYuQLQhoIY6bRFAlC\\/VEVobhy5AP2Ux8BBABERDlCt1M8EEiKZRUU8GjdNQANWi4T6TxpKtYgJ0IpvdmgCqgdDu7nIXQLT4pMlrniKAmnKmCXTLglU3g8I3pSFIBVBTajOb12lAtJMmoHjFtlGtzoca+57pf0\\/OkBp1qv\\/T7FladR3r8Eyqqw+mNus+uJ0H+ciT2oWJwf40IBqJ88cqXhFAvrLk4ozK1KpMA1qJ7gIigHwB0fWF580zgOg89ZFva9b6AsgqIk0FWgNVTmTNGfSOcqQKadB8jQAKkSdX0Q9MA\\/ojiduhAAoBRHdMOkdPZhAddY+GtGS9RgBZRWSocCMdm+tX3B7lwxPamLzi4kuOvkcv1YCo8r416B6P\\/bu2J9HtWZp7jBC7uNdPzO5TYu6Dlm7pHrbNLm4yvoatXPP\\/Fh8MEiuAz3nUUwPiOy8sDoEAWnuAdA9OOCDGcVgkIEbw+C0UMwRQKkBEcikB8Uz3oAAySKDcK44duouAngLwigAaJKCnCYiHRA8JoEECeouA+hmGyG9Qyt+gwwREq3s3TwXdQyaAUgI6TkBnOv18dkyt71t7GZ3PTMf5jm4fNO\\/nQbZ9UOvcSp09NfeL59F731iWCYjqbXMRQN0OXGkBVbo4AdTnRFUAacyBY6p6+h55CyABJK84ecV1eHnLKq5zjcZFAl3EGeJYX2QVV3IVd9a+UbUBOnB+t5Zo7Ceqf79tOM9Sv63d+6Bqo9qt6hFA\\/QJZ9ANUqXq6laUCqCSgSlnafdwggEoCqo4bug\\/sBFBJQNWBXfeRtwAqCag68mYxG40IoFKAJkYjBGQ2uxJApQC1zK7MhoupAa33eHHhy+yW4aLZ9FcAlZpBLdNfvub0xvMCqASgGeN5AtK7nwigEoC07id6By4BVAKQ1oGLs2jWBVIA5QZkdIEkoFknYgGUG1CnE\\/GsG74Ayg2o0w2fs2hYgSxscRJ2WjISfHK0fR4zHffAZjSSPl5c8zzNGsiClYcVCmZcgJxCwRDScIIpjQeQczAlAhpOOLLxAPIKR0ZIwwjoNw5A3gH9CGgYITHHASgoJCYh9fMd6rb3+f9bWziy9Q8oOKgsxVc+LPP6B9QrLDMh9Qts7jKLxlund2DzWnR5N6\\/jABYtNUCeV904oDRHGTW5BhsOS08zPsG7jDh6epr6pv4Jnly6O646yRI81WL0S5E2LuHbRps8RRo7wCSDX0piWxuLme+Z+JaZIL2yE9uyn5h64Z6m03sc6\\/KCrGk6awlKolu3Z6lIoluBlAEObxH6imt2j687hnMODyfjNth5q8UQO\\/eGZB9uDjQGoHrhwGRQxkxS8ybdnv3lao0aaq8Fge6esQDJPmlNul77HNuDEBvQ2DUOzhoCG5j6+xSA2DaPKah1oBnXGAoVnwxbxd+dqCUVoLqTYziqsB4Z9CGWGlA9m\\/YmT\\/fZRwph1\\/IklD480WdNilWcyxBp47A7S2ZJl96E16GBxz5TWs3wZvVX5phB03emSdeubEkM40mMdmv7dZka491itqUSgOpe0IKVq56hLyS4AKBTQSv5X0oopV5xpjEREE1eObNKPjDN\\/tEFhBFY6Eg1ySeXC8rQADX7Qyey7UojsZhZIHQ7pAbgUJ39KvP9tbcbyhOr6xwdm5cA8HNbcPIPs5QZh+AYc\\/QAOKI+h8Ck1YchA5oWFiOibAWwBQAVtIxxt1FlDdtkkOyyco4+B4B\\/nwZwUuXOPjU4GpoO\\/QcvpNTqKr+tBQAAAABJRU5ErkJggg==\"\r\n        }\r\n    }\r\n}"
+								},
+								"url": {
+									"raw": "http://localhost/VoidEyeGames/void-eye-games-api/game",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"VoidEyeGames",
+										"void-eye-games-api",
+										"game"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "addCategory",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Response is 200\", function () {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData.status).to.eql(200);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"credentials\": {\r\n        \"user\": \"permanent\",\r\n        \"token\": \"a\",\r\n        \"expiration\": 1999990082000,\r\n        \"accountType\": 0\r\n    },\r\n    \"data\": {\r\n        \"id\":7,\r\n        \"name\":\"Categoria-Prueba\",\r\n        \"categories_games\":[\r\n            {\r\n                \"categoriesId\": -1,\r\n                \"gamesId\": 4\r\n            },\r\n            {\r\n                \"categoriesId\": -1,\r\n                \"gamesId\": 3\r\n            }\r\n        ]\r\n    }\r\n}"
+								},
+								"url": {
+									"raw": "http://localhost/VoidEyeGames/void-eye-games-api/categories",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"VoidEyeGames",
+										"void-eye-games-api",
+										"categories"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "addPlataform",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Response is 200\", function () {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData.status).to.eql(200);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"credentials\": {\r\n        \"user\": \"permanent\",\r\n        \"token\": \"a\",\r\n        \"expiration\": 1999990082000,\r\n        \"accountType\": 0\r\n    },\r\n    \"data\": {\r\n        \"id\": 2,\r\n        \"url\": \"url\",\r\n        \"name\":\"Prueba\",\r\n        \"mainImage\":{\r\n            \"mediaType\":\"image\\/png\",\r\n            \"name\":\"perfil-icon-modified.png\",\r\n            \"src\":\"data:image\\/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGgAAABoCAYAAAAdHLWhAAAAAXNSR0IArs4c6QAAB8hJREFUeF7tnTuoHUUYx\\/83WNkIXos0pghKFCP4gBQ+uCgIPoooaqEkNoJvIZ2aiKLEaBlQNGqnooVKCKjRRolRi4AGUYnBEEhuE\\/CFhe298l9nz909Z2bnsfPYc\\/eb5tzkzM7OfL+dPTPffI8FzE+5BMBWAFsAbAZwMYCNAC5Sf+tGchbAnwDOAVgGcBrASQA\\/Azg1D0NfGHAnbwCwBICf2wBcGLmvfwE4BuAbAEfUZ+Rb9G9uaIDuBrAdwO0AFvsPz6sFzrTPABwC8LHXlQkrDwHQdQB2AngYwBD6Q3GvAngTwLsAvksof2vTJQWyA8CjAAhoyIWA3gDwXolOlgDEmbILwGUlBtzjnr8C2K9mVo9m\\/C7NCeg+ALvVSsyvl8OqzRXgPgAf5OhWDkDXANgL4LYcA8p4j8MAngXwQ8p7pgb0AoDnUg5gAG2\\/COD5VP1IBYiz5tU5WADEkisXEk+mmE0pAD2iVj2xBj9P7XBVeiBmh2MD4qx5ImYH57Ct19RsitL1WIAuAPC+0gBE6dicN0KNxP0A\\/uk7jhiAqLj8EAB\\/d6SsSeA4gHuUgjZYLn0BXaH0V5uCe7C+L6Q2nXrFX0KH2QeQwHGTei9IoYD4WvsKgH3mPPM7sGEV2LACLPBT\\/b2BqtEVYI+9CTc5JKr140HV52bfV9VYVoDN\\/KmxFkK6KeR1FwKICwLCudraLVYQQLWYqHG42XfhEALoU6\\/VmgBqPsdc3d3h9GCrSr6A\\/Pc5Amiah9c+yQdQmIZAAOkmjLPGwRUQ9zjf+0zNSV0BZBLbtS66O1dA3wYrPgWQCRAVrNfbHnoXQP2ODARQFwPrUYUNUPirzfZo1N+\\/fKaxN6r3GvVeaRV4PPHJ+NdfNPY5K7N7nqvudB1JaL3OV50NEJeFaU9CBRBPZqkO0pYuQLQhoIY6bRFAlC\\/VEVobhy5AP2Ux8BBABERDlCt1M8EEiKZRUU8GjdNQANWi4T6TxpKtYgJ0IpvdmgCqgdDu7nIXQLT4pMlrniKAmnKmCXTLglU3g8I3pSFIBVBTajOb12lAtJMmoHjFtlGtzoca+57pf0\\/OkBp1qv\\/T7FladR3r8Eyqqw+mNus+uJ0H+ciT2oWJwf40IBqJ88cqXhFAvrLk4ozK1KpMA1qJ7gIigHwB0fWF580zgOg89ZFva9b6AsgqIk0FWgNVTmTNGfSOcqQKadB8jQAKkSdX0Q9MA\\/ojiduhAAoBRHdMOkdPZhAddY+GtGS9RgBZRWSocCMdm+tX3B7lwxPamLzi4kuOvkcv1YCo8r416B6P\\/bu2J9HtWZp7jBC7uNdPzO5TYu6Dlm7pHrbNLm4yvoatXPP\\/Fh8MEiuAz3nUUwPiOy8sDoEAWnuAdA9OOCDGcVgkIEbw+C0UMwRQKkBEcikB8Uz3oAAySKDcK44duouAngLwigAaJKCnCYiHRA8JoEECeouA+hmGyG9Qyt+gwwREq3s3TwXdQyaAUgI6TkBnOv18dkyt71t7GZ3PTMf5jm4fNO\\/nQbZ9UOvcSp09NfeL59F731iWCYjqbXMRQN0OXGkBVbo4AdTnRFUAacyBY6p6+h55CyABJK84ecV1eHnLKq5zjcZFAl3EGeJYX2QVV3IVd9a+UbUBOnB+t5Zo7Ceqf79tOM9Sv63d+6Bqo9qt6hFA\\/QJZ9ANUqXq6laUCqCSgSlnafdwggEoCqo4bug\\/sBFBJQNWBXfeRtwAqCag68mYxG40IoFKAJkYjBGQ2uxJApQC1zK7MhoupAa33eHHhy+yW4aLZ9FcAlZpBLdNfvub0xvMCqASgGeN5AtK7nwigEoC07id6By4BVAKQ1oGLs2jWBVIA5QZkdIEkoFknYgGUG1CnE\\/GsG74Ayg2o0w2fs2hYgSxscRJ2WjISfHK0fR4zHffAZjSSPl5c8zzNGsiClYcVCmZcgJxCwRDScIIpjQeQczAlAhpOOLLxAPIKR0ZIwwjoNw5A3gH9CGgYITHHASgoJCYh9fMd6rb3+f9bWziy9Q8oOKgsxVc+LPP6B9QrLDMh9Qts7jKLxlund2DzWnR5N6\\/jABYtNUCeV904oDRHGTW5BhsOS08zPsG7jDh6epr6pv4Jnly6O646yRI81WL0S5E2LuHbRps8RRo7wCSDX0piWxuLme+Z+JaZIL2yE9uyn5h64Z6m03sc6\\/KCrGk6awlKolu3Z6lIoluBlAEObxH6imt2j687hnMODyfjNth5q8UQO\\/eGZB9uDjQGoHrhwGRQxkxS8ybdnv3lao0aaq8Fge6esQDJPmlNul77HNuDEBvQ2DUOzhoCG5j6+xSA2DaPKah1oBnXGAoVnwxbxd+dqCUVoLqTYziqsB4Z9CGWGlA9m\\/YmT\\/fZRwph1\\/IklD480WdNilWcyxBp47A7S2ZJl96E16GBxz5TWs3wZvVX5phB03emSdeubEkM40mMdmv7dZka491itqUSgOpe0IKVq56hLyS4AKBTQSv5X0oopV5xpjEREE1eObNKPjDN\\/tEFhBFY6Eg1ySeXC8rQADX7Qyey7UojsZhZIHQ7pAbgUJ39KvP9tbcbyhOr6xwdm5cA8HNbcPIPs5QZh+AYc\\/QAOKI+h8Ck1YchA5oWFiOibAWwBQAVtIxxt1FlDdtkkOyyco4+B4B\\/nwZwUuXOPjU4GpoO\\/QcvpNTqKr+tBQAAAABJRU5ErkJggg==\"\r\n        },\r\n        \"plataforms_games\": [\r\n            {\r\n                \"gamesId\": 1,\r\n                \"plataformsId\": 2,\r\n                \"price\": 12.4,\r\n                \"priceUnit\": \"USD\",\r\n                \"discount\": 0,\r\n                \"isEnabled\": true\r\n            },\r\n            {\r\n                \"gamesId\": 3,\r\n                \"plataformsId\": 2,\r\n                \"price\": 12.4,\r\n                \"priceUnit\": \"USD\",\r\n                \"discount\": 0,\r\n                \"isEnabled\": true\r\n            }\r\n        ]\r\n    }\r\n}"
+								},
+								"url": {
+									"raw": "http://localhost/VoidEyeGames/void-eye-games-api/plataforms",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"VoidEyeGames",
+										"void-eye-games-api",
+										"plataforms"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "addComment",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Response is 200\", function () {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData.status).to.eql(200);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"credentials\": {\r\n        \"user\": \"permanent\",\r\n        \"token\": \"a\",\r\n        \"expiration\": 1999990082000,\r\n        \"accountType\": 0\r\n    },\r\n    \"data\": {\r\n        \"id\": 2,\r\n        \"usersId\": 4,\r\n        \"gamesId\": 4,\r\n        \"description\": \"autogenerated command\"\r\n    }\r\n}"
+								},
+								"url": {
+									"raw": "http://localhost/VoidEyeGames/void-eye-games-api/comment",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"VoidEyeGames",
+										"void-eye-games-api",
+										"comment"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "update",
+					"item": [
+						{
+							"name": "updateGame",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Response is 200\", function () {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData.status).to.eql(200);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"credentials\": {\r\n        \"user\": \"permanent\",\r\n        \"token\": \"a\",\r\n        \"expiration\": 1999990082000,\r\n        \"accountType\": 0\r\n    },\r\n    \"data\": {\r\n        \"id\":4,\r\n        \"name\": null,\r\n        \"descripcion\":\"sasdasd\",\r\n        \"plataforms\":[],\r\n        \"plataforms_games\":[\r\n            {\r\n                \"gamesId\": 1,\r\n                \"plataformsId\": 3,\r\n                \"price\": 12.4,\r\n                \"priceUnit\": \"USD\",\r\n                \"discount\": 0,\r\n                \"isEnabled\": true\r\n            },\r\n            {\r\n                \"gamesId\": 1,\r\n                \"plataformsId\": 4,\r\n                \"price\": 12.4,\r\n                \"priceUnit\": \"USD\",\r\n                \"discount\": 0,\r\n                \"isEnabled\": true\r\n            }\r\n        ],\r\n        \"categories\":[],\r\n        \"categories_games\":[\r\n            {\r\n                \"gamesId\":-1,\r\n                \"categoriesId\":\"7\",\r\n                \"games\":null,\r\n                \"categories\":null\r\n            },\r\n            {\r\n                \"gamesId\":-1,\r\n                \"categoriesId\":\"1\",\r\n                \"games\":null,\r\n                \"categories\":null\r\n            },\r\n            {\r\n                \"gamesId\":-1,\r\n                \"categoriesId\":\"2\",\r\n                \"games\":null,\r\n                \"categories\":null\r\n            }\r\n        ],\r\n        \"comments\":[],\r\n        \"medias\": [\r\n            {\r\n                \"id\":6,\r\n                \"gamesId\":2,\r\n                \"mediaType\":\"image\\/png\",\r\n                \"name\":\"perfil-icon-modified.png\",\r\n                \"src\":\"data:image\\/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGgAAABoCAYAAAAdHLWhAAAAAXNSR0IArs4c6QAAB8hJREFUeF7tnTuoHUUYx\\/83WNkIXos0pghKFCP4gBQ+uCgIPoooaqEkNoJvIZ2aiKLEaBlQNGqnooVKCKjRRolRi4AGUYnBEEhuE\\/CFhe298l9nz909Z2bnsfPYc\\/eb5tzkzM7OfL+dPTPffI8FzE+5BMBWAFsAbAZwMYCNAC5Sf+tGchbAnwDOAVgGcBrASQA\\/Azg1D0NfGHAnbwCwBICf2wBcGLmvfwE4BuAbAEfUZ+Rb9G9uaIDuBrAdwO0AFvsPz6sFzrTPABwC8LHXlQkrDwHQdQB2AngYwBD6Q3GvAngTwLsAvksof2vTJQWyA8CjAAhoyIWA3gDwXolOlgDEmbILwGUlBtzjnr8C2K9mVo9m\\/C7NCeg+ALvVSsyvl8OqzRXgPgAf5OhWDkDXANgL4LYcA8p4j8MAngXwQ8p7pgb0AoDnUg5gAG2\\/COD5VP1IBYiz5tU5WADEkisXEk+mmE0pAD2iVj2xBj9P7XBVeiBmh2MD4qx5ImYH57Ct19RsitL1WIAuAPC+0gBE6dicN0KNxP0A\\/uk7jhiAqLj8EAB\\/d6SsSeA4gHuUgjZYLn0BXaH0V5uCe7C+L6Q2nXrFX0KH2QeQwHGTei9IoYD4WvsKgH3mPPM7sGEV2LACLPBT\\/b2BqtEVYI+9CTc5JKr140HV52bfV9VYVoDN\\/KmxFkK6KeR1FwKICwLCudraLVYQQLWYqHG42XfhEALoU6\\/VmgBqPsdc3d3h9GCrSr6A\\/Pc5Amiah9c+yQdQmIZAAOkmjLPGwRUQ9zjf+0zNSV0BZBLbtS66O1dA3wYrPgWQCRAVrNfbHnoXQP2ODARQFwPrUYUNUPirzfZo1N+\\/fKaxN6r3GvVeaRV4PPHJ+NdfNPY5K7N7nqvudB1JaL3OV50NEJeFaU9CBRBPZqkO0pYuQLQhoIY6bRFAlC\\/VEVobhy5AP2Ux8BBABERDlCt1M8EEiKZRUU8GjdNQANWi4T6TxpKtYgJ0IpvdmgCqgdDu7nIXQLT4pMlrniKAmnKmCXTLglU3g8I3pSFIBVBTajOb12lAtJMmoHjFtlGtzoca+57pf0\\/OkBp1qv\\/T7FladR3r8Eyqqw+mNus+uJ0H+ciT2oWJwf40IBqJ88cqXhFAvrLk4ozK1KpMA1qJ7gIigHwB0fWF580zgOg89ZFva9b6AsgqIk0FWgNVTmTNGfSOcqQKadB8jQAKkSdX0Q9MA\\/ojiduhAAoBRHdMOkdPZhAddY+GtGS9RgBZRWSocCMdm+tX3B7lwxPamLzi4kuOvkcv1YCo8r416B6P\\/bu2J9HtWZp7jBC7uNdPzO5TYu6Dlm7pHrbNLm4yvoatXPP\\/Fh8MEiuAz3nUUwPiOy8sDoEAWnuAdA9OOCDGcVgkIEbw+C0UMwRQKkBEcikB8Uz3oAAySKDcK44duouAngLwigAaJKCnCYiHRA8JoEECeouA+hmGyG9Qyt+gwwREq3s3TwXdQyaAUgI6TkBnOv18dkyt71t7GZ3PTMf5jm4fNO\\/nQbZ9UOvcSp09NfeL59F731iWCYjqbXMRQN0OXGkBVbo4AdTnRFUAacyBY6p6+h55CyABJK84ecV1eHnLKq5zjcZFAl3EGeJYX2QVV3IVd9a+UbUBOnB+t5Zo7Ceqf79tOM9Sv63d+6Bqo9qt6hFA\\/QJZ9ANUqXq6laUCqCSgSlnafdwggEoCqo4bug\\/sBFBJQNWBXfeRtwAqCag68mYxG40IoFKAJkYjBGQ2uxJApQC1zK7MhoupAa33eHHhy+yW4aLZ9FcAlZpBLdNfvub0xvMCqASgGeN5AtK7nwigEoC07id6By4BVAKQ1oGLs2jWBVIA5QZkdIEkoFknYgGUG1CnE\\/GsG74Ayg2o0w2fs2hYgSxscRJ2WjISfHK0fR4zHffAZjSSPl5c8zzNGsiClYcVCmZcgJxCwRDScIIpjQeQczAlAhpOOLLxAPIKR0ZIwwjoNw5A3gH9CGgYITHHASgoJCYh9fMd6rb3+f9bWziy9Q8oOKgsxVc+LPP6B9QrLDMh9Qts7jKLxlund2DzWnR5N6\\/jABYtNUCeV904oDRHGTW5BhsOS08zPsG7jDh6epr6pv4Jnly6O646yRI81WL0S5E2LuHbRps8RRo7wCSDX0piWxuLme+Z+JaZIL2yE9uyn5h64Z6m03sc6\\/KCrGk6awlKolu3Z6lIoluBlAEObxH6imt2j687hnMODyfjNth5q8UQO\\/eGZB9uDjQGoHrhwGRQxkxS8ybdnv3lao0aaq8Fge6esQDJPmlNul77HNuDEBvQ2DUOzhoCG5j6+xSA2DaPKah1oBnXGAoVnwxbxd+dqCUVoLqTYziqsB4Z9CGWGlA9m\\/YmT\\/fZRwph1\\/IklD480WdNilWcyxBp47A7S2ZJl96E16GBxz5TWs3wZvVX5phB03emSdeubEkM40mMdmv7dZka491itqUSgOpe0IKVq56hLyS4AKBTQSv5X0oopV5xpjEREE1eObNKPjDN\\/tEFhBFY6Eg1ySeXC8rQADX7Qyey7UojsZhZIHQ7pAbgUJ39KvP9tbcbyhOr6xwdm5cA8HNbcPIPs5QZh+AYc\\/QAOKI+h8Ck1YchA5oWFiOibAWwBQAVtIxxt1FlDdtkkOyyco4+B4B\\/nwZwUuXOPjU4GpoO\\/QcvpNTqKr+tBQAAAABJRU5ErkJggg==\"\r\n            },\r\n            {\r\n                \"id\":8,\r\n                \"gamesId\":2,\r\n                \"mediaType\":\"image\\/jpeg\",\r\n                \"name\":\"perfil-icon-modified.png\",\r\n                \"src\":\"data:image\\/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGgAAABoCAYAAAAdHLWhAAAAAXNSR0IArs4c6QAAB8hJREFUeF7tnTuoHUUYx\\/83WNkIXos0pghKFCP4gBQ+uCgIPoooaqEkNoJvIZ2aiKLEaBlQNGqnooVKCKjRRolRi4AGUYnBEEhuE\\/CFhe298l9nz909Z2bnsfPYc\\/eb5tzkzM7OfL+dPTPffI8FzE+5BMBWAFsAbAZwMYCNAC5Sf+tGchbAnwDOAVgGcBrASQA\\/Azg1D0NfGHAnbwCwBICf2wBcGLmvfwE4BuAbAEfUZ+Rb9G9uaIDuBrAdwO0AFvsPz6sFzrTPABwC8LHXlQkrDwHQdQB2AngYwBD6Q3GvAngTwLsAvksof2vTJQWyA8CjAAhoyIWA3gDwXolOlgDEmbILwGUlBtzjnr8C2K9mVo9m\\/C7NCeg+ALvVSsyvl8OqzRXgPgAf5OhWDkDXANgL4LYcA8p4j8MAngXwQ8p7pgb0AoDnUg5gAG2\\/COD5VP1IBYiz5tU5WADEkisXEk+mmE0pAD2iVj2xBj9P7XBVeiBmh2MD4qx5ImYH57Ct19RsitL1WIAuAPC+0gBE6dicN0KNxP0A\\/uk7jhiAqLj8EAB\\/d6SsSeA4gHuUgjZYLn0BXaH0V5uCe7C+L6Q2nXrFX0KH2QeQwHGTei9IoYD4WvsKgH3mPPM7sGEV2LACLPBT\\/b2BqtEVYI+9CTc5JKr140HV52bfV9VYVoDN\\/KmxFkK6KeR1FwKICwLCudraLVYQQLWYqHG42XfhEALoU6\\/VmgBqPsdc3d3h9GCrSr6A\\/Pc5Amiah9c+yQdQmIZAAOkmjLPGwRUQ9zjf+0zNSV0BZBLbtS66O1dA3wYrPgWQCRAVrNfbHnoXQP2ODARQFwPrUYUNUPirzfZo1N+\\/fKaxN6r3GvVeaRV4PPHJ+NdfNPY5K7N7nqvudB1JaL3OV50NEJeFaU9CBRBPZqkO0pYuQLQhoIY6bRFAlC\\/VEVobhy5AP2Ux8BBABERDlCt1M8EEiKZRUU8GjdNQANWi4T6TxpKtYgJ0IpvdmgCqgdDu7nIXQLT4pMlrniKAmnKmCXTLglU3g8I3pSFIBVBTajOb12lAtJMmoHjFtlGtzoca+57pf0\\/OkBp1qv\\/T7FladR3r8Eyqqw+mNus+uJ0H+ciT2oWJwf40IBqJ88cqXhFAvrLk4ozK1KpMA1qJ7gIigHwB0fWF580zgOg89ZFva9b6AsgqIk0FWgNVTmTNGfSOcqQKadB8jQAKkSdX0Q9MA\\/ojiduhAAoBRHdMOkdPZhAddY+GtGS9RgBZRWSocCMdm+tX3B7lwxPamLzi4kuOvkcv1YCo8r416B6P\\/bu2J9HtWZp7jBC7uNdPzO5TYu6Dlm7pHrbNLm4yvoatXPP\\/Fh8MEiuAz3nUUwPiOy8sDoEAWnuAdA9OOCDGcVgkIEbw+C0UMwRQKkBEcikB8Uz3oAAySKDcK44duouAngLwigAaJKCnCYiHRA8JoEECeouA+hmGyG9Qyt+gwwREq3s3TwXdQyaAUgI6TkBnOv18dkyt71t7GZ3PTMf5jm4fNO\\/nQbZ9UOvcSp09NfeL59F731iWCYjqbXMRQN0OXGkBVbo4AdTnRFUAacyBY6p6+h55CyABJK84ecV1eHnLKq5zjcZFAl3EGeJYX2QVV3IVd9a+UbUBOnB+t5Zo7Ceqf79tOM9Sv63d+6Bqo9qt6hFA\\/QJZ9ANUqXq6laUCqCSgSlnafdwggEoCqo4bug\\/sBFBJQNWBXfeRtwAqCag68mYxG40IoFKAJkYjBGQ2uxJApQC1zK7MhoupAa33eHHhy+yW4aLZ9FcAlZpBLdNfvub0xvMCqASgGeN5AtK7nwigEoC07id6By4BVAKQ1oGLs2jWBVIA5QZkdIEkoFknYgGUG1CnE\\/GsG74Ayg2o0w2fs2hYgSxscRJ2WjISfHK0fR4zHffAZjSSPl5c8zzNGsiClYcVCmZcgJxCwRDScIIpjQeQczAlAhpOOLLxAPIKR0ZIwwjoNw5A3gH9CGgYITHHASgoJCYh9fMd6rb3+f9bWziy9Q8oOKgsxVc+LPP6B9QrLDMh9Qts7jKLxlund2DzWnR5N6\\/jABYtNUCeV904oDRHGTW5BhsOS08zPsG7jDh6epr6pv4Jnly6O646yRI81WL0S5E2LuHbRps8RRo7wCSDX0piWxuLme+Z+JaZIL2yE9uyn5h64Z6m03sc6\\/KCrGk6awlKolu3Z6lIoluBlAEObxH6imt2j687hnMODyfjNth5q8UQO\\/eGZB9uDjQGoHrhwGRQxkxS8ybdnv3lao0aaq8Fge6esQDJPmlNul77HNuDEBvQ2DUOzhoCG5j6+xSA2DaPKah1oBnXGAoVnwxbxd+dqCUVoLqTYziqsB4Z9CGWGlA9m\\/YmT\\/fZRwph1\\/IklD480WdNilWcyxBp47A7S2ZJl96E16GBxz5TWs3wZvVX5phB03emSdeubEkM40mMdmv7dZka491itqUSgOpe0IKVq56hLyS4AKBTQSv5X0oopV5xpjEREE1eObNKPjDN\\/tEFhBFY6Eg1ySeXC8rQADX7Qyey7UojsZhZIHQ7pAbgUJ39KvP9tbcbyhOr6xwdm5cA8HNbcPIPs5QZh+AYc\\/QAOKI+h8Ck1YchA5oWFiOibAWwBQAVtIxxt1FlDdtkkOyyco4+B4B\\/nwZwUuXOPjU4GpoO\\/QcvpNTqKr+tBQAAAABJRU5ErkJggg==\"\r\n            }\r\n        ],\r\n        \"mainImage\":{\r\n            \"id\":-1,\r\n            \"gamesId\":null,\r\n            \"mediaType\":\"image\\/png\",\r\n            \"name\":\"perfil-icon-modified.png\",\r\n            \"src\":\"data:image\\/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGgAAABoCAYAAAAdHLWhAAAAAXNSR0IArs4c6QAAB8hJREFUeF7tnTuoHUUYx\\/83WNkIXos0pghKFCP4gBQ+uCgIPoooaqEkNoJvIZ2aiKLEaBlQNGqnooVKCKjRRolRi4AGUYnBEEhuE\\/CFhe298l9nz909Z2bnsfPYc\\/eb5tzkzM7OfL+dPTPffI8FzE+5BMBWAFsAbAZwMYCNAC5Sf+tGchbAnwDOAVgGcBrASQA\\/Azg1D0NfGHAnbwCwBICf2wBcGLmvfwE4BuAbAEfUZ+Rb9G9uaIDuBrAdwO0AFvsPz6sFzrTPABwC8LHXlQkrDwHQdQB2AngYwBD6Q3GvAngTwLsAvksof2vTJQWyA8CjAAhoyIWA3gDwXolOlgDEmbILwGUlBtzjnr8C2K9mVo9m\\/C7NCeg+ALvVSsyvl8OqzRXgPgAf5OhWDkDXANgL4LYcA8p4j8MAngXwQ8p7pgb0AoDnUg5gAG2\\/COD5VP1IBYiz5tU5WADEkisXEk+mmE0pAD2iVj2xBj9P7XBVeiBmh2MD4qx5ImYH57Ct19RsitL1WIAuAPC+0gBE6dicN0KNxP0A\\/uk7jhiAqLj8EAB\\/d6SsSeA4gHuUgjZYLn0BXaH0V5uCe7C+L6Q2nXrFX0KH2QeQwHGTei9IoYD4WvsKgH3mPPM7sGEV2LACLPBT\\/b2BqtEVYI+9CTc5JKr140HV52bfV9VYVoDN\\/KmxFkK6KeR1FwKICwLCudraLVYQQLWYqHG42XfhEALoU6\\/VmgBqPsdc3d3h9GCrSr6A\\/Pc5Amiah9c+yQdQmIZAAOkmjLPGwRUQ9zjf+0zNSV0BZBLbtS66O1dA3wYrPgWQCRAVrNfbHnoXQP2ODARQFwPrUYUNUPirzfZo1N+\\/fKaxN6r3GvVeaRV4PPHJ+NdfNPY5K7N7nqvudB1JaL3OV50NEJeFaU9CBRBPZqkO0pYuQLQhoIY6bRFAlC\\/VEVobhy5AP2Ux8BBABERDlCt1M8EEiKZRUU8GjdNQANWi4T6TxpKtYgJ0IpvdmgCqgdDu7nIXQLT4pMlrniKAmnKmCXTLglU3g8I3pSFIBVBTajOb12lAtJMmoHjFtlGtzoca+57pf0\\/OkBp1qv\\/T7FladR3r8Eyqqw+mNus+uJ0H+ciT2oWJwf40IBqJ88cqXhFAvrLk4ozK1KpMA1qJ7gIigHwB0fWF580zgOg89ZFva9b6AsgqIk0FWgNVTmTNGfSOcqQKadB8jQAKkSdX0Q9MA\\/ojiduhAAoBRHdMOkdPZhAddY+GtGS9RgBZRWSocCMdm+tX3B7lwxPamLzi4kuOvkcv1YCo8r416B6P\\/bu2J9HtWZp7jBC7uNdPzO5TYu6Dlm7pHrbNLm4yvoatXPP\\/Fh8MEiuAz3nUUwPiOy8sDoEAWnuAdA9OOCDGcVgkIEbw+C0UMwRQKkBEcikB8Uz3oAAySKDcK44duouAngLwigAaJKCnCYiHRA8JoEECeouA+hmGyG9Qyt+gwwREq3s3TwXdQyaAUgI6TkBnOv18dkyt71t7GZ3PTMf5jm4fNO\\/nQbZ9UOvcSp09NfeL59F731iWCYjqbXMRQN0OXGkBVbo4AdTnRFUAacyBY6p6+h55CyABJK84ecV1eHnLKq5zjcZFAl3EGeJYX2QVV3IVd9a+UbUBOnB+t5Zo7Ceqf79tOM9Sv63d+6Bqo9qt6hFA\\/QJZ9ANUqXq6laUCqCSgSlnafdwggEoCqo4bug\\/sBFBJQNWBXfeRtwAqCag68mYxG40IoFKAJkYjBGQ2uxJApQC1zK7MhoupAa33eHHhy+yW4aLZ9FcAlZpBLdNfvub0xvMCqASgGeN5AtK7nwigEoC07id6By4BVAKQ1oGLs2jWBVIA5QZkdIEkoFknYgGUG1CnE\\/GsG74Ayg2o0w2fs2hYgSxscRJ2WjISfHK0fR4zHffAZjSSPl5c8zzNGsiClYcVCmZcgJxCwRDScIIpjQeQczAlAhpOOLLxAPIKR0ZIwwjoNw5A3gH9CGgYITHHASgoJCYh9fMd6rb3+f9bWziy9Q8oOKgsxVc+LPP6B9QrLDMh9Qts7jKLxlund2DzWnR5N6\\/jABYtNUCeV904oDRHGTW5BhsOS08zPsG7jDh6epr6pv4Jnly6O646yRI81WL0S5E2LuHbRps8RRo7wCSDX0piWxuLme+Z+JaZIL2yE9uyn5h64Z6m03sc6\\/KCrGk6awlKolu3Z6lIoluBlAEObxH6imt2j687hnMODyfjNth5q8UQO\\/eGZB9uDjQGoHrhwGRQxkxS8ybdnv3lao0aaq8Fge6esQDJPmlNul77HNuDEBvQ2DUOzhoCG5j6+xSA2DaPKah1oBnXGAoVnwxbxd+dqCUVoLqTYziqsB4Z9CGWGlA9m\\/YmT\\/fZRwph1\\/IklD480WdNilWcyxBp47A7S2ZJl96E16GBxz5TWs3wZvVX5phB03emSdeubEkM40mMdmv7dZka491itqUSgOpe0IKVq56hLyS4AKBTQSv5X0oopV5xpjEREE1eObNKPjDN\\/tEFhBFY6Eg1ySeXC8rQADX7Qyey7UojsZhZIHQ7pAbgUJ39KvP9tbcbyhOr6xwdm5cA8HNbcPIPs5QZh+AYc\\/QAOKI+h8Ck1YchA5oWFiOibAWwBQAVtIxxt1FlDdtkkOyyco4+B4B\\/nwZwUuXOPjU4GpoO\\/QcvpNTqKr+tBQAAAABJRU5ErkJggg==\"\r\n        }\r\n    }\r\n}"
+								},
+								"url": {
+									"raw": "http://localhost/VoidEyeGames/void-eye-games-api/game/update",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"VoidEyeGames",
+										"void-eye-games-api",
+										"game",
+										"update"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "updateCategory",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Response is 200\", function () {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData.status).to.eql(200);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"credentials\": {\r\n        \"user\": \"permanent\",\r\n        \"token\": \"a\",\r\n        \"expiration\": 1999990082000,\r\n        \"accountType\": 0\r\n    },\r\n    \"data\": {\r\n        \"id\":7,\r\n        \"name\":\"Prueba\",\r\n        \"categories_games\":[\r\n            {\r\n                \"categoriesId\": -1,\r\n                \"gamesId\": 4\r\n            },\r\n            {\r\n                \"categoriesId\": -1,\r\n                \"gamesId\": 2\r\n            }\r\n        ]\r\n    }\r\n}"
+								},
+								"url": {
+									"raw": "http://localhost/VoidEyeGames/void-eye-games-api/categories/update",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"VoidEyeGames",
+										"void-eye-games-api",
+										"categories",
+										"update"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "updatePlataform",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Response is 200\", function () {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData.status).to.eql(200);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"credentials\": {\r\n        \"user\": \"permanent\",\r\n        \"token\": \"a\",\r\n        \"expiration\": 1999990082000,\r\n        \"accountType\": 0\r\n    },\r\n    \"data\": {\r\n        \"id\": 6,\r\n        \"url\": \"https://www.google.com/\",\r\n        \"name\":\"Prueba-updated\",\r\n        \"plataforms_games\": [\r\n            {\r\n                \"gamesId\": 1,\r\n                \"plataformsId\": 2,\r\n                \"price\": 12.4,\r\n                \"priceUnit\": \"USD\",\r\n                \"discount\": 0,\r\n                \"isEnabled\": true\r\n            },\r\n            {\r\n                \"gamesId\": 2,\r\n                \"plataformsId\": 2,\r\n                \"price\": 12.4,\r\n                \"priceUnit\": \"USD\",\r\n                \"discount\": 0,\r\n                \"isEnabled\": true\r\n            }\r\n        ],\r\n        \"mainImage\":{\r\n            \"mediaType\":\"image\\/png\",\r\n            \"name\":\"perfil-icon-modified.png\",\r\n            \"src\":\"data:image\\/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGgAAABoCAYAAAAdHLWhAAAAAXNSR0IArs4c6QAAB8hJREFUeF7tnTuoHUUYx\\/83WNkIXos0pghKFCP4gBQ+uCgIPoooaqEkNoJvIZ2aiKLEaBlQNGqnooVKCKjRRolRi4AGUYnBEEhuE\\/CFhe298l9nz909Z2bnsfPYc\\/eb5tzkzM7OfL+dPTPffI8FzE+5BMBWAFsAbAZwMYCNAC5Sf+tGchbAnwDOAVgGcBrASQA\\/Azg1D0NfGHAnbwCwBICf2wBcGLmvfwE4BuAbAEfUZ+Rb9G9uaIDuBrAdwO0AFvsPz6sFzrTPABwC8LHXlQkrDwHQdQB2AngYwBD6Q3GvAngTwLsAvksof2vTJQWyA8CjAAhoyIWA3gDwXolOlgDEmbILwGUlBtzjnr8C2K9mVo9m\\/C7NCeg+ALvVSsyvl8OqzRXgPgAf5OhWDkDXANgL4LYcA8p4j8MAngXwQ8p7pgb0AoDnUg5gAG2\\/COD5VP1IBYiz5tU5WADEkisXEk+mmE0pAD2iVj2xBj9P7XBVeiBmh2MD4qx5ImYH57Ct19RsitL1WIAuAPC+0gBE6dicN0KNxP0A\\/uk7jhiAqLj8EAB\\/d6SsSeA4gHuUgjZYLn0BXaH0V5uCe7C+L6Q2nXrFX0KH2QeQwHGTei9IoYD4WvsKgH3mPPM7sGEV2LACLPBT\\/b2BqtEVYI+9CTc5JKr140HV52bfV9VYVoDN\\/KmxFkK6KeR1FwKICwLCudraLVYQQLWYqHG42XfhEALoU6\\/VmgBqPsdc3d3h9GCrSr6A\\/Pc5Amiah9c+yQdQmIZAAOkmjLPGwRUQ9zjf+0zNSV0BZBLbtS66O1dA3wYrPgWQCRAVrNfbHnoXQP2ODARQFwPrUYUNUPirzfZo1N+\\/fKaxN6r3GvVeaRV4PPHJ+NdfNPY5K7N7nqvudB1JaL3OV50NEJeFaU9CBRBPZqkO0pYuQLQhoIY6bRFAlC\\/VEVobhy5AP2Ux8BBABERDlCt1M8EEiKZRUU8GjdNQANWi4T6TxpKtYgJ0IpvdmgCqgdDu7nIXQLT4pMlrniKAmnKmCXTLglU3g8I3pSFIBVBTajOb12lAtJMmoHjFtlGtzoca+57pf0\\/OkBp1qv\\/T7FladR3r8Eyqqw+mNus+uJ0H+ciT2oWJwf40IBqJ88cqXhFAvrLk4ozK1KpMA1qJ7gIigHwB0fWF580zgOg89ZFva9b6AsgqIk0FWgNVTmTNGfSOcqQKadB8jQAKkSdX0Q9MA\\/ojiduhAAoBRHdMOkdPZhAddY+GtGS9RgBZRWSocCMdm+tX3B7lwxPamLzi4kuOvkcv1YCo8r416B6P\\/bu2J9HtWZp7jBC7uNdPzO5TYu6Dlm7pHrbNLm4yvoatXPP\\/Fh8MEiuAz3nUUwPiOy8sDoEAWnuAdA9OOCDGcVgkIEbw+C0UMwRQKkBEcikB8Uz3oAAySKDcK44duouAngLwigAaJKCnCYiHRA8JoEECeouA+hmGyG9Qyt+gwwREq3s3TwXdQyaAUgI6TkBnOv18dkyt71t7GZ3PTMf5jm4fNO\\/nQbZ9UOvcSp09NfeL59F731iWCYjqbXMRQN0OXGkBVbo4AdTnRFUAacyBY6p6+h55CyABJK84ecV1eHnLKq5zjcZFAl3EGeJYX2QVV3IVd9a+UbUBOnB+t5Zo7Ceqf79tOM9Sv63d+6Bqo9qt6hFA\\/QJZ9ANUqXq6laUCqCSgSlnafdwggEoCqo4bug\\/sBFBJQNWBXfeRtwAqCag68mYxG40IoFKAJkYjBGQ2uxJApQC1zK7MhoupAa33eHHhy+yW4aLZ9FcAlZpBLdNfvub0xvMCqASgGeN5AtK7nwigEoC07id6By4BVAKQ1oGLs2jWBVIA5QZkdIEkoFknYgGUG1CnE\\/GsG74Ayg2o0w2fs2hYgSxscRJ2WjISfHK0fR4zHffAZjSSPl5c8zzNGsiClYcVCmZcgJxCwRDScIIpjQeQczAlAhpOOLLxAPIKR0ZIwwjoNw5A3gH9CGgYITHHASgoJCYh9fMd6rb3+f9bWziy9Q8oOKgsxVc+LPP6B9QrLDMh9Qts7jKLxlund2DzWnR5N6\\/jABYtNUCeV904oDRHGTW5BhsOS08zPsG7jDh6epr6pv4Jnly6O646yRI81WL0S5E2LuHbRps8RRo7wCSDX0piWxuLme+Z+JaZIL2yE9uyn5h64Z6m03sc6\\/KCrGk6awlKolu3Z6lIoluBlAEObxH6imt2j687hnMODyfjNth5q8UQO\\/eGZB9uDjQGoHrhwGRQxkxS8ybdnv3lao0aaq8Fge6esQDJPmlNul77HNuDEBvQ2DUOzhoCG5j6+xSA2DaPKah1oBnXGAoVnwxbxd+dqCUVoLqTYziqsB4Z9CGWGlA9m\\/YmT\\/fZRwph1\\/IklD480WdNilWcyxBp47A7S2ZJl96E16GBxz5TWs3wZvVX5phB03emSdeubEkM40mMdmv7dZka491itqUSgOpe0IKVq56hLyS4AKBTQSv5X0oopV5xpjEREE1eObNKPjDN\\/tEFhBFY6Eg1ySeXC8rQADX7Qyey7UojsZhZIHQ7pAbgUJ39KvP9tbcbyhOr6xwdm5cA8HNbcPIPs5QZh+AYc\\/QAOKI+h8Ck1YchA5oWFiOibAWwBQAVtIxxt1FlDdtkkOyyco4+B4B\\/nwZwUuXOPjU4GpoO\\/QcvpNTqKr+tBQAAAABJRU5ErkJggg==\"\r\n        }\r\n    }\r\n}"
+								},
+								"url": {
+									"raw": "http://localhost/VoidEyeGames/void-eye-games-api/plataforms/update",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"VoidEyeGames",
+										"void-eye-games-api",
+										"plataforms",
+										"update"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "session",
+					"item": [
+						{
+							"name": "Signin",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Response is 200\", function () {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData.status).to.eql(200);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"data\": {\r\n        \"name\": \"usuarioPrueba\",\r\n        \"email\": \"usuarioPrueba@VoidEyeGames.com\",\r\n        \"password\": \"c893bad68927b457dbed39460e6afd62\",\r\n        \"confirmationPassword\": \"c893bad68927b457dbed39460e6afd62\",\r\n        \"terms\": true\r\n    }\r\n}"
+								},
+								"url": {
+									"raw": "http://localhost/VoidEyeGames/void-eye-games-api/signIn",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"VoidEyeGames",
+										"void-eye-games-api",
+										"signIn"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Login",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Response is 200\", function () {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData.status).to.eql(200);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"data\": {\r\n        \"username\": \"usuarioPrueba\",\r\n        \"password\": \"c893bad68927b457dbed39460e6afd62\"\r\n    }\r\n}"
+								},
+								"url": {
+									"raw": "http://localhost/VoidEyeGames/void-eye-games-api/logIn",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"path": [
+										"VoidEyeGames",
+										"void-eye-games-api",
+										"logIn"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "sendReport",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response is 200\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.status).to.eql(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"data\": {\r\n        \"reason\": \"aa\",\r\n        \"issue\": \"aaa\",\r\n        \"description\": \"aaaaaaaaa aaaaaaaaa aaaaaaaaaaaaaaaaa\",\r\n        \"email\": \"void.eye.games@gmail.com\",\r\n        \"terms\": true\r\n    }\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost/VoidEyeGames/void-eye-games-api/report",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"VoidEyeGames",
+								"void-eye-games-api",
+								"report"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

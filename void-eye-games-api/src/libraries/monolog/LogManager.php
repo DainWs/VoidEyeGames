@@ -19,7 +19,6 @@ class LogManager {
     public function __construct(String $class) {
         $this->logger = new Logger("[$class]");
         $this->handler = new StreamHandler($this->getFile(), Logger::DEBUG);
-
         $this->logger->pushHandler($this->handler);
     }
 

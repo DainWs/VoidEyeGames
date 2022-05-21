@@ -1,10 +1,13 @@
 import React from 'react';
 import GameItemComponent from '../components/models/GameItemComponent';
+import { EventDataProvider } from '../domain/EventDataProvider';
+import { EventObserver } from '../domain/EventObserver';
+import { EVENT_SEARCH_GAME } from '../domain/EventsEnum';
 import { SocketController } from '../services/socket/SocketController';
 import { SocketDataProvideer } from '../services/socket/SocketDataProvider';
 import { DESTINATION_CATEGORIES, DESTINATION_PLATAFORMS, DESTINATION_PLATAFORM_GAMES } from '../services/socket/SocketDestinations';
 import { SocketObserver } from '../services/socket/SocketObserver';
-import { Comparators } from '../utils/Comparators';
+import SocketRequest from '../services/socket/SocketRequest';
 
 /**
  * TODO check big ones
@@ -14,6 +17,10 @@ import { Comparators } from '../utils/Comparators';
 class GamesPage extends React.Component {
   constructor(props) {
     super(props);
+    this.pageNum = 1;
+    this.isFiltring = false;
+    this.hasMore = true;
+    this.searchTitle = EventDataProvider.provide(EVENT_SEARCH_GAME);
     this.state = {
       orderMethod: 'name',
       plataformsGames: [],
@@ -25,21 +32,36 @@ class GamesPage extends React.Component {
   }
 
   setOrder(event) {
-    this.setState({orderMethod: event.target.value})
+    this.setState({orderMethod: event.target.value});
+  }
+
+  updateSearchedGame(newData) {
+    this.searchTitle = newData;
+    this.onFiltre();
   }
 
   updatePlataformGames() {
-    let plataformsGames = SocketDataProvideer.provide(DESTINATION_PLATAFORM_GAMES);
+    let plataformsGames = (this.isFiltring) ? [] : Array.from(this.state.plataformsGames);
+    let oldSize = plataformsGames.length;
+    plataformsGames.push(...SocketDataProvideer.provide(DESTINATION_PLATAFORM_GAMES));
+    this.hasMore = (oldSize < plataformsGames.length);
     this.setState({plataformsGames: plataformsGames});
   }
 
   changeCategoryState(event) {
     var categoryId = event.target.value;
-    let category = this.state.categories.find(c => c.id === categoryId);
-    let newSelectedCategories = this.state.selectedCategories;
-    if (newSelectedCategories.has(category)) newSelectedCategories.delete(category);
-    else newSelectedCategories.add(category);
-    this.setState({selectedCategories: newSelectedCategories});
+    let selectedCategories = this.state.selectedCategories;
+    if (selectedCategories.has(categoryId)) selectedCategories.delete(categoryId);
+    else selectedCategories.add(categoryId);
+    this.setState({selectedCategories: selectedCategories});
+  }
+
+  changePlataformState(event) {
+    var plataformId = event.target.value;
+    let selectedPlataforms = this.state.selectedPlataforms;
+    if (selectedPlataforms.has(plataformId)) selectedPlataforms.delete(plataformId);
+    else selectedPlataforms.add(plataformId);
+    this.setState({selectedPlataforms: selectedPlataforms});
   }
 
   updateCategories() {
@@ -47,54 +69,75 @@ class GamesPage extends React.Component {
     this.setState({categories: categories});
   }
 
-  changePlataformState(event) {
-    var plataformId = event.target.value;
-    let newSelectedPlataforms = this.state.selectedPlataforms;
-    if (newSelectedPlataforms.has(plataformId)) newSelectedPlataforms.delete(plataformId);
-    else newSelectedPlataforms.add(plataformId);
-    this.setState({selectedPlataforms: newSelectedPlataforms});
-  }
-
   updatePlataforms() {
     let plataforms = SocketDataProvideer.provide(DESTINATION_PLATAFORMS);
     this.setState({plataforms: plataforms});
   }
 
+  onShowMore() {
+    this.pageNum++;
+    this.isFiltring = false;
+    this.sendPlataformGamesRequest();
+  }
+
+  onFiltre() {
+    this.pageNum = 1;
+    this.isFiltring = true;
+    this.sendPlataformGamesRequest();
+  }
+
   componentDidMount() {
+    EventObserver.subscribe(EVENT_SEARCH_GAME, 'GamesPage', this.updateSearchedGame.bind(this));
     SocketObserver.subscribe(DESTINATION_CATEGORIES, 'GamesPage', this.updateCategories.bind(this));
     SocketObserver.subscribe(DESTINATION_PLATAFORMS, 'GamesPage', this.updatePlataforms.bind(this));
     SocketObserver.subscribe(DESTINATION_PLATAFORM_GAMES, 'GamesPage', this.updatePlataformGames.bind(this));
+    
     SocketController.send(DESTINATION_CATEGORIES);
     SocketController.send(DESTINATION_PLATAFORMS);
-    SocketController.send(DESTINATION_PLATAFORM_GAMES);
+    this.sendPlataformGamesRequest();
   }
 
   componentWillUnmount() {
+    EventObserver.unsubscribe(EVENT_SEARCH_GAME, 'GamesPage');
     SocketObserver.unsubscribe(DESTINATION_CATEGORIES, 'GamesPage');
     SocketObserver.unsubscribe(DESTINATION_PLATAFORMS, 'GamesPage');
     SocketObserver.unsubscribe(DESTINATION_PLATAFORM_GAMES, 'GamesPage');
   }
 
+  sendPlataformGamesRequest() {
+    let params = {};
+    params.pageNum = this.pageNum;
+    params.name = this.searchTitle;
+    params.sort = this.state.orderMethod;
+    params.categories = Array.from(this.state.selectedCategories);
+    params.plataforms = Array.from(this.state.selectedPlataforms);
+    
+    let request = new SocketRequest();
+    request.setParams(params);
+    request.setMethod('GET');
+    SocketController.sendCustom(request, DESTINATION_PLATAFORM_GAMES);
+  }
+
   render() {
-    let gameItems = this.getGamesItems();
-    let categoryItems = this.getCategories();
-    let plataformItems = this.getPlataforms();
     return (
-      <section className='d-flex flex-column flex-lg-row' style={{minHeight: '100%'}}>
-        <aside className='border-lg-right border-secondary mh-sm-100 w-15 no-select' style={{minWidth: '15vw'}}>
+      <section className='d-flex flex-column flex-lg-row pb-3' style={{minHeight: '100%'}}>
+        <aside className='border-lg-right border-secondary mh-sm-100 w-15 no-select'>
           <section>
             <header className='bg-secondary text-primary'>
               <h4 className='m-0 px-2 py-2'>Order by</h4>
             </header>
             <div className='d-flex flex-column mt-2 mb-4'>
-              <label className='m-0 pl-3' htmlFor='order-name'>
+              <label className='check-form mb-0 ml-3' htmlFor='order-name'>
                 <input id='order-name' type="radio" value="name" name="order" checked={this.state.orderMethod == 'name'} onChange={this.setOrder.bind(this)}/> Name
+                <span className="radiobtn"></span>
               </label>
-              <label className='m-0 pl-3' htmlFor='order-price'>
+              <label className='check-form mb-0 ml-3' htmlFor='order-price'>
                 <input id='order-price' type="radio" value="price" name="order" checked={this.state.orderMethod == 'price'} onChange={this.setOrder.bind(this)}/> Price
+                <span className="radiobtn"></span>
               </label>
-              <label className='m-0 pl-3' htmlFor='order-plataform'>
+              <label className='check-form mb-0 ml-3' htmlFor='order-plataform'>
                 <input id='order-plataform' type="radio" value="plataform" name="order" checked={this.state.orderMethod == 'plataform'} onChange={this.setOrder.bind(this)}/> Plataform
+                <span className="radiobtn"></span>
               </label>
             </div>
           </section>
@@ -103,7 +146,7 @@ class GamesPage extends React.Component {
               <h4 className='m-0 px-2 py-2'>Categories</h4>
             </header>
             <div className='d-flex flex-column mt-2 mb-4'>
-              {categoryItems}
+              {this.getCategories()}
             </div>
           </section>
           <section>
@@ -111,14 +154,18 @@ class GamesPage extends React.Component {
               <h4 className='m-0 px-2 py-2'>Plataforms</h4>
             </header>
             <div className='d-flex flex-column mt-2 mb-4'>
-              {plataformItems}
+              {this.getPlataforms()}
             </div>
           </section>
+          <a className="btn btn-secondary w-100" href="#" onClick={this.onFiltre.bind(this)}>Filtre</a>
         </aside>
-        <article className='border-2 m-4 mw-100 mw-lg-80' style={{flexGrow: 1}}>
-          <div className='row'>
-            {gameItems}
+        <article className='d-flex flex-column border-2 pt-4 px-4 pb-0 mw-100 mw-lg-80' style={{flexGrow: 1}}>
+          <div className='flex-grow-1'>
+            <div className='row m-0 p-0'>
+              {this.getGamesItems()}
+            </div>
           </div>
+          {this.getShowButtonView()}
         </article>
       </section>
     );
@@ -126,51 +173,14 @@ class GamesPage extends React.Component {
   
   getGamesItems() {
     let gamesItemsViews = [];
-    for (const plataformGame of this.getSortedPlataformsGames()) {
+    for (const plataformGame of this.state.plataformsGames) {
       gamesItemsViews.push(
-        <div className='col-12 col-sm-6 col-md-3 p-0' key={plataformGame.plataformsId + '-' + plataformGame.gamesId}>
+        <div key={plataformGame.plataformsId + '-' + plataformGame.games.id} className='col-12 col-sm-6 col-md-3 p-3' style={{minHeight: 'calc(15vw + 10vh)'}}>
           <GameItemComponent plataformGame={plataformGame}/>
         </div>
       );
     }
     return gamesItemsViews;
-  }
-
-  getSortedPlataformsGames() {
-    let comparator = Comparators.get(this.state.orderMethod);
-    let leakedPlataformsGames = this.getLeakedPlataformsGames();
-    return leakedPlataformsGames.sort(comparator);
-  }
-
-  getLeakedPlataformsGames() {
-    let plataformsGames = this.state.plataformsGames;
-    if (this.state.selectedCategories.size > 0) {
-      plataformsGames = this.leakGamesByCategories(plataformsGames);
-    }
-
-    if (this.state.selectedPlataforms.size > 0) {
-      plataformsGames = this.leakGamesByPlataforms(plataformsGames);
-    }
-    return plataformsGames;
-  }
-
-  leakGamesByCategories(plataformGames) {
-    let categoriesFilter = function(plataformGame) {
-      let result = true;
-      for (const category of this.state.selectedCategories) {
-        let findedGame = Array.from(category.games).find(g => g.id === plataformGame.gamesId);
-        if (findedGame == null) result = false;
-      }
-      return result;
-    };
-    return plataformGames.filter(categoriesFilter.bind(this));
-  }
-
-  leakGamesByPlataforms(plataformGames) {
-    let plataformsFilter = function(plataformGame) {
-      return this.state.selectedPlataforms.has(plataformGame.plataformsId);
-    }
-    return plataformGames.filter(plataformsFilter.bind(this));
   }
 
   getCategories() {
@@ -182,16 +192,7 @@ class GamesPage extends React.Component {
   }
 
   getCategoryView(category) {
-    return (
-      <label className='m-0 pl-3' key={'category-key-' + category.id} htmlFor={'category-' + category.id}>
-        <input 
-          id={'category-' + category.id} 
-          className="mr-1" 
-          type="checkbox" 
-          value={category.id}
-          onChange={this.changeCategoryState.bind(this)}/> {category.name}
-      </label>
-    );
+    return this.getCheckbox('category', category, this.changeCategoryState.bind(this));
   }
 
   getPlataforms() {
@@ -203,16 +204,21 @@ class GamesPage extends React.Component {
   }
 
   getPlataformView(plataform) {
+    return this.getCheckbox('plataform', plataform, this.changePlataformState.bind(this));
+  }
+
+  getCheckbox(type, object, onChange = function() {}) {
     return (
-      <label className='m-0 pl-3' key={'plataform-key-' + plataform.id} htmlFor={'plataform-' + plataform.id}>
-        <input 
-          id={'plataform-' + plataform.id} 
-          className="mr-1" 
-          type="checkbox" 
-          value={plataform.id} 
-          onChange={this.changePlataformState.bind(this)}/> {plataform.name}
+      <label className='check-form ml-3' key={ type + '-key-' + object.id}>
+        {object.name}
+        <input id={ type + '-' + object.id} type="checkbox" value={object.id} onChange={onChange}/>
+        <span className="checkmark"></span>
       </label>
     );
+  }
+
+  getShowButtonView() {
+    return (this.hasMore) ? <a className="btn btn-secondary w-100" href="#" onClick={this.onShowMore.bind(this)}>Show More</a> : <></>;
   }
 }
 export default GamesPage;
