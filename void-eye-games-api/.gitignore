@@ -3,6 +3,7 @@
 vendor
 cache/*
 cache/credentials.json
+composer.lock
 !assets/images/not-found.png
 !assets/images/games/game-1.png
 !assets/images/games/game-2.png
