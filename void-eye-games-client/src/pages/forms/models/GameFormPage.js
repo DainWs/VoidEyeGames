@@ -351,7 +351,7 @@ class GameFormPage extends ModelFormPage {
   }
 
   getMainImageView() {
-    return `<img src="${this.state.mainImage.src}" alt="Main image" style="max-width: 200px" />`;
+    return `<img src="${this.state.mainImage.src || process.env.REACT_APP_PUBLIC_API+'/assets/images/not-found.png'}" alt="Main image" style="max-width: 200px" />`;
   }
 
   getGamesOptions() {

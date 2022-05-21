@@ -2,9 +2,8 @@ import axios from 'axios';
 import { SocketDataProvideer } from './SocketDataProvider';
 import SocketRequest from './SocketRequest';
 
-export var API_URL = PUBLIC_URL + '/void-eye-games-api';
-export const setUrl = (url) => API_URL = url;
-console.log(API_URL);
+export const API_URL = process.env.REACT_APP_PUBLIC_API;
+
 class SocketController {
     send(destination, onError = onHandleError) {
         this.sendCustom(new SocketRequest(), destination, onError);

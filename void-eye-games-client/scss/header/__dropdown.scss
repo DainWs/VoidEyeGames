@@ -14,15 +14,19 @@
         transition: max-height .125s linear;
 
         &.header-menu {    
-            transform: translate3d(-198px, 50px, 0px) !important;
+            transform: translate3d(-278px, calc(50px + 1vh + 2px), 0px) !important;
             left: 0px !important;
-            width: 250px;
+            width: 350px;
             background-color: $secondary !important;
 
             &.show {
-                max-height: 300px;
+                max-height: 500px;
                 padding-bottom: 0.15rem !important;
                 border-bottom: 0.1rem solid gray !important;
+            }
+
+            .nav-link {
+                height: $headerHeight;
             }
         }
     }

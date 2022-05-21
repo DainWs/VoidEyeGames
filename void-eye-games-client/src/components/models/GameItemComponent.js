@@ -62,8 +62,13 @@ class GameItemComponent extends React.Component {
     if (this.state.showType === 'discount' && this.state.plataformGame.discount > 0) {
       return `-${(this.state.plataformGame.discount * 100)}%`;
     }
+    let price = this.state.plataformGame.price;
+    if (price == 0) {
+      return `FREE`;
+    }
+
     let priceUnit = PriceUnitEnum.getPriceUnitById(this.state.plataformGame.priceUnit);
-    return `${this.state.plataformGame.price} ${priceUnit.getSymbol()}`;
+    return `${price} ${priceUnit.getSymbol()}`;
   }
 }
 

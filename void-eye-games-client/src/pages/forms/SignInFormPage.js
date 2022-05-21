@@ -107,46 +107,48 @@ class SignInFormPage extends React.Component {
 
   render() {
     return (
-      <article className='p-2 p-sm-0 mt-5'>
+      <article className='p-2 p-sm-0 pb-sm-5 mt-5'>
         {this.getHasSession()}
-        <section className='m-auto' style={{maxWidth: '400px'}}>
+        <section className='m-auto' style={{maxWidth: '800px'}}>
           <header>
             <h1 className='text-align-center'>Sign in</h1>
           </header>
           <form id='login-form' className='w-100 my-2'>
-            <section className='w-100 mt-3'>
-              <label htmlFor='login-form--username' className='mb-2'>Username:</label>
+            <section className='w-100 py-3'>
+              <label htmlFor='login-form--username' className='mb-2'><span className='text-error'>* </span>Username:</label>
               <input id='login-form--username' className='form-control w-100' type='text' value={this.state.username} onChange={this.onChangeUsername.bind(this)} autoComplete='false'/>
             </section>
-            <section className='w-100 mt-3'>
-              <label htmlFor='login-form--email' className='mb-2'>Email:</label>
+            <section className='w-100 py-3'>
+              <label htmlFor='login-form--email' className='mb-2'><span className='text-error'>* </span>Email:</label>
               <input id='login-form--email' className='form-control w-100' type='email' value={this.state.email} onChange={this.onChangeEmail.bind(this)} autoComplete='false'/>
             </section>
-            <section className='w-100 mt-3'>
-              <label htmlFor='login-form--password' className='mb-2'>Password:</label>
+            <section className='w-100 py-3'>
+              <label htmlFor='login-form--password' className='mb-2'><span className='text-error'>* </span>Password:</label>
               <input id='login-form--password' className='form-control w-100' type='password' value={this.state.password} onChange={this.onChangePassword.bind(this)} autoComplete='false'/>
             </section>
-            <section className='w-100 mb-2 mt-3'>
-              <label htmlFor='login-form--password-confirmation' className='mb-2'>Confirmation password:</label>
+            <section className='w-100 py-3'>
+              <label htmlFor='login-form--password-confirmation' className='mb-2'><span className='text-error'>* </span>Confirmation password:</label>
               <input id='login-form--password-confirmation' className='form-control w-100' type='password' value={this.state.confirmationPassword} onChange={this.onChangeConfirmationPassword.bind(this)} autoComplete='false'/>
             </section>
-            <section className='my-1 mt-3'>
-              <label htmlFor='report-form--terms'>
-                <span className='text-error'>* </span>
-                <input id='report-form--terms' type='checkbox' checked={this.state.terms} onChange={this.onChangeTerms.bind(this)}/> Accept terms and conditions.
+            <section className='py-2 required'>
+              <label className='check-form mb-0 ml-3' htmlFor='report-form--terms'>
+                Accept terms and conditions.
+                <input id='report-form--terms' type='checkbox' checked={this.state.terms} onChange={this.onChangeTerms.bind(this)}/>
+                <span className="checkmark"></span>
               </label>
             </section>
-            <section className='my-1 mb-3'>
-              <label htmlFor='report-form--publicity'>
-                <span className='text-error'>* </span>
-                <input id='report-form--publicity' type='checkbox' checked={this.state.publicity} onChange={this.onChangePublicity.bind(this)}/> I agree to receive advertising in my email.
+            <section className='py-2'>
+              <label className='check-form mb-0 ml-3' htmlFor='report-form--publicity'>
+                I agree to receive advertising in my email.
+                <input id='report-form--publicity' type='checkbox' checked={this.state.publicity} onChange={this.onChangePublicity.bind(this)}/>
+                <span className="checkmark"></span>
               </label>
             </section>
             {this.getErrorView()}
-            <section className='d-flex flex-column w-100 text-center mt-3'>
+            <section className='d-flex flex-column w-100 text-center py-3'>
               <a className='btn btn-quaternary w-100 text-primary' onClick={this.submit.bind(this)}>Sign in</a>
             </section>
-            <section className='d-flex flex-column w-100 text-center mt-3'>
+            <section className='d-flex flex-column w-100 text-center py-3'>
               <NavLink className='btn btn-secondary w-100 text-primary' to='/login'>Back to log in</NavLink>
             </section>
           </form>

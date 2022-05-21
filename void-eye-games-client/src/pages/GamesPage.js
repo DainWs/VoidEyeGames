@@ -121,20 +121,23 @@ class GamesPage extends React.Component {
   render() {
     return (
       <section className='d-flex flex-column flex-lg-row pb-3' style={{minHeight: '100%'}}>
-        <aside className='border-lg-right border-secondary mh-sm-100 w-15 no-select' style={{minWidth: '15vw', maxWidth: '20vw'}}>
+        <aside className='border-lg-right border-secondary mh-sm-100 w-15 no-select'>
           <section>
             <header className='bg-secondary text-primary'>
               <h4 className='m-0 px-2 py-2'>Order by</h4>
             </header>
             <div className='d-flex flex-column mt-2 mb-4'>
-              <label className='m-0 pl-3' htmlFor='order-name'>
+              <label className='check-form mb-0 ml-3' htmlFor='order-name'>
                 <input id='order-name' type="radio" value="name" name="order" checked={this.state.orderMethod == 'name'} onChange={this.setOrder.bind(this)}/> Name
+                <span className="radiobtn"></span>
               </label>
-              <label className='m-0 pl-3' htmlFor='order-price'>
+              <label className='check-form mb-0 ml-3' htmlFor='order-price'>
                 <input id='order-price' type="radio" value="price" name="order" checked={this.state.orderMethod == 'price'} onChange={this.setOrder.bind(this)}/> Price
+                <span className="radiobtn"></span>
               </label>
-              <label className='m-0 pl-3' htmlFor='order-plataform'>
+              <label className='check-form mb-0 ml-3' htmlFor='order-plataform'>
                 <input id='order-plataform' type="radio" value="plataform" name="order" checked={this.state.orderMethod == 'plataform'} onChange={this.setOrder.bind(this)}/> Plataform
+                <span className="radiobtn"></span>
               </label>
             </div>
           </section>
@@ -172,7 +175,7 @@ class GamesPage extends React.Component {
     let gamesItemsViews = [];
     for (const plataformGame of this.state.plataformsGames) {
       gamesItemsViews.push(
-        <div key={plataformGame.plataformsId + '-' + plataformGame.games.id} className='col-12 col-sm-6 col-md-3 p-0' style={{minHeight: 'calc(15vw + 10vh)'}}>
+        <div key={plataformGame.plataformsId + '-' + plataformGame.games.id} className='col-12 col-sm-6 col-md-3 p-3' style={{minHeight: 'calc(15vw + 10vh)'}}>
           <GameItemComponent plataformGame={plataformGame}/>
         </div>
       );
@@ -189,16 +192,7 @@ class GamesPage extends React.Component {
   }
 
   getCategoryView(category) {
-    return (
-      <label className='m-0 pl-3 text-nowrap text-truncate overflow-hidden' key={'category-key-' + category.id} htmlFor={'category-' + category.id}>
-        <input 
-          id={'category-' + category.id} 
-          className="mr-1" 
-          type="checkbox" 
-          value={category.id}
-          onChange={this.changeCategoryState.bind(this)}/> {category.name}
-      </label>
-    );
+    return this.getCheckbox('category', category, this.changeCategoryState.bind(this));
   }
 
   getPlataforms() {
@@ -210,14 +204,15 @@ class GamesPage extends React.Component {
   }
 
   getPlataformView(plataform) {
+    return this.getCheckbox('plataform', plataform, this.changePlataformState.bind(this));
+  }
+
+  getCheckbox(type, object, onChange = function() {}) {
     return (
-      <label className='m-0 pl-3 text-nowrap text-truncate overflow-hidden' key={'plataform-key-' + plataform.id} htmlFor={'plataform-' + plataform.id}>
-        <input 
-          id={'plataform-' + plataform.id} 
-          className="mr-1" 
-          type="checkbox" 
-          value={plataform.id} 
-          onChange={this.changePlataformState.bind(this)}/> {plataform.name}
+      <label className='check-form ml-3' key={ type + '-key-' + object.id}>
+        {object.name}
+        <input id={ type + '-' + object.id} type="checkbox" value={object.id} onChange={onChange}/>
+        <span className="checkmark"></span>
       </label>
     );
   }

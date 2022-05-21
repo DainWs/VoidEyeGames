@@ -130,7 +130,7 @@ class HomePage extends React.Component {
     let gamesItemsViews = [];
     for (const plataformGame of this.state.plataformsGames) {
       gamesItemsViews.push(
-        <div key={plataformGame.plataformsId + '-' + plataformGame.gamesId + '--items'} className='p-0' style={{flex: '1 1 30vh', minHeight: '30vh', maxHeight: '255px'}}>
+        <div key={plataformGame.plataformsId + '-' + plataformGame.gamesId + '--items'} className='p-2' style={{flex: '1 1 30vh', minHeight: '30vh', maxHeight: '255px'}}>
           <GameItemComponent plataformGame={plataformGame}/>
         </div>
       );

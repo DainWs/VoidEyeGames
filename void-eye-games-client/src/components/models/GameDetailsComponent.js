@@ -13,7 +13,19 @@ import Plataform from '../../domain/models/dtos/Plataform';
 import { SocketDataFilter } from '../../services/socket/SocketDataFilter';
 import Carousel from 'nuka-carousel';
 import { Player } from 'video-react';
-import Comment from '../../domain/models/dtos/Comment';
+
+const CAROUSER_CONTROLS_CONFIG = {
+    containerClassName: '',
+    nextButtonClassName: 'slider--control',
+    nextButtonStyle: {height: 'calc(calc(20vw + 35vh)/2)'}, 
+    nextButtonText: '>',
+    pagingDotsClassName: '',
+    pagingDotsContainerClassName: '',
+    pagingDotsStyle: {}, 
+    prevButtonClassName: 'slider--control',
+    prevButtonStyle: {height: 'calc(calc(20vw + 35vh)/2)'}, 
+    prevButtonText: '<',
+};
 
 //TODO check more button
 class GameDetailsComponent extends React.Component {
@@ -79,21 +91,21 @@ class GameDetailsComponent extends React.Component {
     render() {
         return (
             <div className='d-md-flex justify-content-center'>
-                <article className='m-lg-3' style={{maxWidth: '960px'}}>
+                <article className='game-details m-lg-3 w-100'>
                     <header className='w-100'>
-                        <h1 className='w-100 col-lg-4'>{this.state.game.name || <Skeleton />}</h1>
+                        <h1 className='w-100'>{this.state.game.name || <Skeleton />}</h1>
                     </header>
                     
-                    <section className='details--header row p-0 m-0 m-sm-3'>
-                        <div className='details--header__info row col-12 col-lg-4 w-100 p-0 m-0 my-2 my-lg-0'>
+                    <section className='details--header row p-0 m-0 my-sm-3'>
+                        <div className='details--header__info row col-12 col-lg-4 w-100 p-0 pl-lg-3 m-0 my-2 my-lg-0'>
                             <div className='details--header__img col-12 col-sm-5 col-lg-12 p-0 d-flex align-items-center justify-content-center overflow-hidden'>
                                 {this.getGameImageView() ||  <Skeleton className='mt-2 mt-sm-3 mx-2 mx-sm-0 p-2 p-sm-3 ' />}
                             </div>
-                            <div className='col-12 col-sm-7 col-lg-12 py-4 px-2 p-sm-4 p-sm-1 px-sm-4 p-lg-0 d-flex flex-column justify-content-around flex-grow-1'>
+                            <div className='plataform col-12 col-sm-7 col-lg-12 py-4 px-2 p-sm-4 p-sm-1 px-sm-4 p-lg-0 d-flex flex-column justify-content-around flex-grow-1'>
                                 {this.getBestPlataforms() || <Skeleton count={3} className='m-0 p-2 p-sm-3 ' />}
                             </div>
                         </div>
-                        <div className='slider--dynamic col-12 col-lg-8 order-lg-first w-100 p-0 pr-lg-3 overflow-hidden'>
+                        <div className='slider--dynamic col-12 col-lg-8 order-lg-first w-100 p-0 overflow-hidden'>
                             {this.getMediaTabView()}
                         </div>
                     </section>
@@ -110,11 +122,13 @@ class GameDetailsComponent extends React.Component {
                         </header>
                         <div className='d-flex m-3'>
                             <div className='d-flex align-items-start justify-content-center rounded mr-3'>
-                                <div className='bg-secondary text-primary rounded-circle d-flex align-items-center justify-content-center' style={{ width: '50px', height: '50px' }}>
+                                <div className='game-comment-icon bg-secondary text-primary rounded-circle d-flex align-items-center justify-content-center'>
                                     <FontAwesomeIcon icon={faUser} style={{ width: '50%', height: '50%' }} />
                                 </div>
                             </div>
-                            <textarea className='no-resize flex-grow-1' rows={5} onChange={this.setCommentText.bind(this)} value={this.state.commentText}/>
+                            <div className='flex-grow-1'>
+                                <textarea className='w-100 no-resize' rows={5} onChange={this.setCommentText.bind(this)} value={this.state.commentText}/>
+                            </div>
                         </div>
                         <div className='d-flex flex-column justify-content-center'>
                             <div className='row m-3'>
@@ -159,14 +173,14 @@ class GameDetailsComponent extends React.Component {
     preparePlataformView(plataformGame) {
         let plataform = new Plataform(plataformGame.plataforms);
         let discount = (plataformGame.discount > 0) ? `(-${plataformGame.discount * 100}%)` : '';
-        let discountView = (plataformGame.discount > 0) ? (<span style={{fontSize: '.8rem'}}><br/>{discount}</span>) : <></>;
+        let discountView = (plataformGame.discount > 0) ? (<span className='discount'>{discount}</span>) : <></>;
         return (
             <a key={`${plataformGame.gamesId}-${plataformGame.plataformsId}__price-tag`}
                 className='plataform-link d-flex border border-black rounded m-0 mt-2 mt-md-0 w-100 text-decoration-none' 
                 href={plataform.url} target="_blank">
 
                 <div className='border border-black rounded-left p-0'>
-                    <div className='m-2'>
+                    <div className='h-100 p-2 d-flex align-items-center justify-content-center'>
                         {this.getPlataformImageView(plataform)}
                     </div>
                 </div>
@@ -175,7 +189,8 @@ class GameDetailsComponent extends React.Component {
                         {plataform.name}
                     </div>
                     <div className='plataform-price w-50 d-flex align-items-center justify-content-center bg-quinary border-left border-black rounded-right font-weight-bold text-primary'>
-                        <span className='text-center' style={{lineHeight: '.8rem'}}>{plataformGame.price} {plataformGame.priceUnit} {discountView}</span>
+                        <span className='text-center'>{plataformGame.price} {plataformGame.priceUnit}</span>
+                        {discountView}
                     </div>
                 </div>
             </a>
@@ -201,7 +216,7 @@ class GameDetailsComponent extends React.Component {
                     </div>
                 </div>
                 <div style={{ flexGrow: 1 }}>
-                    <h5>{comment.users.name}</h5>
+                    <h5 className='pb-3'>{comment.users.name}</h5>
                     <p className='border border-black rounded p-2 m-0'>{comment.description}</p>
                 </div>
             </div>
@@ -209,7 +224,7 @@ class GameDetailsComponent extends React.Component {
     }
 
     getPlataformImageView(plataform) {
-        return (<img src={plataform.getLogo()} alt={plataform.name} style={{ width: '25px' }} />);
+        return (<img src={plataform.getLogo()} alt={plataform.name} className='plataform-image' style={{ width: '25px' }} />);
     }
 
     getMediaTabView() {
@@ -282,7 +297,16 @@ class GameDetailsComponent extends React.Component {
     }
 
     getCarouselWithItems(items) {
-        return (<Carousel className='w-100 h-100'>{items}</Carousel>);
+        return (
+            <Carousel
+                animation='zoom' 
+                autoplay={items.length > 1} 
+                renderBottomCenterControls={false} 
+                defaultControlsConfig={CAROUSER_CONTROLS_CONFIG}
+                wrapAround={false} className='w-100 h-100'>
+                {items}
+            </Carousel>
+        );
     }
 }
 

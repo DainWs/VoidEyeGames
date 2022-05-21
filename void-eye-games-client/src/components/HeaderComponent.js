@@ -71,9 +71,9 @@ class HeaderComponent extends React.Component {
 
   render() {
     return (
-      <header>
+      <header className='position-fixed w-100' style={{zIndex: 1000}}>
         <NavLink id='navigate-home' to="/"/>
-        <nav className="nav justify-content-between bg-secondary" style={{ height: '3rem', fontSize: '1.4rem', fontFamily: 'Arial' }}>
+        <nav className="nav justify-content-between bg-secondary" style={{  fontSize: '1.4rem', fontFamily: 'Arial' }}>
           <div className='nav h-100 d-none d-sm-flex'>
             <Link to="/" className="h-100 mr-3" href="#">
               <img src={require('../assets/images/logo.png')} alt="logo" className='h-100' />
@@ -102,8 +102,8 @@ class HeaderComponent extends React.Component {
             {this.getSessionDropdownView()}
           </div>
           <div className="d-block d-sm-none w-100" style={{zIndex: 3}}>
-            <nav className="navbar-light d-flex justify-content-start">
-              <a id="hamburger-menu" className="nav-link" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+            <nav className="navbar-light d-flex justify-content-start h-100">
+              <a id="hamburger-menu" className="nav-link nav-icon" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
                 <FontAwesomeIcon icon={faBars} />
               </a>
             </nav>
@@ -144,7 +144,8 @@ class HeaderComponent extends React.Component {
   getSignedSessionDropdownView() {
     return (
       <>
-        <a className="nav-link" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <a className="nav-link nav-icon d-flex align-items-center justify-content-center" href="#" role="button" id="dropdownMenuLink" 
+          data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style={{width: 'calc(50px + 1vh)'}}>
           <FontAwesomeIcon icon={faUser} />
         </a>
         <div className="dropdown-menu header-menu mt-0 p-0 border-top" 

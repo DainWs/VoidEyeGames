@@ -22,11 +22,11 @@ class LayoutPage extends React.Component {
     return (
       <>
         <RouterHeaderComponent/>
-        <div className="flex-grow-1"><Outlet /></div>
+        <div className="app-content flex-grow-1"><Outlet /></div>
         <FooterComponent/>
 
-        <a className="position-fixed p-right-bottom-1 d-flex align-items-center justify-content-center bg-secondary rounded-circle" 
-          style={{width: '50px', height: '50px', zIndex: '200'}} 
+        <a className="to-top-btn position-fixed p-right-bottom-1 d-flex align-items-center justify-content-center bg-secondary rounded-circle" 
+          style={{width: '3vw', height: '3vw', zIndex: '200'}} 
           onClick={this.toTopOfView}>
           <FontAwesomeIcon icon={faAngleUp} style={{ width: '50%', height: '50%' }} />
         </a>

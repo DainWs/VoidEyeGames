@@ -9,6 +9,40 @@ body {
         padding: 0;
     }
 
+    @include media-breakpoint-up(lg) {
+        $normalFont: calc(0.1vw + 0.5vh + 1rem);
+        font-size: $normalFont !important;
+
+        .to-top-btn, input,
+        textarea, svg, .btn {
+            font-size: $normalFont !important;
+        }
+
+        * h1, * .h1 {
+            font-size: calc(1vw + 1vh + 1rem) !important;
+        }
+        * h2, * .h2 {
+            font-size: calc(1.4vw + 1vh) !important;
+        }
+        * h3, * .h3 {
+            font-size: calc(1.5vw + 1vh) !important;
+        }
+        * h4, * .h4 {
+            font-size: calc(1.2vw + 1.2vh) !important;
+        }
+        * h5, * .h5 {
+            font-size: calc(1vw + 1vh) !important;
+        }
+        * h6, * .h6 {
+            font-size: calc(1vw + 1.2vh) !important;
+        }
+    }
+
+    hr {
+        border-color: gray;
+        border-width: calc(1px + .01vw);
+    }
+
     overflow-x: hidden;
 
     $sizePosition: 0, 1;
@@ -70,10 +104,17 @@ body {
         justify-content: center;
 
         max-width: 960px;
+        @include media-breakpoint-up(lg) { 
+            max-width: 80vw;
+        }
+
         height: unset;
 
-        &__img img {
-            height: 80vw;
+        &__img {
+            background-color: black;
+            img {
+                height: 80vw;
+            }
         }
 
         &__info {
@@ -101,7 +142,7 @@ body {
         }
 
         @include media-breakpoint-up(md) { 
-            height: 60vh;
+            height: 40%;
 
             &__info {
                 overflow-y: hidden;
@@ -115,26 +156,63 @@ body {
         }
 
         @include media-breakpoint-up(lg) {
+            height: auto;
             &__info {
+                height: auto;
                 min-height: 100%;
+                max-height: 100%;
+                overflow-y: visible;
+                padding-left: 2% !important;
             }
 
             &__img {
-                min-width: 100%;
+                max-width: 100%;
+                height: 50%;
+
+                img {
+                    max-width: 100%;
+                }
             }
         }
 
         @include media-breakpoint-up(xl) { 
-            height: 50vh;
+            height: auto;
+
+            &__info {
+                height: auto;
+                min-height: 100%;
+                max-height: 100%;
+                overflow-y: visible;
+                padding-left: 2% !important;
+            }
+
+            &__img {
+                max-width: 100%;
+                height: 50%;
+
+                img {
+                    max-width: 100%;
+                }
+            }
         }
     }
 
     & .slider {
+        &-container {
+            @include media-breakpoint-up(xm) { 
+                max-height: 100% !important;
+            }
+        }
+
+        &-frame {
+            @include media-breakpoint-up(xm) {
+                max-height: 100% !important;
+            }
+        }
+
         &--dynamic {
             display: flex;
             flex-direction: column;
-
-            min-height: 200px;
 
             & .nav-tabs {
                 height: 50px !important;
@@ -143,6 +221,9 @@ body {
 
                     & > * {
                         height: 100%;
+                        @include media-breakpoint-up(lg) { 
+                            font-size: calc(1vw + 1vh) !important;
+                        }
                     }
                 }
             }
@@ -164,22 +245,107 @@ body {
             }
 
             @include media-breakpoint-up(md) { 
-                height: 60vh;
+                height: calc(100% - 200px);
+
+                & .tab-content {
+                    height: calc(100% - 250px);
+                    overflow-y: hidden;
+
+                    & > * {
+                        max-height: 100%;
+                        height: 100%;
+                    }
+                }
+            }
+
+            @include media-breakpoint-up(lg) { 
+                height: 100%;
+
+                .tab-content {
+                    
+                    min-height: 400px;
+                    max-height: 400px;
+                }
             }
 
             @include media-breakpoint-up(xl) { 
-                height: 50vh;
+                .nav-tabs {
+                    height: auto !important;
+                }
+    
+                .tab-content {
+                    height: calc(100% - 300px);
+                    min-height: 600px;
+                    max-height: 600px;
+                }
             }
         }
     }
 
-    .plataform-link {
+    .plataform{
+        
+        &-link {
+            font-size: calc(0.2vw + 0.2vh + .55rem) !important;
+            
+            &:hover {
+                background-color: $form;
+
+                .plataform-price {
+                    background-color: #976c00 !important;
+                }
+            }
+
+            .discount {
+                font-size: calc(0.2vw + 0.3vh + .45rem);
+            }
+        }
+
+        &-price {
+            display: flex;
+            flex-direction: column;
+        }
+
+        @include media-breakpoint-up(lg) {
+            max-height: 60%;
+            
+        }
+
+        @include media-breakpoint-up(xl) {
+            flex-grow: 1 !important;
+            
+            &-link {
+                font-size: calc(0.5vw + 0.4vh + .55rem) !important;
+                height: 7vh;
+                max-height: 25%;
+
+                .discount {
+                    font-size: calc(0.5vw + 0.4vh + .45rem);
+                }
+            }
+        
+            &-image {
+                width: unset !important;
+                height: 90% !important;
+            }
+        }
+    }
+
+    .app-content {
+        margin-top: $headerHeight;
+    }
+
+    .filter-checkbox {
         &:hover {
             background-color: $form;
+        }
+    }
+    
 
-            .plataform-price {
-                background-color: #976c00 !important;
-            }
+    aside {
+        width: 100% !important;
+        @include media-breakpoint-up(lg) { 
+            min-width: 15vw !important;
+            max-width: 20vw !important;
         }
     }
 }

@@ -1,4 +1,21 @@
 .game {
+    &-comment-icon {
+        @include media-breakpoint-up(sm) { 
+            width: 25px;
+            height: 25px;
+        }
+
+        @include media-breakpoint-up(md) { 
+            width: 60px;
+            height: 60px;
+        }
+
+        @include media-breakpoint-up(lg) { 
+            width: 75px;
+            height: 75px;
+        }
+    }
+
     &-item {
         position: relative;
         background-position: center;
@@ -76,4 +93,16 @@
             }
         }
     }
+
+    &-details {
+        max-width: 960px;
+        @include media-breakpoint-up(lg) { 
+            max-width: 80vw;
+        }
+
+        & > hr {
+            margin: calc(1px + 3vh) 0;
+        }
+    }
+    
 }

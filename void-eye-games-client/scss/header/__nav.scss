@@ -1,8 +1,16 @@
 .nav {
+    flex-wrap: nowrap;
+    height: $headerHeight;
+
     &-link {
         color: $text-primary !important;
-        font-size: 1.4rem;
+        font-size: calc(1rem + .5vw);
         font-family: 'Arial';
+
+        height: 100%;
+
+        display: flex;
+        align-items: center;
 
         -webkit-touch-callout: none;
           -webkit-user-select: none; 
@@ -20,5 +28,25 @@
         }
 
         @include btn-transition;
+    }
+
+    &-icon svg {
+        font-size: calc(2rem + .5vw) !important;
+    }
+
+    @include media-breakpoint-up(lg) {
+        &-link {
+            font-size: calc(0.5vw + 0.2vh + 1rem) !important;
+        }
+
+        &-icon svg {
+            font-size: calc(2rem + .5vw) !important;
+        }
+    }
+}
+
+@include media-breakpoint-up(lg) {
+    header > .nav {
+        height: $headerHeight !important;
     }
 }

@@ -34,8 +34,7 @@ class LogInFormPage extends React.Component {
     SocketController.sendCustomWithCallback(
       request,
       DESTINATION_LOGIN,
-      this.onSuccess.bind(this),
-      this.onFailed.bind(this)
+      this.onSuccess.bind(this)
     );
   }
 
@@ -48,6 +47,7 @@ class LogInFormPage extends React.Component {
   }
 
   onFailed(response) {
+    console.log(response);
     this.setState({errors: response.data.body});
   }
 
@@ -55,17 +55,17 @@ class LogInFormPage extends React.Component {
     return (
       <article className='p-2 p-sm-0 mt-5'>
         {this.getHasSession()}
-        <section className='m-auto' style={{maxWidth: '400px'}}>
+        <section className='m-auto' style={{maxWidth: '800px'}}>
           <header>
             <h1 className='text-align-center'>Log in</h1>
           </header>
-          <form id='login-form' className='w-100'>
+          <form id='login-form' className='w-100 my-2'>
             <section className='w-100 my-3'>
-              <label htmlFor='login-form--username'>Username:</label>
+              <label htmlFor='login-form--username' className='mb-2'><span className='text-error'>* </span>Username:</label>
               <input id='login-form--username' className='form-control w-100' type='text' value={this.state.username} onChange={this.onChangeUsername.bind(this)} autoComplete='false'/>
             </section>
             <section className='w-100 my-3'>
-              <label htmlFor='login-form--password'>Password:</label>
+              <label htmlFor='login-form--password' className='mb-2'><span className='text-error'>* </span>Password:</label>
               <input id='login-form--password' className='form-control w-100' type='password' value={this.state.password} onChange={this.onChangePassword.bind(this)} autoComplete='false'/>
             </section>
             {this.getErrorView()}
