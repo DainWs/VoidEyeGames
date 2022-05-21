@@ -3,6 +3,7 @@
   "author": "Jose Antonio Duarte Perez",
   "version": "1.0.0",
   "main": "src/App.js",
+  "homepage": ".",
   "private": true,
   "scripts": {
     "start": "react-scripts start",

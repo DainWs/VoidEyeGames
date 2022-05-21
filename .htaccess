@@ -1,0 +1,21 @@
+# Rute rule rewrite
+<IfModule mod_rewrite.c>
+    # Activar mod_rewrite  
+    RewriteEngine on
+
+    # For Api support
+    RewriteCond %{REQUEST_URL} !^.*Api/.*$
+    RewriteRule ^.*Api/(.*)$ ./void-eye-games-api/$1 [QSA] [L]
+
+    # For App support
+    RewriteCond %{REQUEST_URL} !^.*App/.*$
+    RewriteRule ^.*App/(.*)$ ./void-eye-games-client/build/$1 [QSA] [L]
+
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.*)$ ./void-eye-games-client/build/$1 [QSA] [L]
+
+    RewriteCond %{REQUEST_FILENAME} -f
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteRule ^(.*)$ ./void-eye-games-client/build/index.html [QSA] [L]
+</IfModule>

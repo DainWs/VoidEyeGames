@@ -2,8 +2,9 @@ import axios from 'axios';
 import { SocketDataProvideer } from './SocketDataProvider';
 import SocketRequest from './SocketRequest';
 
-export const API_URL = 'http://localhost/VoidEyeGames/void-eye-games-api';
-
+export var API_URL = PUBLIC_URL + '/void-eye-games-api';
+export const setUrl = (url) => API_URL = url;
+console.log(API_URL);
 class SocketController {
     send(destination, onError = onHandleError) {
         this.sendCustom(new SocketRequest(), destination, onError);
