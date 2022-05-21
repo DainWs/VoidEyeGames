@@ -1,6 +1,7 @@
 .old
 .unsupported
 .ssl
+build
 node_modules
 void-eye-games-api/cache/credentials.json
 void-eye-games-client/build
