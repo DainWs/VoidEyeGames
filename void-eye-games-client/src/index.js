@@ -1,8 +1,9 @@
+console.log("bbbbbbbbbbbbbbbbbb");
 import '../node_modules/video-react/dist/video-react.css';
 import '../node_modules/react-loading-skeleton/dist/skeleton.css';
 import './assets/css/App.css';
 import 'bootstrap';
-
+console.log("CCCCCCCCCCCCCCCCCCCCC");
 import React from 'react';
 import ReactDOM from "react-dom";
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
@@ -23,11 +24,11 @@ let RouterGamePage = withRouter(GamesPage);
 let RouterGameFormPage = withRouter(GameFormPage);
 let RouterCategoryFormPage = withRouter(CategoryFormPage);
 let RouterPlataformFormPage = withRouter(PlataformFormPage);
-
+console.log("DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD " + process.env.REACT_APP_BASEHOME);
 export default function App() {
   return (
     <>
-      <BrowserRouter>
+      <BrowserRouter basename={process.env.REACT_APP_BASEHOME}>
         <Routes>
           <Route path="/" element={<LayoutPage />}>
             <Route index element={<HomePage />} />
@@ -51,5 +52,5 @@ export default function App() {
     </>
   );
 }
-
+console.log("eeeeeeeeeeeeeeeeeeeeeeee");
 ReactDOM.render(<App/>, document.getElementById("root"));
