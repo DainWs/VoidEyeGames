@@ -30,7 +30,7 @@ class SelectController extends BaseController
     public function getGames(Request $request, Response $response, array $args)
     {
         /* PAGE */
-        $pageNum = $request->getParam('pageNum', []);
+        $pageNum = $request->getParam('pageNum', 1);
         $pageNum = ($pageNum < 1) ? 1 : $pageNum;
         $pageStart = ($pageNum - 1) * QUERY_GAMES_PER_PAGE;
 

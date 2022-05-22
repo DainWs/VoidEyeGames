@@ -27,7 +27,7 @@ let RouterPlataformFormPage = withRouter(PlataformFormPage);
 export default function App() {
   return (
     <>
-      <BrowserRouter>
+      <BrowserRouter basename={process.env.REACT_APP_BASEHOME}>
         <Routes>
           <Route path="/" element={<LayoutPage />}>
             <Route index element={<HomePage />} />
