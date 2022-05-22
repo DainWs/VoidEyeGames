@@ -2,6 +2,7 @@
 .unsupported
 .ssl
 build
+./public
 package-lock.json
 node_modules
 void-eye-games-api/cache/credentials.json
