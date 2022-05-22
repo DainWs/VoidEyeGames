@@ -1,9 +1,7 @@
 .game {
     &-comment-icon {
-        @include media-breakpoint-up(sm) { 
-            width: 25px;
-            height: 25px;
-        }
+        width: 50px;
+        height: 50px;
 
         @include media-breakpoint-up(md) { 
             width: 60px;

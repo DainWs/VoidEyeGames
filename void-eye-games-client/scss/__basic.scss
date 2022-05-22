@@ -214,6 +214,19 @@ body {
             display: flex;
             flex-direction: column;
 
+            & .slider {
+                &-container {
+                    height: 100%;
+                    position: relative;
+                }
+
+                &-list {
+                    & .slide {
+                        width: 100% !important;
+                    }
+                }
+            }
+
             & .nav-tabs {
                 height: 50px !important;
 
@@ -339,7 +352,6 @@ body {
             background-color: $form;
         }
     }
-    
 
     aside {
         width: 100% !important;

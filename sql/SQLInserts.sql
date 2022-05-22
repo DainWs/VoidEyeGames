@@ -45,7 +45,7 @@ COMMIT;
 
 INSERT INTO MEDIAS VALUES (null, 1, "imagen_1", "image/png");
 INSERT INTO MEDIAS VALUES (null, 1, "video_1", "video/mp4");
-INSERT INTO MEDIAS VALUES (null, 2, "video_2", "video/webm");
+INSERT INTO MEDIAS VALUES (null, 2, "video_2", "video/mp4");
 INSERT INTO MEDIAS VALUES (null, 2, "imagen_2", "image/png");
 INSERT INTO MEDIAS VALUES (null, 3, "imagen_3", "image/jpg");
 COMMIT;
