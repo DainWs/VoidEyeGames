@@ -23,7 +23,7 @@ Ejecutamos la siguiente secuencia de comandos desde la terminal estando situados
 
 ### Ejecución
 #### API
-Ejecuta el servicio web y de base de datos, si al acceder a `http://localhost/VoidEyeGames/void-eye-games-api/` te salta un `Method not allowed` se instalo correctamente la API del proyecto.
+Ejecuta el servicio **web** y **base de datos**, si al acceder a `http://localhost/VoidEyeGames/void-eye-games-api/` te salta un `Method not allowed` se instalo correctamente la API del proyecto.
 
 #### Client
 Muevase desde la terminal al directorio `C:/xampp/htdocs/VoidEyeGames/void-eye-games-client/` y ejecute `npm run web` y cuando acabe de cargar, y salgan algunas opciones, pulsa **R** en el teclado (la opcion de refresh), a continuacion se abrira una pagina web. (el usuario administrador de la web es 'admin' y password 'prueba').
@@ -54,7 +54,7 @@ Final project for 2ºDAW, its a website is intended for support in the search fo
     - [X] Report form navigation button
 - [X] Report Form View
 - [X] Login Form View
-    - [ ] [Optional] Recovery password
+    - [X] [Optional] Recovery password
 - [X] Signin Form View
 
 - [X] **Admin** Game Form View

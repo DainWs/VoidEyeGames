@@ -1,5 +1,8 @@
+import { faFilter } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import GameItemComponent from '../components/models/GameItemComponent';
+import { CacheConfiguration } from '../domain/cache/CacheConfiguration';
 import { EventDataProvider } from '../domain/EventDataProvider';
 import { EventObserver } from '../domain/EventObserver';
 import { EVENT_SEARCH_GAME } from '../domain/EventsEnum';
@@ -20,9 +23,13 @@ class GamesPage extends React.Component {
     this.pageNum = 1;
     this.isFiltring = false;
     this.hasMore = true;
+    this.hasMoreCategories = true;
+    this.hasMorePlataforms = true;
     this.searchTitle = EventDataProvider.provide(EVENT_SEARCH_GAME);
     this.state = {
       orderMethod: 'name',
+      numOfCategories: 3,
+      numOfPlataforms: 3,
       plataformsGames: [],
       categories: [],
       plataforms: [],
@@ -78,6 +85,18 @@ class GamesPage extends React.Component {
     this.pageNum++;
     this.isFiltring = false;
     this.sendPlataformGamesRequest();
+  }
+
+  onShowMoreCategories() {
+    let num = this.state.numOfCategories + 5;
+    this.hasMoreCategories = this.state.categories.length > num;
+    this.setState({numOfCategories: num})
+  }
+
+  onShowMorePlataforms() {
+    let num = this.state.numOfPlataforms + 5;
+    this.hasMorePlataforms = this.state.plataforms.length > num;
+    this.setState({numOfPlataforms: num})
   }
 
   onFiltre() {
@@ -147,6 +166,9 @@ class GamesPage extends React.Component {
             </header>
             <div className='d-flex flex-column mt-2 mb-4'>
               {this.getCategories()}
+              <div className='w-100 px-2'>
+                {this.getCategoryShowMore()}
+              </div>
             </div>
           </section>
           <section>
@@ -155,9 +177,17 @@ class GamesPage extends React.Component {
             </header>
             <div className='d-flex flex-column mt-2 mb-4'>
               {this.getPlataforms()}
+              <div className='w-100 px-2'>
+                {this.getPlataformShowMore()}
+              </div>
             </div>
           </section>
-          <a className="btn btn-secondary w-100" href="#" onClick={this.onFiltre.bind(this)}>Filtre</a>
+          <div className='w-100 px-2'>
+            <a className="btn btn-quaternary w-100" href="#" onClick={this.onFiltre.bind(this)}>
+              <FontAwesomeIcon icon={faFilter} className='mr-2'/> 
+              Filtre
+            </a>
+          </div>
         </aside>
         <article className='d-flex flex-column border-2 pt-4 px-4 pb-0 mw-100 mw-lg-80' style={{flexGrow: 1}}>
           <div className='flex-grow-1'>
@@ -184,9 +214,11 @@ class GamesPage extends React.Component {
   }
 
   getCategories() {
-    let categoryItemViews = [];
-    for (const category of this.state.categories) {
-      categoryItemViews.push(this.getCategoryView(category));
+    let categories = this.state.categories;
+    let categoryItemViews = new Set();
+    for (let i = 0; i < categories.length && i < this.state.numOfCategories; i++) {
+      let category = categories[i];
+      categoryItemViews.add(this.getCategoryView(category));
     }
     return categoryItemViews;
   }
@@ -195,16 +227,26 @@ class GamesPage extends React.Component {
     return this.getCheckbox('category', category, this.changeCategoryState.bind(this));
   }
 
+  getCategoryShowMore() {
+    return (this.hasMoreCategories) ? <a className="btn btn-quaternary w-100" href="#" onClick={this.onShowMoreCategories.bind(this)}>Show more</a> : <></>;
+  }
+
   getPlataforms() {
-    let plataformItemViews = [];
-    for (const plataform of this.state.plataforms) {
-      plataformItemViews.push(this.getPlataformView(plataform));
+    let plataforms = this.state.plataforms;
+    let plataformItemViews = new Set();
+    for (let i = 0; i < plataforms.length && i < this.state.numOfPlataforms; i++) {
+      let plataform = plataforms[i];
+      plataformItemViews.add(this.getPlataformView(plataform));
     }
     return plataformItemViews;
   }
 
   getPlataformView(plataform) {
     return this.getCheckbox('plataform', plataform, this.changePlataformState.bind(this));
+  }
+
+  getPlataformShowMore() {
+    return (this.hasMorePlataforms) ? <a className="btn btn-quaternary w-100" href="#" onClick={this.onShowMorePlataforms.bind(this)}>Show more</a> : <></>;
   }
 
   getCheckbox(type, object, onChange = function() {}) {
@@ -218,7 +260,7 @@ class GamesPage extends React.Component {
   }
 
   getShowButtonView() {
-    return (this.hasMore) ? <a className="btn btn-secondary w-100" href="#" onClick={this.onShowMore.bind(this)}>Show More</a> : <></>;
+    return (this.hasMore) ? <a className="btn btn-secondary w-100" href="#" onClick={this.onShowMore.bind(this)}>Show more</a> : <></>;
   }
 }
 export default GamesPage;

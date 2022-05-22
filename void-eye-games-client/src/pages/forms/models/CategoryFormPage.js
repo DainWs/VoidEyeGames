@@ -88,7 +88,7 @@ class CategoryFormPage extends ModelFormPage {
         request.setBody(JSON.stringify(category));
         request.setMethod('POST');
         
-        let destination = DESTINATION_CATEGORIES;
+        let destination = DESTINATION_CATEGORY;
         if (category.id && category.id !== -1) {
             destination = DESTINATION_CATEGORIES_UPDATES;
         }
@@ -176,7 +176,7 @@ class CategoryFormPage extends ModelFormPage {
                         </section>
                         <section className='row w-100 m-0'>
                             <Select className='flex-grow-1 p-0' options={this.getGamesOptions()} onChange={this.onChangeSelectedGame.bind(this)}/>
-                            <a className='btn btn-form  text-dark col-12 col-sm-2 m-0 mt-3 mt-sm-0 ml-sm-2' onClick={this.addSelectedGame.bind(this)}>Add game</a>
+                            <a className='btn btn-form  text-dark col-12 col-sm-3 m-0 mt-3 mt-sm-0 ml-sm-2' onClick={this.addSelectedGame.bind(this)}>Add game</a>
                         </section>
                         <hr className='w-100 my-3'/>
                         <fieldset id='games-list' title='Games in category' className='d-flex flex-column flex-grow-1 w-100 border border-gray rounded' style={{ minHeight: '200px'}}>

@@ -79,6 +79,7 @@ $app->post('/comment', 'src\controllers\InsertController:addComment')->add(new A
 
 // Send Reports
 $app->post('/report', 'src\controllers\SessionController:sendReport');
+$app->post('/recovery', 'src\controllers\SessionController:sendRecovery');
 
 $container = $app->getContainer();
 DatabaseProvider::newInstance($container);

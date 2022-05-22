@@ -9,7 +9,7 @@ import { SessionManager } from '../domain/SessionManager';
 class SupportPage extends React.Component {
   render() {
     return (
-      <article className='d-flex flex-column m-3'>
+      <article className='d-flex flex-column m-3 pb-3'>
         <section className='overflow-hidden'>
           <h1 className='pb-2'>Support</h1>
           <section className='row vh-40' style={{overflow: 'hidden'}}>
@@ -67,7 +67,7 @@ class SupportPage extends React.Component {
           </section>
         </section>
         <section><hr/></section>
-        <section>
+        <section className='my-1 py-1'>
           <h3 className='pt-2'>Report</h3>
           <section className='row' >
             <div className='col-12'>
@@ -86,7 +86,7 @@ class SupportPage extends React.Component {
               </p>
             </div>
           </section>
-          <section className=''>
+          <section className='py-3'>
             <NavLink className='btn btn-secondary col-12 col-sm-3 text-primary' to='/report'>Send report</NavLink>
           </section>
         </section>

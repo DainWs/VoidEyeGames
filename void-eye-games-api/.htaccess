@@ -15,7 +15,7 @@ Header set Access-Control-Allow-Origin "*"
     SetEnv DB_PASSWORD 'void_eye_games'
 </IfModule>
 
-RedirectMatch "^/VoidEyeGames/void-eye-games-api/(?!health|assets|index\.php|signIn|logIn|games?|category|categories|plataforms?|comment|report).*" /VoidEyeGames/void-eye-games-api/index.php
+RedirectMatch "^/VoidEyeGames/void-eye-games-api/(?!recovery|health|assets|index\.php|signIn|logIn|games?|category|categories|plataforms?|comment|report).*" /VoidEyeGames/void-eye-games-api/index.php
 
 # Rute rule rewrite
 <IfModule mod_rewrite.c>

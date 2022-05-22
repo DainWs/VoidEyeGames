@@ -91,4 +91,19 @@ class EmailManager {
             $this->logger->log("[Error] ".$ex->getMessage(), Logger::WARNING);
         }
     }
+
+    public function sendRecovery($email, $newPassword): void  {
+        try {
+            $this->logger->log("Send recovery.");
+
+            $name = explode('@', $email);
+            $this->mailer->addAddress($email, $name[0]);
+            $this->mailer->Subject = "Void eye games - Recovery password.";
+            $this->mailer->isHTML(true);
+            $this->mailer->Body = "Buenos d&iacute;as, aqui tienes tu nueva contrase&ntilde;a generada: $newPassword";
+            $this->mailer->send();
+        } catch(Exception $ex) {
+            $this->logger->log("[Error] ".$ex->getMessage(), Logger::WARNING);
+        }
+    }
 }
