@@ -25,7 +25,7 @@ $app->add(new HeadersMiddleware());
 
 /*==== REQUESTS ====*/
 $app->get('/', 'src\controllers\HealthController:health');
-$app->post('/', 'src\controllers\HealthController:health');
+$app->get('/health', 'src\controllers\HealthController:health');
 
 $app->post('/signIn', 'src\controllers\SessionController:signIn');
 $app->post('/logIn', 'src\controllers\SessionController:logIn');

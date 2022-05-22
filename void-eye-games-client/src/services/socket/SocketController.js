@@ -18,6 +18,8 @@ class SocketController {
     }
 
     sendCustomWithCallback(request, destination, callback, onError = onHandleError) {
+        console.log(request);
+        console.log(this.getUrlFor(destination));
         axios.request(this.getUrlFor(destination), request)
             .then(response => callback(response))
             .catch(onError);
@@ -29,7 +31,7 @@ class SocketController {
 }
 
 function onHandleError(error) {
-    console.error(error);
+    console.log(error);
 }
 
 const SocketControllerInstance = new SocketController();
