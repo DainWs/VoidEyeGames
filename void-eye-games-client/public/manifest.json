@@ -3,27 +3,26 @@
   "name": "Void Eye Games",
   "icons": [
     {
-      "src": "assets/images/favicon.ico",
+      "src": "static/media/favicon.ico",
       "sizes": "64x64 32x32 24x24 16x16",
       "type": "image/x-icon"
     },
     {
-      "src": "assets/images/logo_rounded.png",
+      "src": "static/media/logo_rounded.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "assets/images/logo_rounded.png",
+      "src": "static/media/logo_rounded.png",
       "type": "image/png",
       "sizes": "512x512"
     },
     {
-      "src": "assets/images/logo_rounded.png",
+      "src": "static/media/logo_rounded.png",
       "type": "image/png",
       "sizes": "1024x1024"
     }
   ],
-  "start_url": ".",
   "display": "standalone",
   "theme_color": "#000000",
   "background_color": "#FFFFFF"

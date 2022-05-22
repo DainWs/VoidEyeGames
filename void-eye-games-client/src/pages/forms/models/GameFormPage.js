@@ -212,7 +212,7 @@ class GameFormPage extends ModelFormPage {
 
     let destination = DESTINATION_GAMES;
     if (game.id && game.id !== -1) {
-        destination = DESTINATION_GAMES_UPDATE;
+      destination = DESTINATION_GAMES_UPDATE;
     }
 
     SocketController.sendCustomWithCallback(
@@ -280,7 +280,7 @@ class GameFormPage extends ModelFormPage {
             <h1 className='text-center'>Games Form</h1>
           </header>
           <form className='row w-100 m-0'>
-            <section className='col-12 mb-3'>
+            <section className='col-12 mb-3 p-0 px-lg-3'>
               <label htmlFor='selected-game-form'>Editing:</label>
               <Select id='selected-game-form' className='flex-grow-1 p-0 pt-2 pt-sm-0' 
                 placeholder={this.state.game.name || 'New Game'}

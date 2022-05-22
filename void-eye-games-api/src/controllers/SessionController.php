@@ -106,4 +106,33 @@ class SessionController extends BaseController
         }
         return $this->createJsonResponseMessage($response);
     }
+
+    public function sendRecovery(Request $request, Response $response, array $args)
+    {
+        $this->logger->log("[POST] sendReport called.");
+        try {
+            $report = $request->getParsedBody()['data'] ?? null;
+            if (($report['email'] ?? null)==null) throw new AppException('The email is required.');
+            
+            $record = $this->atlas->select(User::class, ['email' => $report['email']])->fetchRecord();
+            
+            if ($record == null) throw new AppException('No user with this email was found.');
+
+            $newPassword = bin2hex(openssl_random_pseudo_bytes(6));
+            $record->password = md5($newPassword);
+
+            $this->atlas->beginTransaction();
+            $this->atlas->persist($record);
+            $this->atlas->commit();
+
+            $mailSender = new EmailManager();
+            $mailSender->sendRecovery($record->email, $newPassword);
+            $this->logger->log("[POST] sendRecovery was successfully. object : " . json_encode($report));
+        } catch(AppException $ex) {
+            $this->processException($ex);
+        } catch (Exception $ex) {
+            $this->tryItMoreLater($ex);
+        }
+        return $this->createJsonResponseMessage($response);
+    }
 }

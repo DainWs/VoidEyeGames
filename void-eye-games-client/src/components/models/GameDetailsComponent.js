@@ -93,7 +93,7 @@ class GameDetailsComponent extends React.Component {
             <div className='d-md-flex justify-content-center'>
                 <article className='game-details m-lg-3 w-100'>
                     <header className='w-100'>
-                        <h1 className='w-100'>{this.state.game.name || <Skeleton />}</h1>
+                        <h1 className='w-100 pl-2 pl-lg-0'>{this.state.game.name || <Skeleton />}</h1>
                     </header>
                     
                     <section className='details--header row p-0 m-0 my-sm-3'>
@@ -217,7 +217,7 @@ class GameDetailsComponent extends React.Component {
                 </div>
                 <div style={{ flexGrow: 1 }}>
                     <h5 className='pb-3'>{comment.users.name}</h5>
-                    <p className='border border-black rounded p-2 m-0'>{comment.description}</p>
+                    <p className='border border-black rounded p-2 m-0' style={{wordWrap: 'anywhere'}}>{comment.description}</p>
                 </div>
             </div>
         );

@@ -19,6 +19,9 @@ USE void_eye_games;
 SELECT * FROM users;
 
 USE void_eye_games;
+SELECT * FROM medias;
+
+USE void_eye_games;
 SELECT * FROM categories;
 SELECT * FROM categories_games;
 

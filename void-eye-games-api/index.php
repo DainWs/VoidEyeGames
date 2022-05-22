@@ -1,6 +1,7 @@
 <?php
 use Slim\Http\Request;
 use Slim\Http\Response;
+use src\domain\dto\HealthStatus;
 use src\domain\dto\JsonResponse;
 use src\domain\middlewares\AuthMiddleware;
 use src\domain\middlewares\HeadersMiddleware;
@@ -23,10 +24,8 @@ $app = new Slim\App($container);
 $app->add(new HeadersMiddleware());
 
 /*==== REQUESTS ====*/
-$app->post('/', function(Request $request, Response $response, array $args) {
-    $jsonResponse = new JsonResponse(404, $request->getParsedBody());
-    return $response->withJson($jsonResponse, 404);
-});
+$app->get('/', 'src\controllers\HealthController:health');
+$app->get('/health', 'src\controllers\HealthController:health');
 
 $app->post('/signIn', 'src\controllers\SessionController:signIn');
 $app->post('/logIn', 'src\controllers\SessionController:logIn');
@@ -80,6 +79,7 @@ $app->post('/comment', 'src\controllers\InsertController:addComment')->add(new A
 
 // Send Reports
 $app->post('/report', 'src\controllers\SessionController:sendReport');
+$app->post('/recovery', 'src\controllers\SessionController:sendRecovery');
 
 $container = $app->getContainer();
 DatabaseProvider::newInstance($container);

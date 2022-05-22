@@ -49,7 +49,7 @@ class ReportFormPage extends React.Component {
   }
 
   onChangeTerms(event) {
-    this.setState({terms: event.target.value});
+    this.setState({terms: !(event.target.value == 'true')});
   }
 
   cancel() {
@@ -103,11 +103,12 @@ class ReportFormPage extends React.Component {
       emailConfirmation: emailConfirmation,
       terms: terms
     }));
+    
     request.setMethod('POST');
     SocketController.sendCustomWithCallback( request, DESTINATION_REPORT, this.onSuccess.bind(this));
   }
 
-  onSuccess() {
+  onSuccess(response) {
     if (response.data.status !== 200) {
       this.onFailed(response);
       return;
@@ -154,7 +155,7 @@ class ReportFormPage extends React.Component {
           <section className='py-2 required'>
             <label className='check-form ml-3' htmlFor='report-form--terms'>
               Accept terms and conditions.
-              <input id='report-form--terms' type='checkbox' value={this.state.terms} onChange={this.onChangeTerms.bind(this)}/>
+              <input id='report-form--terms' type='checkbox' value={this.state.terms} checked={this.state.terms} onChange={this.onChangeTerms.bind(this)}/>
               <span className="checkmark"></span>
             </label>
           </section>

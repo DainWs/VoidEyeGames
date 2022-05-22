@@ -1,3 +1,5 @@
+Header set Access-Control-Allow-Origin "*"
+
 # App Enviroment Variables
 <IfModule mod_env.c>
     #The domain/IP of the database
@@ -12,6 +14,8 @@
     #The password of the database
     SetEnv DB_PASSWORD 'void_eye_games'
 </IfModule>
+
+RedirectMatch "^/VoidEyeGames/void-eye-games-api/(?!recovery|health|assets|index\.php|signIn|logIn|games?|category|categories|plataforms?|comment|report).*" /VoidEyeGames/void-eye-games-api/index.php
 
 # Rute rule rewrite
 <IfModule mod_rewrite.c>

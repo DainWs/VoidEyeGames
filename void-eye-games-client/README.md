@@ -24,7 +24,7 @@ Final project for 2ºDAW, its a website is intended for support in the search fo
     - [X] Report form navigation button
 - [X] Report Form View
 - [X] Login Form View
-    - [ ] [Optional] Recovery password
+    - [X] [Optional] Recovery password
 - [X] Signin Form View
 
 - [X] **Admin** Game Form View

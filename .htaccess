@@ -1,2 +1,5 @@
+Header set Access-Control-Allow-Origin "*"
 RedirectMatch "^/VoidEyeGames/[Aa][Pp][Ii]/?(.*)$" /VoidEyeGames/void-eye-games-api/$1
-RedirectMatch "^/VoidEyeGames/(?!void-eye-games-api|void-eye-games-client)/?(.*)" /VoidEyeGames/void-eye-games-client/build/$1
+RedirectMatch "^/VoidEyeGames/(?!void-eye-games-api|public)/?(.*)" /VoidEyeGames/public/$1
+RedirectMatch "^/VoidEyeGames/public/(?!index\.html|manifest\.json|robots\.txt|static|asset-manifest\.json)/?(.*)" /VoidEyeGames/public/index.html
+
