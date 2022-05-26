@@ -1,16 +1,14 @@
 # Void Eye Game
-![License](https://img.shields.io/static/v1?label=License&message=MIT&color=green)
-![License](https://img.shields.io/static/v1?label=Tags&message=1.0.1&color=yellow)
+![License](https://img.shields.io/static/v1?label=License&message=MIT&color=green) ![License](https://img.shields.io/static/v1?label=Tags&message=1.0.1&color=yellow)
 
 **Author:** Jose Antonio Duarte Perez
 
 ## Description
 Final project for 2ºDAW, its a website is intended for support in the search for the best offers and alternatives when buying video games. In addition, together with the detailed description of the video games that will be made through videos and images, you will find the different links to purchase websites and a series of comments written by users. They will also be able to report bugs to developers and view the location of our company on a map. In short, a page that helps customers to see on which page it is sold at the best price and the different prices at the time to buy video games. **Remember that games cannot be purchased on this page, since its purpose is consultation, and not the purchase of video games.**
 
-For this purpose, we use an API and a CLIENT application, you can find **Users Manual** in the following links.
+For this purpose, we use API and the Web Client, you can find **Users Manual** in the following links.
 
-[![License](https://img.shields.io/static/v1?label=See&message=API&color=informational&style=for-the-badge)](void-eye-games-api)
-[![License](https://img.shields.io/static/v1?label=See&message=Client%20App&color=informational&style=for-the-badge)](void-eye-games-client)
+[![API](https://img.shields.io/static/v1?label=See&message=API&color=informational&style=for-the-badge)](void-eye-games-api) [![Web Client](https://img.shields.io/static/v1?label=See&message=Web%20Client&color=informational&style=for-the-badge)](void-eye-games-client)
 
 ## Installation
 For installation steps see the [INSTALLATION.md](INSTALLATION.md) or in the following link:
@@ -32,7 +30,9 @@ For installation steps see the [INSTALLATION.md](INSTALLATION.md) or in the foll
 5. Games are updated and added through the **Administrator user**, while that **logged in users** can *make comments* about their experience in the game.
 6. Data **consultation and updating** is done **manually**, through pages only accessible by the **Administrator user**.
 
+## User manuals
+We have user manuals for both the API and the Web Client:<br/> [![API](https://img.shields.io/static/v1?label=See&message=API&color=informational&style=for-the-badge)](void-eye-games-api) [![Web Client](https://img.shields.io/static/v1?label=See&message=Web%20Client&color=informational&style=for-the-badge)](void-eye-games-client)
+
 ## Tools
 
-![Visual Studio Code](https://img.shields.io/static/v1?label=IDE&message=Visual%20Studio%20Code&color=034987)
-![Github](https://img.shields.io/static/v1?label=Version%20control&message=Github&color=24292f)
+![Visual Studio Code](https://img.shields.io/static/v1?label=IDE&message=Visual%20Studio%20Code&color=034987) ![Github](https://img.shields.io/static/v1?label=Version%20control&message=Github&color=24292f) ![Boostrap](https://img.shields.io/static/v1?label=Styles&message=Boostrap&color=4c0bce) ![Sass](https://img.shields.io/static/v1?label=Styles&message=Sass&color=ea7afb) ![Fontawesome](https://img.shields.io/static/v1?label=Styles&message=Fontawesome&color=74c0fc) ![NodeJS](https://img.shields.io/static/v1?label=Client%20Runtime%20Environment&message=NodeJS&color=039f00) ![Composer](https://img.shields.io/static/v1?label=API%20Runtime%20Environment&message=Composer&color=e77922) ![Client Framework](https://img.shields.io/static/v1?label=Client%20Framework&message=React&color=25dfca) ![API Framework](https://img.shields.io/static/v1?label=API%20Framework&message=Slim%20Framework&color=719E40)
