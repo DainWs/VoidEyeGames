@@ -60,7 +60,7 @@ class LayoutPage extends React.Component {
         <FooterComponent/>
 
         <a className="to-top-btn position-fixed p-right-bottom-1 d-flex align-items-center justify-content-center bg-secondary rounded-circle" 
-          style={{minWidth: '50px', minHeight: '50px', width: '3vw', height: '3vw', zIndex: '200'}} 
+          style={{minWidth: '50px', minHeight: '50px', width: '3vw', height: '3vw', zIndex: '200', cursor: "pointer"}} 
           onClick={this.toTopOfView}>
           <FontAwesomeIcon icon={faAngleUp} style={{ width: '50%', height: '50%' }} />
         </a>

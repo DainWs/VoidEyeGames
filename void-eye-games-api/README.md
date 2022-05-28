@@ -90,6 +90,8 @@ Here you have a example with all params in true:
 }
 ```
 
+<hr/>
+
 ### Session system
 Used for **login/signin** action and for credetials check.<br/>
 To prevent unidentified users from accessing certain services, a credentials object is required to identify you for said action, the middleware will check if said credentials are valid.
@@ -129,6 +131,8 @@ But for signin request, you have to send the followed JSON to the `/signin` url 
     "terms": true
 }
 ```
+
+<hr/>
 
 ### Data System
 For each type of object **[games, categories, platforms and comments]** *similar requests* will be sent to their respective *directories*, in case of being about only 1 object, the directory will be in **singular**, in case of being about several, the directory will be in **plural**, for example:
@@ -260,6 +264,8 @@ This section is to show a **example of object type data** as **json object**
 }
 ```
 
+<hr/>
+
 ### Others
 In this *Others* section, you can find the supports requests, like **password recovery** and **bug reports**.
 
@@ -287,6 +293,8 @@ To report a bug, you will have to send a **POST** request to `/report`, The requ
     }
 }
 ```
+
+<hr/>
 
 ### Paths map
 A map of all the paths in which you can make requests.
