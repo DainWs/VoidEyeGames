@@ -14,6 +14,9 @@ use src\domain\exceptions\AppException;
 use src\libraries\EmailManager;
 use src\validators\SignUserValidator;
 
+/**
+ * Used to manage the Session and Others operations request
+ */
 class SessionController extends BaseController
 {
     public function __construct() {

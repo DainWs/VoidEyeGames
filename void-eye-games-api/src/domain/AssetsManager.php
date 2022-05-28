@@ -4,6 +4,9 @@ namespace src\domain;
 
 use src\libraries\LogManager;
 
+/**
+ * Used for images/video management.
+ */
 class AssetsManager {
 
     private static ?AssetsManager $instance = null;
@@ -21,9 +24,11 @@ class AssetsManager {
         $this->logger = new LogManager(AssetsManager::class);
     }
     
-    public function writeAssets($path, $filename, $src) {
-        $this->logger->log($path);
-        $this->logger->log(!is_writable($path));
+    /**
+     * Write image/video src into a file in the assets folder.
+     */
+    public function writeAssets($path, $filename, $src): void {
+        $this->logger->log("File $path/$filename will/has change.");
         if (!is_writable($path)) {
             chmod($path, 0777);
         }

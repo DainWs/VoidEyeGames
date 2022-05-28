@@ -12,6 +12,9 @@ use classes\Plataform\Plataform;
 use classes\CategoriesGame\CategoriesGame;
 use classes\PlataformsGame\PlataformsGame;
 
+/**
+ * Used to manage the select data operations request
+ */
 class SelectController extends BaseController
 {
     private const ORDER_METHODS = [
