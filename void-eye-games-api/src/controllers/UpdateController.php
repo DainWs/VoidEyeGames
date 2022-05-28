@@ -13,6 +13,9 @@ use classes\Game\GameRecord;
 use classes\Plataform\PlataformRecord;
 use src\domain\exceptions\AppException;
 
+/**
+ * Used to manage the update data operations request
+ */
 class UpdateController extends BaseController
 {
     public function __construct() {

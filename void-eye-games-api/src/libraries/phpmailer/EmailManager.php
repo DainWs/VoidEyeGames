@@ -5,7 +5,7 @@ namespace src\libraries;
 use Exception;
 use Monolog\Logger;
 use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\SMTP;
+use src\domain\exceptions\AppException;
 
 /**
  * This class manage the send email task
@@ -46,28 +46,31 @@ class EmailManager {
     public function check(): bool
     {
         $result = false;
-        $smtp = new SMTP();
+        $smtp = null;
         try {
-            if (!$smtp->connect(SELF::SMTP_HOST, SELF::SMTP_PORT)) {
-                throw new Exception('Connect failed');
+            if (!$this->mailer->smtpConnect()) {
+                throw new AppException('Connect failed');
             }
 
+            $smtp = $this->mailer->getSMTPInstance();
             if (!$smtp->hello(gethostname())) {
-                throw new Exception('EHLO failed: ' . $smtp->getError()['error']);
+                throw new AppException('EHLO failed: ' . $smtp->getError()['error']);
             }
-            
-            $username = base64_decode(SELF::USER_EMAIL);
-            $secret = base64_decode(SELF::USER_PASSWORD);
-            if ($smtp->authenticate($username, $secret)) {
-                $result = true;
-            }
+
+            $result = true;
         } catch (Exception $ex) {
             $this->logger->log("[Error] SMTP: ".$ex->getMessage(), Logger::WARNING);
         }
-        $smtp->quit();
+        if ($smtp) {
+            $smtp->quit();
+        }
         return $result;
     }
 
+    /**
+     * Sends a bug report
+     * @param $report is the report DTO object represented as a Array
+     */
     public function send($report): void  {
         try {
             $selectedReason = $report['reason'];
@@ -92,6 +95,11 @@ class EmailManager {
         }
     }
 
+    /**
+     * Send the recovery password email, to the specific email.
+     * @param String $email the destination mail.
+     * @param String $newPassword the new password.
+     */
     public function sendRecovery($email, $newPassword): void  {
         try {
             $this->logger->log("Send recovery.");

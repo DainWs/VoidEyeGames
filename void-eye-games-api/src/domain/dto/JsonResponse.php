@@ -2,6 +2,9 @@
 
 namespace src\domain\dto;
 
+/**
+ * This class represents the JSON Response DTO object.
+ */
 class JsonResponse {
     public $status;
     public $body;

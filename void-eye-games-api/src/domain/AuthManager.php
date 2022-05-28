@@ -7,6 +7,10 @@ use Monolog\Logger;
 use src\domain\dto\Credentials;
 use src\libraries\LogManager;
 
+/**
+ * Used to manage and validate the credentials of logged in users.
+ * Mostly used by AuthMiddleware
+ */
 class AuthManager {
     private LogManager $logger;
 
@@ -61,6 +65,7 @@ class AuthManager {
             $cachedCredentials = $this->search($credentials->user);
             if ($cachedCredentials == null) return false;
             if ($cachedCredentials->hasExpired()) return false;
+            if ($cachedCredentials->getAccountType() !== $credentials->getAccountType()) return false;
             return ($cachedCredentials->getToken() === $credentials->getToken());
         } catch(Exception $ex) {
             $this->logger->log('Error validating credentials, the credentials Object is '.json_encode($credentials).', the erro message is: '.$ex->getMessage(), Logger::WARNING);
@@ -73,7 +78,7 @@ class AuthManager {
      * @param String $username the username with which the credentials will be identified
      * @return Credentials if the user credentials was found, null otherwise
      */
-    private function search(String $username) {
+    public function search(String $username) {
         $this->logger->log("Get saved credentials.", Logger::INFO);
         $fileContentText = file_get_contents($this->getFile());
         $filecontent = json_decode($fileContentText, true);

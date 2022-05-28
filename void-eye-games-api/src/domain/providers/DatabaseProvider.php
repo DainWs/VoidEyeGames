@@ -3,6 +3,9 @@ namespace src\domain\providers;
 
 use PDO;
 
+/**
+ * Creates and provide the PDO instance.
+ */
 class DatabaseProvider {
     private static ?PDO $instance = null;
 

@@ -6,6 +6,9 @@ use Exception;
 use InvalidArgumentException;
 use Monolog\Logger;
 
+/**
+ * A validator class for login cases of user objects
+ */
 class LogUserValidator extends UserValidator {
     public function __construct() {
         parent::__construct();

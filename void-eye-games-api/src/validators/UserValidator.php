@@ -6,6 +6,9 @@ use Exception;
 use InvalidArgumentException;
 use Monolog\Logger;
 
+/**
+ * A validator class for user objects
+ */
 class UserValidator extends BaseValidator {
     protected Atlas $atlas;
     protected ValidationUtils $utils;

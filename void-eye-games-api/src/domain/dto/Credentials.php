@@ -2,6 +2,9 @@
 
 namespace src\domain\dto;
 
+/**
+ * This class represents the credentials DTO object.
+ */
 class Credentials {
     public string $user;
     public string $token;
