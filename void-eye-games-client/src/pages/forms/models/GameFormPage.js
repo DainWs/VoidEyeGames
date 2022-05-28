@@ -60,7 +60,6 @@ class GameFormPage extends ModelFormPage {
   //---------------------------------------------------------------------------------------------
 
   onChangeSelectedCategory(event) {
-    console.log(event);
     this.setState({ selectedCategory: event.value });
   }
 
@@ -163,7 +162,6 @@ class GameFormPage extends ModelFormPage {
         media.mediaType = image.type;
         media.src = reader.result;
 
-        console.log(media);
         this.setState({ mainImage: media });
       }.bind(this);
     }
@@ -223,17 +221,20 @@ class GameFormPage extends ModelFormPage {
   }
 
   onSuccess(response) {
-    if (response.data.status !== 200) {
+    if (response.data.status != 200) {
       this.onFailed(response);
       return;
     }
     this.requestListedGames();
-    this.setState({game: new Game(), errors: null});
-    this.navigate('/admin/game', {replace: true});
+    this.setState({game: new Game(), medias: [], mainImage: {}, mode: MODEL_FORM_MODE_NEW, errors: null});
   }
 
   onFailed(response) {
-    this.setState({ errors: response.data.body });
+    let responseData = response.data;
+    if (responseData === undefined) {
+      responseData = {};
+    }
+    this.setState({ errors: responseData.body });
   }
 
   componentDidMount() {
@@ -271,7 +272,6 @@ class GameFormPage extends ModelFormPage {
 
   render() {
     SessionManager.reload();
-    console.log(this.state.medias);
     return (
       <section className='row h-100 p-3 p-lg-0 m-0'>
         {this.checkSession()}
@@ -375,7 +375,6 @@ class GameFormPage extends ModelFormPage {
   }
 
   getCategoriesList() {
-    console.log(this.state.game);
     if ( !this.state.game || !this.state.game.categories ) return [];
     let categoriesList = [];
     for (const category of this.state.game.categories) {
@@ -386,7 +385,6 @@ class GameFormPage extends ModelFormPage {
   }
 
   getMediasList() {
-    console.log(this.state.game);
     if ( !this.state.game || !this.state.game.medias ) return [];
     let mediasList = [];
     for (const media of this.state.medias) {

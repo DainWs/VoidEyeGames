@@ -13,6 +13,9 @@ use classes\Game\GameRecord;
 use classes\Plataform\PlataformRecord;
 use src\domain\exceptions\AppException;
 
+/**
+ * Used to manage the update data operations request
+ */
 class UpdateController extends BaseController
 {
     public function __construct() {
@@ -39,9 +42,13 @@ class UpdateController extends BaseController
             $this->atlas->commit();
             
             $mainImage = $game['mainImage'] ?? null;
-            if ($mainImage !== null && $mainImage['src'] !== null) {
-                $recordid = $record->id;
-                $this->uploadImage($mainImage['src'], "game-$recordid.png", 'games');
+            $src = $mainImage['src'] ?? null;
+            $mediaType = $mainImage['mediaType'] ?? null;
+            if ($mainImage !== null && $src !== null && $mediaType !== null) {
+                if (preg_match('/.*image.*/', $mediaType) ) {
+                    $recordid = $record->id;
+                    $this->uploadImage($src, "game-$recordid.png", 'games');
+                }
             }
             $this->logger->log("[POST] updateGame was successfully. object : " . json_encode($record->jsonSerialize()));
         } catch (AppException $ex) {
@@ -104,9 +111,13 @@ class UpdateController extends BaseController
             $this->atlas->commit();
             
             $mainImage = $game['mainImage'] ?? null;
-            if ($mainImage !== null && $mainImage['src'] !== null) {
-                $recordid = $record->id;
-                $this->uploadImage($mainImage['src'], "plataform-$recordid.png", 'plataforms');
+            $src = $mainImage['src'] ?? null;
+            $mediaType = $mainImage['mediaType'] ?? null;
+            if ($mainImage !== null && $src !== null && $mediaType !== null) {
+                if (preg_match('/.*image.*/', $mediaType) ) {
+                    $recordid = $record->id;
+                    $this->uploadImage($src, "plataform-$recordid.png", 'plataforms');
+                }
             }
             $this->logger->log("[POST] updatePlataform was successfully. object : " . json_encode($record->jsonSerialize()));
         } catch (AppException $ex) {

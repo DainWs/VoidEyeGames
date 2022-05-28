@@ -1,77 +1,40 @@
 # Void Eye Game
+![License](https://img.shields.io/static/v1?label=License&message=MIT&color=green) ![License](https://img.shields.io/static/v1?label=Tags&message=1.0.1&color=yellow)
+
 **Author:** Jose Antonio Duarte Perez
 
-## Installation
-Descargate la rama `Responsive-Plan`, y en un servidor web, colocas los archivos, por ejemplo, la ruta de los archivos en xampp estaria en: `C:/xampp/htdocs/VoidEyeGames/`, en esta rama es importante mantener esta ruta, 
-
-### Database
-En tu base de datos, (en local) procedemos a la ejecución de los 
-siguientes archivos en el orden indicado:
-- sql/SQLSentences.sql
-- sql/SQLMyUser.sql
-- sql/SQLInserts.sql
-para comprobar que todo fue correctamente, ejecute `sql/SQLQueries.sql`.
-
-### Dependencias
-**¡¡IMPORTANTE!! Tener instalado NodeJs y Composer**
-Ejecutamos la siguiente secuencia de comandos desde la terminal estando situados en `C:/xampp/htdocs/VoidEyeGames/`:
-- npm install
-- cd void-eye-games-api
-- composer install
-- cd ../void-eye-games-client
-- npm install
-
-### Ejecución
-#### API
-Ejecuta el servicio **web** y **base de datos**, si al acceder a `http://localhost/VoidEyeGames/void-eye-games-api/` te salta un `Method not allowed` se instalo correctamente la API del proyecto.
-
-#### Client
-Muevase desde la terminal al directorio `C:/xampp/htdocs/VoidEyeGames/void-eye-games-client/` y ejecute `npm run web` y cuando acabe de cargar, y salgan algunas opciones, pulsa **R** en el teclado (la opcion de refresh), a continuacion se abrira una pagina web. (el usuario administrador de la web es 'admin' y password 'prueba').
-
-### Solucion de errores de la instalacion
-Si encuentra algun error, comentelo para poder solucionarlo.
+You can see the full **User manual** and recommended one, [here](./docs/manuals/UserManual.md)
 
 ## Description
-Final project for 2ºDAW, its a website is intended for support in the search for the best offers and alternatives when buying video games. In addition, together with the detailed description of the video games that will be made through videos and images, you will find the different links to purchase websites and a series of comments written by users. They will also be able to report bugs to developers and view the location of our company on a map. In short, a page that helps customers to see on which page it is sold at the best price and the different prices at the time to buy video games.
+Final project for 2ºDAW, its a website is intended for support in the search for the best offers and alternatives when buying video games. In addition, together with the detailed description of the video games that will be made through videos and images, you will find the different links to purchase websites and a series of comments written by users. They will also be able to report bugs to developers and view the location of our company on a map. In short, a page that helps customers to see on which page it is sold at the best price and the different prices at the time to buy video games. **Remember that games cannot be purchased on this page, since its purpose is consultation, and not the purchase of video games.**
 
-## Requirements
-### Views
-- [X] Home View
-    - [X] Slider
-    - [X] News
-- [X] Games View
-    - [X] Order By {Name, Price, Plataform}
-    - [X] Categories Filtre
-    - [X] Plataforms Filtre
-- [X] Games Details View
-    - [X] Galery
-    - [X] Best plataforms to buy
-    - [X] A description
-    - [X] User comments
-        - [X] Logged user can add Comments
-- [X] Support View
-    - [X] GeoLocation
-    - [X] Report form navigation button
-- [X] Report Form View
-- [X] Login Form View
-    - [X] [Optional] Recovery password
-- [X] Signin Form View
+For this purpose, we use API and the Web Client, you can find **Users Manual** in the following links.
 
-- [X] **Admin** Game Form View
-    - [X] A list of games to select which one do you want to edit
-    - [X] Add games.
-    - [X] Add categories to game.
-    - [X] Add images to game.
-    - [X] Edit Games
-- [X] **Admin** Plataform Form View
-    - [X] A list of Plataforms to select which one do you want to edit
-    - [X] Add Plataforms.
-    - [X] Add games to plataform with prices and discount of the plataform.
-    - [X] Edit plataforms
-- [X] **Admin** Categories Form View
-    - [X] A list of categories to select which one do you want to edit
-    - [X] Add category.
-    - [X] Add games to category.
-    - [X] Edit categories
+[![API](https://img.shields.io/static/v1?label=See&message=API&color=informational&style=for-the-badge)](void-eye-games-api) [![Web Client](https://img.shields.io/static/v1?label=See&message=Web%20Client&color=informational&style=for-the-badge)](void-eye-games-client)
 
-- [ ] Poner la app en producción.
+## Installation
+For installation steps see the [INSTALLATION.md](INSTALLATION.md) or in the following link:
+
+[![License](https://img.shields.io/static/v1?label=Review&message=Installation&color=orange&style=for-the-badge)](INSTALLATION.md)
+
+## Goals
+1. That the **users** can *compare the price of video games on each platform (including discounts)* and *select the one that sells it at the best price to buy*.
+2. That the **users** can *consult the details in more depth about a game*, i mean, a *description*, a *series of images/videos/trailers* and *the opinion of the users* about the game.
+3. That the **users** that is previously **logged in/registered**, can comment on their experience in the game.
+4. If a **user** find **a wrong price/bug/error** on our page, whether *you are registered or not*, be able to *inform us* and *help us* **improve** the page, through an *error reporting form*.
+5. That the **users** of our page can *find* their game as quickly as possible.
+
+## Specifications
+1. The application has an **API**, and can be accessed through a **Web Client**.
+2. The **API** is made with **[PHP](https://www.php.net/)** (with **[Slim Framework](https://www.slimframework.com/)**).
+3. The **Web Client** is made with **[NodeJS](https://nodejs.org/es/)** (with **[React](https://es.reactjs.org/)**).
+4. The layout of the page is made with **[Bootstrap](https://getbootstrap.com/)** (and therefore **[Sass](https://sass-lang.com/)**) and with **[Fontawesome](https://fontawesome.com/)**.
+5. Games are updated and added through the **Administrator user**, while that **logged in users** can *make comments* about their experience in the game.
+6. Data **consultation and updating** is done **manually**, through pages only accessible by the **Administrator user**.
+
+## User manuals
+We have user manuals for both the API and the Web Client:<br/> [![API](https://img.shields.io/static/v1?label=See&message=API&color=informational&style=for-the-badge)](void-eye-games-api) [![Web Client](https://img.shields.io/static/v1?label=See&message=Web%20Client&color=informational&style=for-the-badge)](void-eye-games-client)
+
+## Tools
+
+![Visual Studio Code](https://img.shields.io/static/v1?label=IDE&message=Visual%20Studio%20Code&color=034987) ![Github](https://img.shields.io/static/v1?label=Version%20control&message=Github&color=24292f) ![Boostrap](https://img.shields.io/static/v1?label=Styles&message=Boostrap&color=4c0bce) ![Sass](https://img.shields.io/static/v1?label=Styles&message=Sass&color=ea7afb) ![Fontawesome](https://img.shields.io/static/v1?label=Styles&message=Fontawesome&color=74c0fc) ![NodeJS](https://img.shields.io/static/v1?label=Client%20Runtime%20Environment&message=NodeJS&color=039f00) ![Composer](https://img.shields.io/static/v1?label=API%20Runtime%20Environment&message=Composer&color=e77922) ![Client Framework](https://img.shields.io/static/v1?label=Client%20Framework&message=React&color=25dfca) ![API Framework](https://img.shields.io/static/v1?label=API%20Framework&message=Slim%20Framework&color=719E40)

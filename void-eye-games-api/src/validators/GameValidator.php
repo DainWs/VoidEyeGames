@@ -7,6 +7,9 @@ use Exception;
 use InvalidArgumentException;
 use Monolog\Logger;
 
+/**
+ * A validator class for game objects
+ */
 class GameValidator extends BaseValidator {
     protected Atlas $atlas;
     protected ValidationUtils $utils;

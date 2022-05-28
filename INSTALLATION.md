@@ -1,32 +1,28 @@
-# Void Eye Game
-**Author:** Jose Antonio Duarte Perez
+# Installation
+Download this repository and mount it on a web server, to give you an idea of ​​how the repository should be located, here would be the repository on a XAMPP server: `C:/xampp/htdocs/VoidEyeGames/`, leaving this file located (`INSTALLATION.md`) in the `VoidEyeGames` folder along with the rest of the files.
 
-## Installation
-Descargate la rama `Responsive-Plan`, y en un servidor web, colocas los archivos, por ejemplo, la ruta de los archivos en xampp estaria en: `C:/xampp/htdocs/VoidEyeGames/`, en esta rama es importante mantener esta ruta, 
+## Database
+In your database, (in local) we proceed to the execution of the
+following files in the order listed:
+1. sql/SQLSentences.sql
+2. sql/SQLMyUser.sql
+3. sql/SQLInserts.sql
+to check that everything went correctly, run `sql/SQLQueries.sql`.
 
-### Database
-En tu base de datos, (en local) procedemos a la ejecución de los 
-siguientes archivos en el orden indicado:
-- sql/SQLSentences.sql
-- sql/SQLMyUser.sql
-- sql/SQLInserts.sql
-para comprobar que todo fue correctamente, ejecute `sql/SQLQueries.sql`.
+## Dependencies
+**IMPORTANT!! Have NodeJs and Composer installed**
+We execute the following commands from the terminal being located in `C:/xampp/htdocs/VoidEyeGames/` execute the command `npm run install` or `npm run deploy`.
 
-### Dependencias
-**¡¡IMPORTANTE!! Tener instalado NodeJs y Composer**
-Ejecutamos la siguiente secuencia de comandos desde la terminal estando situados en `C:/xampp/htdocs/VoidEyeGames/`:
-- npm install
-- cd void-eye-games-api
-- composer install
-- cd ../void-eye-games-client
-- npm install
+## Execution
+### API
+Run the **web** service and **database**, if when accessing `http://localhost/VoidEyeGames/void-eye-games-api/` you get this:
+```json
+{"status": "UP"}
+```
+Then the API was installed correctly.
 
-### Ejecución
-#### API
-Ejecuta el servicio web y de base de datos, si al acceder a `http://localhost/VoidEyeGames/void-eye-games-api/` te salta un `Method not allowed` se instalo correctamente la API del proyecto.
+### Client
+Move from the terminal to the `C:/xampp/htdocs/VoidEyeGames/` directory and run `npm run start` command, when finished, then you can access from the browser to `localhost:8080/VoidEyeGames/`.
 
-#### Client
-Muevase desde la terminal al directorio `C:/xampp/htdocs/VoidEyeGames/void-eye-games-client/` y ejecute `npm run web` y cuando acabe de cargar, y salgan algunas opciones, pulsa **R** en el teclado (la opcion de refresh), a continuacion se abrira una pagina web. (el usuario administrador de la web es 'admin' y password 'prueba').
-
-### Solucion de errores de la instalacion
-Si encuentra algun error, comentelo para poder solucionarlo.
+## Solucion de errores de la instalacion
+If you find any error, comment it to me so we can fix it.

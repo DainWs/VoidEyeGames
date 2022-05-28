@@ -2,12 +2,15 @@
 
 namespace src\domain\dto\health;
 
+/**
+ * This object represents a Health Component DTO
+ */
 class HealthComponent {
     public $status;
     public $details;
 
     /**
-     * @param $status
+     * @param String $status 'UP' or 'DOWN', defaults is 'UP'
      */
     public function __construct($status = 'UP') {
         $this->status = $status;

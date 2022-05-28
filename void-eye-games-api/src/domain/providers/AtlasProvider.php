@@ -4,6 +4,9 @@ namespace src\domain\providers;
 use Atlas\Orm\Atlas;
 use Atlas\Orm\AtlasBuilder;
 
+/**
+ * Creates and provide the Atlas instance.
+ */
 class AtlasProvider {
 
     private static ?Atlas $instance = null;

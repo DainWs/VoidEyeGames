@@ -5,6 +5,9 @@ use classes\User\User;
 use Exception;
 use Monolog\Logger;
 
+/**
+ * A validator class for sign case of user objects
+ */
 class SignUserValidator extends UserValidator {
     public function __construct() {
         parent::__construct();

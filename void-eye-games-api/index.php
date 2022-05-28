@@ -1,8 +1,4 @@
 <?php
-use Slim\Http\Request;
-use Slim\Http\Response;
-use src\domain\dto\HealthStatus;
-use src\domain\dto\JsonResponse;
 use src\domain\middlewares\AuthMiddleware;
 use src\domain\middlewares\HeadersMiddleware;
 use src\domain\providers\AtlasProvider;
@@ -24,6 +20,11 @@ $app = new Slim\App($container);
 $app->add(new HeadersMiddleware());
 
 /*==== REQUESTS ====*/
+/**
+ * The url param {showComponents} is used to request components states. (boolean)
+ * The url param {showLibraries} is used to request libraries states. (boolean)
+ * The url param {showDetails} is used to request details. (boolean)
+ */
 $app->get('/', 'src\controllers\HealthController:health');
 $app->get('/health', 'src\controllers\HealthController:health');
 
@@ -32,6 +33,9 @@ $app->post('/logIn', 'src\controllers\SessionController:logIn');
 
 // Games
 $app->group('/game', function () use ($app) {
+    /**
+     * The url param {id} is the game id.
+     */
     $app->get('', 'src\controllers\SelectController:getGame');
     $app->post('', 'src\controllers\InsertController:addGame')->add(new AuthMiddleware());
     $app->post('/update', 'src\controllers\UpdateController:updateGame')->add(new AuthMiddleware());
@@ -52,6 +56,9 @@ $app->group('/game', function () use ($app) {
 
 // Categories
 $app->group('/category', function () use ($app) {
+    /**
+     * The url param {id} is the category id.
+     */
     $app->get('', 'src\controllers\SelectController:getCategory');
     $app->post('', 'src\controllers\InsertController:addCategory')->add(new AuthMiddleware());
     $app->post('/update', 'src\controllers\UpdateController:updateCategory')->add(new AuthMiddleware());

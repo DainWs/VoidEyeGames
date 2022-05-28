@@ -5,7 +5,12 @@
   "main": "index.js",
   "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "cd void-eye-games-client && npm run start && cd ..",
+    "build": "cd void-eye-games-client && npm run build && cd ..",
+    "deploy": "npm run install",
+    "install": "npm run install-api && npm run install-client",
+    "install-api": "cd void-eye-games-api && composer install && cd ..",
+    "install-client": "cd void-eye-games-client && npm install && cd .."
   },
   "keywords": [],
   "author": "Jose Antonio Duarte Perez",

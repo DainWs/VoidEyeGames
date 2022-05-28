@@ -1,53 +1,137 @@
-[![License](https://img.shields.io/static/v1?label=See&message=Readme&color=informational&style=for-the-badge)](../) [![License](https://img.shields.io/static/v1?label=See&message=Web%20Client&color=informational&style=for-the-badge)](../void-eye-games-client)
+# Void Eye Game
+**Author:** Jose Antonio Duarte Perez
 
-<style>
-hr {width:100%;}
-.center{width:100%;display:flex;align-items:center;justify-content:center;}
-</style>
+## Description
+Final project for 2ºDAW, its a website is intended for support in the search for the best offers and alternatives when buying video games. In addition, together with the detailed description of the video games that will be made through videos and images, you will find the different links to purchase websites and a series of comments written by users. They will also be able to report bugs to developers and view the location of our company on a map. In short, a page that helps customers to see on which page it is sold at the best price and the different prices at the time to buy video games. **Remember that games cannot be purchased on this page, since its purpose is consultation, and not the purchase of video games.**
 
-# Void Eye Game - Api
+## Installation
+Download this repository and mount it on a web server, to give you an idea of ​​how the repository should be located, here would be the repository on a XAMPP server: `C:/xampp/htdocs/VoidEyeGames/`, leaving this file located (`INSTALLATION.md`) in the `VoidEyeGames` folder along with the rest of the files.
+
+### Database
+In your database, (in local) we proceed to the execution of the
+following files in the order listed:
+1. sql/SQLSentences.sql
+2. sql/SQLMyUser.sql
+3. sql/SQLInserts.sql
+to check that everything went correctly, run `sql/SQLQueries.sql`.
+
+### Dependencies
+**IMPORTANT!! Have NodeJs and Composer installed**
+We execute the following commands from the terminal being located in `C:/xampp/htdocs/VoidEyeGames/` execute the command `npm run install` or `npm run deploy`.
+
+### Execution
+#### API
+Run the **web** service and **database**, if when accessing `http://localhost/VoidEyeGames/void-eye-games-api/` you get this:
+```json
+{"status": "UP"}
+```
+Then the API was installed correctly.
+
+#### Client
+Move from the terminal to the `C:/xampp/htdocs/VoidEyeGames/` directory and run `npm run start` command, when finished, then you can access from the browser to `localhost:8080/VoidEyeGames/`.
+
+### Solucion de errores de la instalacion
+If you find any error, comment it to me so we can fix it.
+
+## Goals
+1. That the **users** can *compare the price of video games on each platform (including discounts)* and *select the one that sells it at the best price to buy*.
+2. That the **users** can *consult the details in more depth about a game*, i mean, a *description*, a *series of images/videos/trailers* and *the opinion of the users* about the game.
+3. That the **users** that is previously **logged in/registered**, can comment on their experience in the game.
+4. If a **user** find **a wrong price/bug/error** on our page, whether *you are registered or not*, be able to *inform us* and *help us* **improve** the page, through an *error reporting form*.
+5. That the **users** of our page can *find* their game as quickly as possible.
+
+## Specifications
+1. The application has an **API**, and can be accessed through a **Web Client**.
+2. The **API** is made with **[PHP](https://www.php.net/)** (with **[Slim Framework](https://www.slimframework.com/)**).
+3. The **Web Client** is made with **[NodeJS](https://nodejs.org/es/)** (with **[React](https://es.reactjs.org/)**).
+4. The layout of the page is made with **[Bootstrap](https://getbootstrap.com/)** (and therefore **[Sass](https://sass-lang.com/)**) and with **[Fontawesome](https://fontawesome.com/)**.
+5. Games are updated and added through the **Administrator user**, while that **logged in users** can *make comments* about their experience in the game.
+6. Data **consultation and updating** is done **manually**, through pages only accessible by the **Administrator user**.
+
+## Void Eye Game - Client
+The client side application is the one that will be used by them, and the one that will query the data in the **server database through the API**, *repetitive requests are not a problem*, see [API](../void-eye-games-api) for more information.
+
+In this *Users manual* you will see some showcases of Web Client **usage** and a **description** *explaining features and tips* for each page.
+
+### Home page
+<img style="float: right;height:10rem;" src="./client/NoApiConnection.png"/>
+
+The *home page* is the **main page or entrance to our web client**, here you can find a **slider** of those games that have a *discount applied to certain platforms*, and a **news** section where you will find *the latest games added to the platform*.
+
+One *feature* of this page is that if you **cannot check the status/availability of the API**, a **modal dialog** will be displayed indicating that the API is currently unavailable, and it will not be possible to show you the games at that time.
+
+<hr/>
+
+### Games page
+In the *games page* you will find a **aside of filters** and a **section where the filtered games will be listed**, **<span style="color: red;">IMPORTANT!! games will not be filtered until you click the 'Filter' button</span>**, however, the **search box** *in the menu bar at the top of the page does filter in* **real time**, constantly sending requests to the server due to which requires fewer resources.
+
+The list of games is **paginated** and *12 games will be shown per page*, when you click **"show more"**, the following **12 games will be loaded**, the same thing happens in the case of *filters*, only these go from 5 to 5.
+
+<hr/>
+
+### Games details page
+This is the most important page, in this we can find the details of a game, in these details enter:
+- A gallery of medias (images and videos)
+- The best three platforms in which the game is sold, *if you click on any you will be redirected to the platform page*.
+- The description of the game.
+- A comment section for users to share their experience with the game, **<span style="color: red;">IMPORTANT! You can only comment if you are logged in</span>**, and you can do it directly from the game details page.
+
+<hr/>
+
+### Support page
+On the support page you can find out about who we are, how we work and where we are (thanks to a geolocation map), you can also access the error reporting form.
+
+<hr/>
+
+### Report form page
+From the error report form, *whether you are registered or not*, you can *inform us* and *help us* **improve** the page, reporting **inaccurate prices**, or **bugs**.
+
+<hr/>
+
+### Login form page
+On this page, you can **login**, or if **you don't have an account**, *you can access the page to register it*, you can also **recover your account password** on this page.
+
+<hr/>
+
+### Signin form page
+On this page you can **register your user account**, as long as there is not already *one with the same name/email*.
+
+<hr/>
+
+### Game form page _<span style="color: red;">Admin side</span>_
+**<span style="color: red;">IMPORTANT! to this page only can be accessed by admin users accounts.</span>**
+
+On this page, you can **add/edit** games, **add categories to them**, **define a cover/main image for the game**, and **add media to the gallery**. (you will **not be able to add the game to the platforms** from this page).
+
+<img style="float: right;height:10rem;" src="./client/HoverForImage.png"/>
+
+#### Tips
+On this page, you can find lists, if you **left or right click** on them, a **context menu will be displayed** that will *allow you to perform operations on these items*, in the case of **categories**, you can *delete* the category of this game, and in the case from the **gallery medias**, you can also *delete* them, **but in the case of images there is a special case, when you put the mouse over the item, the resource you have the mouse over will be shown (either image or video)**
+
+<hr/>
+
+### Plataform form page _<span style="color: red;">Admin side</span>_
+**<span style="color: red;">IMPORTANT! to this page only can be accessed by admin users accounts.</span>**
+
+On this page, you can create/edit platforms, and the games they sell on it, the platform will have a **(unique) name**, a **URL**, and an **image**, then it has a *list of games*, when you add a game, you can indicate its **price**, the **type of currency**, the **discount** in percentage (minimum 0, and max 1, 1 equals 100%) and finally, if the game is **currently for sale on that platform** (true or false).
+
+#### Tips
+In the *context menu of the items in the game list*, you will have **2 possible actions**, *delete* the game from the platform, or *edit* its features, in this way, we can edit the **price / type of currency / discount / if it is enabled in said platform**.
+
+<div class="center">
+    <img src="./client/GameItemContextMenu.png"/>
+</div>
+
+<hr/>
+
+### Categories form page _<span style="color: red;">Admin side</span>_
+**<span style="color: red;">IMPORTANT! to this page only can be accessed by admin users accounts.</span>**
+
+On this page, you can *create/edit* categories, the categories only require a **unique name**, and they have a list where you can *add games* to this category, the **context menu** is simple, there is only **1 action** which is to **remove the game from this category**.
+
+## Void Eye Game - Api
 The API is the one that _provides data to the **web client**_ and *manage the session system*, see [Web Client](../void-eye-games-client) for more information.
 
-## Requirements
-Here you have the requiriments for **API side**:
-
-### Health
-Use to check the server state, whitch services are **UP** and witch are **DOWN**.
-- [X] health requer support [GET]
-
-### Sessions
-- [X] Session control with **Auth Tokens**.
-- [X] login request support [POST].
-- [X] signin request support [POST].
-
-### Data Management
-- [X] Games
-    - [X] Game request support to retrieve a specific game. [GET]
-    - [X] Game request support to retrieve all games where X. [GET]
-    - [X] Game request support to retrieve all games with minimized data. [GET]
-    - [X] Game request to support the feature of adding games. [POST]
-    - [X] Game request to support the feature of updating games. [POST]
-- [X] Categories
-    - [X] Category request support to retrieve a specific category. [GET]
-    - [X] Category request support to retrieve all categories where X. [GET]
-    - [X] Category request support to retrieve all categories with minimized data. [GET]
-    - [X] Category request to support the feature of adding categories. [POST]
-    - [X] Category request to support the feature of updating categories. [POST]
-- [X] Plataforms
-    - [X] Plataform request support to retrieve a specific plataform. [GET]
-    - [X] Plataform request support to retrieve all plataforms where X. [GET]
-    - [X] Plataform request support to retrieve all plataforms with minimized data. [GET]
-    - [X] Plataform request to support the feature of adding plataforms. [POST]
-    - [X] Plataform request to support the feature of updating plataforms. [POST]
-- [X] Comments
-    -  [X] Comments request to support the feature of adding comments to a game. [POST]
-
-### Others
-- [X] Email
-    - [X] Email request to support the feature of send reports to the void eyes games support email. [POST]
-    - [X] Email request to support the feature of recover password via email. [POST]
-
-## User manual
 In this *Users manual* you will see the API **usage** and a **description** *explaining features*.
 
 ### Health system

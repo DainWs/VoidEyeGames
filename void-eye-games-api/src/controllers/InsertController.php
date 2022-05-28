@@ -19,6 +19,9 @@ use src\validators\CategoryValidator;
 use src\validators\GameValidator;
 use src\validators\PlataformValidator;
 
+/**
+ * Used to manage the insert data operations request
+ */
 class InsertController extends BaseController
 {
     public function __construct() {

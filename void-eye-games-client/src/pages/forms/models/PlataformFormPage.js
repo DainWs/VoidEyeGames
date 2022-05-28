@@ -177,17 +177,20 @@ class PlataformFormPage extends ModelFormPage {
   }
 
   onSuccess(response) {
-    if (response.data.status !== 200) {
+    if (response.data.status != 200) {
       this.onFailed(response);
       return;
     }
     this.requestListedPlataforms();
-    this.setState({plataform: new Plataform(), editingGameId: null, errors: null});
-    this.navigate('/admin/plataform', {replace: true});
+    this.setState({plataform: new Plataform(), mode: MODEL_FORM_MODE_NEW, editingGameId: null, errors: null});
   }
 
   onFailed(response) {
-    this.setState({ errors: response.data.body });
+    let responseData = response.data;
+    if (responseData === undefined) {
+      responseData = {};
+    }
+    this.setState({ errors: responseData.body });
   }
 
   componentDidMount() {

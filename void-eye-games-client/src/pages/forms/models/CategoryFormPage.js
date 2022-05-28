@@ -7,7 +7,7 @@ import { SessionManager } from '../../../domain/SessionManager';
 import { withRouter } from '../../../routes/Routes';
 import { SocketController } from '../../../services/socket/SocketController';
 import { SocketDataFilter } from '../../../services/socket/SocketDataFilter';
-import { DESTINATION_CATEGORIES, DESTINATION_CATEGORIES_UPDATES, DESTINATION_CATEGORY, DESTINATION_LIST_OF_CATEGORIES, DESTINATION_LIST_OF_GAMES } from '../../../services/socket/SocketDestinations';
+import { DESTINATION_CATEGORIES_UPDATES, DESTINATION_CATEGORY, DESTINATION_LIST_OF_CATEGORIES, DESTINATION_LIST_OF_GAMES } from '../../../services/socket/SocketDestinations';
 import SocketRequest from '../../../services/socket/SocketRequest';
 import ModelFormPage, { MODEL_FORM_MODE_EDIT, MODEL_FORM_MODE_NEW } from './ModelFormPage';
 
@@ -101,17 +101,20 @@ class CategoryFormPage extends ModelFormPage {
     }
 
     onSuccess(response) {
-        if (response.data.status !== 200) {
+        if (response.data.status != 200) {
             this.onFailed(response);
             return;
         }
         this.requestListedCategories();
-        this.setState({category: new Category(), errors: null});
-        this.navigate('/admin/category', {replace: true});
+        this.setState({category: new Category(), mode: MODEL_FORM_MODE_NEW, errors: null});
     }
 
     onFailed(response) {
-        this.setState({errors: response.data.body });
+        let responseData = response.data;
+        if (responseData === undefined) {
+            responseData = {};
+        }
+        this.setState({errors: responseData.body });
     }
 
     componentDidMount() {

@@ -2,6 +2,9 @@
 
 namespace src\validators;
 
+/**
+ * A class used for validations
+ */
 final class ValidationUtils {
     private static ?ValidationUtils $instance = null;
 
