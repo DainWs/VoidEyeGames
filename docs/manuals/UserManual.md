@@ -190,7 +190,7 @@ Here you have a example of a request that requires permissions:
         "accountType": 1
     },
     "data": {
-        ...[your body post data]...
+        
     }
 }
 ```
@@ -263,7 +263,7 @@ This section is to show a **example of object type data** as **json object**
    "id":"1",
    "name":"[name]",
    "descripcion":"[description]",
-   "medias":[ // list of images/videos of this game
+   "medias":[ 
       {
         "id":"1",
         "name":"image/png",
@@ -271,7 +271,7 @@ This section is to show a **example of object type data** as **json object**
         "mediaType":"image/png"
       }
    ],
-   "plataforms_games":[ // Game to plataform relationship, with the prices and others
+   "plataforms_games":[
       {
          "plataformsId":"6",
          "gamesId":"1",
@@ -279,26 +279,26 @@ This section is to show a **example of object type data** as **json object**
          "priceUnit":"USD",
          "discount":"0.00",
          "isEnabled":"1",
-         "plataforms":{ // The plataform of this relation
+         "plataforms":{ 
             "id":"6",
             "name":"[Plataform name]",
             "url":"[Plataform url]"
          }
       }
    ],
-   "categories":[ // categories of this game
+   "categories":[ 
       {
          "id":"1",
          "name":"Accion"
       }
    ],
-   "comments":[ // comments about this game
+   "comments":[ 
       {
          "id":"1",
          "usersId":"2",
          "gamesId":"1",
          "description":"Un comentario de ejemplo",
-         "users":{ // the user that comments the game
+         "users":{
             "id":"2",
             "name":"Juan Alverto"
          }
@@ -312,7 +312,7 @@ This section is to show a **example of object type data** as **json object**
 {
    "id":"1",
    "name":"Accion",
-   "games":[ // games in this category  (minimized)
+   "games":[ 
       {
          "id":"1",
          "name":"[Game name]",
@@ -328,7 +328,7 @@ This section is to show a **example of object type data** as **json object**
    "id":"1",
    "name":"[Plataform name]",
    "url":"https:/[Plataform domain]/",
-   "plataforms_games":[// The games relationship selled for this plataform, with the price and details
+   "plataforms_games":[
       {
          "plataformsId":"1",
          "gamesId":"1",
@@ -338,7 +338,7 @@ This section is to show a **example of object type data** as **json object**
          "isEnabled":"1"
       }
    ],
-   "games":[// The games selled for this plataform (minimized)
+   "games":[
       {
          "id":"1",
          "name":"[Game name]",
