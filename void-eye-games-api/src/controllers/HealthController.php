@@ -40,7 +40,7 @@ class HealthController extends BaseController
     private function checkLogger(HealthStatus $status): void
     {
         $component = new HealthComponent($this->checkBasic($this->logger));
-        $status->setComponent('service.logger', $component);
+        $status->setComponent('library.logger', $component);
     }
     
     private function checkDatabase(HealthStatus $status): void
@@ -60,7 +60,7 @@ class HealthController extends BaseController
     {
         $mailStatus = $this->checkBasic((new \src\libraries\EmailManager())->check());
         $component = new HealthComponent($mailStatus);
-        $status->setComponent('service.mailer', $component);
+        $status->setComponent('library.mailer', $component);
     }
 
     private function checkExtras(HealthStatus $status): void

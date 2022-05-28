@@ -113,12 +113,15 @@ class SelectController extends BaseController
             ->fetchRecordSet();
         $game->plataforms_games = $plataformsGames;
 
+        /** @param MapperSelect $selectReplies */
         $comments = $this->atlas->select(Comment::class)
-            ->with(['users'])
-            ->where('gamesId =', $game->id)
+            ->with(['users' => function ($selectReplies) {
+                $selectReplies->columns('id', 'name');
+            }])
+            ->where('comments.gamesId =', $game->id)
             ->fetchRecordSet();
+        $this->logger->log(json_encode($comments->jsonSerialize()));
         $game->comments = $comments;
-
         return $response->withJson($game, 200);
     }
 

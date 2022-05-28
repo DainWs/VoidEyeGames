@@ -9,7 +9,7 @@ hr {width:100%;}
 The client side application is the one that will be used by them, and the one that will query the data in the **server database through the API**, *repetitive requests are not a problem*, see [API](../void-eye-games-api) for more information.
 
 ## Requirements
-Here you have the requiriments for **Client side app**:
+Here you have the requiriments for **Web Client side**:
 - [X] In production. (Speack with me to get the link)
 ### Common user
 - [X] Home page
