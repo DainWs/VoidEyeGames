@@ -35,6 +35,8 @@ For installation steps see the [INSTALLATION.md](INSTALLATION.md) or in the foll
 6. Data **consultation and updating** is done **manually**, through pages only accessible by the **Administrator user**.
 
 ## User manuals
+You can see the full **User manual** and recommended one:<br/>
+[![USER MANUAL](https://img.shields.io/static/v1?label=See&message=User%20manual&color=informational&style=for-the-badge)](./docs/manuals/UserManual.md)<br/>
 We have user manuals for both the API and the Web Client:<br/> [![API](https://img.shields.io/static/v1?label=See&message=API&color=informational&style=for-the-badge)](void-eye-games-api) [![Web Client](https://img.shields.io/static/v1?label=See&message=Web%20Client&color=informational&style=for-the-badge)](void-eye-games-client)
 
 ## Tools
