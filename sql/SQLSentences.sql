@@ -73,12 +73,12 @@ ALTER TABLE plataforms_games ADD CONSTRAINT fk_plataforms_games_games FOREIGN KE
 ALTER TABLE plataforms_games ADD CONSTRAINT fk_plataforms_games_plataforms FOREIGN KEY(plataformsId) REFERENCES plataforms(id);
 
 CREATE TABLE IF NOT EXISTS medias(
-	id          INT(255) auto_increment NOT NULL,
+	id          INT(255) NOT NULL AUTO_INCREMENT,
 	gamesId		INT(255) NOT NULL,
 	name		VARCHAR(100) NOT NULL,
 	mediaType	VARCHAR(100) NOT NULL DEFAULT "image/png",
-	CONSTRAINT pk_medias PRIMARY KEY(id, gamesId)
-);
+	CONSTRAINT pk_medias PRIMARY KEY(gamesId, id)
+) ENGINE=MyISAM;
 
 ALTER TABLE medias ADD CONSTRAINT fk_medias_games FOREIGN KEY(gamesId) REFERENCES games(id);
 
@@ -92,3 +92,4 @@ CREATE TABLE IF NOT EXISTS comments(
 
 ALTER TABLE comments ADD CONSTRAINT fk_comments_users FOREIGN KEY(usersId) REFERENCES users(id);
 ALTER TABLE comments ADD CONSTRAINT fk_comments_games FOREIGN KEY(gamesId) REFERENCES games(id);
+

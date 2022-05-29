@@ -85,8 +85,8 @@ class MediaTable extends Table
     ];
 
     const PRIMARY_KEY = [
-        'id',
         'gamesId',
+        'id',
     ];
 
     const AUTOINC_COLUMN = 'id';
