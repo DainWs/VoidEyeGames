@@ -1,5 +1,5 @@
 # Void Eye Game
-![License](https://img.shields.io/static/v1?label=License&message=ISC&color=green) ![License](https://img.shields.io/static/v1?label=Tags&message=1.0.3&color=yellow)
+![License](https://img.shields.io/static/v1?label=License&message=ISC&color=green) ![License](https://img.shields.io/static/v1?label=Tags&message=1.0.5&color=yellow)
 
 **Author:** Jose Antonio Duarte Perez
 
