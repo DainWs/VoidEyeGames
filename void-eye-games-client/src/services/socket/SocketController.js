@@ -2,7 +2,8 @@ import axios from 'axios';
 import { SocketDataProvideer } from './SocketDataProvider';
 import SocketRequest from './SocketRequest';
 
-export const API_URL = process.env.REACT_APP_PUBLIC_API;
+let host = process.env.REACT_APP_PUBLIC_API;
+export const API_URL = host.replace('{host}', window.location.host);
 
 class SocketController {
     send(destination, onError = onHandleError) {
@@ -10,7 +11,7 @@ class SocketController {
     }
 
     sendCustom(request, destination, onError = onHandleError) {
-        axios.request(this.getUrlFor(destination), request)
+        axios.request(this.getUrlFor(destination), request, { rejectUnauthorized: false })
             .then(response => {
                 SocketDataProvideer.supply(destination, response.data);
             })
@@ -18,7 +19,7 @@ class SocketController {
     }
 
     sendCustomWithCallback(request, destination, callback, onError = onHandleError) {
-        axios.request(this.getUrlFor(destination), request)
+        axios.request(this.getUrlFor(destination), request, { rejectUnauthorized: false })
             .then(response => callback(response))
             .catch(onError);
     }

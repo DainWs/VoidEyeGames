@@ -7,7 +7,7 @@ class SocketRequest {
         this.url =  API_URL;
         this.method = 'GET';
         this.params = {};
-        this.headers = {'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json'};
+        this.headers = {'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers': '*', 'Content-Type': 'application/json'};
     }
 
     paramsSerializer(params) {
@@ -19,7 +19,7 @@ class SocketRequest {
     }
 
     setContentType(contentType) {
-        this.headers = {'Access-Control-Allow-Origin': '*', 'Content-Type': contentType};
+        this.headers = {'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers': '*', 'Content-Type': contentType};
     }
 
     setParams(params) {
