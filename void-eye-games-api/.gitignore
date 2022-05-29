@@ -4,4 +4,3 @@ vendor
 cache/*
 cache/credentials.json
 composer.lock
-assets/images/*
