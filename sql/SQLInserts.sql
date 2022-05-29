@@ -70,7 +70,7 @@ INSERT INTO MEDIAS VALUES (null, 1, "trailer", "video/mp4");
 INSERT INTO MEDIAS VALUES (null, 2, "trailer", "video/mp4");
 INSERT INTO MEDIAS VALUES (null, 2, "main_image", "image/png");
 INSERT INTO MEDIAS VALUES (null, 3, "main_image", "image/jpg");
-INSERT INTO MEDIAS VALUES (null, 4, "main_image", "image/webp");
+INSERT INTO MEDIAS VALUES (null, 4, "main_image", "image/png");
 INSERT INTO MEDIAS VALUES (null, 4, "zed", "image/jpeg");
 INSERT INTO MEDIAS VALUES (null, 4, "trailer", "video/mp4");
 INSERT INTO MEDIAS VALUES (null, 4, "teaser-2020", "video/mp4");

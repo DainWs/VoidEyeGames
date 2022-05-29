@@ -12,47 +12,47 @@ The client side application is the one that will be used by them, and the one th
 Here you have the requiriments for **Web Client side**:
 - [X] In production. (Speack with me to get the link)
 ### Common user
-- [X] Home page
-    - [X] Slider.
-    - [X] News.
-- [X] Games page
-    - [X] Order By {name, price, plataform}.
-    - [X] Categories filter.
-    - [X] Plataforms filter.
-- [X] Games details page
-    - [X] Galery.
-    - [X] Best plataforms to buy.
-    - [X] The description.
-    - [X] User comments.
-- [X] Support page
-    - [X] GeoLocation.
-    - [X] Report form navigation button.
-- [X] Report form View
-- [X] Login form page
-    - [X] [Optional] Recovery password.
-- [X] Signin form View
+- [x] Home page
+    - [x] Slider.
+    - [x] News.
+- [x] Games page
+    - [x] Order By {name, price, plataform}.
+    - [x] Categories filter.
+    - [x] Plataforms filter.
+- [x] Games details page
+    - [x] Galery.
+    - [x] Best plataforms to buy.
+    - [x] The description.
+    - [x] User comments.
+- [x] Support page
+    - [x] GeoLocation.
+    - [x] Report form navigation button.
+- [x] Report form View
+- [x] Login form page
+    - [x] [Optional] Recovery password.
+- [x] Signin form View
 
 ### Logged users
-- [X] Games details page
-    - [X] Logged user can add Comments.
+- [x] Games details page
+    - [x] Logged user can add Comments.
 
 ### Admin
-- [X] Game form page
-    - [X] A list of games to select which one do you want to edit.
-    - [X] Add games.
-    - [X] Add categories to game.
-    - [X] Add images to game.
-    - [X] Edit games.
-- [X] Plataform form page
-    - [X] A list of plataforms to select which one do you want to edit.
-    - [X] Add plataforms.
-    - [X] Add games to plataform with prices and discount of the plataform.
-    - [X] Edit plataforms.
-- [X] Categories form page
-    - [X] A list of categories to select which one do you want to edit.
-    - [X] Add category.
-    - [X] Add games to category.
-    - [X] Edit categories.
+- [x] Game form page
+    - [x] A list of games to select which one do you want to edit.
+    - [x] Add games.
+    - [x] Add categories to game.
+    - [x] Add images to game.
+    - [x] Edit games.
+- [x] Plataform form page
+    - [x] A list of plataforms to select which one do you want to edit.
+    - [x] Add plataforms.
+    - [x] Add games to plataform with prices and discount of the plataform.
+    - [x] Edit plataforms.
+- [x] Categories form page
+    - [x] A list of categories to select which one do you want to edit.
+    - [x] Add category.
+    - [x] Add games to category.
+    - [x] Edit categories.
 
 ## User manual
 In this *Users manual* you will see some showcases of Web Client **usage** and a **description** *explaining features and tips* for each page.
