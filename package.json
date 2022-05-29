@@ -6,11 +6,12 @@
   "private": true,
   "scripts": {
     "start": "cd void-eye-games-client && npm run start && cd ..",
-    "build": "cd void-eye-games-client && npm run build && cd ..",
-    "deploy": "npm run install",
+    "build": "npm run build-client",
+    "deploy": "npm install",
     "install": "npm run install-api && npm run install-client",
     "install-api": "cd void-eye-games-api && composer install && cd ..",
-    "install-client": "cd void-eye-games-client && npm install && cd .."
+    "install-client": "cd void-eye-games-client && npm install && cd .. && npm run build-client",
+    "build-client": "cd void-eye-games-client && npm run build && cd .."
   },
   "keywords": [],
   "author": "Jose Antonio Duarte Perez",

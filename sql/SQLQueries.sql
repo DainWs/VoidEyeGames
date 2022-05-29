@@ -28,3 +28,6 @@ SELECT * FROM categories_games;
 USE void_eye_games;
 SELECT * FROM plataforms;
 SELECT * FROM plataforms_games;
+
+
+SELECT TABLE_NAME, ENGINE FROM information_schema.TABLES where TABLE_SCHEMA = 'void_eye_games';

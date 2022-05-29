@@ -3,6 +3,7 @@ import React from 'react';
 import Skeleton from 'react-loading-skeleton';
 import GameItemComponent from '../components/models/GameItemComponent';
 import GameItemSliderComponent from '../components/models/GameItemSliderComponent';
+import { CacheConfiguration, GAMES_COUNT, GAMES_LIMIT_PER_PAGE, ON_CACHE_LOAD } from '../domain/cache/CacheConfiguration';
 import { EventObserver } from '../domain/EventObserver';
 import { EVENT_SESSION_CHANGE } from '../domain/EventsEnum';
 import { SessionManager } from '../domain/SessionManager';
@@ -32,6 +33,15 @@ class HomePage extends React.Component {
     }
   }
   
+  onCacheLoad() {
+    let gamesCount = CacheConfiguration.get(GAMES_COUNT);
+    let gamesLimit = CacheConfiguration.get(GAMES_LIMIT_PER_PAGE);
+    this.numOfPages = Math.floor(gamesCount / gamesLimit);
+    console.log(this.numOfPages);
+    this.setState({plataformsGames: []});
+    this.sendGamesRequest(this.numOfPages);
+  }
+
   updateSliderGames(response) {
     this.setState({sliderGames: response.data});
   }
@@ -57,12 +67,16 @@ class HomePage extends React.Component {
   }
 
   componentDidMount() {
-    this.sendGamesRequest(1);
-    this.sendGamesRequest(2);
+    EventObserver.subscribe(ON_CACHE_LOAD, "HomePage", this.onCacheLoad.bind(this));
+    this.sendGamesRequest();
     this.sendSliderGamesRequest();
     if (SessionManager.check()) {
       EventObserver.notify(EVENT_SESSION_CHANGE);
     }
+  }
+
+  componentWillUnmount() {
+    EventObserver.unsubscribe(ON_CACHE_LOAD, "HomePage");
   }
 
   render() {
