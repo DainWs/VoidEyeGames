@@ -58,7 +58,7 @@ class PlataformRecord extends Record
     }
 
     public function updatePlataformsGames(?Array $plataformGames, Atlas $atlas): void {
-        if ($plataformGames != null) return;
+        if (!$plataformGames) return;
         if (!$this->plataforms_games) $this->plataforms_games = $atlas->newRecordSet(PlataformsGame::class);
 
         $this->plataforms_games->setDelete();
