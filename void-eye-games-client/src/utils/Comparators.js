@@ -1,3 +1,5 @@
+import PriceUnitEnum from "../domain/models/PriceUnits";
+
 const nameComparatorCallback = function(o1, o2) {
     if (o1.games.name < o2.games.name) return -1;
     else if (o1.games.name > o2.games.name) return 1;
@@ -10,8 +12,15 @@ const priceComparatorCallback = function(o1, o2) {
 
 const priceWithDiscountComparatorCallback = function(o1, o2) {
     function calcPrice(o) {
-        let discount = o.price * o.discount;
-        return o.price - discount;
+        let oPrice = o.price;
+        console.log(oPrice);
+        let oPriceUnit = PriceUnitEnum.getPriceUnitById(o.priceUnit);
+        if (oPriceUnit != null) {
+            oPrice = oPrice * oPriceUnit.getMultiplier();
+        }
+        console.log(oPrice);
+        let discount = oPrice * o.discount;
+        return oPrice - discount;
     }
     return calcPrice(o1) - calcPrice(o2);
 }

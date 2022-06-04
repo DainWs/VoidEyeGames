@@ -2,7 +2,6 @@ import { faFilter } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import GameItemComponent from '../components/models/GameItemComponent';
-import { CacheConfiguration } from '../domain/cache/CacheConfiguration';
 import { EventDataProvider } from '../domain/EventDataProvider';
 import { EventObserver } from '../domain/EventObserver';
 import { EVENT_SEARCH_GAME } from '../domain/EventsEnum';
