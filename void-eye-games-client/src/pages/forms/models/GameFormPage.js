@@ -26,6 +26,8 @@ class GameFormPage extends ModelFormPage {
     parentState.mainImage = {};
     parentState.isDragingOver = false;
     parentState.medias = [];
+    parentState.errors = null;
+    parentState.successMessage = null;
     return parentState;
   }
 
@@ -226,7 +228,7 @@ class GameFormPage extends ModelFormPage {
       return;
     }
     this.requestListedGames();
-    this.setState({game: new Game(), medias: [], mainImage: {}, mode: MODEL_FORM_MODE_NEW, errors: null});
+    this.setState({successMessage: "Se ha guardado correctamente.", errors: null});
   }
 
   onFailed(response) {
@@ -234,7 +236,7 @@ class GameFormPage extends ModelFormPage {
     if (responseData === undefined) {
       responseData = {};
     }
-    this.setState({ errors: responseData.body });
+    this.setState({successMessage: null, errors: responseData.body });
   }
 
   componentDidMount() {
@@ -339,6 +341,7 @@ class GameFormPage extends ModelFormPage {
               <a className='btn btn-form w-100 mt-3 text-dark' onClick={this.submit.bind(this)}>Save all</a>
             </section>
           </form>
+          {this.getSuccessView()}
           {this.getErrorView()}
         </article>
         <ReactTooltip html={true} place={'top'} />

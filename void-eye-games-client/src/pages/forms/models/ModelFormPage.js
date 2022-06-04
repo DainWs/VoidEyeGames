@@ -22,6 +22,14 @@ class ModelFormPage extends React.Component {
         return (<></>);
     }
 
+    getSuccessView() {
+        let successMessage = this.state.successMessage;
+        if (successMessage === undefined || successMessage === null || successMessage.length <= 0) return (<section><br/></section>);
+        return (
+            <section className='mt-2 mb-4'><p className='text-quaternary mb-1'>{successMessage}</p></section>
+        );
+    }
+
     getErrorView() {
         let error = this.state.errors;
         if (error === undefined || error === null || error.length <= 0) return (<section><br/></section>);
