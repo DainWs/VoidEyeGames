@@ -21,6 +21,7 @@ class CategoryFormPage extends ModelFormPage {
         parentState.listedGames = [];
         parentState.listedCategories = [];
         parentState.errors = null;
+        parentState.successMessage = null;
         return parentState;
     }
 
@@ -82,7 +83,7 @@ class CategoryFormPage extends ModelFormPage {
     //---------------------------------------------------------------------------------------------
 
     submit() {
-        let category = this.state.category;
+        let category = new Category(this.state.category);
         category.games = [];
         let request = new SocketRequest();
         request.setBody(JSON.stringify(category));
@@ -106,7 +107,7 @@ class CategoryFormPage extends ModelFormPage {
             return;
         }
         this.requestListedCategories();
-        this.setState({category: new Category(), mode: MODEL_FORM_MODE_NEW, errors: null});
+        this.setState({successMessage: "Se ha guardado correctamente.", errors: null});
     }
 
     onFailed(response) {
@@ -114,7 +115,7 @@ class CategoryFormPage extends ModelFormPage {
         if (responseData === undefined) {
             responseData = {};
         }
-        this.setState({errors: responseData.body });
+        this.setState({successMessage: null, errors: responseData.body });
     }
 
     componentDidMount() {
@@ -191,6 +192,7 @@ class CategoryFormPage extends ModelFormPage {
                             <a className='btn btn-form w-100 text-dark' onClick={this.submit.bind(this)}>Save all</a>
                         </section>
                     </form>
+                    {this.getSuccessView()}
                     {this.getErrorView()}
                 </article>
             </section>

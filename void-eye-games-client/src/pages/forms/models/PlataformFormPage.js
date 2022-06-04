@@ -26,6 +26,8 @@ class PlataformFormPage extends ModelFormPage {
     parentState.selectedFile = {};
     parentState.listedGames = [];
     parentState.listedPlataforms = [];
+    parentState.errors = null;
+    parentState.successMessage = null;
     return parentState;
   }
 
@@ -182,7 +184,7 @@ class PlataformFormPage extends ModelFormPage {
       return;
     }
     this.requestListedPlataforms();
-    this.setState({plataform: new Plataform(), mode: MODEL_FORM_MODE_NEW, editingGameId: null, errors: null});
+    this.setState({successMessage: "Se ha guardado correctamente.", errors: null});
   }
 
   onFailed(response) {
@@ -190,7 +192,7 @@ class PlataformFormPage extends ModelFormPage {
     if (responseData === undefined) {
       responseData = {};
     }
-    this.setState({ errors: responseData.body });
+    this.setState({successMessage: null, errors: responseData.body });
   }
 
   componentDidMount() {
@@ -336,6 +338,7 @@ class PlataformFormPage extends ModelFormPage {
             </section>
           </form>
 
+          {this.getSuccessView()}
           {this.getErrorView()}
         </article>
         <ReactTooltip html={true} place={'top'} />
@@ -348,7 +351,7 @@ class PlataformFormPage extends ModelFormPage {
   }
 
   getImageView() {
-    return `<img src="${this.state.selectedFile.src}" alt="Main image" style="max-width: 200px" />`;
+    return `<img src="${this.state.selectedFile.src}" alt="Main image" style="max-width: 200px;max-height: 100px;" />`;
   }
 
   getPlataformsOptions() {
