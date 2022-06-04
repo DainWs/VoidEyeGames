@@ -17,6 +17,9 @@ class MediaListItemComponent extends ItemContextMenuComponent {
 
     getTitle() {
         let media = this.state.data;
+        if (media.mediaType == media.name) {
+            return `${Math.trunc(Math.random() * 100000)}`;
+        }
         return `${media.name}`;
     }
 
