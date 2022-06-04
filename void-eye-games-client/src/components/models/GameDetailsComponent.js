@@ -172,8 +172,6 @@ class GameDetailsComponent extends React.Component {
 
     preparePlataformView(plataformGame) {
         let plataform = new Plataform(plataformGame.plataforms);
-        let discount = (plataformGame.discount > 0) ? `(-${plataformGame.discount * 100}%)` : '';
-        let discountView = (plataformGame.discount > 0) ? (<span className='discount'>{discount}</span>) : <></>;
         return (
             <a key={`${plataformGame.gamesId}-${plataformGame.plataformsId}__price-tag`}
                 className='plataform-link d-flex border border-black rounded m-0 mt-2 mt-md-0 w-100 text-decoration-none' 
@@ -189,11 +187,27 @@ class GameDetailsComponent extends React.Component {
                         {plataform.name}
                     </div>
                     <div className='plataform-price w-50 d-flex align-items-center justify-content-center bg-quinary border-left border-black rounded-right font-weight-bold text-primary'>
-                        <span className='text-center'>{plataformGame.price} {plataformGame.priceUnit}</span>
-                        {discountView}
+                        {this.getPriceView(plataformGame)}
                     </div>
                 </div>
             </a>
+        );
+    }
+
+    getPriceView(plataformGame) {
+        let discount = (plataformGame.discount > 0) ? `(-${plataformGame.discount * 100}%)` : '';
+        let discountView = (plataformGame.discount > 0) ? (<span className='discount'>{discount}</span>) : <></>;
+
+        let price = `${plataformGame.price} ${plataformGame.priceUnit}`;
+        if (plataformGame.price <= 0) {
+            price = 'FREE'
+        }
+
+        return (
+            <>
+                <span className='text-center'>{price}</span>
+                {discountView}
+            </>
         );
     }
 
