@@ -327,12 +327,12 @@ body {
             flex-grow: 1 !important;
             
             &-link {
-                font-size: calc(0.5vw + 0.4vh + .55rem) !important;
+                font-size: calc(0.5vw + 0.4vh + .45rem) !important;
                 height: 7vh;
                 max-height: 25%;
 
                 .discount {
-                    font-size: calc(0.5vw + 0.4vh + .45rem);
+                    font-size: calc(0.5vw + 0.4vh + .25rem);
                 }
             }
         
