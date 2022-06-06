@@ -15,12 +15,17 @@ class SupportPage extends React.Component {
           <section className='row vh-40' style={{overflow: 'hidden'}}>
             <div className='col-12 col-sm-6 col-lg-8'>
               <p className='text-justify p-2'>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor 
-                incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
-                exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute 
-                irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla 
-                pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia 
-                deserunt mollit anim id est laborum.
+                First of all, indicate that this page belongs to an <strong>Integrated Project of the end of 
+                higher degree of the I.E.S. Francisco Ayala</strong> maked only for student purposes, 
+                this project has been created by Jose Antonio Duarte Pérez, so he
+                is not guilty of any incident on this page and the geolocation location is also false, too indicate that this 
+                project has an <strong>ISC license</strong> and you can find its code at (except certs files): <br/>
+                <strong><a className='text-links' href='https://github.com/DainWs/VoidEyeGames'>
+                https://github.com/DainWs/VoidEyeGames</a></strong><br/>
+                <br/><span className='text-error'><strong>REMEMBER NOT TO INSERT PASSWORDS 
+                USED NORMALLY OR IN OTHER ACCOUNTS THE SAME FOR EMAILS, USE THE DOMAIN @voideyegames.com 
+                IF POSSIBLE TO AVOID PROBLEMS</strong> (of course, this will not allow you to recover 
+                passwords, since said email domain does not exist).</span><br/><br/>
                 <span className='d-none d-lg-block'>Lorem ipsum dolor sit amet, consectetur adipiscing
                 elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
                 minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo

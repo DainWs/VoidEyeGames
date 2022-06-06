@@ -8,6 +8,14 @@ hr {width:100%;}
 # Void Eye Game - Api
 The API is the one that _provides data to the **web client**_ and *manage the session system*, see [Web Client](../void-eye-games-client) for more information.
 
+<hr/>
+<h2><strong style="color:red;">Important!! - The database MUST be mysql or mariadb</strong></h2>
+As has been said, the database must be Mysql or Mariadb, since it has not been tested in other databases, we are not responsible.
+
+<h2><strong style="color:red;">Important!! - SSL Certs not included</strong></h2>
+As you can understand, I can't provide application passwords/credentials/certificates, as this could bring security issues, for this project you can only run it in DEVELOPMENT mode (using `npm start` command), Yes even if you want to be able to put it into production, access the `.crt` folder in the project root folder, (relative path from which this file is located is: `../.crt`, if the folder does not exist, no hesitate to create it) in that folder you will save the server.crt and the server.key (the certificates)
+<hr/>
+
 ## Requirements
 Here you have the requiriments for **API side**:
 
