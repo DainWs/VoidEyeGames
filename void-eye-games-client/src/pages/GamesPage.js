@@ -2,6 +2,7 @@ import { faFilter } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import GameItemComponent from '../components/models/GameItemComponent';
+import { CacheConfiguration, GAMES_COUNT } from '../domain/cache/CacheConfiguration';
 import { EventDataProvider } from '../domain/EventDataProvider';
 import { EventObserver } from '../domain/EventObserver';
 import { EVENT_SEARCH_GAME } from '../domain/EventsEnum';
@@ -24,6 +25,7 @@ class GamesPage extends React.Component {
     this.hasMore = true;
     this.hasMoreCategories = true;
     this.hasMorePlataforms = true;
+    this.scrollYPosition = 0;
     this.searchTitle = EventDataProvider.provide(EVENT_SEARCH_GAME);
     this.state = {
       orderMethod: 'name',
@@ -48,9 +50,8 @@ class GamesPage extends React.Component {
 
   updatePlataformGames() {
     let plataformsGames = (this.isFiltring) ? [] : Array.from(this.state.plataformsGames);
-    let oldSize = plataformsGames.length;
     plataformsGames.push(...SocketDataProvideer.provide(DESTINATION_PLATAFORM_GAMES));
-    this.hasMore = (oldSize < plataformsGames.length);
+    this.hasMore = ( plataformsGames.length < CacheConfiguration.get(GAMES_COUNT) );
     this.setState({plataformsGames: plataformsGames});
   }
 
@@ -94,7 +95,7 @@ class GamesPage extends React.Component {
 
   onShowMorePlataforms() {
     let num = this.state.numOfPlataforms + 5;
-    this.hasMorePlataforms = this.state.plataforms.length > num;
+    this.hasMorePlataforms = this.state.plataforms.length >= num;
     this.setState({numOfPlataforms: num})
   }
 
@@ -130,6 +131,7 @@ class GamesPage extends React.Component {
     params.categories = Array.from(this.state.selectedCategories);
     params.plataforms = Array.from(this.state.selectedPlataforms);
     
+    this.scrollYPosition = document.scrollingElement.scrollTop;
     let request = new SocketRequest();
     request.setParams(params);
     request.setMethod('GET');
@@ -137,9 +139,16 @@ class GamesPage extends React.Component {
   }
 
   render() {
+    window.scrollTo(0, this.scrollYPosition);
     return (
       <section className='d-flex flex-column flex-lg-row pb-3' style={{minHeight: '100%'}}>
         <aside className='border-lg-right border-secondary mh-sm-100 w-15 no-select'>
+          <section className='d-block d-lg-none'>
+            <header className='bg-secondary text-primary row m-0'>
+              <h4 className='col-6 col-sm-8 m-0 px-2 py-2'>Filtros</h4>
+              Show/Hide
+            </header>
+          </section>
           <section>
             <header className='bg-secondary text-primary'>
               <h4 className='m-0 px-2 py-2'>Order by</h4>
