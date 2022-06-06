@@ -8,6 +8,14 @@ hr {width:100%;}
 # Void Eye Game - Client
 The client side application is the one that will be used by them, and the one that will query the data in the **server database through the API**, *repetitive requests are not a problem*, see [API](../void-eye-games-api) for more information.
 
+<hr/>
+<h2><strong style="color:red;">Important!! - Mandatory API</strong></h2>
+It is mandatory to have the API installed and running locally for the correct functioning of the client side.
+
+<h2><strong style="color:red;">Important!! - SSL Certs not included</strong></h2>
+As you can understand, I can't provide application passwords/credentials/certificates, as this could bring security issues, for this project you can only run it in DEVELOPMENT mode (using `npm start` command), Yes even if you want to be able to put it into production, access the `.crt` folder in the project root folder, (relative path from which this file is located is: `../.crt`, if the folder does not exist, no hesitate to create it) in that folder you will save the server.crt and the server.key (the certificates)
+<hr/>
+
 ## Requirements
 Here you have the requiriments for **Web Client side**:
 - [X] In production. (Speack with me to get the link)
