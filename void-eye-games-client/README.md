@@ -1,10 +1,5 @@
 [![License](https://img.shields.io/static/v1?label=See&message=Readme&color=informational&style=for-the-badge)](../) [![License](https://img.shields.io/static/v1?label=See&message=API&color=informational&style=for-the-badge)](../void-eye-games-api)
 
-<style>
-hr {width:100%;}
-.center{width:100%;display:flex;align-items:center;justify-content:center;}
-</style>
-
 # Void Eye Game - Client
 The client side application is the one that will be used by them, and the one that will query the data in the **server database through the API**, *repetitive requests are not a problem*, see [API](../void-eye-games-api) for more information.
 
