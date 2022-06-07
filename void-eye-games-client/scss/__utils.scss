@@ -1,0 +1,86 @@
+//------------------------------------------------------------------
+// UTILS
+//------------------------------------------------------------------
+
+/** font sizes **/
+@include media-breakpoint-up(lg) {
+    $normalFont: calc(0.1vw + 0.5vh + 1rem);
+
+    body {
+        font-size: $normalFont  !important;
+    }
+
+    .to-top-btn, input,
+    textarea, svg, .btn {
+        font-size: $normalFont !important;
+    }
+
+    * h1, * .h1 {
+        font-size: calc(1vw + 1vh + 1rem) !important;
+    }
+
+    * h2, * .h2 {
+        font-size: calc(1.4vw + 1vh) !important;
+    }
+
+    * h3, * .h3 {
+        font-size: calc(1.5vw + 1vh) !important;
+    }
+
+    * h4, * .h4 {
+        font-size: calc(1.2vw + 1.2vh) !important;
+    }
+
+    * h5, * .h5 {
+        font-size: calc(1vw + 1vh) !important;
+    }
+
+    * h6, * .h6 {
+        font-size: calc(1vw + 1.2vh) !important;
+    }
+}
+
+/** fixed positions **/
+$sizePosition: 0, 1;
+$verticalPositions: none, top, bottom;
+$horizontalPositions: right, left;
+
+// Make fixed classes for each position in $sizePosition
+@each $sizePos in $sizePosition {
+    // Make horizontal fixed classes
+    @each $horizontalPos in $horizontalPositions {
+        @include fix-position($sizePos, $horizontalPos);
+    }
+    
+    // Make vertical fixed classes
+    @each $verticalPos in $verticalPositions {
+        @include fix-position($sizePos, $verticalPos);
+    }
+
+    // Make corners fixed classes
+    @each $horizontalPos in $horizontalPositions {
+        @each $verticalPos in $verticalPositions {
+            @each $sizePos in $sizePosition {
+                @include fix-position($sizePos, $horizontalPos, $verticalPos);
+            }
+        }
+    }
+}
+
+/** No select and No resize **/
+.no {
+    &-resize {resize: none;}
+    &-select {
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+}
+
+/** button animations **/
+.list--item {
+    @include btn-transition;
+}

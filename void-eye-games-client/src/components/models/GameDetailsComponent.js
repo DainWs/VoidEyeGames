@@ -35,6 +35,8 @@ class GameDetailsComponent extends React.Component {
         let defaultGame = new Game();
         defaultGame.id = this.gameId;
 
+        window.scrollTo(0, 0);
+
         this.state = {
             game: defaultGame,
             commentText: '',

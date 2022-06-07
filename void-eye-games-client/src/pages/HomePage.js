@@ -27,6 +27,7 @@ const CAROUSER_CONTROLS_CONFIG = {
 class HomePage extends React.Component {
   constructor(props) {
     super(props);
+    this.numOfPages = 1;
     this.state = {
       sliderGames: [],
       plataformsGames: []

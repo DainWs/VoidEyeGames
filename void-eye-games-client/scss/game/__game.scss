@@ -1,8 +1,14 @@
+//------------------------------------------------------------------
+// GAMES
+//------------------------------------------------------------------
+
 .game {
+    // Game comment user icon
     &-comment-icon {
         width: 50px;
         height: 50px;
 
+        // Responsive sizes
         @include media-breakpoint-up(md) { 
             width: 60px;
             height: 60px;
@@ -14,6 +20,7 @@
         }
     }
 
+    // Game items for sliders
     &-item {
         position: relative;
         background-position: center;
@@ -60,6 +67,7 @@
             text-shadow: 0px 0px 10px black;
             background-color: rgba($color: $secondary, $alpha: 0.3);
 
+            // Game item animation
             @include game-item-transition(.1s, .15s);
         }
 
@@ -69,6 +77,7 @@
             height: 100%;
             background-color: $text-secondary;
 
+            // Game item animation
             @include game-item-transition(.1s, .15s);
         }
 
@@ -92,14 +101,17 @@
         }
     }
 
+    // Game details
     &-details {
         max-width: 960px;
-        @include media-breakpoint-up(lg) { 
-            max-width: 80vw;
-        }
 
         & > hr {
             margin: calc(1px + 3vh) 0;
+        }
+
+        // Responsive side
+        @include media-breakpoint-up(lg) { 
+            max-width: 80vw;
         }
     }
     

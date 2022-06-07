@@ -1,4 +1,9 @@
+//------------------------------------------------------------------
+// DROPDOWNS
+//------------------------------------------------------------------
+
 .dropdown {
+    // dropdown menu animated
     &-menu{
         position: absolute !important;
         top: -2px !important;
@@ -31,6 +36,7 @@
         }
     }
 
+    // dropdown items
     &-item {
         color: $primary !important;
         font-size: 1.2rem !important;

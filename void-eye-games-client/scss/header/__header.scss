@@ -1,3 +1,8 @@
+//------------------------------------------------------------------
+// HEADER
+//------------------------------------------------------------------
+
+// home header
 .home--header {
     & .slider {
         &-frame,
@@ -12,5 +17,8 @@
     }
 }
 
+// Navigations stylesheet
 @import './__nav.scss';
+
+// Dropdowns stylesheet
 @import './__dropdown.scss';

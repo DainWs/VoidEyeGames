@@ -95,7 +95,7 @@ class HealthController extends BaseController
             $this->addTableCountDetails($status, 'users', \classes\User\User::class);
             $this->addTableCountDetails($status, 'categories', \classes\Category\Category::class);
             $this->addTableCountDetails($status, 'plataforms', \classes\Plataform\Plataform::class);
-            $this->addTableCountDetails($status, 'games', \classes\PlataformsGame\PlataformsGame::class);
+            $this->addTableCountDetails($status, 'games', \classes\PlataformsGame\PlataformsGame::class, ['isEnabled' => true]);
         }
         $status->setDetail('table.games.limit-per-page', QUERY_GAMES_PER_PAGE);
     }
@@ -106,9 +106,11 @@ class HealthController extends BaseController
      * @param String $key the identifier key for the detail.
      * @param String $tableClass the table classname.
      */
-    private function addTableCountDetails(HealthStatus $status, $key, $tableClass): void
+    private function addTableCountDetails(HealthStatus $status, $key, $tableClass, $whereEquals = []): void
     {
-        $count = $this->atlas->select($tableClass)->fetchCount();
+        $count = $this->atlas->select($tableClass)
+            ->whereEquals($whereEquals)
+            ->fetchCount();
         $status->setDetail("table.$key.count", $count);
     }
 

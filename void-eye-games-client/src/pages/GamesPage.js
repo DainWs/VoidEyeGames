@@ -1,7 +1,8 @@
-import { faFilter } from '@fortawesome/free-solid-svg-icons';
+import { faAngleDown, faAngleUp, faFilter } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import GameItemComponent from '../components/models/GameItemComponent';
+import { CacheConfiguration, GAMES_COUNT } from '../domain/cache/CacheConfiguration';
 import { EventDataProvider } from '../domain/EventDataProvider';
 import { EventObserver } from '../domain/EventObserver';
 import { EVENT_SEARCH_GAME } from '../domain/EventsEnum';
@@ -11,11 +12,6 @@ import { DESTINATION_CATEGORIES, DESTINATION_PLATAFORMS, DESTINATION_PLATAFORM_G
 import { SocketObserver } from '../services/socket/SocketObserver';
 import SocketRequest from '../services/socket/SocketRequest';
 
-/**
- * TODO check big ones
- * FINISED. DO NOT TOUCH
- * @author Jose Antonio Duarte Perez
- */
 class GamesPage extends React.Component {
   constructor(props) {
     super(props);
@@ -24,6 +20,7 @@ class GamesPage extends React.Component {
     this.hasMore = true;
     this.hasMoreCategories = true;
     this.hasMorePlataforms = true;
+    this.scrollYPosition = 0;
     this.searchTitle = EventDataProvider.provide(EVENT_SEARCH_GAME);
     this.state = {
       orderMethod: 'name',
@@ -33,12 +30,19 @@ class GamesPage extends React.Component {
       categories: [],
       plataforms: [],
       selectedCategories: new Set(),
-      selectedPlataforms: new Set()
+      selectedPlataforms: new Set(),
+      isShowingFilters: false
     }
   }
 
   setOrder(event) {
     this.setState({orderMethod: event.target.value});
+  }
+
+  showOrHideFilters() {
+    this.scrollYPosition = 0;
+    let isShowingFilters = this.state.isShowingFilters;
+    this.setState({isShowingFilters: !isShowingFilters});
   }
 
   updateSearchedGame(newData) {
@@ -48,9 +52,8 @@ class GamesPage extends React.Component {
 
   updatePlataformGames() {
     let plataformsGames = (this.isFiltring) ? [] : Array.from(this.state.plataformsGames);
-    let oldSize = plataformsGames.length;
     plataformsGames.push(...SocketDataProvideer.provide(DESTINATION_PLATAFORM_GAMES));
-    this.hasMore = (oldSize < plataformsGames.length);
+    this.hasMore = ( plataformsGames.length < CacheConfiguration.get(GAMES_COUNT) );
     this.setState({plataformsGames: plataformsGames});
   }
 
@@ -94,7 +97,7 @@ class GamesPage extends React.Component {
 
   onShowMorePlataforms() {
     let num = this.state.numOfPlataforms + 5;
-    this.hasMorePlataforms = this.state.plataforms.length > num;
+    this.hasMorePlataforms = this.state.plataforms.length >= num;
     this.setState({numOfPlataforms: num})
   }
 
@@ -130,6 +133,7 @@ class GamesPage extends React.Component {
     params.categories = Array.from(this.state.selectedCategories);
     params.plataforms = Array.from(this.state.selectedPlataforms);
     
+    this.scrollYPosition = document.scrollingElement.scrollTop;
     let request = new SocketRequest();
     request.setParams(params);
     request.setMethod('GET');
@@ -137,10 +141,17 @@ class GamesPage extends React.Component {
   }
 
   render() {
+    window.scrollTo(0, this.scrollYPosition);
     return (
-      <section className='d-flex flex-column flex-lg-row pb-3' style={{minHeight: '100%'}}>
-        <aside className='border-lg-right border-secondary mh-sm-100 w-15 no-select'>
-          <section>
+      <section className='d-flex flex-column flex-lg-row' style={{minHeight: '100%'}}>
+        <aside className={this.getAsideClass()}>
+          <section className='d-block d-lg-none'>
+            <header className='btn btn-secondary border-0 rounded-0 w-100 text-primary d-flex align-items-center m-0' style={{minHeight: '60px'}} onClick={this.showOrHideFilters.bind(this)}>
+              <h4 className='m-0 p-0 flex-grow-1 text-left'>Filtros</h4>
+              <div className=''>{this.getFilterText()}</div>
+            </header>
+          </section>
+          <section className={this.getFilterClass()}>
             <header className='bg-secondary text-primary'>
               <h4 className='m-0 px-2 py-2'>Order by</h4>
             </header>
@@ -159,7 +170,7 @@ class GamesPage extends React.Component {
               </label>
             </div>
           </section>
-          <section>
+          <section className={this.getFilterClass()}>
             <header className='bg-secondary text-primary'>
               <h4 className='m-0 px-2 py-2'>Categories</h4>
             </header>
@@ -170,7 +181,7 @@ class GamesPage extends React.Component {
               </div>
             </div>
           </section>
-          <section>
+          <section className={this.getFilterClass()}>
             <header className='bg-secondary text-primary'>
               <h4 className='m-0 px-2 py-2'>Plataforms</h4>
             </header>
@@ -181,14 +192,20 @@ class GamesPage extends React.Component {
               </div>
             </div>
           </section>
-          <div className='w-100 px-2'>
-            <a className="btn btn-quaternary w-100" href="#" onClick={this.onFiltre.bind(this)}>
+          <div className={'w-100 px-0 px-lg-2 ' + this.getFilterClass()}>
+            <a className="btn btn-quaternary rounded-0 w-100" href="#" onClick={this.onFiltre.bind(this)}>
               <FontAwesomeIcon icon={faFilter} className='mr-2'/> 
               Filtre
             </a>
           </div>
+          <section className={this.getFilterCloseClass()}>
+            <header className='btn btn-secondary border-0 rounded-0 w-100 text-primary d-flex align-items-center justify-content-center mt-0 mx-0 mb-0' 
+              onClick={this.showOrHideFilters.bind(this)}>
+              <div className=''>{this.getFilterText()}</div>
+            </header>
+          </section>
         </aside>
-        <article className='d-flex flex-column border-2 pt-4 px-4 pb-0 mw-100 mw-lg-80' style={{flexGrow: 1}}>
+        <article className='d-flex flex-column border-2 p-0 pb-3 pt-md-2 px-md-2 pb-0 mw-100 mw-lg-80' style={{flexGrow: 1}}>
           <div className='flex-grow-1'>
             <div className='row m-0 p-0'>
               {this.getGamesItems()}
@@ -199,12 +216,40 @@ class GamesPage extends React.Component {
       </section>
     );
   }
+
+  getAsideClass() {
+    if (this.state.isShowingFilters) {
+      return 'filter-aside filter-active border-lg-right border-secondary mh-sm-100 w-15 no-select';
+    }
+    return 'filter-aside border-lg-right border-secondary mh-sm-100 w-15 no-select';
+  }
+
+  getFilterText() {
+    if (this.state.isShowingFilters) {
+      return <FontAwesomeIcon icon={faAngleDown} className='m-0 mr-2 h4'/>;
+    }
+    return <FontAwesomeIcon icon={faAngleUp} className='m-0 mr-2 h4'/>;
+  }
+
+  getFilterClass() {
+    if (this.state.isShowingFilters) {
+      return 'd-block d-lg-block';
+    }
+    return 'd-none d-lg-block';
+  }
+
+  getFilterCloseClass() {
+    if (this.state.isShowingFilters) {
+      return 'd-block d-lg-none';
+    }
+    return 'd-none d-lg-none';
+  }
   
   getGamesItems() {
     let gamesItemsViews = [];
     for (const plataformGame of this.state.plataformsGames) {
       gamesItemsViews.push(
-        <div key={plataformGame.plataformsId + '-' + plataformGame.games.id} className='col-12 col-sm-6 col-md-3 p-3' style={{minHeight: 'calc(15vw + 10vh)'}}>
+        <div key={plataformGame.plataformsId + '-' + plataformGame.games.id} className='col-12 col-sm-6 col-md-3 p-2 p-md-1 p-lg-2' style={{minHeight: 'calc(15vw + 10vh)'}}>
           <GameItemComponent plataformGame={plataformGame}/>
         </div>
       );
@@ -259,7 +304,7 @@ class GamesPage extends React.Component {
   }
 
   getShowButtonView() {
-    return (this.hasMore) ? <a className="btn btn-secondary w-100" href="#" onClick={this.onShowMore.bind(this)}>Show more</a> : <></>;
+    return (this.hasMore) ? <a className="btn btn-secondary rounded-0 w-100" href="#" onClick={this.onShowMore.bind(this)}>Show more</a> : <></>;
   }
 }
 export default GamesPage;
