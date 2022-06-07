@@ -1,5 +1,5 @@
 # Void Eye Game
-![License](https://img.shields.io/static/v1?label=License&message=ISC&color=green) ![License](https://img.shields.io/static/v1?label=Tags&message=1.1.0&color=yellow)
+![License](https://img.shields.io/static/v1?label=License&message=ISC&color=green) ![License](https://img.shields.io/static/v1?label=Tags&message=1.1.1&color=yellow)
 
 **Author:** Jose Antonio Duarte Perez
 
@@ -17,7 +17,7 @@ For this purpose, we use API and the Web Client, you can find **Users Manual** i
 [![API](https://img.shields.io/static/v1?label=See&message=API&color=informational&style=for-the-badge)](void-eye-games-api) [![Web Client](https://img.shields.io/static/v1?label=See&message=Web%20Client&color=informational&style=for-the-badge)](void-eye-games-client)
 
 <hr/>
-<h2><strong style="color:red;">Important!! - SSL Certs not included</strong></h2>
+##Important!! - SSL Certs not included
 As you can understand, I can't provide application passwords/credentials/certificates, as this could bring security issues, for this project you can only run it in DEVELOPMENT mode (using `npm start` command), Yes even if you want to be able to put it into production, access the `.crt` folder in the project root folder, (relative path from which this file is located is: `../.crt`, if the folder does not exist, no hesitate to create it) in that folder you will save the server.crt and the server.key (the certificates)
 <hr/>
 
