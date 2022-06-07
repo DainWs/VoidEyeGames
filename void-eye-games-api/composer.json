@@ -1,7 +1,7 @@
 {
     "name": "void-eye-games/api",
     "author": "Jose Antonio Duarte Perez",
-    "version": "1.1.1",
+    "version": "1.1.2",
     "description": "This is not a library or dependency that can be used in the vendor.",
     "require": {
         "slim/slim": "^3.1",
