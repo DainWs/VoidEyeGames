@@ -3,7 +3,7 @@
 
 **Author:** Jose Antonio Duarte Perez
 
-<span style="color:red;"> Before all, you should see the **Important** section below, you can easily differentiate it because the titles are in red.</span>
+<span style="color:red;"> Before all, you should see the **Important** section below, you can easily differentiate it because the titles contains `Important!!`.</span>
 
 You can see the full **User manual** and recommended one:
 
