@@ -1,4 +1,25 @@
-.slider{
+//------------------------------------------------------------------
+// SLIDERS
+//------------------------------------------------------------------
+
+/** Define static tab slider images and videos media sizes **/
+.tab-content {
+    &--images,
+    &--videos {
+        & .slide.slide-visible {
+            display: block !important;
+
+            .video {
+                max-height: 26.75rem;
+                & * {max-height: 26.75rem;}
+            }
+        }
+    }
+}
+
+/** Sliders **/
+.slider {
+    // The control component (buttons as example)
     &--control {
         width: 3.125rem;
         font-size: 2rem;
@@ -14,8 +35,109 @@
         }
     }
 
+    // The list of items in the slider
     &-list {
         display: flex;
         align-items: center;
+    }
+
+    // One container is equals a item container
+    &-container {
+        @include media-breakpoint-up(xm) { 
+            max-height: 100% !important;
+        }
+    }
+
+    // The frame is the main slider container
+    &-frame {
+        @include media-breakpoint-up(xm) {
+            max-height: 100% !important;
+        }
+    }
+
+    // Used to support differents types of medias
+    &--dynamic {
+        display: flex;
+        flex-direction: column;
+
+        & .slider {
+            &-container {
+                height: 100%;
+                position: relative;
+            }
+
+            &-list {
+                & .slide {
+                    width: 100% !important;
+                }
+            }
+        }
+
+        & .nav-tabs {
+            height: 50px !important;
+
+            & .nav-item {
+
+                & > * {
+                    height: 100%;
+                    @include media-breakpoint-up(lg) { 
+                        font-size: calc(1vw + 1vh) !important;
+                    }
+                }
+            }
+        }
+
+        & .tab-content {
+            display: flex;
+            align-items: center;
+            flex-grow: 1;
+
+            background-color: black;
+
+            & > * {
+                width: 100%;
+            }
+        }
+
+        /** Responsive side **/
+        @include media-breakpoint-up(sm) { 
+            height: 50vh;
+        }
+
+        @include media-breakpoint-up(md) { 
+            height: calc(100% - 200px);
+
+            & .tab-content {
+                height: calc(100% - 250px);
+                overflow-y: hidden;
+
+                & > * {
+                    max-height: 100%;
+                    height: 100%;
+                }
+            }
+        }
+
+        @include media-breakpoint-up(lg) { 
+            height: 100%;
+
+            .tab-content {
+                
+                min-height: 400px;
+                max-height: 400px;
+            }
+        }
+
+        @include media-breakpoint-up(xl) { 
+            .nav-tabs {
+                height: auto !important;
+            }
+
+            .tab-content {
+                height: calc(100% - 300px);
+                min-height: 600px;
+                max-height: 600px;
+            }
+        }
     }
 }

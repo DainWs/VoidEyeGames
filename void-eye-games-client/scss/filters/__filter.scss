@@ -1,0 +1,36 @@
+//------------------------------------------------------------------
+// Filters
+//------------------------------------------------------------------
+
+// Filters checkbox
+.filter-checkbox {
+    &:hover {
+        background-color: $form;
+    }
+}
+
+// Filters aside section in games page
+aside {
+    width: 100% !important;
+
+    &.filter-aside {
+        max-height: 60px;
+        overflow: hidden;
+
+        transition: max-height .7s linear;
+
+        &.filter-active {
+            max-height: 200rem;
+        }
+    }
+
+    @include media-breakpoint-up(lg) {
+        min-width: 15vw !important;
+        max-width: 20vw !important;
+
+        &.filter-aside {
+            max-height: unset;
+            overflow: unset;
+        }
+    }
+}

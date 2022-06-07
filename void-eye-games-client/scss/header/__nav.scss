@@ -1,7 +1,12 @@
+//------------------------------------------------------------------
+// Navigation
+//------------------------------------------------------------------
+
 .nav {
     flex-wrap: nowrap;
     height: $headerHeight;
 
+    // Navigation links
     &-link {
         color: $text-primary !important;
         font-size: calc(1rem + .5vw);
@@ -27,13 +32,16 @@
             border-color: #343a40 !important;
         }
 
+        // link animation
         @include btn-transition;
     }
 
+    // navigation icons
     &-icon svg {
         font-size: calc(2rem + .5vw) !important;
     }
 
+    // Responsive side
     @include media-breakpoint-up(lg) {
         &-link {
             font-size: calc(0.5vw + 0.2vh + 1rem) !important;
@@ -45,6 +53,7 @@
     }
 }
 
+// Responsive side
 @include media-breakpoint-up(lg) {
     header > .nav {
         height: $headerHeight !important;

@@ -1,0 +1,56 @@
+//------------------------------------------------------------------
+// PLATAFORMS
+//------------------------------------------------------------------
+
+.plataform{
+    // Plataform link (links to plataform website) tag
+    &-link {
+        font-size: calc(0.2vw + 0.2vh + .55rem) !important;
+        
+        // On hover styles
+        &:hover {
+            background-color: $form;
+            
+            // Plataforms price tag inside a plataform link hovered
+            .plataform-price {
+                background-color: #976c00 !important;
+            }
+        }
+
+        // Discount styles
+        .discount {
+            font-size: calc(0.2vw + 0.3vh + .45rem);
+        }
+    }
+
+    // Plataform price tag
+    &-price {
+        display: flex;
+        flex-direction: column;
+    }
+
+    /** Responsive side **/
+    @include media-breakpoint-up(lg) {
+        max-height: 60%;
+        
+    }
+
+    @include media-breakpoint-up(xl) {
+        flex-grow: 1 !important;
+        
+        &-link {
+            font-size: calc(0.5vw + 0.4vh + .45rem) !important;
+            height: 7vh;
+            max-height: 25%;
+
+            .discount {
+                font-size: calc(0.5vw + 0.4vh + .25rem);
+            }
+        }
+    
+        &-image {
+            width: unset !important;
+            height: 90% !important;
+        }
+    }
+}

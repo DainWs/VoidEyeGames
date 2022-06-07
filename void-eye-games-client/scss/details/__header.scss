@@ -1,15 +1,16 @@
-body .details--header {
+//------------------------------------------------------------------
+// Details header
+//------------------------------------------------------------------
+
+.details--header {
     display: flex;
     justify-content: center;
 
     max-width: 960px;
 
-    @include media-breakpoint-up(lg) {
-        max-width: 80vw;
-    }
-
     height: unset;
 
+    // details main image
     &__img {
         background-color: black;
 
@@ -18,10 +19,12 @@ body .details--header {
         }
     }
 
+    // details info
     &__info {
         overflow-y: visible;
     }
 
+    // Responsive sides
     @include media-breakpoint-up(xm) {
         height: auto;
     }
