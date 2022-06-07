@@ -54,8 +54,6 @@ The client side application is the one that will be used by them, and the one th
 In this *Users manual* you will see some showcases of Web Client **usage** and a **description** *explaining features and tips* for each page.
 
 ### Home page
-<img style="float: right;height:10rem;" src="./client/NoApiConnection.png"/>
-
 The *home page* is the **main page or entrance to our web client**, here you can find a **slider** of those games that have a *discount applied to certain platforms*, and a **news** section where you will find *the latest games added to the platform*.
 
 One *feature* of this page is that if you **cannot check the status/availability of the API**, a **modal dialog** will be displayed indicating that the API is currently unavailable, and it will not be possible to show you the games at that time.
@@ -102,8 +100,6 @@ On this page you can **register your user account**, as long as there is not alr
 **<span style="color: red;">IMPORTANT! to this page only can be accessed by admin users accounts.</span>**
 
 On this page, you can **add/edit** games, **add categories to them**, **define a cover/main image for the game**, and **add media to the gallery**. (you will **not be able to add the game to the platforms** from this page).
-
-<img style="float: right;height:10rem;" src="./client/HoverForImage.png"/>
 
 #### Tips
 On this page, you can find lists, if you **left or right click** on them, a **context menu will be displayed** that will *allow you to perform operations on these items*, in the case of **categories**, you can *delete* the category of this game, and in the case from the **gallery medias**, you can also *delete* them, **but in the case of images there is a special case, when you put the mouse over the item, the resource you have the mouse over will be shown (either image or video)**
