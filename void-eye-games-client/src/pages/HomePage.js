@@ -24,6 +24,9 @@ const CAROUSER_CONTROLS_CONFIG = {
   prevButtonText: '<',
 };
 
+/**
+ * Home page view
+ */
 class HomePage extends React.Component {
   constructor(props) {
     super(props);
@@ -43,14 +46,11 @@ class HomePage extends React.Component {
     this.sendGamesRequest(this.numOfPages);
   }
 
+  //============================================
+  // SLIDER
+  //============================================
   updateSliderGames(response) {
     this.setState({sliderGames: response.data});
-  }
-
-  updatePlataformGames(response) {
-    let plataformsGames = this.state.plataformsGames;
-    plataformsGames.push(...response.data);
-    this.setState({plataformsGames: plataformsGames});
   }
 
   sendSliderGamesRequest() {
@@ -60,6 +60,15 @@ class HomePage extends React.Component {
     SocketController.sendCustomWithCallback(request, DESTINATION_PLATAFORM_GAMES, this.updateSliderGames.bind(this));
   }
 
+  //============================================
+  // PLATAFORMS GAMES
+  //============================================
+  updatePlataformGames(response) {
+    let plataformsGames = this.state.plataformsGames;
+    plataformsGames.push(...response.data);
+    this.setState({plataformsGames: plataformsGames});
+  }
+
   sendGamesRequest(page = 1) {
     let request = new SocketRequest();
     request.setParams({pageNum: page});
@@ -67,6 +76,9 @@ class HomePage extends React.Component {
     SocketController.sendCustomWithCallback(request, DESTINATION_PLATAFORM_GAMES, this.updatePlataformGames.bind(this));
   }
 
+  //============================================
+  // COMPONENT UTILS
+  //============================================
   componentDidMount() {
     EventObserver.subscribe(ON_CACHE_LOAD, "HomePage", this.onCacheLoad.bind(this));
     this.sendGamesRequest();
@@ -107,11 +119,18 @@ class HomePage extends React.Component {
     );
   }
 
+  //============================================
+  // SLIDER
+  //============================================
   getSliderItems() {
     if (this.state.sliderGames.length > 0) {
       return this.getGameSliderItems();
     }
-    return this.getSkeletonSliderItems();
+    return [
+      <Skeleton key='slider-skeleton-1' width='90%' height='90%' style={{margin: '2% 5%'}}/>,
+      <Skeleton key='slider-skeleton-1' width='90%' height='90%' style={{margin: '2% 5%'}}/>,
+      <Skeleton key='slider-skeleton-1' width='90%' height='90%' style={{margin: '2% 5%'}}/>
+    ];
   }
 
   getGameSliderItems() {
@@ -126,21 +145,16 @@ class HomePage extends React.Component {
     return discountedGames;
   }
 
-  getSkeletonSliderItems() {
-    return [
-      <Skeleton key='slider-skeleton-1' width='90%' height='90%' style={{margin: '2% 5%'}}/>,
-      <Skeleton key='slider-skeleton-1' width='90%' height='90%' style={{margin: '2% 5%'}}/>,
-      <Skeleton key='slider-skeleton-1' width='90%' height='90%' style={{margin: '2% 5%'}}/>
-    ];
-  }
-
   getNewsItems() {
     if (this.state.plataformsGames.length > 0) {
       return this.getGamesItems();
     }
-    return this.getSkeletonItems();
+    return [ <Skeleton key='news-skeleton-1' className='p-0' width='90vw' height='30vh'/> ];
   }
 
+  //============================================
+  // NEWS
+  //============================================
   getGamesItems() {
     let gamesItemsViews = [];
     for (const plataformGame of this.state.plataformsGames) {
@@ -151,12 +165,6 @@ class HomePage extends React.Component {
       );
     }
     return gamesItemsViews;
-  }
-
-  getSkeletonItems() {
-    return [
-      <Skeleton key='news-skeleton-1' className='p-0' width='90vw' height='30vh'/>
-    ];
   }
 }
 

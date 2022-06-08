@@ -10,11 +10,17 @@ import HealthDialogComponent from "../components/utils/HealthDialogComponent";
 
 const RouterHeaderComponent = withRouter(HeaderComponent);
 
+/**
+ * The main view container
+ */
 class LayoutPage extends React.Component {
   componentDidMount() {
     SessionManager.reload();
   }
-
+  
+  //============================================
+  // VIEW
+  //============================================
   render() {
     return (
       <>
