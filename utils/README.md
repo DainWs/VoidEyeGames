@@ -1,0 +1,2 @@
+# Utils
+For now the only utility that there is is this `.htaccess` that you can place in the root of the server to *redirect the requests* from **https://x.x.x.x/** to **https://x.x.x.x/VoidEyeGames/** and then they don't have access to the folders in **https://x.x.x.x/**.
