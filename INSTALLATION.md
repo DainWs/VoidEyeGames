@@ -1,5 +1,5 @@
 # Installation
-Download this repository and mount it on a web server, to give you an idea of ​​how the repository should be located, here would be the repository on a XAMPP server: `C:/xampp/htdocs/VoidEyeGames/`, leaving this file located (`INSTALLATION.md`) in the `VoidEyeGames` folder along with the rest of the files.
+Download this repository and mount it on a web server, to give you an idea of ​​how the repository should be located, here would be the repository on a XAMPP server: `C:/xampp/htdocs/VoidEyeGames/`, leaving this file located (`INSTALLATION.md`) in the `VoidEyeGames` folder along with the rest of the files. (**IMPORTANT!! the project must be in a VoidEyeGames folder for it to work properly.**)
 
 ## Database
 In your database, (in local) we proceed to the execution of the
@@ -22,7 +22,10 @@ Run the **web** service and **database**, if when accessing `http://localhost/Vo
 Then the API was installed correctly.
 
 ### Client
-Move from the terminal to the `C:/xampp/htdocs/VoidEyeGames/` directory and run `npm run start` command, when finished, then you can access from the browser to `localhost:8080/VoidEyeGames/`.
+Move from the terminal to the `C:/xampp/htdocs/VoidEyeGames/` directory and run `npm run start` command, when finished, then you can access from the browser to `localhost:3000/VoidEyeGames/`. **It may take a while, be patient**.
+
+## Utils
+See `utils/` folder for some utils tips and short features.
 
 ## Solucion de errores de la instalacion
 If you find any error, comment it to me so we can fix it.

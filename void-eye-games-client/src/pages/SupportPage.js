@@ -1,10 +1,8 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { SessionManager } from '../domain/SessionManager';
 
 /**
- * FINISED. DO NOT TOUCH
- * @author Jose Antonio Duarte Perez
+ * Support page view.
  */
 class SupportPage extends React.Component {
   render() {

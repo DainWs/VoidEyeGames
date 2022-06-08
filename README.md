@@ -1,7 +1,8 @@
 # Void Eye Game
-![License](https://img.shields.io/static/v1?label=License&message=ISC&color=green) ![License](https://img.shields.io/static/v1?label=Tags&message=1.1.2&color=yellow)
+![License](https://img.shields.io/static/v1?label=License&message=ISC&color=green) ![License](https://img.shields.io/static/v1?label=Tags&message=1.1.3&color=yellow)
 
 **Author:** Jose Antonio Duarte Perez
+**Production:** To have access to the version in production, talk to Jose Antonio Duarte.
 
 <span style="color:red;"> Before all, you should see the **Important** section below, you can easily differentiate it because the titles contains `Important!!`.</span>
 

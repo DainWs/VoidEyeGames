@@ -28,7 +28,10 @@ Run the **web** service and **database**, if when accessing `http://localhost/Vo
 Then the API was installed correctly.
 
 #### Client
-Move from the terminal to the `C:/xampp/htdocs/VoidEyeGames/` directory and run `npm run start` command, when finished, then you can access from the browser to `localhost:8080/VoidEyeGames/`.
+Move from the terminal to the `C:/xampp/htdocs/VoidEyeGames/` directory and run `npm run start` command, when finished, then you can access from the browser to `localhost:3000/VoidEyeGames/`. **It may take a while, be patient**.
+
+### Utils
+See `utils/` folder for some utils tips and short features.
 
 ### Solucion de errores de la instalacion
 If you find any error, comment it to me so we can fix it.

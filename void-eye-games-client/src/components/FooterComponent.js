@@ -2,7 +2,7 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTwitterSquare, faFacebookSquare, faInstagramSquare } from '@fortawesome/free-brands-svg-icons'
 import { Link } from 'react-router-dom';
-//TODO top padding desktop view
+
 class FooterComponent extends React.Component {
   render() {
     return (
@@ -10,7 +10,7 @@ class FooterComponent extends React.Component {
         <article className='d-block d-sm-flex justify-content-between'>
           <section className='d-block d-sm-flex flex-column justify-content-start align-items-center mx-0 mx-sm-4 pb-3 p-sm-0 flex-grow-1'>
               <h6 className='text-decoration-link'>About Us</h6>
-              <ul className='pl-0' style={{listStyle: 'none'}}>
+              <ul className='pl-2' style={{listStyle: 'none'}}>
                   <li><Link to='/support' className='text-decoration-none text-links'>Cookie policy</Link></li>
                   <li><Link to='/support' className='text-decoration-none text-links'>Privacy policy</Link></li>
                   <li><Link to='/support' className='text-decoration-none text-links'>Terms of use</Link></li>
