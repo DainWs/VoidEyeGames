@@ -47,7 +47,7 @@
     }
 
     @include media-breakpoint-up(md) {
-        height: 40%;
+        height: unset;
 
         &__info {
             overflow-y: hidden;

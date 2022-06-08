@@ -2,7 +2,7 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTwitterSquare, faFacebookSquare, faInstagramSquare } from '@fortawesome/free-brands-svg-icons'
 import { Link } from 'react-router-dom';
-//TODO top padding desktop view
+
 class FooterComponent extends React.Component {
   render() {
     return (

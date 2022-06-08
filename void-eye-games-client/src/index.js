@@ -21,6 +21,7 @@ import { withRouter } from './routes/Routes';
 
 let RouterGamePage = withRouter(GamesPage);
 let RouterGameFormPage = withRouter(GameFormPage);
+let RouterGameDetailsPage = withRouter(GameDetailsPage);
 let RouterCategoryFormPage = withRouter(CategoryFormPage);
 let RouterPlataformFormPage = withRouter(PlataformFormPage);
 
@@ -32,7 +33,7 @@ export default function App() {
           <Route path="/" element={<LayoutPage />}>
             <Route index element={<HomePage />} />
             <Route path="/games" element={<RouterGamePage />} />
-            <Route path="/details/:id" element={<GameDetailsPage />} />
+            <Route path="/details/:id" element={<RouterGameDetailsPage />} />
             <Route path="/signin" element={<SignInFormPage />} />
             <Route path="/login" element={<LogInFormPage />} />
             <Route path="/support" element={<SupportPage />} />

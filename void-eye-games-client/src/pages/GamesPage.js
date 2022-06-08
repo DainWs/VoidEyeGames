@@ -12,6 +12,12 @@ import { DESTINATION_CATEGORIES, DESTINATION_PLATAFORMS, DESTINATION_PLATAFORM_G
 import { SocketObserver } from '../services/socket/SocketObserver';
 import SocketRequest from '../services/socket/SocketRequest';
 
+/**
+ * Represents the 'Juegos' View, this page show/filtre/search games.
+ * 
+ * This class has grown so much because it has to handle Categories/Platforms and games.
+ * in addition to the requests that you have to make on the API's for this purpose.
+ */
 class GamesPage extends React.Component {
   constructor(props) {
     super(props);
@@ -35,16 +41,9 @@ class GamesPage extends React.Component {
     }
   }
 
-  setOrder(event) {
-    this.setState({orderMethod: event.target.value});
-  }
-
-  showOrHideFilters() {
-    this.scrollYPosition = 0;
-    let isShowingFilters = this.state.isShowingFilters;
-    this.setState({isShowingFilters: !isShowingFilters});
-  }
-
+  //============================================
+  // PLATAFORMS GAMES
+  //============================================
   updateSearchedGame(newData) {
     this.searchTitle = newData;
     this.onFiltre();
@@ -57,12 +56,45 @@ class GamesPage extends React.Component {
     this.setState({plataformsGames: plataformsGames});
   }
 
+  onShowMore() {
+    this.pageNum++;
+    this.isFiltring = false;
+    this.sendPlataformGamesRequest();
+  }
+
+  //============================================
+  // FILTERS LISTS
+  //============================================
+
+  //---------------------------------------
+  // CATEGORIES
+  //---------------------------------------
   changeCategoryState(event) {
     var categoryId = event.target.value;
     let selectedCategories = this.state.selectedCategories;
     if (selectedCategories.has(categoryId)) selectedCategories.delete(categoryId);
     else selectedCategories.add(categoryId);
     this.setState({selectedCategories: selectedCategories});
+  }
+
+  updateCategories() {
+    let categories = SocketDataProvideer.provide(DESTINATION_CATEGORIES);
+    this.setState({categories: categories});
+  }
+
+  onShowMoreCategories() {
+    let num = this.state.numOfCategories + 5;
+    this.hasMoreCategories = this.state.categories.length > num;
+    this.setState({numOfCategories: num})
+  }
+
+  //---------------------------------------
+  // PLATAFORMS
+  //---------------------------------------
+
+  updatePlataforms() {
+    let plataforms = SocketDataProvideer.provide(DESTINATION_PLATAFORMS);
+    this.setState({plataforms: plataforms});
   }
 
   changePlataformState(event) {
@@ -73,32 +105,23 @@ class GamesPage extends React.Component {
     this.setState({selectedPlataforms: selectedPlataforms});
   }
 
-  updateCategories() {
-    let categories = SocketDataProvideer.provide(DESTINATION_CATEGORIES);
-    this.setState({categories: categories});
-  }
-
-  updatePlataforms() {
-    let plataforms = SocketDataProvideer.provide(DESTINATION_PLATAFORMS);
-    this.setState({plataforms: plataforms});
-  }
-
-  onShowMore() {
-    this.pageNum++;
-    this.isFiltring = false;
-    this.sendPlataformGamesRequest();
-  }
-
-  onShowMoreCategories() {
-    let num = this.state.numOfCategories + 5;
-    this.hasMoreCategories = this.state.categories.length > num;
-    this.setState({numOfCategories: num})
-  }
-
   onShowMorePlataforms() {
     let num = this.state.numOfPlataforms + 5;
     this.hasMorePlataforms = this.state.plataforms.length >= num;
     this.setState({numOfPlataforms: num})
+  }
+
+  //============================================
+  // FILTERS UTILS
+  //============================================
+  setOrder(event) {
+    this.setState({orderMethod: event.target.value});
+  }
+
+  showOrHideFilters() {
+    this.scrollYPosition = 0;
+    let isShowingFilters = this.state.isShowingFilters;
+    this.setState({isShowingFilters: !isShowingFilters});
   }
 
   onFiltre() {
@@ -106,6 +129,10 @@ class GamesPage extends React.Component {
     this.isFiltring = true;
     this.sendPlataformGamesRequest();
   }
+
+  //============================================
+  // COMPONENT UTILS
+  //============================================
 
   componentDidMount() {
     EventObserver.subscribe(EVENT_SEARCH_GAME, 'GamesPage', this.updateSearchedGame.bind(this));
@@ -140,6 +167,9 @@ class GamesPage extends React.Component {
     SocketController.sendCustom(request, DESTINATION_PLATAFORM_GAMES);
   }
 
+  //============================================
+  // VIEW
+  //============================================
   render() {
     window.scrollTo(0, this.scrollYPosition);
     return (
@@ -217,6 +247,10 @@ class GamesPage extends React.Component {
     );
   }
 
+  //============================================
+  // FILTERS
+  //============================================
+
   getAsideClass() {
     if (this.state.isShowingFilters) {
       return 'filter-aside filter-active border-lg-right border-secondary mh-sm-100 w-15 no-select';
@@ -244,6 +278,10 @@ class GamesPage extends React.Component {
     }
     return 'd-none d-lg-none';
   }
+
+  //---------------------------------------
+  // GAMES
+  //---------------------------------------
   
   getGamesItems() {
     let gamesItemsViews = [];
@@ -256,6 +294,10 @@ class GamesPage extends React.Component {
     }
     return gamesItemsViews;
   }
+
+  //---------------------------------------
+  // CATEGORIES
+  //---------------------------------------
 
   getCategories() {
     let categories = this.state.categories;
@@ -274,6 +316,10 @@ class GamesPage extends React.Component {
   getCategoryShowMore() {
     return (this.hasMoreCategories) ? <a className="btn btn-quaternary w-100" href="#" onClick={this.onShowMoreCategories.bind(this)}>Show more</a> : <></>;
   }
+
+  //---------------------------------------
+  // PLATAFORMS
+  //---------------------------------------
 
   getPlataforms() {
     let plataforms = this.state.plataforms;
