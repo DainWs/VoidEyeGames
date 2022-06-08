@@ -10,5 +10,6 @@ void-eye-games-api/cache/credentials.json
 void-eye-games-client/build
 !void-eye-games-client/public
 void-eye-games-client/src/assets/css/App.css.map
+.crt/
 .crt/server.key
 .crt/server.csr
