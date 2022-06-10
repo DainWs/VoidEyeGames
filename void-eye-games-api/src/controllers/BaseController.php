@@ -5,7 +5,6 @@
  * DB Access: Yes
  * Uses files:
  *  - src\libraries\LogManager.php
- *  - Atlas\Orm\Atlas.php
  *  - src\domain\AssetsManager.php
  *  - src\domain\providers\AtlasProvider.php
  *  - src\domain\providers\DatabaseProvider.php
