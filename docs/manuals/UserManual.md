@@ -137,7 +137,7 @@ In this *Users manual* you will see the API **usage** and a **description** *exp
 Sending a **GET** request to */* or */health* you will retrieve this as a response:
 ```JSON
 {
-    "status":"UP"
+   "status":"UP"
 }
 ```
 This **UP** means that the API is reachable on the net, and you can start requesting data.

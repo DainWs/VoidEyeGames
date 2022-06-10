@@ -1,4 +1,21 @@
 <?php
+/**
+ * File: BaseController.php
+ * Purpose: Perform basic operations on the database of those classes that extend from it.
+ * DB Access: Yes
+ * Uses files:
+ *  - src\libraries\LogManager.php
+ *  - src\domain\AssetsManager.php
+ *  - src\domain\providers\AtlasProvider.php
+ *  - src\domain\providers\DatabaseProvider.php
+ * Used from:
+ *  - HealthController.php
+ *  - InsertController.php
+ *  - SelectController.php
+ *  - SessionController.php
+ *  - UpdateController.php
+ */
+
 
 namespace src\controllers;
 
@@ -7,9 +24,6 @@ use Exception;
 use Monolog\Logger;
 use Slim\Http\Response;
 use Atlas\Orm\Atlas;
-use classes\Media\Media;
-use classes\Game\GameRecord;
-use classes\Media\MediaRecord;
 use src\domain\AssetsManager;
 use src\domain\providers\AtlasProvider;
 use src\domain\providers\DatabaseProvider;
