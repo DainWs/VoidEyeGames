@@ -49,7 +49,7 @@ class MediaListItemComponent extends ItemContextMenuComponent {
     getImageView() {
         let media = new Media(this.state.data);
         if (media.mediaType.match(/.*video.*/)) {
-            return `<video width="200" autoplay muted><source src="${media.getUrl()}" type="${media.mediaType}"/>Your browser does not support the video tag.</video>`;
+            return `<video width="200" preload="none" autoplay muted><source src="${media.getUrl()}" type="${media.mediaType}"/>Your browser does not support the video tag.</video>`;
         }
         return `<img src="${media.getUrl() || media.src}" alt="Main image" style="max-width: 200px" />`;
     }

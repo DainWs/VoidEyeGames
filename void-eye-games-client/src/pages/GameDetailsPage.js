@@ -88,19 +88,19 @@ class GameDetailsPage extends React.Component {
     console.log(this.state.game);
     return (
       <div className='d-md-flex justify-content-center'>
-        <article className='game-details m-lg-3 w-100'>
+        <article className='game__details m-lg-3 w-100'>
           <header className='w-100'>
             <h1 className='w-100 pl-2 pl-lg-0'>{this.state.game.name || <Skeleton />}</h1>
           </header>
           <DetailsHeaderComponent game={this.state.game} />
           <hr />
           <section className='p-3 p-lg-0 my-3'>
-            <h3 className='mb-3'>Description</h3>
+            <h3 className='mb-3 capitalize'>Descripci&oacute;n</h3>
             {this.state.game.descripcion || <Skeleton count={10} />}
           </section>
           <section className='p-3 p-lg-0'>
             <header className='d-flex align-items-center'>
-              <h4>Comments</h4>
+              <h4 className='capitalize'>Comentarios</h4>
               <span className='text-error ml-3'>{this.state.commentError}</span>
             </header>
             <div className='d-flex m-3'>
@@ -110,13 +110,13 @@ class GameDetailsPage extends React.Component {
                 </div>
               </div>
               <div className='flex-grow-1'>
-                <textarea className='w-100 no-resize' rows={5} onChange={this.setCommentText.bind(this)} value={this.state.commentText} />
+                <textarea className='w-100 p-2 no-resize' rows={5} onChange={this.setCommentText.bind(this)} value={this.state.commentText} />
               </div>
             </div>
             <div className='d-flex flex-column justify-content-center'>
               <div className='row m-3'>
                 <div className='col-8 col-sm-9 col-md-10 d-none d-sm-block m-auto'><hr /></div>
-                <a className='col-12 col-sm-3 col-md-2 btn btn-quaternary align-self-baseline' onClick={this.sendCommentRequest.bind(this)}>Comment</a>
+                <a className='col-12 col-sm-3 col-md-2 btn btn-quaternary align-self-baseline capitalize' onClick={this.sendCommentRequest.bind(this)}>Comentar</a>
               </div>
               <div>
                 <div className='d-flex flex-column'>

@@ -5,11 +5,16 @@ import { NavLink } from 'react-router-dom';
  * Support page view.
  */
 class SupportPage extends React.Component {
+  constructor(props) {
+    super(props);
+    window.scrollTo(0, 0);
+  }
+
   render() {
     return (
       <article className='d-flex flex-column m-3 pb-3'>
         <section className='overflow-hidden'>
-          <h1 className='pb-2'>Support</h1>
+          <h1 className='pb-2'>Soporte</h1>
           <section className='row vh-40' style={{overflow: 'hidden'}}>
             <div className='col-12 col-sm-6 col-lg-8'>
               <p className='text-justify p-2'>
@@ -71,7 +76,7 @@ class SupportPage extends React.Component {
         </section>
         <section><hr/></section>
         <section className='my-1 py-1'>
-          <h3 className='pt-2'>Report</h3>
+          <h3 className='pt-2'>Reporte</h3>
           <section className='row' >
             <div className='col-12'>
               <p className='text-justify py-3 px-2'>
@@ -90,7 +95,7 @@ class SupportPage extends React.Component {
             </div>
           </section>
           <section className='py-3'>
-            <NavLink className='btn btn-secondary col-12 col-sm-3 text-primary' to='/report'>Send report</NavLink>
+            <NavLink className='btn btn-secondary col-12 col-sm-3 text-primary' to='/report'>Enviar reporte</NavLink>
           </section>
         </section>
       </article>

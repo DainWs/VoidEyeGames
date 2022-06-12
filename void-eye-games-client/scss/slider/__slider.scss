@@ -57,9 +57,8 @@
 
     // Used to support differents types of medias
     &--dynamic {
-        display: flex;
-        flex-direction: column;
-
+        min-height: calc(200px + 25vw);
+        
         & .slider {
             &-container {
                 height: 100%;
@@ -70,6 +69,11 @@
                 & .slide {
                     width: 100% !important;
                 }
+            }
+
+            &-frame {
+                display: flex;
+                align-items: center;
             }
         }
 
@@ -92,23 +96,36 @@
             align-items: center;
             flex-grow: 1;
 
+            $height: calc(100% - 50px);
+            height: $height;
+            min-height: $height;
+            max-height: $height;
             background-color: black;
 
             & > * {
                 width: 100%;
+                height: 100%;
             }
         }
 
         /** Responsive side **/
+        @include media-breakpoint-up(xm) { 
+            min-height: calc(200px + 30vw + 5vh);
+        }
+
         @include media-breakpoint-up(sm) { 
-            height: 50vh;
+            min-height: calc(200px + 35vw + 5vh);
         }
 
         @include media-breakpoint-up(md) { 
-            height: calc(100% - 200px);
+            & .slider {
+                &-list {
+                    height: 100%;
+                }
+            }
 
             & .tab-content {
-                height: calc(100% - 250px);
+                height: 500px;
                 overflow-y: hidden;
 
                 & > * {
@@ -119,7 +136,7 @@
         }
 
         @include media-breakpoint-up(lg) { 
-            height: 100%;
+            min-height: 100%;
 
             .tab-content {
                 
@@ -134,9 +151,10 @@
             }
 
             .tab-content {
-                height: calc(100% - 300px);
-                min-height: 600px;
-                max-height: 600px;
+                $height: calc(100% - 50px);
+                height: $height;
+                min-height: $height;
+                max-height: $height;
             }
         }
     }

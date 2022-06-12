@@ -1,5 +1,21 @@
 <?php
-
+/**
+ * File: InsertController.php
+ * Purpose: Perform database insert operations.
+ * DB Access: Yes
+ * Uses files:
+ *  - src\controllers\BaseController.php
+ *  - classes\User\User.php
+ *  - classes\Game\Game.php
+ *  - classes\Comment\Comment.php
+ *  - classes\Category\Category.php
+ *  - classes\Plataform\Plataform.php
+ *  - src\validators\CategoryValidator.php
+ *  - src\validators\GameValidator.php
+ *  - src\validators\PlataformValidator.php
+ * Used from:
+ *  - index.php
+ */
 namespace src\controllers;
 
 use Slim\Http\Request;

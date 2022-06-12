@@ -4,11 +4,12 @@ import { SessionManager } from '../../domain/SessionManager';
 import { SocketController } from '../../services/socket/SocketController';
 import SocketRequest from '../../services/socket/SocketRequest';
 import {  DESTINATION_SIGNIN } from '../../services/socket/SocketDestinations';
-import { NavLink } from 'react-router-dom';
+import { Navigate, NavLink } from 'react-router-dom';
 
 class SignInFormPage extends React.Component {
   constructor(props) {
     super(props);
+    window.scrollTo(0, 0);
     this.state = {
       username: '',
       password: '',
@@ -94,6 +95,8 @@ class SignInFormPage extends React.Component {
   }
 
   onSuccess(response) {
+    console.log(response.data);
+    console.log(Array.from(response.data.body));
     if (response.data.status !== 200) {
       this.onFailed(response);
       return;
@@ -111,23 +114,23 @@ class SignInFormPage extends React.Component {
         {this.getHasSession()}
         <section className='m-auto' style={{maxWidth: '800px'}}>
           <header>
-            <h1 className='text-align-center'>Sign in</h1>
+            <h1 className='text-align-center'>Registro</h1>
           </header>
           <form id='login-form' className='w-100 my-2'>
-            <section className='w-100 py-3'>
-              <label htmlFor='login-form--username' className='mb-2'><span className='text-error'>* </span>Username:</label>
+            <section className='w-100 pt-3'>
+              <label htmlFor='login-form--username' className='mb-2'><span className='text-error'>* </span>Nombre de usuario:</label>
               <input id='login-form--username' className='form-control w-100' type='text' value={this.state.username} onChange={this.onChangeUsername.bind(this)} autoComplete='false'/>
             </section>
-            <section className='w-100 py-3'>
-              <label htmlFor='login-form--email' className='mb-2'><span className='text-error'>* </span>Email:</label>
+            <section className='w-100 pt-3'>
+              <label htmlFor='login-form--email' className='mb-2'><span className='text-error'>* </span>Correo electr&oacute;nico:</label>
               <input id='login-form--email' className='form-control w-100' type='email' value={this.state.email} onChange={this.onChangeEmail.bind(this)} autoComplete='false'/>
             </section>
-            <section className='w-100 py-3'>
-              <label htmlFor='login-form--password' className='mb-2'><span className='text-error'>* </span>Password:</label>
+            <section className='w-100 pt-3'>
+              <label htmlFor='login-form--password' className='mb-2'><span className='text-error'>* </span>Contrase&ntilde;a:</label>
               <input id='login-form--password' className='form-control w-100' type='password' value={this.state.password} onChange={this.onChangePassword.bind(this)} autoComplete='false'/>
             </section>
             <section className='w-100 py-3'>
-              <label htmlFor='login-form--password-confirmation' className='mb-2'><span className='text-error'>* </span>Confirmation password:</label>
+              <label htmlFor='login-form--password-confirmation' className='mb-2'><span className='text-error'>* </span>Confirmaci&oacute;n contrase&ntilde;a:</label>
               <input id='login-form--password-confirmation' className='form-control w-100' type='password' value={this.state.confirmationPassword} onChange={this.onChangeConfirmationPassword.bind(this)} autoComplete='false'/>
             </section>
             <section className='py-2 required'>
@@ -146,10 +149,10 @@ class SignInFormPage extends React.Component {
             </section>
             {this.getErrorView()}
             <section className='d-flex flex-column w-100 text-center py-3'>
-              <a className='btn btn-quaternary w-100 text-primary' onClick={this.submit.bind(this)}>Sign in</a>
+              <a className='btn btn-quaternary w-100 text-primary' onClick={this.submit.bind(this)}>Registrarse</a>
             </section>
             <section className='d-flex flex-column w-100 text-center py-3'>
-              <NavLink className='btn btn-secondary w-100 text-primary' to='/login'>Back to log in</NavLink>
+              <NavLink className='btn btn-secondary w-100 text-primary' to='/login'>Volver al inicio de sesi&oacute;n</NavLink>
             </section>
           </form>
         </section>
@@ -164,8 +167,18 @@ class SignInFormPage extends React.Component {
 
   getErrorView() {
     let error = this.state.errors;
-    if (error === undefined || error === null || error.length <= 0) return (<></>);
-    return (<section><p className='text-error'>{error}</p></section>);
+    if (!error || error.length <= 0) return (<></>);
+    if (typeof error === 'string' || error instanceof String) {
+      return (<section><p className='text-error'>{error}</p></section>);
+    }
+
+    var listOfElements = [];
+    let errorsList = Object.values(error);
+    errorsList.forEach((value, index) => {
+      listOfElements.push(<span key={'error-item--' + index}>{value}<br/></span>);
+    });
+
+    return (<section><p className='text-error'>{listOfElements}</p></section>);
   }
 }
 

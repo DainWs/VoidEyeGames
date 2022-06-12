@@ -64,14 +64,12 @@ class HomePage extends React.Component {
   // PLATAFORMS GAMES
   //============================================
   updatePlataformGames(response) {
-    let plataformsGames = this.state.plataformsGames;
-    plataformsGames.push(...response.data);
-    this.setState({plataformsGames: plataformsGames});
+    this.setState({plataformsGames: response.data});
   }
 
   sendGamesRequest(page = 1) {
     let request = new SocketRequest();
-    request.setParams({pageNum: page});
+    request.setParams({pageNum: page, sort: "price"});
     request.setMethod('GET');
     SocketController.sendCustomWithCallback(request, DESTINATION_PLATAFORM_GAMES, this.updatePlataformGames.bind(this));
   }
@@ -83,7 +81,7 @@ class HomePage extends React.Component {
     EventObserver.subscribe(ON_CACHE_LOAD, "HomePage", this.onCacheLoad.bind(this));
     this.sendGamesRequest();
     this.sendSliderGamesRequest();
-    if (SessionManager.check()) {
+    if (SessionManager.checkExpiration()) {
       EventObserver.notify(EVENT_SESSION_CHANGE);
     }
   }

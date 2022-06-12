@@ -8,6 +8,7 @@
  *  - src\domain\AssetsManager.php
  *  - src\domain\providers\AtlasProvider.php
  *  - src\domain\providers\DatabaseProvider.php
+ *  - src\domain\dto\JsonResponse.php
  * Used from:
  *  - HealthController.php
  *  - InsertController.php
@@ -15,8 +16,6 @@
  *  - SessionController.php
  *  - UpdateController.php
  */
-
-
 namespace src\controllers;
 
 use PDO;
@@ -36,13 +35,46 @@ use src\libraries\LogManager;
  */
 class BaseController
 {
+    /**
+     * The log manager.
+     * @var LogManager $logger
+     * @see LogManager
+     */
     protected LogManager $logger;
+
+    /**
+     * The PDO object connection.
+     * @var PDO $db
+     * @see PDO
+     */
     protected PDO $db;
+
+    /**
+     * The Atlas librarie instance.
+     * @var Atlas $atlas
+     * @see Atlas
+     */
     protected Atlas $atlas;
 
+    /**
+     * This is the result code used to create the JSONResponse.
+     * @var mixed $resultCode
+     * @see JsonResponse
+     */
     protected $resultCode = 200;
+
+    /**
+     * This is the result message used to create the JSONResponse.
+     * @var mixed $resultMessage
+     * @see JsonResponse
+     */
     protected $resultMessage = 'OK';
 
+    /**
+     * Creates an instance of this controller
+     * @param Class $clazz the class used for the logger.
+     * @see LogManager
+     */
     public function __construct($clazz = BaseController::class) {
         $this->logger = new LogManager($clazz);
         $this->db = DatabaseProvider::getInstance();

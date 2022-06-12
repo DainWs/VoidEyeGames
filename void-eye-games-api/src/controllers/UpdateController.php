@@ -1,5 +1,16 @@
 <?php
-
+/**
+ * File: UpdateController.php
+ * Purpose: Perform database user update operations.
+ * DB Access: Yes
+ * Uses files:
+ *  - src\controllers\BaseController.php
+ *  - classes\Game\Game.php
+ *  - classes\Category\Category.php
+ *  - classes\Plataform\Plataform.php
+ * Used from:
+ *  - index.php
+ */
 namespace src\controllers;
 
 use Exception;
@@ -75,6 +86,7 @@ class UpdateController extends BaseController
                 ->fetchRecord();
             
             if ($record == null) throw new AppException('This category does not exist');
+            $this->logger->log("[POST] : " . json_encode($category));
             $record->update($category, $this->atlas);
             $this->atlas->beginTransaction();
             $this->atlas->persist($record);

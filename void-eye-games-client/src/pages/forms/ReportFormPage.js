@@ -17,6 +17,7 @@ const REASONS = [
 class ReportFormPage extends React.Component {
   constructor(props) {
     super(props);
+    window.scrollTo(0, 0);
     this.state = {
       selectedReason: null,
       issue: '',
@@ -122,51 +123,53 @@ class ReportFormPage extends React.Component {
 
   render() {
     return (
-      <article className='m-auto p-2 p-sm-0 w-100' style={{minHeight: '1000px', maxWidth: '800px'}}>
-        <header>
-          <h1 className='text-align-center'>Report form</h1>
-        </header>
-        <form id='report-form'>
-          <section className='py-2 d-flex flex-column'>
-            <label htmlFor='report-form--reason'>Reason:</label>
-            <Select id='report-form--reason' options={REASONS} onChange={this.onChangeReason.bind(this)}/>
-          </section>
+      <article className='p-2 p-sm-0 my-4'>
+        <section className='m-auto' style={{maxWidth: '800px'}}>
+          <header>
+            <h1 className='text-align-center'>Report form</h1>
+          </header>
+          <form id='report-form'>
+            <section className='py-2 d-flex flex-column'>
+              <label className='capitalize' htmlFor='report-form--reason'>Raz&oacute;n:</label>
+              <Select id='report-form--reason' options={REASONS} onChange={this.onChangeReason.bind(this)}/>
+            </section>
 
-          <section className='py-2 d-flex flex-column'>
-            <label htmlFor='report-form--issue'>Case/Issue:</label>
-            <input id='report-form--issue' className='form-control' type='text' value={this.state.issue} onChange={this.onChangeIssue.bind(this)}/>
-          </section>
+            <section className='py-2 d-flex flex-column'>
+              <label className='capitalize' htmlFor='report-form--issue'>Asunto:</label>
+              <input id='report-form--issue' className='form-control' type='text' value={this.state.issue} onChange={this.onChangeIssue.bind(this)}/>
+            </section>
 
-          <section className='py-2 d-flex flex-column'>
-            <label htmlFor='report-form--description'>Description:</label>
-            <textarea id='report-form--description' className='form-control no-resize' rows={10} value={this.state.description} onChange={this.onChangeDescription.bind(this)}/>
-          </section>
+            <section className='py-2 d-flex flex-column'>
+              <label className='capitalize' htmlFor='report-form--description'>Descripci&oacute;n:</label>
+              <textarea id='report-form--description' className='form-control no-resize' rows={10} value={this.state.description} onChange={this.onChangeDescription.bind(this)}/>
+            </section>
 
-          <section className='py-2 d-flex flex-column'>
-            <label htmlFor='report-form--email'>Contact email:</label>
-            <input id='report-form--email' type='email' className='form-control' value={this.state.email} onChange={this.onChangeEmail.bind(this)}/>
-          </section>
+            <section className='py-2 d-flex flex-column'>
+              <label className='capitalize' htmlFor='report-form--email'>Correo:</label>
+              <input id='report-form--email' type='email' className='form-control' value={this.state.email} onChange={this.onChangeEmail.bind(this)}/>
+            </section>
 
-          <section className='py-2 d-flex flex-column'>
-            <label htmlFor='report-form--email-confirmation'>Contact email confirmation:</label>
-            <input id='report-form--email-confirmation' className='form-control' type='email' value={this.state.emailConfirmation} onChange={this.onChangeEmailConfirmation.bind(this)}/>
-          </section>
+            <section className='py-2 d-flex flex-column'>
+              <label className='capitalize' htmlFor='report-form--email-confirmation'>Confirmaci&oacute;n de correo:</label>
+              <input id='report-form--email-confirmation' className='form-control' type='email' value={this.state.emailConfirmation} onChange={this.onChangeEmailConfirmation.bind(this)}/>
+            </section>
 
-          <section className='py-2 required'>
-            <label className='check-form ml-3' htmlFor='report-form--terms'>
-              Accept terms and conditions.
-              <input id='report-form--terms' type='checkbox' value={this.state.terms} checked={this.state.terms} onChange={this.onChangeTerms.bind(this)}/>
-              <span className="checkmark"></span>
-            </label>
-          </section>
-          
-          <section className='d-flex justify-content-between mb-3'>
-            <a className='btn btn-primary border' onClick={this.cancel.bind(this)}>Cancel</a>
-            <a className='btn btn-quaternary' onClick={this.submit.bind(this)}>Submit</a>
-          </section>
+            <section className='py-2 required'>
+              <label className='check-form ml-3' htmlFor='report-form--terms'>
+                Accept terms and conditions.
+                <input id='report-form--terms' type='checkbox' value={this.state.terms} checked={this.state.terms} onChange={this.onChangeTerms.bind(this)}/>
+                <span className="checkmark"></span>
+              </label>
+            </section>
+            
+            <section className='d-flex justify-content-between mb-3'>
+              <a className='btn btn-primary border' onClick={this.cancel.bind(this)}>Cancelar</a>
+              <a className='btn btn-quaternary' onClick={this.submit.bind(this)}>Enviar</a>
+            </section>
 
-          {this.getErrorView()}
-        </form>
+            {this.getErrorView()}
+          </form>
+        </section>
       </article>
     );
   }

@@ -239,7 +239,7 @@ class PlataformFormPage extends ModelFormPage {
     return (
       <section className='row h-100'>
         {this.checkSession()}
-        <article className='d-flex flex-column mx-auto p-2 p-sm-0 col-12 col-sm-10'>
+        <article className='d-flex flex-column mx-0 mx-lg-auto p-0 p-lg-2 col-12 col-sm-10'>
           <header>
             <h1 className='text-center'>Plataforms Form</h1>
           </header>
@@ -256,11 +256,23 @@ class PlataformFormPage extends ModelFormPage {
             <section className='row w-100 m-0 p-0'>
               <section className='col-12 col-sm-6 col-lg-3 p-0 pr-sm-3'>
                 <label htmlFor='plataform-form--name' className='m-0 mb-sm-2'>Name:</label>
-                <input id='plataform-form--name' className='form-control w-100' type='text' value={this.state.plataform.name || ''} onChange={this.onChangeName.bind(this)} autoComplete='false' />
+                <input id='plataform-form--name' 
+                  className='form-control w-100' 
+                  type='text' 
+                  value={this.state.plataform.name || ''} 
+                  onChange={this.onChangeName.bind(this)} 
+                  autoComplete='false' 
+                  data-tip='This is the plataform name.'/>
               </section>
               <section className='col-12 col-sm-6 col-lg-4 p-0'>
-                <label htmlFor='plataform-form--name' className='m-0 mb-sm-2'>Web Url:</label>
-                <input id='plataform-form--name' className='form-control w-100' type='text' value={this.state.plataform.url || ''} onChange={this.onChangeUrl.bind(this)} autoComplete='false' />
+                <label htmlFor='plataform-form--url' className='m-0 mb-sm-2'>Web Url:</label>
+                <input id='plataform-form--url' 
+                  className='form-control w-100' 
+                  type='text' 
+                  value={this.state.plataform.url || ''} 
+                  onChange={this.onChangeUrl.bind(this)} 
+                  autoComplete='false' 
+                  data-tip='This is the plataform URL.'/>
               </section>
               <section className='col-12 col-lg-5 p-0'>
                 <div className='row m-0 mt-3 mt-sm-0 mb-sm-2 p-0'>
@@ -269,7 +281,12 @@ class PlataformFormPage extends ModelFormPage {
                 </div>
                 <div className='m-0 mt-3 mt-sm-0 p-0'>
                   <label htmlFor='plataform-form--logo' className='btn btn-form d-block m-0 ml-lg-3'><FontAwesomeIcon icon={faUpload} /> Upload file</label>
-                  <input id='plataform-form--logo' className='form-control w-100' type="file" accept='image/*' onChange={this.onFileChange.bind(this)} />
+                  <input id='plataform-form--logo' 
+                    className='form-control w-100' 
+                    type="file" 
+                    accept='image/*' 
+                    onChange={this.onFileChange.bind(this)}
+                    data-tip='The platform logo is mandatory.'/>
                 </div>
               </section>
               <section className='col-12 row w-100 m-0 p-0 pt-3'>
@@ -296,7 +313,8 @@ class PlataformFormPage extends ModelFormPage {
                   value={this.state.plataformGame.price} 
                   onChange={this.onChangePrice.bind(this)} 
                   autoComplete='false' 
-                  disabled={this.state.editingGameId == null}/>
+                  disabled={this.state.editingGameId == null}
+                  data-tip='The price of the game on this platform.'/>
               </section>
               <section className='col-12 col-sm-6 col-lg-3 p-0 pr-lg-3 m-0 mt-2 mt-sm-0'>
                 <label htmlFor='plataform-form--price' className='m-0'>Currency type:</label>
@@ -304,7 +322,8 @@ class PlataformFormPage extends ModelFormPage {
                   hideSelectedOptions={true}
                   placeholder={this.state.plataformGame.priceUnit || 'Select...'}
                   onChange={this.onChangeConcurrencyType.bind(this)} 
-                  isDisabled={this.state.editingGameId == null}/>
+                  isDisabled={this.state.editingGameId == null}
+                  data-tip='The type of currency with which it is sold on this platform.'/>
               </section>
               <section className='col-12 col-sm-6 col-lg-2 p-0 pr-sm-3 m-0 mt-2 mt-sm-0'>
                 <label htmlFor='plataform-form--discount' className='m-0'>Discount:</label>
@@ -313,7 +332,8 @@ class PlataformFormPage extends ModelFormPage {
                   value={this.state.plataformGame.discount} 
                   onChange={this.onChangeDiscount.bind(this)} 
                   autoComplete='false' 
-                  disabled={this.state.editingGameId == null}/>
+                  disabled={this.state.editingGameId == null}
+                  data-tip='The game discount, min 0 and max 1.'/>
               </section>
               <section className='col-12 col-sm-3 col-lg-2 p-0 mt-2 mt-sm-0'>
                 <label htmlFor='plataform-form--enabled' className='m-0'>Its on sale:</label>
@@ -347,7 +367,7 @@ class PlataformFormPage extends ModelFormPage {
   }
 
   checkSession() {
-    return (SessionManager.check()) ? <Navigate replace to="/home" /> : <></>;
+    return (SessionManager.checkExpiration()) ? <Navigate replace to="/home" /> : <></>;
   }
 
   getImageView() {
@@ -369,7 +389,7 @@ class PlataformFormPage extends ModelFormPage {
     let classes = (isEnabled) ? "w-100 btn btn-quaternary" : "w-100 btn btn-error ";
     classes = (this.state.editingGameId == null) ? classes + ' disabled' : classes
     return (
-      <a type="button" className={classes} onClick={this.onTurnGameEnabled.bind(this)}>
+      <a type="button" className={classes} onClick={this.onTurnGameEnabled.bind(this)} data-tip='If it is currently being sold on the platform.'>
         {(isEnabled) ? 'Enabled' : 'Disabled'}
       </a>
     );

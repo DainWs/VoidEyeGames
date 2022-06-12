@@ -1,4 +1,15 @@
 <?php
+/**
+ * File: HealthController.php
+ * Purpose: Perform health operations.
+ * DB Access: Yes
+ * Uses files:
+ *  - src\controllers\BaseController.php
+ *  - src\domain\dto\health\HealthComponent.php
+ *  - src\domain\dto\health\HealthStatus.php
+ * Used from:
+ *  - index.php
+ */
 
 namespace src\controllers;
 

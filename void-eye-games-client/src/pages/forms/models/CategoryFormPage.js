@@ -200,7 +200,7 @@ class CategoryFormPage extends ModelFormPage {
     }
 
     checkSession() {
-        return (SessionManager.check()) ? <Navigate replace to="/home" /> : <></>;
+        return (SessionManager.checkExpiration()) ? <Navigate replace to="/home" /> : <></>;
     }
 
     getCategoriesOptions() {

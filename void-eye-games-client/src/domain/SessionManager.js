@@ -39,12 +39,12 @@ class SessionManager {
     }
 
     reload() {
-        if (this.check()) {
+        if (this.checkExpiration()) {
             this.setSession(DEFAULT_SESSION);
         }
     }
 
-    check() {
+    checkExpiration() {
         return (!this.session.expiration || this.session.expiration < Date.now());
     }
 

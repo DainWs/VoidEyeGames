@@ -11,12 +11,12 @@ use src\domain\exceptions\AppException;
  * This class manage the send email task
  */
 class EmailManager {
-    private const SMTP_HOST = 'smtp.gmail.com';
-    private const SMTP_PORT = 465;
+    private const SMTP_HOST = 'smtp.office365.com';
+    private const SMTP_PORT = 587;
     private const SMTP_AUTH = true;
-    private const SMTP_ENCRYPTION = PHPMailer::ENCRYPTION_SMTPS;
+    private const SMTP_ENCRYPTION = PHPMailer::ENCRYPTION_STARTTLS;
     private const USER_NAME = 'Void Eye Support';
-    private const USER_EMAIL = 'dm9pZC5leWUuZ2FtZXNAZ21haWwuY29t';
+    private const USER_EMAIL = 'dm9pZC5leWUuZ2FtZXNAaG90bWFpbC5jb20=';
     private const USER_PASSWORD = 'SHMlakVvekI2JkRMdlNIXnlXOEtCN2lOZUBVYyUwYk5pMHBpZ1BNbnFhVTBxVSpqTFY=';
     
     private LogManager $logger;
