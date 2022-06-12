@@ -1,9 +1,20 @@
 <?php
-
+/**
+ * File: SessionController.php
+ * Purpose: Perform database user insert/credentials and email operations.
+ * DB Access: Yes
+ * Uses files:
+ *  - src\controllers\BaseController.php
+ *  - src\domain\AuthManager.php
+ *  - src\libraries\EmailManager.php
+ *  - src\validators\SignUserValidator.php
+ *  - classes\User\User.php
+ * Used from:
+ *  - index.php
+ */
 namespace src\controllers;
 
 use Exception;
-use Monolog\Logger;
 use Slim\Http\Request;
 use Slim\Http\Response;
 use classes\User\User;

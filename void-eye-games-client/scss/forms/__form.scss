@@ -11,10 +11,16 @@ label {
     }
 }
 
+.capitalize {
+    text-transform: capitalize;
+}
+
 input{
-    border-width: calc(1px + .01vw);
+    border-width: calc(0.063rem + .01vw);
 
     &[type=file] {display: none;}
+    &[type=checkbox],
+    &[type=radio] {text-transform: capitalize;}
 
     &#search:hover {
         cursor: pointer;
@@ -27,7 +33,7 @@ input{
 }
 
 textarea {
-    border-width: calc(1px + .01vw);
+    border-width: calc(0.063rem + .01vw);
 
     &.form-control:focus {
         border-color: $secondary !important;
@@ -37,7 +43,7 @@ textarea {
 .dropzone {
     width: 100%;
     height: 100%;
-    border: 4px dashed $secondary;
+    border: 0.25rem dashed $secondary;
     background: #ffffff9c;
 
     &.active {
@@ -48,10 +54,10 @@ textarea {
 .check-form {
     display: block;
     position: relative;
-    padding-left: 35px;
-    margin-bottom: 12px;
+    padding-left: 2.188rem;
+    margin-bottom: 0.75rem;
     cursor: pointer;
-    font-size: 22px;
+    font-size: 1.375rem;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
@@ -65,22 +71,17 @@ textarea {
         width: 0;
     }
   
+    .radiobtn,
     .checkmark {
         position: absolute;
-        top: 5px;
+        top: 0.313rem;
         left: 0;
-        height: 25px;
-        width: 25px;
+        height: 1.563rem;
+        width: 1.563rem;
         background-color: #eee;
     }
 
     .radiobtn {
-        position: absolute;
-        top: 5px;
-        left: 0;
-        height: 25px;
-        width: 25px;
-        background-color: #eee;
         border-radius: 50%;
     }
   
@@ -107,22 +108,22 @@ textarea {
     }
 
     & .checkmark:after {
-        left: 9px;
-        top: 5px;
-        width: 10px;
-        height: 15px;
+        left: 0.563rem;
+        top: 0.313rem;
+        width: 0.625rem;
+        height: 0.938rem;
         border: solid white;
-        border-width: 0 5px 5px 0;
+        border-width: 0 0.313rem 0.313rem 0;
         -webkit-transform: rotate(45deg) translate(.5rem, -0.2rem);
         -ms-transform: rotate(45deg) translate(.5rem, -0.2rem);
         transform: rotate(45deg) translate(.5rem, -0.2rem);
     }
 
     & .radiobtn:after {
-        top: 9px;
-        left: 9px;
-        width: 8px;
-        height: 8px;
+        top: 0.563rem;
+        left: 0.563rem;
+        width: 0.5rem;
+        height: 0.5rem;
         border-radius: 50%;
         background: white;
         -webkit-transform: translate(100%, 100%);
@@ -135,5 +136,5 @@ textarea {
     content: "*";
     color: $error;
     position: absolute;
-    transform: translateY(-4px);
+    transform: translateY(-0.25rem);
 }

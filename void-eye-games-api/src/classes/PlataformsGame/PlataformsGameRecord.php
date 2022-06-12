@@ -17,6 +17,11 @@ class PlataformsGameRecord extends Record
 {
     use PlataformsGameFields;
 
+    /**
+     * Updates a plataformGame with other PlataformGame object as array representation.
+     * @param Array $updatedPlataformGame a list of properties from PlataformGame objects.
+     * @throws AppException if price is not a number, if the currency type is not correct, or if the discount is not correct.
+     */
     public function update(Array $updatedPlataformGame): void
     {
         $this->updatePrice($updatedPlataformGame['price'] ?? null);
@@ -25,6 +30,11 @@ class PlataformsGameRecord extends Record
         $this->updateIsEnabled($updatedPlataformGame['isEnabled'] ?? null);
     }
 
+    /**
+     * Updates the plataformGame price.
+     * @param $price the new price.
+     * @throws AppException if price is not a number
+     */
     public function updatePrice($price): void
     {
         if (!$price) return;
@@ -33,6 +43,11 @@ class PlataformsGameRecord extends Record
         $this->price = $price;
     }
     
+    /**
+     * Updates the plataformGame priceUnit.
+     * @param $priceUnit the new priceUnit.
+     * @throws AppException if the currency type is not correct
+     */
     public function updatePriceUnit($priceUnit): void
     {
         if (!$priceUnit || empty($priceUnit)) return;
@@ -44,6 +59,11 @@ class PlataformsGameRecord extends Record
         $this->priceUnit = $priceUnit;
     }
 
+    /**
+     * Updates the plataformGame discount.
+     * @param $discount the new discount.
+     * @throws AppException the discount is not correct.
+     */
     public function updateDiscount($discount): void
     {
         if (!$discount) return;
@@ -52,6 +72,10 @@ class PlataformsGameRecord extends Record
         $this->discount = $discount;
     }
 
+    /**
+     * enables or disables the game of this plataformGame, when disabled is the same as the plataform do not sell the game anymore.
+     * @param $isEnabled true to enable the game, false otherwise.
+     */
     public function updateIsEnabled($isEnabled): void
     {
         if ($isEnabled === null) return;

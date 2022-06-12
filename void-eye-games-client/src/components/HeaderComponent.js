@@ -32,8 +32,11 @@ class HeaderComponent extends React.Component {
   }
   
   update() {
-    this.setState({session: SessionManager.getSession()});
-    this.navigate('/home', {replace: true});
+    let newSession = SessionManager.getSession();
+    if (this.state.session.token != newSession.token) {
+      this.setState({session: SessionManager.getSession()});
+      this.navigate('/', {replace: true});
+    }
   }
   
   closeHamburger() {
@@ -43,7 +46,6 @@ class HeaderComponent extends React.Component {
   closeHamburgerAndSession() {
     this.closeHamburger();
     SessionManager.close();
-    this.setState({session: SessionManager.getSession()});
   }
 
   onChangeSearch(event) {
@@ -71,7 +73,7 @@ class HeaderComponent extends React.Component {
 
   render() {
     return (
-      <header className='position-fixed w-100' style={{zIndex: 1000}}>
+      <header className='position-fixed w-100' style={{zIndex: 900}}>
         <NavLink id='navigate-home' to="/"/>
         <nav className="nav justify-content-between bg-secondary" style={{  fontSize: '1.4rem', fontFamily: 'Arial' }}>
           <div className='nav h-100 d-none d-sm-flex'>

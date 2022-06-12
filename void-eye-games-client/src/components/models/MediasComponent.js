@@ -24,9 +24,12 @@ class MediasComponent extends React.Component {
         this.state = {medias: []};
     }
 
-    componentWillReceiveProps(nextProps) {
-        console.log(nextProps.medias);
-        this.setState({medias: nextProps.medias})
+    static getDerivedStateFromProps(props, state) {
+        if (props.medias !== state.medias) {
+            console.log(props.medias);
+            return { medias: props.medias };
+        }
+        return null;
     }
 
     render() {
@@ -34,10 +37,10 @@ class MediasComponent extends React.Component {
             <>
                 <ul className="nav nav-tabs bg-secondary border-0" id="myTab" role="tablist">
                     <li className="nav-item">
-                        <a className="nav-link active" id="nav-images-tab" data-toggle="tab" href="#nav-images" role="tab" aria-controls="nav-images" aria-selected="true">Images</a>
+                        <a className="nav-link active capitalize" id="nav-images-tab" data-toggle="tab" href="#nav-images" role="tab" aria-controls="nav-images" aria-selected="true">Imagenes</a>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link" id="nav-videos-tab" data-toggle="tab" href="#nav-videos" role="tab" aria-controls="nav-videos" aria-selected="false">Videos</a>
+                        <a className="nav-link capitalize" id="nav-videos-tab" data-toggle="tab" href="#nav-videos" role="tab" aria-controls="nav-videos" aria-selected="false">Videos</a>
                     </li>
                 </ul>
                 <div className="tab-content border border-dark" id="myTabContent">

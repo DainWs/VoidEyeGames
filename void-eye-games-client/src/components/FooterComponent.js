@@ -19,7 +19,7 @@ class FooterComponent extends React.Component {
           <section className='d-block d-sm-flex flex-column justify-content-start align-items-center mx-0 mx-sm-4 pb-3 p-sm-0 flex-grow-1'>
               <h6>Contact Us</h6>
               <ul className='pl-2' style={{listStyle: 'none'}}>
-                  <li><strong>Mail:</strong> void.eye.games@gmail.com</li>
+                  <li><strong>Mail:</strong> void.eye.games@hotmail.com</li>
                   <li><strong>Tlf:</strong> 654 000 000/954 000 000</li>
               </ul>
           </section>

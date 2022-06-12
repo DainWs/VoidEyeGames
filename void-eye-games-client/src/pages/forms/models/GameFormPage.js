@@ -130,6 +130,7 @@ class GameFormPage extends ModelFormPage {
       // Read each dropped file and make a "Document" array of object
       var instance = this;
       var medias = this.state.medias;
+      console.log(filesUpload);
       Array.from(filesUpload).forEach((image, index) => {
         var reader = new FileReader();
         reader.readAsDataURL(image);
@@ -141,7 +142,7 @@ class GameFormPage extends ModelFormPage {
           media.src = reader.result;
           medias.push(media);
 
-          if (index == (filesUpload.length - 1)) {
+          if (medias.length == filesUpload.length) {
             this.setState({ medias: medias, isDragingOver: false });
           }
         }.bind(instance);
@@ -306,8 +307,8 @@ class GameFormPage extends ModelFormPage {
               <hr className='w-100 my-3' />
 
               <section className='row w-100 m-0'>
-                <Select className='flex-grow-1 p-0' options={this.getCategoriesOptions()} onChange={this.onChangeSelectedCategory.bind(this)} />
-                <a className='btn btn-form text-dark col-12 col-sm-3 m-0 mt-3 mt-sm-0 ml-sm-2' onClick={this.addSelectedCategory.bind(this)}>Add category</a>
+                <Select className='col-12 col-sm-6 col-md-8 flex-grow-1 p-0 pr-sm-2' options={this.getCategoriesOptions()} onChange={this.onChangeSelectedCategory.bind(this)} />
+                <a className='btn btn-form text-dark col-12 col-sm-6 col-md-4 m-0 mt-3 mt-sm-0' onClick={this.addSelectedCategory.bind(this)}>Add category</a>
               </section>
 
               <fieldset id='categories-list' title='Categories in game' className='d-flex flex-column flex-grow-1 w-100 border mt-3 border-gray rounded' style={{ minHeight: '200px' }}>
@@ -350,7 +351,7 @@ class GameFormPage extends ModelFormPage {
   }
 
   checkSession() {
-    return (SessionManager.check()) ? <Navigate replace to="/home" /> : <></>;
+    return (SessionManager.checkExpiration()) ? <Navigate replace to="/home" /> : <></>;
   }
 
   getMainImageView() {

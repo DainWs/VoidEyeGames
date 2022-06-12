@@ -6,6 +6,8 @@ export const MODEL_FORM_MODE_EDIT = 1;
 class ModelFormPage extends React.Component {
     constructor(props) {
         super(props);
+        window.scrollTo(0, 0);
+        
         this.navigate = props.navigate;
         this.state = this.createState(props);
     }

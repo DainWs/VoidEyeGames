@@ -9,6 +9,7 @@ import { SessionManager } from '../../domain/SessionManager';
 class LogInFormPage extends React.Component {
   constructor(props) {
     super(props);
+    window.scrollTo(0, 0);
     this.state = {
       username: '',
       password: '',
@@ -103,24 +104,24 @@ class LogInFormPage extends React.Component {
         {this.getHasSession()}
         <section className='m-auto' style={{maxWidth: '800px'}}>
           <header>
-            <h1 className='text-align-center'>Log in</h1>
+            <h1 className='text-align-center'>Inicio de sesi&oacute;n</h1>
           </header>
           <form id='login-form' className='w-100 my-2'>
             <section className='w-100 my-3'>
-              <label htmlFor='login-form--username' className='mb-2'><span className='text-error'>* </span>Username:</label>
+              <label htmlFor='login-form--username' className='mb-2'><span className='text-error'>* </span>Nombre de usuario:</label>
               <input id='login-form--username' className='form-control w-100' type='text' value={this.state.username} onChange={this.onChangeUsername.bind(this)} autoComplete='false'/>
             </section>
             <section className='w-100 my-3'>
-              <label htmlFor='login-form--password' className='mb-2'><span className='text-error'>* </span>Password:</label>
+              <label htmlFor='login-form--password' className='mb-2'><span className='text-error'>* </span>Contrase&ntilde;a:</label>
               <input id='login-form--password' className='form-control w-100' type='password' value={this.state.password} onChange={this.onChangePassword.bind(this)} autoComplete='false'/>
             </section>
             {this.getSuccessView()}
             {this.getErrorView()}
             <section className='d-flex flex-column w-100 text-center my-3'>
               <a className='text-links text-left text-primary py-3' onClick={this.showModal.bind(this)} style={{textDecoration: 'underline'}}>Have you forgotten your password? get it back</a>
-              <a className='btn btn-quaternary w-100 text-primary' onClick={this.submit.bind(this)}>Log in</a>
-              <span className='my-3'>or register if you don't have an account yet</span>
-              <NavLink className='btn btn-secondary w-100 text-primary' to='/signin'>Sign in</NavLink>
+              <a className='btn btn-quaternary w-100 text-primary' onClick={this.submit.bind(this)}>Iniciar sesi&oacute;n</a>
+              <span className='my-3'>o registrate si aun no tienes una cuenta</span>
+              <NavLink className='btn btn-secondary w-100 text-primary' to='/signin'>Registrarse</NavLink>
             </section>
           </form>
         </section>

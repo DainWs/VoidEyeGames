@@ -20,7 +20,13 @@ class PlataformRecord extends Record
 {
     use PlataformFields;
 
-    public function addPlataformGame(Array $plataformGame, Atlas $atlas): void {
+    /**
+     * Adds a plataform relationship to this PlataformRecord.
+     * @param Array $plataformGame a list of properties from PlataformsGames objects.
+     * @param Atlas $atlas the atlas instance.
+     */
+    public function addPlataformGame(Array $plataformGame, Atlas $atlas): void
+    {
         if (!$this->plataforms_games) $this->plataforms_games = $atlas->newRecordSet(PlataformsGame::class);
         
         $plataformGame['plataformsId'] =  $this->id;
@@ -36,6 +42,12 @@ class PlataformRecord extends Record
         $this->plataforms_games->appendNew($plataformGame);
     }
 
+    /**
+     * Updates a plataform with other Plataform object as array representation.
+     * @param Array $updatedPlataform a list of properties from Plataform objects.
+     * @param Atlas $atlas the atlas instance.
+     * @throws AppException if already exists a plataform with that name
+     */
     public function update(Array $updatedPlataform, Atlas $atlas): void
     {
         $this->updateName($updatedPlataform['name'] ?? null, $atlas);
@@ -43,7 +55,13 @@ class PlataformRecord extends Record
         $this->updatePlataformsGames($updatedPlataform['plataforms_games'] ?? null, $atlas);
     }
 
-    public function updateName(?string $name, Atlas $atlas): void
+    /**
+     * Updates the plataform name.
+     * @param ?String $name the new name.
+     * @param Atlas $atlas the atlas instance.
+     * @throws AppException if already exists a plataform with that name
+     */
+    public function updateName(?String $name, Atlas $atlas): void
     {
         if (!$name || empty($name)) return;
         $searchedPlataform = $atlas->select(Plataform::class, ['name' => $name])->where('id !=', $this->id)->fetchRecord();
@@ -51,14 +69,24 @@ class PlataformRecord extends Record
         $this->name = $name;
     }
     
-    public function updateUrl(?string $url): void
+    /**
+     * Updates the plataform url.
+     * @param ?String $url the new url.
+     */
+    public function updateUrl(?String $url): void
     {
         if (!$url) return;
         $this->url = $url;
     }
 
-    public function updatePlataformsGames(?Array $plataformGames, Atlas $atlas): void {
-        if (!$plataformGames) return;
+    /**
+     * Updates the plataforms relationships.
+     * @param ?Array $plataformGames array of the current new plataforms relationships, if a relationship is not found here, it means that was deleted.
+     * @param Atlas $atlas the atlas instance.
+     */
+    public function updatePlataformsGames(?Array $plataformGames, Atlas $atlas): void
+    {
+        if ($plataformGames == null) return;
         if (!$this->plataforms_games) $this->plataforms_games = $atlas->newRecordSet(PlataformsGame::class);
 
         $this->plataforms_games->setDelete();

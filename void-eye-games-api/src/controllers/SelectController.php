@@ -1,5 +1,19 @@
 <?php
-
+/**
+ * File: SelectController.php
+ * Purpose: Perform database query operations.
+ * DB Access: Yes
+ * Uses files:
+ *  - src\controllers\BaseController.php
+ *  - classes\Game\Game.php
+ *  - classes\Comment\Comment.php
+ *  - classes\Category\Category.php
+ *  - classes\Plataform\Plataform.php
+ *  - classes\CategoriesGame\CategoriesGame.php
+ *  - classes\PlataformsGame\PlataformsGame.php
+ * Used from:
+ *  - index.php
+ */
 namespace src\controllers;
 
 use Exception;

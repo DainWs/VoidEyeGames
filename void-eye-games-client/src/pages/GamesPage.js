@@ -2,7 +2,7 @@ import { faAngleDown, faAngleUp, faFilter } from '@fortawesome/free-solid-svg-ic
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import GameItemComponent from '../components/models/GameItemComponent';
-import { CacheConfiguration, GAMES_COUNT } from '../domain/cache/CacheConfiguration';
+import { CacheConfiguration, GAMES_COUNT, GAMES_LIMIT_PER_PAGE } from '../domain/cache/CacheConfiguration';
 import { EventDataProvider } from '../domain/EventDataProvider';
 import { EventObserver } from '../domain/EventObserver';
 import { EVENT_SEARCH_GAME } from '../domain/EventsEnum';
@@ -52,7 +52,10 @@ class GamesPage extends React.Component {
   updatePlataformGames() {
     let plataformsGames = (this.isFiltring) ? [] : Array.from(this.state.plataformsGames);
     plataformsGames.push(...SocketDataProvideer.provide(DESTINATION_PLATAFORM_GAMES));
-    this.hasMore = ( plataformsGames.length < CacheConfiguration.get(GAMES_COUNT) );
+    let expectedGamesCount = this.pageNum * CacheConfiguration.get(GAMES_LIMIT_PER_PAGE);
+    console.log(plataformsGames.length);
+    console.log(expectedGamesCount);
+    this.hasMore = ( plataformsGames.length >= expectedGamesCount );
     this.setState({plataformsGames: plataformsGames});
   }
 
@@ -183,26 +186,26 @@ class GamesPage extends React.Component {
           </section>
           <section className={this.getFilterClass()}>
             <header className='bg-secondary text-primary'>
-              <h4 className='m-0 px-2 py-2'>Order by</h4>
+              <h4 className='m-0 px-2 py-2'>Ordenar por</h4>
             </header>
             <div className='d-flex flex-column mt-2 mb-4'>
-              <label className='check-form mb-0 ml-3' htmlFor='order-name'>
-                <input id='order-name' type="radio" value="name" name="order" checked={this.state.orderMethod == 'name'} onChange={this.setOrder.bind(this)}/> Name
+              <label className='check-form capitalize mb-0 ml-3' htmlFor='order-name'>
+                <input id='order-name' type="radio" value="name" name="order" checked={this.state.orderMethod == 'name'} onChange={this.setOrder.bind(this)}/> Nombres
                 <span className="radiobtn"></span>
               </label>
-              <label className='check-form mb-0 ml-3' htmlFor='order-price'>
-                <input id='order-price' type="radio" value="price" name="order" checked={this.state.orderMethod == 'price'} onChange={this.setOrder.bind(this)}/> Price
+              <label className='check-form capitalize mb-0 ml-3' htmlFor='order-price'>
+                <input id='order-price' type="radio" value="price" name="order" checked={this.state.orderMethod == 'price'} onChange={this.setOrder.bind(this)}/> Precios
                 <span className="radiobtn"></span>
               </label>
-              <label className='check-form mb-0 ml-3' htmlFor='order-plataform'>
-                <input id='order-plataform' type="radio" value="plataform" name="order" checked={this.state.orderMethod == 'plataform'} onChange={this.setOrder.bind(this)}/> Plataform
+              <label className='check-form capitalize mb-0 ml-3' htmlFor='order-plataform'>
+                <input id='order-plataform' type="radio" value="plataform" name="order" checked={this.state.orderMethod == 'plataform'} onChange={this.setOrder.bind(this)}/> Plataformas
                 <span className="radiobtn"></span>
               </label>
             </div>
           </section>
           <section className={this.getFilterClass()}>
             <header className='bg-secondary text-primary'>
-              <h4 className='m-0 px-2 py-2'>Categories</h4>
+              <h4 className='m-0 px-2 py-2'>Categor&iacute;as</h4>
             </header>
             <div className='d-flex flex-column mt-2 mb-4'>
               {this.getCategories()}
@@ -213,7 +216,7 @@ class GamesPage extends React.Component {
           </section>
           <section className={this.getFilterClass()}>
             <header className='bg-secondary text-primary'>
-              <h4 className='m-0 px-2 py-2'>Plataforms</h4>
+              <h4 className='m-0 px-2 py-2'>Plataformas</h4>
             </header>
             <div className='d-flex flex-column mt-2 mb-4'>
               {this.getPlataforms()}
@@ -225,7 +228,7 @@ class GamesPage extends React.Component {
           <div className={'w-100 px-0 px-lg-2 ' + this.getFilterClass()}>
             <a className="btn btn-quaternary rounded-0 w-100" href="#" onClick={this.onFiltre.bind(this)}>
               <FontAwesomeIcon icon={faFilter} className='mr-2'/> 
-              Filtre
+              Filtrar
             </a>
           </div>
           <section className={this.getFilterCloseClass()}>
@@ -255,7 +258,7 @@ class GamesPage extends React.Component {
     if (this.state.isShowingFilters) {
       return 'filter-aside filter-active border-lg-right border-secondary mh-sm-100 w-15 no-select';
     }
-    return 'filter-aside border-lg-right border-secondary mh-sm-100 w-15 no-select';
+    return 'filter-aside border-lg-right border-secondary mh-sm-100 w-15 pb-3 no-select';
   }
 
   getFilterText() {
@@ -314,7 +317,7 @@ class GamesPage extends React.Component {
   }
 
   getCategoryShowMore() {
-    return (this.hasMoreCategories) ? <a className="btn btn-quaternary w-100" href="#" onClick={this.onShowMoreCategories.bind(this)}>Show more</a> : <></>;
+    return (this.hasMoreCategories) ? <a className="btn btn-quaternary w-100 capitalize" href="#" onClick={this.onShowMoreCategories.bind(this)}>Mostrar mas</a> : <></>;
   }
 
   //---------------------------------------
@@ -336,12 +339,12 @@ class GamesPage extends React.Component {
   }
 
   getPlataformShowMore() {
-    return (this.hasMorePlataforms) ? <a className="btn btn-quaternary w-100" href="#" onClick={this.onShowMorePlataforms.bind(this)}>Show more</a> : <></>;
+    return (this.hasMorePlataforms) ? <a className="btn btn-quaternary w-100 capitalize" href="#" onClick={this.onShowMorePlataforms.bind(this)}>Mostrar mas</a> : <></>;
   }
 
   getCheckbox(type, object, onChange = function() {}) {
     return (
-      <label className='check-form ml-3' key={ type + '-key-' + object.id}>
+      <label className='check-form capitalize ml-3' key={ type + '-key-' + object.id}>
         {object.name}
         <input id={ type + '-' + object.id} type="checkbox" value={object.id} onChange={onChange}/>
         <span className="checkmark"></span>
@@ -350,7 +353,7 @@ class GamesPage extends React.Component {
   }
 
   getShowButtonView() {
-    return (this.hasMore) ? <a className="btn btn-secondary rounded-0 w-100" href="#" onClick={this.onShowMore.bind(this)}>Show more</a> : <></>;
+    return (this.hasMore) ? <a className="btn btn-secondary rounded-0 w-100 capitalize" href="#" onClick={this.onShowMore.bind(this)}>Mostrar mas</a> : <></>;
   }
 }
 export default GamesPage;
