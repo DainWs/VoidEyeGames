@@ -1,8 +1,8 @@
 # Battery examples
-**Project:** Void Eye Games
-**Author:** Jose Antonio Duarte Pérez
-**Tutor:** Jose Antonio Piñero Berbel
-**Centro:** I.E.S. Francisco Ayala
+**Project:** Void Eye Games<br/>
+**Author:** Jose Antonio Duarte Pérez<br/>
+**Tutor:** Jose Antonio Piñero Berbel<br/>
+**Centro:** I.E.S. Francisco Ayala<br/>
 **Departamento:** Dpto. Informática - 2º DAW
 
 ## Sumary
