@@ -1,3 +1,12 @@
+/**
+ * File: User.js
+ * Purpose: The model representation of a User object.
+ * DB Access: No
+ * Used from:
+ *  - StorageManager.js
+ * Uses files:
+ *  - The following imported files:
+ */
 import { ACCOUNT_TYPE_UNKNOWN, getTypeFromName } from "../AccountTypes";
 
 class User {

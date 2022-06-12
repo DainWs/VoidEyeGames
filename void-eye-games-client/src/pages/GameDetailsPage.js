@@ -1,3 +1,12 @@
+/**
+ * File: GameDetailsPage.js
+ * Purpose: Represents the game details page view.
+ * DB Access: No
+ * Used from:
+ *  - Index.js
+ * Uses files:
+ *  - The following imported files:
+ */
 import React from 'react';
 import Skeleton from 'react-loading-skeleton'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';

@@ -1,3 +1,12 @@
+/**
+ * File: PlataformComponent.js
+ * Purpose: This component view creates the plataform view used in details.
+ * DB Access: No
+ * Used from:
+ *  - GameDetailsPage.js
+ * Uses files:
+ *  - The following imported files:
+ */
 import React from 'react';
 import Plataform from '../../domain/models/dtos/Plataform';
 

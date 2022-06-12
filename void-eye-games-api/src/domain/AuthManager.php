@@ -1,5 +1,16 @@
 <?php
-
+/**
+ * File: AuthManager.php
+ * Purpose: Manage all Credentials operations, so, 
+ * this class allow to log in and log out sessions, 
+ * creatina a unique token for each session.
+ * DB Access: No
+ * Uses files:
+ *  - src\libraries\LogManager.php
+ *  - src\domain\dto\Credentials.php
+ * Used from:
+ *  - src\domain\middlewares\AuthMiddleware.php
+ */
 namespace src\domain;
 
 use Exception;

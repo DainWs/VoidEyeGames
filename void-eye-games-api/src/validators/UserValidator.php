@@ -1,4 +1,13 @@
 <?php
+/**
+ * File: UserValidator.php
+ * Purpose: Validates user objects.
+ * DB Access: No
+ * Uses files:
+ *  - None
+ * Used from:
+ *  - Controllers
+ */
 namespace src\validators;
 
 use Atlas\Orm\Atlas;

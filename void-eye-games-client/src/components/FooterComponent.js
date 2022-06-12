@@ -1,3 +1,12 @@
+/**
+ * File: FooterComponent.js
+ * Purpose: This component view creates the Footer view.
+ * DB Access: No
+ * Used from:
+ *  - LayoutPage.js
+ * Uses files:
+ *  - The following imported files:
+ */
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTwitterSquare, faFacebookSquare, faInstagramSquare } from '@fortawesome/free-brands-svg-icons'

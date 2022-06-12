@@ -1,3 +1,14 @@
+/**
+ * File: GameItemComponent.js
+ * Purpose: This component view creates list item that show name/price and main image of a game.
+ * DB Access: No
+ * Used from:
+ *  - GamesPages.js
+ *  - HomePages.js
+ *  - GameItemSliderComponent.js
+ * Uses files:
+ *  - The following imported files:
+ */
 import React from 'react';
 import { Link } from 'react-router-dom';
 import PlataformGame from '../../domain/models/dtos/PlataformGame';

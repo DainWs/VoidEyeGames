@@ -1,3 +1,19 @@
+/**
+ * File: EventObserver.js
+ * Purpose: This file create a events observer that notify when a 
+ * custom event of EventEnum is throwed, you throw it calling notify(Event).
+ * DB Access: No
+ * Used from:
+ *  - HeaderComponent.js
+ *  - ItemContextMenuComponent.js
+ *  - WhileLoadingComponent.js
+ *  - SessionManagerjs
+ *  - CacheConfiguration.js
+ *  - GamesPage.js
+ *  - HomePage.js
+ * Uses files:
+ *  - The following imported files:
+ */
 class EventObserver {
     constructor() {
         this.listeners = new Map();

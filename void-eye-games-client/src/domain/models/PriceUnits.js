@@ -1,3 +1,16 @@
+/**
+ * File: PriceUnit.js
+ * Purpose: this is a Enumerator class, that is
+ * used to specify the default data for each currency type. 
+ * DB Access: No
+ * Used from:
+ *  - GameItemComponent.js
+ *  - PlataformFormPage.js
+ *  - Comparators.js
+ * Uses files:
+ *  - The following imported files:
+ */
+
 class PriceUnit {
     constructor(currencyId, currencyDescription, currencySymbol, euroMultiplier) {
         this.id = currencyId;

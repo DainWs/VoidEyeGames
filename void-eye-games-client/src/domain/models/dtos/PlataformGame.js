@@ -1,3 +1,13 @@
+/**
+ * File: PlataformGame.js
+ * Purpose: The model representation of a PlataformGame object.
+ * DB Access: No
+ * Used from:
+ *  - GameItemComponent.js
+ *  - PlataformFormPage.js
+ * Uses files:
+ *  - The following imported files:
+ */
 import Game from "./Game";
 import Plataform from "./Plataform";
 

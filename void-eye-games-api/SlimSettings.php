@@ -1,4 +1,13 @@
 <?php
+/**
+ * File: SlimSettings.php
+ * Purpose: the Settings file for API side.
+ * DB Access: No
+ * Uses files:
+ *  - Constants.php
+ * Used from:
+ *  - Index.php
+ */
 include_once('./src/config/constants.php');
 define('APP_ROOT', __DIR__);
 

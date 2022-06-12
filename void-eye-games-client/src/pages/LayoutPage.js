@@ -1,3 +1,12 @@
+/**
+ * File: LayoutPage.js
+ * Purpose: Represents the layout page view.
+ * DB Access: No
+ * Used from:
+ *  - Index.js
+ * Uses files:
+ *  - The following imported files:
+ */
 import { Outlet } from "react-router-dom";
 import FooterComponent from "../components/FooterComponent";
 import HeaderComponent from "../components/HeaderComponent";

@@ -1,3 +1,12 @@
+/**
+ * File: SocketRequest.js
+ * Purpose: The model representation of a HTTP Request object.
+ * DB Access: No
+ * Used from:
+ *  - SocketController.js
+ * Uses files:
+ *  - The following imported files:
+ */
 import qs from 'qs';
 import { SessionManager } from "../../domain/SessionManager";
 import { API_URL } from "./SocketController";

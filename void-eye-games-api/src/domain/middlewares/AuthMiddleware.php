@@ -1,5 +1,16 @@
 <?php
-
+/**
+ * File: AuthMiddleware.php
+ * Purpose: Middleware used for credentials checks, so if someone who does
+ * not have enough permissions tries to access it, it will not let him.
+ * DB Access: No
+ * Uses files:
+ *  - src\domain\AuthManager.php
+ *  - src\domain\dto\JsonResponse.php
+ *  - src\libraries\LogManager.php
+ * Used from:
+ *  - Index.php
+ */
 namespace src\domain\middlewares;
 
 use Exception;

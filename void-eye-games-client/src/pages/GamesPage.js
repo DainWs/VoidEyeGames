@@ -1,3 +1,12 @@
+/**
+ * File: GamesPage.js
+ * Purpose: Represents the games list page view.
+ * DB Access: No
+ * Used from:
+ *  - Index.js
+ * Uses files:
+ *  - The following imported files:
+ */
 import { faAngleDown, faAngleUp, faFilter } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';

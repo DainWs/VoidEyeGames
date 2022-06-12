@@ -1,3 +1,14 @@
+/**
+ * File: Media.js
+ * Purpose: The model representation of a Media object.
+ * DB Access: No
+ * Used from:
+ *  - MediasComponent.js
+ *  - MediaListItemComponent.js
+ *  - GameFormPage.js
+ * Uses files:
+ *  - The following imported files:
+ */
 import { ResourceManger } from "../../ResourceManager";
 import MediaTypeEnum from "../MediaTypes";
 

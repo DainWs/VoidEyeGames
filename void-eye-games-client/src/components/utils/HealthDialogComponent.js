@@ -1,4 +1,13 @@
-
+/**
+ * File: HealthDialogComponent.js
+ * Purpose: This component view creates a dialog
+ * that is show when we failed to connect with the api.
+ * DB Access: No
+ * Used from:
+ *  - LayoutPage.js
+ * Uses files:
+ *  - The following imported files:
+ */
 import React from "react";
 import { CacheConfiguration } from "../../domain/cache/CacheConfiguration";
 import { SocketController } from "../../services/socket/SocketController";

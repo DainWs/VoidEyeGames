@@ -1,3 +1,12 @@
+/**
+ * File: LogInFormPage.js
+ * Purpose: Represents the log in form page view.
+ * DB Access: No
+ * Used from:
+ *  - Index.js
+ * Uses files:
+ *  - The following imported files:
+ */
 import React from 'react';
 import { Navigate, NavLink } from 'react-router-dom';
 import md5 from 'crypto-js/md5';

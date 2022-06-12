@@ -1,3 +1,17 @@
+/**
+ * File: Game.js
+ * Purpose: The model representation of a Game object.
+ * DB Access: No
+ * Used from:
+ *  - DetailsHeaderComponent.js
+ *  - Category.js
+ *  - PlataformGame.js
+ *  - GameDetailsPage.js
+ *  - GameFormPage.js
+ *  - SocketDataFilter.js
+ * Uses files:
+ *  - The following imported files:
+ */
 import { ResourceManger } from "../../ResourceManager";
 import CategoryGame from "./CategoryGame";
 

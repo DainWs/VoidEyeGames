@@ -1,4 +1,13 @@
 <?php
+/**
+ * File: DatabaseProvider.php
+ * Purpose: Provides the instance of PDO object.
+ * DB Access: Yes
+ * Uses files:
+ *  - None
+ * Used from:
+ *  - src\controllers\BaseController.php
+ */
 namespace src\domain\providers;
 
 use PDO;
@@ -9,10 +18,16 @@ use PDO;
 class DatabaseProvider {
     private static ?PDO $instance = null;
 
+    /**
+     * Creates a new instance of Atlas
+     */
     public static function newInstance(): PDO {
         return SELF::getInstance();
     }
 
+    /**
+     * Returns the PDO Instance, if is not set, then this method create it too.
+     */
     public static function getInstance(): PDO {
         if (SELF::$instance == null) {
             $dbDomain = ($_SERVER['DB_DOMAIN'] ?? DB_DEFAULT_DOMAIN);

@@ -1,4 +1,13 @@
 <?php
+/**
+ * File: SignUserValidator.php
+ * Purpose: Validates user sign in objects.
+ * DB Access: No
+ * Uses files:
+ *  - None
+ * Used from:
+ *  - Controllers
+ */
 namespace src\validators;
 
 use classes\User\User;

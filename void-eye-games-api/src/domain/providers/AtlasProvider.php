@@ -1,4 +1,13 @@
 <?php
+/**
+ * File: AtlasProvider.php
+ * Purpose: Provides the instance of Atlas object.
+ * DB Access: Yes
+ * Uses files:
+ *  - None
+ * Used from:
+ *  - src\controllers\BaseController.php
+ */
 namespace src\domain\providers;
 
 use Atlas\Orm\Atlas;
@@ -11,6 +20,9 @@ class AtlasProvider {
 
     private static ?Atlas $instance = null;
 
+    /**
+     * Creates a new instance of Atlas
+     */
     public static function newInstance($container): Atlas {
         if (SELF::$instance == null) {
             $args = $container['settings']['settings']['atlas']['pdo'];
@@ -27,6 +39,9 @@ class AtlasProvider {
         return SELF::$instance;
     }
 
+    /**
+     * Returns the Atlas instance
+     */
     public static function getInstance(): Atlas {
         return SELF::$instance;
     }

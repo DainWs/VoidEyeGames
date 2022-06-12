@@ -1,3 +1,12 @@
+/**
+ * File: SignInFormPage.js
+ * Purpose: Represents the Sign in form page view.
+ * DB Access: No
+ * Used from:
+ *  - Index.js
+ * Uses files:
+ *  - The following imported files:
+ */
 import React from 'react';
 import md5 from 'crypto-js/md5';
 import { SessionManager } from '../../domain/SessionManager';

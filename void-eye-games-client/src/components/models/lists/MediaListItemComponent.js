@@ -1,3 +1,13 @@
+/**
+ * File: MediaListItemComponent.js
+ * Purpose: This component view creates a context ListItemComponent that
+ * represents a Media model.
+ * DB Access: No
+ * Used from:
+ *  - GameFormPage.js
+ * Uses files:
+ *  - The following imported files:
+ */
 import React from 'react';
 import ReactTooltip from 'react-tooltip';
 import Media from '../../../domain/models/dtos/Media';

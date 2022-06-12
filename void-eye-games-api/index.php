@@ -1,4 +1,15 @@
 <?php
+/**
+ * File: index.php
+ * Purpose: the main file for API side, creates the server.
+ * DB Access: No
+ * Uses files:
+ *  - Controllers
+ *  - SlimSettings.php
+ *  - autoload.php
+ * Used from:
+ *  - None
+ */
 use src\domain\middlewares\AuthMiddleware;
 use src\domain\middlewares\HeadersMiddleware;
 use src\domain\providers\AtlasProvider;

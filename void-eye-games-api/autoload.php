@@ -1,4 +1,13 @@
 <?php
+/**
+ * File: autoload.php
+ * Purpose: used to load all classes and files.
+ * DB Access: No
+ * Uses files:
+ *  - None
+ * Used from:
+ *  - Index.php
+ */
 include_once('src/config/constants.php');
 
 {/** Encapsulation Scope */

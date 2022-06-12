@@ -1,5 +1,15 @@
 <?php
-
+/**
+ * File: AssetsManager.php
+ * Purpose: Manage all API resources, assets included, so, 
+ * this class allow upload resources to the API.
+ * DB Access: No
+ * Uses files:
+ *  - src\libraries\LogManager.php
+ * Used from:
+ *  - src\controllers\BaseController.php
+ *  - src\classes\Game\GameRecord.php
+ */
 namespace src\domain;
 
 use src\libraries\LogManager;

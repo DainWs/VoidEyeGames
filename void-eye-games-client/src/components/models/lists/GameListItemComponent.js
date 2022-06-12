@@ -1,3 +1,14 @@
+/**
+ * File: GameListItemComponent.js
+ * Purpose: This component view creates a context ListItemComponent that
+ * represents a game model.
+ * DB Access: No
+ * Used from:
+ *  - CategoryFormPage.js
+ *  - PlataformFormPage.js
+ * Uses files:
+ *  - The following imported files:
+ */
 import React from 'react';
 import ItemContextMenuComponent from './ItemContextMenuComponent';
 

@@ -1,5 +1,13 @@
 <?php
-
+/**
+ * File: LogManager.php
+ * Purpose: Use to log message to the log file inside ./logs/
+ * DB Access: No
+ * Uses files:
+ *  - None
+ * Used from:
+ *  - Used from all classes that wants to log some data.
+ */
 namespace src\libraries;
 
 use Monolog\Handler\StreamHandler;

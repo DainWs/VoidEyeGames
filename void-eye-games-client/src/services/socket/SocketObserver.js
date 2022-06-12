@@ -1,3 +1,15 @@
+/**
+ * File: SocketObserver.js
+ * Purpose: Use to notify subscribers object when a request
+ * that go to a specific destination is completed.
+ * DB Access: No
+ * Used from:
+ *  - GamesPage.js
+ *  - SocketDataProvider.js
+ *  - SocketObserver.js
+ * Uses files:
+ *  - The following imported files:
+ */
 import { ALL_DESTINATIONS } from "./SocketDestinations";
 
 class SocketObserver {

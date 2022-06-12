@@ -1,3 +1,15 @@
+/**
+ * File: MediaType.js
+ * Purpose: this is a Enumerator class, that is
+ * used to specify the default data for each media type and
+ * allowed ones. 
+ * DB Access: No
+ * Used from:
+ *  - Media.js
+ *  - SocketDataFilter.js
+ * Uses files:
+ *  - The following imported files:
+ */
 class MediaType {
     constructor(type, extension) {
         this.type = type;

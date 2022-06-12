@@ -1,3 +1,12 @@
+/**
+ * File: SupportPage.js
+ * Purpose: Represents the support page view.
+ * DB Access: No
+ * Used from:
+ *  - Index.js
+ * Uses files:
+ *  - The following imported files:
+ */
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
