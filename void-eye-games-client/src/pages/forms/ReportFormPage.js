@@ -1,3 +1,12 @@
+/**
+ * File: ReportFormPage.js
+ * Purpose: Represents the report form page view.
+ * DB Access: No
+ * Used from:
+ *  - Index.js
+ * Uses files:
+ *  - The following imported files:
+ */
 import React from 'react';
 import Select from 'react-select'
 import { SocketController } from '../../services/socket/SocketController';
@@ -10,10 +19,6 @@ const REASONS = [
   { value: 'commerce', label: 'Enterprise contact' }
 ];
 
-/**
- * FINISED. DO NOT TOUCH
- * @author Jose Antonio Duarte Perez
- */
 class ReportFormPage extends React.Component {
   constructor(props) {
     super(props);

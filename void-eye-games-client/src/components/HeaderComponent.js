@@ -1,3 +1,12 @@
+/**
+ * File: HeaderComponent.js
+ * Purpose: This component view creates the Header view.
+ * DB Access: No
+ * Used from:
+ *  - LayoutPage.js
+ * Uses files:
+ *  - The following imported files:
+ */
 import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'

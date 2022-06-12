@@ -1,3 +1,12 @@
+/**
+ * File: EventsEnum.js
+ * Purpose: This file exports all types of events.
+ * DB Access: No
+ * Used from:
+ *  - Can be used for all classes.
+ * Uses files:
+ *  - The following imported files:
+ */
 import { DESTINATION_CATEGORIES, DESTINATION_GAMES, DESTINATION_LOGIN, DESTINATION_PLATAFORMS, DESTINATION_PLATAFORM_GAMES, DESTINATION_SIGNIN } from "../services/socket/SocketDestinations";
 
 export const EVENT_SEARCH_GAME = 'searchGame';

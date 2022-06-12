@@ -1,4 +1,13 @@
 <?php
+/**
+ * File: LogUserValidator.php
+ * Purpose: Validates user logging objects.
+ * DB Access: No
+ * Uses files:
+ *  - None
+ * Used from:
+ *  - Controllers
+ */
 namespace src\validators;
 
 use classes\User\User;

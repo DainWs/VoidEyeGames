@@ -1,3 +1,12 @@
+/**
+ * File: Category.js
+ * Purpose: The model representation of a Category object.
+ * DB Access: No
+ * Used from:
+ *  - CategoryFormPage.js
+ * Uses files:
+ *  - The following imported files:
+ */
 import CategoryGame from "./CategoryGame";
 import Game from "./Game";
 

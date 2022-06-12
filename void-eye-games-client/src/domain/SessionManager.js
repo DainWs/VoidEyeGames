@@ -1,3 +1,20 @@
+/**
+ * File: SessionManager.js
+ * Purpose: Manages the sessions for the logged users.
+ * DB Access: No
+ * Used from:
+ * - HeaderComponent.js
+ * - GameDetailsPage.js
+ * - HomePage.js
+ * - LayoutPage.js
+ * - LogInFormPage.js
+ * - SignInFormPage.js
+ * - CategoryFormPage.js
+ * - PlataformFormPage.js
+ * - SocketRequest.js
+ * Uses files:
+ *  - The following imported files:
+ */
 import { EventObserver } from "./EventObserver";
 import { EVENT_SESSION_CHANGE } from "./EventsEnum";
 import { ACCOUNT_TYPE_UNKNOWN } from "./models/AccountTypes";

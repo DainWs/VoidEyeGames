@@ -1,3 +1,16 @@
+/**
+ * File: CacheConfiguration.js
+ * Purpose: this cache is used to store Health data received from the API
+ * in the first call to /health.
+ * DB Access: No
+ * Used from:
+ *  - HealthDialogComponent.js
+ *  - WhileLoadingComponent.js
+ *  - GamesPage.js
+ *  - HomePage.js
+ * Uses files:
+ *  - The following imported files:
+ */
 import { EventObserver } from "../EventObserver";
 
 export const USERS_COUNT = "table.users.count";
@@ -20,5 +33,9 @@ export class CacheConfiguration {
 
     static get(key) {
         return cache[key];
+    }
+
+    static has() {
+        return cache.size !== 0;
     }
 }

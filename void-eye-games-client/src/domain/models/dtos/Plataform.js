@@ -1,5 +1,15 @@
+/**
+ * File: Plataform.js
+ * Purpose: The model representation of a Plataform object.
+ * DB Access: No
+ * Used from:
+ *  - PlataformComponent.js
+ *  - PlataformGame.js
+ *  - PlataformFormPage.js
+ * Uses files:
+ *  - The following imported files:
+ */
 import { ResourceManger } from "../../ResourceManager";
-import PlataformGame from "./PlataformGame";
 
 class Plataform {
     constructor(builder = {id: -1, name: '', url: '', games: [], plataforms_games: []}) {

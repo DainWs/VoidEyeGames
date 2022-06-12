@@ -1,3 +1,13 @@
+/**
+ * File: DetailsHeaderComponent.js
+ * Purpose: This component view creates the header component used 
+ * in Games details view.
+ * DB Access: No
+ * Used from:
+ *  - GameDetailsPage.js
+ * Uses files:
+ *  - The following imported files:
+ */
 import React from 'react';
 import Skeleton from 'react-loading-skeleton';
 import Game from '../../domain/models/dtos/Game';

@@ -1,3 +1,13 @@
+/**
+ * File: ToTopButtonComponent.js
+ * Purpose: Create a button that when 
+ * pressed sends you to the top of the page.
+ * DB Access: No
+ * Used from:
+ *  - LayoutPage.js
+ * Uses files:
+ *  - The following imported files:
+ */
 import { faAngleUp } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";

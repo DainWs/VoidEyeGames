@@ -1,3 +1,12 @@
+/**
+ * File: index.js
+ * Purpose: the main file for client side, creates the App view.
+ * DB Access: No
+ * Used from:
+ *  - None
+ * Uses files:
+ *  - The following imported files:
+ */
 import '../node_modules/video-react/dist/video-react.css';
 import '../node_modules/react-loading-skeleton/dist/skeleton.css';
 import './assets/css/App.css';

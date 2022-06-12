@@ -1,3 +1,12 @@
+/**
+ * File: MediasComponent.js
+ * Purpose: This component view creates the Medias Tabber view used in GameDetails.
+ * DB Access: No
+ * Used from:
+ *  - GameDetailsPage.js
+ * Uses files:
+ *  - The following imported files:
+ */
 import React from 'react';
 import Carousel from 'nuka-carousel';
 import { SocketDataFilter } from '../../services/socket/SocketDataFilter';

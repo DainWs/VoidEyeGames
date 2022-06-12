@@ -1,3 +1,13 @@
+/**
+ * File: AccountType.js
+ * Purpose: this is a Enumerator class, that is
+ * used to specify the default data for each account type. 
+ * DB Access: No
+ * Used from:
+ *  - HeaderComponent.js
+ * Uses files:
+ *  - The following imported files:
+ */
 class AccountType {
     constructor(id, name) {
         this.id = id;

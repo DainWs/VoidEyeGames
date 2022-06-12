@@ -1,3 +1,14 @@
+/**
+ * File: SocketDataProvideer.js
+ * Purpose: Provides data from requests dones.
+ * DB Access: No
+ * Used from:
+ *  - GamesPage.js
+ *  - SocketController.js
+ *  - SocketDataQuery.js
+ * Uses files:
+ *  - The following imported files:
+ */
 import { SocketObserver } from "./SocketObserver";
 
 class SocketDataProvideer {

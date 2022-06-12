@@ -1,3 +1,16 @@
+/**
+ * File: SocketDataFilter.js
+ * Purpose: This file is used to filter data.
+ * DB Access: No
+ * Used from:
+ *  - MediasComponent.js
+ *  - CategoryFormPage.js
+ *  - GameFormPage.js
+ *  - PlataformFormPage.js
+ *  - SocketDataQuery.js
+ * Uses files:
+ *  - The following imported files:
+ */
 import Game from "../../domain/models/dtos/Game";
 import MediaTypeEnum from "../../domain/models/MediaTypes";
 import { Comparators } from "../../utils/Comparators";

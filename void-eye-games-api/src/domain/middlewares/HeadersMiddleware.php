@@ -1,5 +1,13 @@
 <?php
-
+/**
+ * File: HeadersMiddleware.php
+ * Purpose: Middleware used to set required headers.
+ * DB Access: No
+ * Uses files:
+ *  - None
+ * Used from:
+ *  - Index.php
+ */
 namespace src\domain\middlewares;
 
 /**

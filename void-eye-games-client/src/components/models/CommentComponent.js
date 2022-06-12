@@ -1,3 +1,13 @@
+/**
+ * File: CommentComponent.js
+ * Purpose: This component view creates list item that show user
+ * name and commented data (a comment model representation).
+ * DB Access: No
+ * Used from:
+ *  - GamesDetailsPages.js
+ * Uses files:
+ *  - The following imported files:
+ */
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';

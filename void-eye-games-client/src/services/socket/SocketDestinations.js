@@ -1,3 +1,21 @@
+/**
+ * File: SocketDestinations.js
+ * Purpose: This enumerator is used to declare all allowed API Paths destinations.
+ * DB Access: No
+ * Used from:
+ *  - HealthDialogComponent.js
+ *  - GameDetailsPage.js
+ *  - GamePage.js
+ *  - HomePage.js
+ *  - LogInFormPage.js
+ *  - ReportFormPage.js
+ *  - SignInFormPage.js
+ *  - CategoryFormPage.js
+ *  - GameFormPage.js
+ *  - PlataformFormPage.js
+ * Uses files:
+ *  - None
+ */
 const DESTINATION_HEALTH = '/health';
 
 const DESTINATION_GAMES = '/game';

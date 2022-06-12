@@ -1,3 +1,14 @@
+/**
+ * File: ModelFormPage.js
+ * Purpose: Represents the model form page view.
+ * DB Access: No
+ * Used from:
+ *  - CategoryFormPage.js
+ *  - GameFormPage.js
+ *  - PlataformFormPage.js
+ * Uses files:
+ *  - The following imported files:
+ */
 import React from 'react';
 
 export const MODEL_FORM_MODE_NEW = 0;

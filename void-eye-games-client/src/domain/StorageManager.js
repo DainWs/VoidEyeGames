@@ -1,3 +1,12 @@
+/**
+ * File: StorageManager.js
+ * Purpose: Manage the localstore data.
+ * DB Access: No
+ * Used from:
+ *  - SessionManager.js
+ * Uses files:
+ *  - The following imported files:
+ */
 const SESSION_KEY = 'session';
 
 class StorageManager {

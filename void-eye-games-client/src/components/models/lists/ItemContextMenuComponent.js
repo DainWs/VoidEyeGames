@@ -1,3 +1,15 @@
+/**
+ * File: ItemContextMenuComponent.js
+ * Purpose: This component view creates a context item 
+ * that when you click, it displays a context menu.
+ * DB Access: No
+ * Used from:
+ *  - GameFormPage.js
+ *  - CategoryFormPage.js
+ *  - PlataformFormPage.js
+ * Uses files:
+ *  - The following imported files:
+ */
 import React from 'react';
 import { EventObserver } from '../../../domain/EventObserver';
 import { EVENT_CONTEXT_MENU_CLICK } from '../../../domain/EventsEnum';

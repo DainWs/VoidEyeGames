@@ -1,5 +1,14 @@
 <?php
-
+/**
+ * File: EmailManager.php
+ * Purpose: Used to send emails, so, this is the class that
+ * sends reports and recovery password emails.
+ * DB Access: No
+ * Uses files:
+ *  - src\domain\exceptions\AppException.php
+ * Used from:
+ *  - src\controllers\SessionController.php
+ */
 namespace src\libraries;
 
 use Exception;

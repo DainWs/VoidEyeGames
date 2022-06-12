@@ -1,3 +1,12 @@
+/**
+ * File: HomePage.js
+ * Purpose: Represents the home page view.
+ * DB Access: No
+ * Used from:
+ *  - Index.js
+ * Uses files:
+ *  - The following imported files:
+ */
 import Carousel from 'nuka-carousel';
 import React from 'react';
 import Skeleton from 'react-loading-skeleton';

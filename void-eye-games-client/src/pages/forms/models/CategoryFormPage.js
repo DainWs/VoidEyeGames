@@ -1,3 +1,12 @@
+/**
+ * File: CategoryFormPage.js
+ * Purpose: Represents the category form page view.
+ * DB Access: No
+ * Used from:
+ *  - Index.js
+ * Uses files:
+ *  - The following imported files:
+ */
 import React from 'react';
 import { Navigate } from 'react-router-dom';
 import Select from 'react-select'
@@ -11,7 +20,6 @@ import { DESTINATION_CATEGORIES_UPDATES, DESTINATION_CATEGORY, DESTINATION_LIST_
 import SocketRequest from '../../../services/socket/SocketRequest';
 import ModelFormPage, { MODEL_FORM_MODE_EDIT, MODEL_FORM_MODE_NEW } from './ModelFormPage';
 
-// TODO check multi games context menu
 class CategoryFormPage extends ModelFormPage {
 
     createState(props) {

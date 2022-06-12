@@ -1,3 +1,13 @@
+/**
+ * File: CategoryListItemComponent.js
+ * Purpose: This component view creates a context ListItemComponent that
+ * represents a category model.
+ * DB Access: No
+ * Used from:
+ *  - GamesFormPage.js
+ * Uses files:
+ *  - The following imported files:
+ */
 import React from 'react';
 import ItemContextMenuComponent from './ItemContextMenuComponent';
 

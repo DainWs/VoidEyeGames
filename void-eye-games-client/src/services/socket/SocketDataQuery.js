@@ -1,3 +1,12 @@
+/**
+ * File: SocketDataQuery.js
+ * Purpose: This file is used to filter/select specific data.
+ * DB Access: No
+ * Used from:
+ *  - Pages
+ * Uses files:
+ *  - The following imported files:
+ */
 import { SocketDataFilter } from "./SocketDataFilter";
 import { SocketDataProvideer } from "./SocketDataProvider";
 import { DESTINATION_CATEGORIES, DESTINATION_GAMES, DESTINATION_LIST_OF_GAMES, DESTINATION_PLATAFORMS, DESTINATION_PLATAFORM_GAMES } from "./SocketDestinations";
