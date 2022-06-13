@@ -1,6 +1,13 @@
-//------------------------------------------------------------------
-// BASIC
-//------------------------------------------------------------------
+/*
+ * File: __basic.scss
+ * Purpose: scss basics.
+ * DB Access: No
+ * Used from:
+ *  - App.scss
+ * Uses files:
+ *  - None
+ */
+
 html { overflow-y: scroll; }
 
 body {
@@ -13,10 +20,8 @@ body {
 
     hr {
         border-color: gray;
-        border-width: calc(1px + .01vw);
+        border-width: calc(0.063rem + .01vw);
     }
 
-    .app-content {
-        margin-top: $headerHeight;
-    }
+    .app-content {  margin-top: $headerHeight; }
 }

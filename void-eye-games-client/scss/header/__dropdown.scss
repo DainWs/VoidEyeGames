@@ -1,12 +1,18 @@
-//------------------------------------------------------------------
-// DROPDOWNS
-//------------------------------------------------------------------
-
+/*
+ * File: __dropdown.scss
+ * Purpose: scss header dropdowns.
+ * DB Access: No
+ * Used from:
+ *  - __header.scss
+ * Uses files:
+ *  - None
+ */
+ 
 .dropdown {
     // dropdown menu animated
     &-menu{
         position: absolute !important;
-        top: -2px !important;
+        top: -0.125rem !important;
 
         overflow: hidden;
         display: block;
@@ -14,25 +20,23 @@
         border: none !important;
         border-radius: 0 !important;
         height: auto;
-        max-height: 0px;
+        max-height: 0;
         
         transition: max-height .125s linear;
 
         &.header-menu {    
-            transform: translate3d(-278px, calc(50px + 1vh + 2px), 0px) !important;
-            left: 0px !important;
-            width: 350px;
+            transform: translate3d(-278px, calc(3.125rem + 1vh + 0.125rem), 0) !important;
+            left: 0 !important;
+            width: 21.875rem;
             background-color: $secondary !important;
 
             &.show {
-                max-height: 500px;
+                max-height: 31.25rem;
                 padding-bottom: 0.15rem !important;
                 border-bottom: 0.1rem solid gray !important;
             }
 
-            .nav-link {
-                height: $headerHeight;
-            }
+            .nav-link { height: $headerHeight; }
         }
     }
 

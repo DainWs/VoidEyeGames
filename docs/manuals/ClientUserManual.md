@@ -1,9 +1,9 @@
 # Client User Manual
-**Project:** Void Eye Games
-**Author:** Jose Antonio Duarte Pérez
-**Tutor:** Jose Antonio Piñero Berbel
-**Centro:** I.E.S. Francisco Ayala
-**Departamento:** Dpto. Informática - 2º DAW
+**Project:** Void Eye Games<br/>
+**Author:** Jose Antonio Duarte Pérez<br/>
+**Tutor:** Jose Antonio Piñero Berbel<br/>
+**Centro:** I.E.S. Francisco Ayala<br/>
+**Departamento:** Dpto. Informática - 2º DAW<br/>
 
 ## Summary
 ### Spanish
@@ -14,8 +14,6 @@ Final project for 2ºDAW, it’s a website is intended for support in the search
 sold at the best price and the different prices at the time to buy video games. Remember that games cannot be purchased on this page, since its purpose is consultation, and not the purchase of video games.
 
 ## Home page
-<img style="float: right;height:10rem;" src="../docs/manuals/client/NoApiConnection.png"/>
-
 The *home page* is the **main page or entrance to our web client**, here you can find a **slider** of those games that have a *discount applied to certain platforms*, and a **news** section where you will find *the latest games added to the platform*.
 
 One *feature* of this page is that if you **cannot check the status/availability of the API**, a **modal dialog** will be displayed indicating that the API is currently unavailable, and it will not be possible to show you the games at that time.
@@ -63,8 +61,6 @@ On this page you can **register your user account**, as long as there is not alr
 
 On this page, you can **add/edit** games, **add categories to them**, **define a cover/main image for the game**, and **add media to the gallery**. (you will **not be able to add the game to the platforms** from this page).
 
-<img style="float: right;height:10rem;" src="../docs/manuals/client/HoverForImage.png"/>
-
 ### Tips
 On this page, you can find lists, if you **left or right click** on them, a **context menu will be displayed** that will *allow you to perform operations on these items*, in the case of **categories**, you can *delete* the category of this game, and in the case from the **gallery medias**, you can also *delete* them, **but in the case of images there is a special case, when you put the mouse over the item, the resource you have the mouse over will be shown (either image or video)**
 
@@ -79,7 +75,7 @@ On this page, you can create/edit platforms, and the games they sell on it, the 
 In the *context menu of the items in the game list*, you will have **2 possible actions**, *delete* the game from the platform, or *edit* its features, in this way, we can edit the **price / type of currency / discount / if it is enabled in said platform**.
 
 <div class="center">
-    <img src="../docs/manuals/client/GameItemContextMenu.png"/>
+    <img src="client/GameItemContextMenu.png"/>
 </div>
 
 <hr/>

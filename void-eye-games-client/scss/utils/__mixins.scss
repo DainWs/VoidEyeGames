@@ -1,7 +1,13 @@
-//---------------------------------------------------------------------------------------------
-// Mixins
-//---------------------------------------------------------------------------------------------
-
+/*
+ * File: __mixins.scss
+ * Purpose: scss mixins.
+ * DB Access: No
+ * Used from:
+ *  - App.scss
+ * Uses files:
+ *  - None
+ */
+ 
 /** Btn transition mixin **/
 @mixin btn-transition {
     -webkit-transition: 

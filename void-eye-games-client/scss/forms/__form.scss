@@ -1,18 +1,18 @@
-//------------------------------------------------------------------
-// FORMS
-//------------------------------------------------------------------
+/*
+ * File: __form.scss
+ * Purpose: scss forms.
+ * DB Access: No
+ * Used from:
+ *  - App.scss
+ * Uses files:
+ *  - None
+ */
 
-label {
-    &.type-file {
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        overflow-x: hidden;
-        max-width: 100%;
-    }
-}
-
-.capitalize {
-    text-transform: capitalize;
+label.type-file {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow-x: hidden;
+    max-width: 100%;
 }
 
 input{

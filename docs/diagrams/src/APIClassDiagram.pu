@@ -1,4 +1,4 @@
-@startuml
+@startuml API Class Diagram
 class PostRequests {}
 namespace API {
  namespace libraries {

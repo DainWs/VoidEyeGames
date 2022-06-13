@@ -1,15 +1,17 @@
-//------------------------------------------------------------------
-// Filters
-//------------------------------------------------------------------
+/*
+ * File: __filter.scss
+ * Purpose: scss filters.
+ * DB Access: No
+ * Used from:
+ *  - App.scss
+ * Uses files:
+ *  - None
+ */
 
-// Filters checkbox
-.filter-checkbox {
-    &:hover {
-        background-color: $form;
-    }
-}
+// Checkbox filters
+.filter-checkbox:hover { background-color: $form; }
 
-// Filters aside section in games page
+// Aside filters section in games page
 aside {
     width: 100% !important;
 
@@ -19,9 +21,7 @@ aside {
 
         transition: max-height .7s linear;
 
-        &.filter-active {
-            max-height: 200rem;
-        }
+        &.filter-active { max-height: 200rem; }
     }
 
     @include media-breakpoint-up(lg) {

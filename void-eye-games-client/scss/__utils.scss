@@ -1,43 +1,28 @@
-//------------------------------------------------------------------
-// UTILS
-//------------------------------------------------------------------
-
+/*
+ * File: __utils.scss
+ * Purpose: scss utilities.
+ * DB Access: No
+ * Used from:
+ *  - App.scss
+ * Uses files:
+ *  - None
+ */
+ 
 /** font sizes **/
 @include media-breakpoint-up(lg) {
     $normalFont: calc(0.1vw + 0.5vh + 1rem);
 
-    body {
-        font-size: $normalFont  !important;
-    }
+    body { font-size: $normalFont  !important; }
 
     .to-top-btn, input,
-    textarea, svg, .btn {
-        font-size: $normalFont !important;
-    }
+    textarea, svg, .btn { font-size: $normalFont !important; }
 
-    * h1, * .h1 {
-        font-size: calc(1vw + 1vh + 1rem) !important;
-    }
-
-    * h2, * .h2 {
-        font-size: calc(1.4vw + 1vh) !important;
-    }
-
-    * h3, * .h3 {
-        font-size: calc(1.5vw + 1vh) !important;
-    }
-
-    * h4, * .h4 {
-        font-size: calc(1.2vw + 1.2vh) !important;
-    }
-
-    * h5, * .h5 {
-        font-size: calc(1vw + 1vh) !important;
-    }
-
-    * h6, * .h6 {
-        font-size: calc(1vw + 1.2vh) !important;
-    }
+    * h1, * .h1 { font-size: calc(1vw + 1vh + 1rem) !important; }
+    * h2, * .h2 { font-size: calc(1.4vw + 1vh) !important; }
+    * h3, * .h3 { font-size: calc(1.5vw + 1vh) !important; }
+    * h4, * .h4 { font-size: calc(1.2vw + 1.2vh) !important; }
+    * h5, * .h5 { font-size: calc(1vw + 1vh) !important; }
+    * h6, * .h6 { font-size: calc(1vw + 1.2vh) !important; }
 }
 
 /** fixed positions **/
@@ -80,7 +65,7 @@ $horizontalPositions: right, left;
     }
 }
 
+.capitalize { text-transform: capitalize; }
+
 /** button animations **/
-.list--item {
-    @include btn-transition;
-}
+.list--item { @include btn-transition; }

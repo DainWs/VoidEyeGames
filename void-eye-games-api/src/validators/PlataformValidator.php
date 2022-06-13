@@ -2,15 +2,14 @@
 /**
  * File: PlataformValidator.php
  * Purpose: Validates plataforms objects.
- * DB Access: No
+ * DB Access: Si (Checkea existencia de objeto)
  * Uses files:
- *  - None
+ *  - src\validators\BaseValidator.php
  * Used from:
- *  - Controllers
+ *  - src\controllers\InsertController.php
  */
 namespace src\validators;
 
-use Atlas\Orm\Atlas;
 use classes\Plataform\Plataform;
 use Exception;
 use InvalidArgumentException;
@@ -18,20 +17,13 @@ use Monolog\Logger;
 
 /**
  * A validator class for plataforms objects
+ * @uses BaseValidator
  */
 class PlataformValidator extends BaseValidator {
-    protected Atlas $atlas;
-    protected ValidationUtils $utils;
-
-    public function __construct() {
-        parent::__construct();
-        $this->utils = ValidationUtils::getInstance();
-    }
-
-    public function setAtlas(Atlas $atlas): void {
-        $this->atlas = $atlas;
-    }
-
+    /**
+     * Validates a plataform object in a Array representation.
+     * @param $plataform the plataform object as array.
+     */
     public function validate($plataform): void {
         try {
             if ($plataform === null) throw new InvalidArgumentException("Plataform is null, invalid argument");
@@ -45,14 +37,20 @@ class PlataformValidator extends BaseValidator {
         }
     }
 
+    /**
+     * Validates name, if found errors, this method 
+     * will append its to the $errors array property
+     * @param $name the name to validate.
+     */
     private function validateName($name): void {
-        if ($name === null || empty($name)) {
-            $this->errors['name'] = 'El campo "name" es obligatorio.';
-        } else {
+        if ($this->utils->validateNotEmpty($name)) {
             $dbPlataform = $this->atlas->select(Plataform::class, ['name' => $name])->fetchRecord();
+
             if ($dbPlataform !== null) {
                 $this->errors['others'] = 'Ya existe una plataforma con este nombre.';
             }
+        } else {
+            $this->errors['name'] = 'El campo "name" es obligatorio.';
         }
     }
 }

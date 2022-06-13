@@ -2,15 +2,14 @@
 /**
  * File: CategoryValidator.php
  * Purpose: Validates categories objects.
- * DB Access: No
+ * DB Access: Si (Checkea existencia de objeto)
  * Uses files:
- *  - None
+ *  - src\validators\BaseValidator.php
  * Used from:
- *  - Controllers
+ *  - src\controllers\InsertController.php
  */
 namespace src\validators;
 
-use Atlas\Orm\Atlas;
 use classes\Category\Category;
 use Exception;
 use InvalidArgumentException;
@@ -18,20 +17,13 @@ use Monolog\Logger;
 
 /**
  * A validator class for category objects
+ * @uses BaseValidator
  */
 class CategoryValidator extends BaseValidator {
-    protected Atlas $atlas;
-    protected ValidationUtils $utils;
-
-    public function __construct() {
-        parent::__construct();
-        $this->utils = ValidationUtils::getInstance();
-    }
-
-    public function setAtlas(Atlas $atlas): void {
-        $this->atlas = $atlas;
-    }
-
+    /**
+     * Validates a category object in a Array representation.
+     * @param $category the category object as array.
+     */
     public function validate($category): void {
         try {
             if ($category === null) throw new InvalidArgumentException("Category is null, invalid argument");
@@ -42,14 +34,20 @@ class CategoryValidator extends BaseValidator {
         }
     }
 
+    /**
+     * Validates name, if found errors, this method 
+     * will append its to the $errors array property
+     * @param $name the name to validate.
+     */
     private function validateName($name): void {
-        if ($name === null || empty($name)) {
-            $this->errors['name'] = 'El campo "name" es obligatorio.';
-        } else {
+        if ($this->utils->validateNotEmpty($name)) {
             $dbCategory = $this->atlas->select(Category::class, ['name' => $name])->fetchRecord();
+
             if ($dbCategory !== null) {
                 $this->errors['others'] = 'Ya existe una categoria con este nombre.';
             }
+        } else {
+            $this->errors['name'] = 'El campo "name" es obligatorio.';
         }
     }
 }

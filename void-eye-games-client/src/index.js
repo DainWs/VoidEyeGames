@@ -1,20 +1,30 @@
 /**
  * File: index.js
- * Purpose: the main file for client side, creates the App view.
+ * Purpose: the main file for client side, creates the App view,
+ * in conclusion, this is the file that will be executed when the 
+ * application starts.
  * DB Access: No
  * Used from:
  *  - None
  * Uses files:
  *  - The following imported files:
  */
+/** Video-react.css **/
 import '../node_modules/video-react/dist/video-react.css';
+/** Skeleton.css **/
 import '../node_modules/react-loading-skeleton/dist/skeleton.css';
+/** Our custom and compiled css: App.css **/
 import './assets/css/App.css';
+
+/** Bootstrap javascript file: Bootstrap.js **/
 import 'bootstrap';
 
+/** Libraries **/
 import React from 'react';
 import ReactDOM from "react-dom";
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+
+/** Used files **/
 import HomePage from './pages/HomePage';
 import GamesPage from './pages/GamesPage';
 import GameDetailsPage from './pages/GameDetailsPage';
@@ -34,6 +44,7 @@ let RouterGameDetailsPage = withRouter(GameDetailsPage);
 let RouterCategoryFormPage = withRouter(CategoryFormPage);
 let RouterPlataformFormPage = withRouter(PlataformFormPage);
 
+/** App function component view **/
 export default function App() {
   return (
     <>
@@ -62,4 +73,5 @@ export default function App() {
   );
 }
 
+/** Start the App render **/
 ReactDOM.render(<App/>, document.getElementById("root"));

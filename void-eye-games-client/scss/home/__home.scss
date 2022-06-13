@@ -1,0 +1,23 @@
+/*
+ * File: __home.scss
+ * Purpose: scss header.
+ * DB Access: No
+ * Used from:
+ *  - App.scss
+ * Uses files:
+ *  - none
+ */
+
+// Home
+.home {
+    // home header
+    &--header .slider {
+        &-frame,
+        &-container {
+            width: 100% !important;
+            height: 100% !important;
+        }
+
+        &-list { height: 100% !important; }
+    }
+}

@@ -1,4 +1,4 @@
-@startuml
+@startuml Client Class Diagram
 skinparam groupInheritance 5
 
 class Api {}

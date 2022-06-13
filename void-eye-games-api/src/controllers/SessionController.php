@@ -7,6 +7,7 @@
  *  - src\controllers\BaseController.php
  *  - src\domain\AuthManager.php
  *  - src\libraries\EmailManager.php
+ *  - src\validators\LogUserValidator.php
  *  - src\validators\SignUserValidator.php
  *  - classes\User\User.php
  * Used from:
@@ -23,6 +24,7 @@ use src\domain\AuthManager;
 use src\domain\dto\JsonResponse;
 use src\domain\exceptions\AppException;
 use src\libraries\EmailManager;
+use src\validators\LogUserValidator;
 use src\validators\SignUserValidator;
 
 /**
@@ -75,16 +77,15 @@ class SessionController extends BaseController
         $this->logger->log("[POST] logIn called. ");
         try {
             $user = $request->getParsedBody()['data'] ?? null;
-            $username = $user['username'] ?? null;
-            $password = $user['password'] ?? null;
-            if ($username === null || $password === null) {
-                throw new AppException('Ivalid Username or Password.');
+            $validator = new LogUserValidator();
+            $validator->setAtlas($this->atlas);
+            $validator->validate($user);
+            if ($validator->hasErrors()) {
+                $jsonResponse = new JsonResponse(400, $validator->getErrors());
+                return $response->withJson($jsonResponse, 200);
             }
 
-            $record = $this->atlas->select(User::class, ['name' => $username])->fetchRecord();
-            if ($record === null) throw new AppException('That user does not exist');
-            if ($record->password !== $password) throw new AppException('Ivalid Username or Password.');
-            
+            $record = $this->atlas->select(User::class, ['name' => $user['username']])->fetchRecord();
             $credentials = (new AuthManager())->registre($record->name, $record->accountType);
             $this->resultMessage = $credentials;
             $this->logger->log("[POST] logIn was successfully. object : " . json_encode($record->jsonSerialize()));

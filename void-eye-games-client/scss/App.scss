@@ -1,11 +1,22 @@
+/**
+ * File: App.scss
+ * Purpose: The main scss file.
+ * DB Access: No
+ * Used from:
+ *  - None
+ * Uses files:
+ *  - The following imported files:
+ */
+
 @import './utils/__mixins.scss';
 @import './utils/__variables.scss';
 @import 'node_modules/bootstrap/scss/bootstrap.scss';
 @import '__basic.scss';
 @import '__utils.scss';
+@import 'skeletons/__skeleton.scss';
 @import 'filters/__filter.scss';
 @import 'header/__header.scss';
 @import 'slider/__slider.scss';
 @import 'forms/__form.scss';
 @import 'game/__game.scss';
-@import 'skeletons/__skeleton.scss';
+@import 'home/__home.scss';

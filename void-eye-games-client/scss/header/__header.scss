@@ -1,21 +1,13 @@
-//------------------------------------------------------------------
-// HEADER
-//------------------------------------------------------------------
-
-// home header
-.home--header {
-    & .slider {
-        &-frame,
-        &-container {
-            width: 100% !important;
-            height: 100% !important;
-        }
-
-        &-list {
-            height: 100% !important;
-        }
-    }
-}
+/*
+ * File: __header.scss
+ * Purpose: scss header.
+ * DB Access: No
+ * Used from:
+ *  - App.scss
+ * Uses files:
+ *  - __nav.scss
+ *  - __dropdown.scss
+ */
 
 // Navigations stylesheet
 @import './__nav.scss';
