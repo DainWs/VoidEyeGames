@@ -4,12 +4,12 @@
  * Purpose: Perform database insert operations.
  * DB Access: Yes
  * Uses files:
- *  - src\controllers\BaseController.php
  *  - classes\User\User.php
  *  - classes\Game\Game.php
  *  - classes\Comment\Comment.php
  *  - classes\Category\Category.php
  *  - classes\Plataform\Plataform.php
+ *  - src\controllers\BaseController.php
  *  - src\validators\CategoryValidator.php
  *  - src\validators\GameValidator.php
  *  - src\validators\PlataformValidator.php

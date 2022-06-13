@@ -2,7 +2,7 @@
 /**
  * File: index.php
  * Purpose: the main file for API side, creates the server.
- * DB Access: No
+ * DB Access: No (only creates connection instances)
  * Uses files:
  *  - Controllers
  *  - SlimSettings.php

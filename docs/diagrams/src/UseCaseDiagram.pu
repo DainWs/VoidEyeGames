@@ -1,4 +1,4 @@
-@startuml
+@startuml Use Case Diagram
 left to right direction
 rectangle Api {
  rectangle Sessions { 

@@ -6,7 +6,7 @@
  * Uses files:
  *  - None
  * Used from:
- *  - src\validators\*.php
+ *  - src\validators\BaseController.php
  */
 namespace src\validators;
 
@@ -58,8 +58,8 @@ final class ValidationUtils {
      * @return true if the password is correct.
      */
     public function validatePassword($password, $otherPassword = null): bool {
-        $result = $this->validateNotEmpty($password);
-        if ($otherPassword) {
+        $result = $this->validateNotEmpty($password) && $otherPassword;
+        if ($result) {
             $result &= ($password === $otherPassword);
         }
         return $result;

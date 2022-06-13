@@ -1,6 +1,12 @@
-//------------------------------------------------------------------
-// SLIDERS
-//------------------------------------------------------------------
+/*
+ * File: __slider.scss
+ * Purpose: scss slider.
+ * DB Access: No
+ * Used from:
+ *  - App.scss
+ * Uses files:
+ *  - None
+ */
 
 /** Define static tab slider images and videos media sizes **/
 .tab-content {
@@ -10,8 +16,9 @@
             display: block !important;
 
             .video {
-                max-height: 26.75rem;
-                & * {max-height: 26.75rem;}
+                $videoMaxHeight: 26.75rem;
+                max-height: $videoMaxHeight;
+                & * {max-height: $videoMaxHeight;}
             }
         }
     }
@@ -41,23 +48,9 @@
         align-items: center;
     }
 
-    // One container is equals a item container
-    &-container {
-        @include media-breakpoint-up(xm) { 
-            max-height: 100% !important;
-        }
-    }
-
-    // The frame is the main slider container
-    &-frame {
-        @include media-breakpoint-up(xm) {
-            max-height: 100% !important;
-        }
-    }
-
     // Used to support differents types of medias
     &--dynamic {
-        min-height: calc(200px + 25vw);
+        min-height: calc(12.5rem + 25vw);
         
         & .slider {
             &-container {
@@ -65,11 +58,7 @@
                 position: relative;
             }
 
-            &-list {
-                & .slide {
-                    width: 100% !important;
-                }
-            }
+            &-list .slide { width: 100% !important; }
 
             &-frame {
                 display: flex;
@@ -78,7 +67,7 @@
         }
 
         & .nav-tabs {
-            height: 50px !important;
+            height: 3.125rem !important;
 
             & .nav-item {
 
@@ -96,7 +85,7 @@
             align-items: center;
             flex-grow: 1;
 
-            $height: calc(100% - 50px);
+            $height: calc(100% - 3.125rem);
             height: $height;
             min-height: $height;
             max-height: $height;
@@ -110,22 +99,17 @@
 
         /** Responsive side **/
         @include media-breakpoint-up(xm) { 
-            min-height: calc(200px + 30vw + 5vh);
+            min-height: calc(12.5rem + 30vw + 5vh);
         }
 
         @include media-breakpoint-up(sm) { 
-            min-height: calc(200px + 35vw + 5vh);
+            min-height: calc(12.5rem + 35vw + 5vh);
         }
 
         @include media-breakpoint-up(md) { 
-            & .slider {
-                &-list {
-                    height: 100%;
-                }
-            }
-
+            & .slider-list { height: 100%; }
             & .tab-content {
-                height: 500px;
+                height: 31.25rem;
                 overflow-y: hidden;
 
                 & > * {
@@ -139,23 +123,27 @@
             min-height: 100%;
 
             .tab-content {
-                
-                min-height: 400px;
-                max-height: 400px;
+                min-height: 25rem;
+                max-height: 25rem;
             }
         }
 
         @include media-breakpoint-up(xl) { 
-            .nav-tabs {
-                height: auto !important;
-            }
+            .nav-tabs { height: auto !important; }
 
             .tab-content {
-                $height: calc(100% - 50px);
+                $height: calc(100% - 3.125rem);
                 height: $height;
                 min-height: $height;
                 max-height: $height;
             }
         }
+    }
+
+    @include media-breakpoint-up(xm) { 
+        // One container is equals a item container
+        &-container { max-height: 100% !important; }
+        // The frame is the main slider container
+        &-frame { max-height: 100% !important; }
     }
 }

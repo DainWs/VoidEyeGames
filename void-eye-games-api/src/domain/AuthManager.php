@@ -93,7 +93,11 @@ class AuthManager {
         $this->logger->log("Get saved credentials.", Logger::INFO);
         $fileContentText = file_get_contents($this->getFile());
         $filecontent = json_decode($fileContentText, true);
-        return new Credentials($filecontent['keys'][$username]) ?? null;
+        $userRawData = $filecontent['keys'][$username] ?? null;
+        if ($userRawData === null) {
+            return null;
+        } 
+        return new Credentials($userRawData) ?? null;
     }
 
     /**

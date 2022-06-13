@@ -1,6 +1,12 @@
-//------------------------------------------------------------------
-// VARIABLES
-//------------------------------------------------------------------
+/*
+ * File: __variables.scss
+ * Purpose: scss variables.
+ * DB Access: No
+ * Used from:
+ *  - App.scss
+ * Uses files:
+ *  - None
+ */
 
 /** COLORS **/
 $primary:#FFFFFF;
@@ -30,4 +36,4 @@ $theme-colors: (
 );
 
 /** GENERAL VARIABLES **/
-$headerHeight: calc(50px + 1vh);
+$headerHeight: calc(3.125rem + 1vh);
