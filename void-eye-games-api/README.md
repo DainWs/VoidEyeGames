@@ -3,13 +3,13 @@
 # Void Eye Game - Api
 The API is the one that _provides data to the **web client**_ and *manage the session system*, see [Web Client](../void-eye-games-client) for more information.
 
-<hr/>
+
 <h2><strong style="color:red;">Important!! - The database MUST be mysql or mariadb</strong></h2>
 As has been said, the database must be Mysql or Mariadb, since it has not been tested in other databases, we are not responsible.
 
 <h2><strong style="color:red;">Important!! - SSL Certs not included</strong></h2>
 As you can understand, I can't provide application passwords/credentials/certificates, as this could bring security issues, for this project you can only run it in DEVELOPMENT mode (using `npm start` command), Yes even if you want to be able to put it into production, access the `.crt` folder in the project root folder, (relative path from which this file is located is: `../.crt`, if the folder does not exist, no hesitate to create it) in that folder you will save the server.crt and the server.key (the certificates)
-<hr/>
+
 
 ## Requirements
 Here you have the requiriments for **API side**:
@@ -93,8 +93,6 @@ Here you have a example with all params in true:
 }
 ```
 
-<hr/>
-
 ### Session system
 Used for **login/signin** action and for credetials check.<br/>
 To prevent unidentified users from accessing certain services, a credentials object is required to identify you for said action, the middleware will check if said credentials are valid.
@@ -135,7 +133,7 @@ But for signin request, you have to send the followed JSON to the `/signin` url 
 }
 ```
 
-<hr/>
+
 
 ### Data System
 For each type of object **[games, categories, platforms and comments]** *similar requests* will be sent to their respective *directories*, in case of being about only 1 object, the directory will be in **singular**, in case of being about several, the directory will be in **plural**, for example:
@@ -267,7 +265,7 @@ This section is to show a **example of object type data** as **json object**
 }
 ```
 
-<hr/>
+
 
 ### Others
 In this *Others* section, you can find the supports requests, like **password recovery** and **bug reports**.
@@ -297,7 +295,7 @@ To report a bug, you will have to send a **POST** request to `/report`, The requ
 }
 ```
 
-<hr/>
+
 
 ### Paths map
 A map of all the paths in which you can make requests.

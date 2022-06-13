@@ -61,14 +61,10 @@ The *home page* is the **main page or entrance to our web client**, here you can
 
 One *feature* of this page is that if you **cannot check the status/availability of the API**, a **modal dialog** will be displayed indicating that the API is currently unavailable, and it will not be possible to show you the games at that time.
 
-<hr/>
-
 ### Games page
 In the *games page* you will find a **aside of filters** and a **section where the filtered games will be listed**, **<span style="color: red;">IMPORTANT!! games will not be filtered until you click the 'Filter' button</span>**, however, the **search box** *in the menu bar at the top of the page does filter in* **real time**, constantly sending requests to the server due to which requires fewer resources.
 
 The list of games is **paginated** and *12 games will be shown per page*, when you click **"show more"**, the following **12 games will be loaded**, the same thing happens in the case of *filters*, only these go from 5 to 5.
-
-<hr/>
 
 ### Games details page
 This is the most important page, in this we can find the details of a game, in these details enter:
@@ -77,27 +73,17 @@ This is the most important page, in this we can find the details of a game, in t
 - The description of the game.
 - A comment section for users to share their experience with the game, **<span style="color: red;">IMPORTANT! You can only comment if you are logged in</span>**, and you can do it directly from the game details page.
 
-<hr/>
-
 ### Support page
 On the support page you can find out about who we are, how we work and where we are (thanks to a geolocation map), you can also access the error reporting form.
-
-<hr/>
 
 ### Report form page
 From the error report form, *whether you are registered or not*, you can *inform us* and *help us* **improve** the page, reporting **inaccurate prices**, or **bugs**.
 
-<hr/>
-
 ### Login form page
 On this page, you can **login**, or if **you don't have an account**, *you can access the page to register it*, you can also **recover your account password** on this page.
 
-<hr/>
-
 ### Signin form page
 On this page you can **register your user account**, as long as there is not already *one with the same name/email*.
-
-<hr/>
 
 ### Game form page _<span style="color: red;">Admin side</span>_
 **<span style="color: red;">IMPORTANT! to this page only can be accessed by admin users accounts.</span>**
@@ -106,8 +92,6 @@ On this page, you can **add/edit** games, **add categories to them**, **define a
 
 #### Tips
 On this page, you can find lists, if you **left or right click** on them, a **context menu will be displayed** that will *allow you to perform operations on these items*, in the case of **categories**, you can *delete* the category of this game, and in the case from the **gallery medias**, you can also *delete* them, **but in the case of images there is a special case, when you put the mouse over the item, the resource you have the mouse over will be shown (either image or video)**
-
-<hr/>
 
 ### Plataform form page _<span style="color: red;">Admin side</span>_
 **<span style="color: red;">IMPORTANT! to this page only can be accessed by admin users accounts.</span>**
@@ -120,8 +104,6 @@ In the *context menu of the items in the game list*, you will have **2 possible 
 <div class="center">
     <img src="./client/GameItemContextMenu.png"/>
 </div>
-
-<hr/>
 
 ### Categories form page _<span style="color: red;">Admin side</span>_
 **<span style="color: red;">IMPORTANT! to this page only can be accessed by admin users accounts.</span>**
@@ -173,8 +155,6 @@ Here you have a example with all params in true:
 }
 ```
 
-<hr/>
-
 ### Session system
 Used for **login/signin** action and for credetials check.<br/>
 To prevent unidentified users from accessing certain services, a credentials object is required to identify you for said action, the middleware will check if said credentials are valid.
@@ -214,8 +194,6 @@ But for signin request, you have to send the followed JSON to the `/signin` url 
     "terms": true
 }
 ```
-
-<hr/>
 
 ### Data System
 For each type of object **[games, categories, platforms and comments]** *similar requests* will be sent to their respective *directories*, in case of being about only 1 object, the directory will be in **singular**, in case of being about several, the directory will be in **plural**, for example:
@@ -347,8 +325,6 @@ This section is to show a **example of object type data** as **json object**
 }
 ```
 
-<hr/>
-
 ### Others
 In this *Others* section, you can find the supports requests, like **password recovery** and **bug reports**.
 
@@ -376,8 +352,6 @@ To report a bug, you will have to send a **POST** request to `/report`, The requ
     }
 }
 ```
-
-<hr/>
 
 ### Paths map
 A map of all the paths in which you can make requests.
