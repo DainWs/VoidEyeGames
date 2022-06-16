@@ -1,5 +1,5 @@
 # Void Eye Game
-![License](https://img.shields.io/static/v1?label=License&message=ISC&color=green) ![License](https://img.shields.io/static/v1?label=Tags&message=1.2.1&color=yellow)
+![License](https://img.shields.io/static/v1?label=License&message=ISC&color=green) ![License](https://img.shields.io/static/v1?label=Tags&message=1.2.2&color=yellow)
 
 **Author:** Jose Antonio Duarte Perez<br/>
 **Production:** To have access to the version in production, talk to Jose Antonio Duarte.
@@ -26,7 +26,7 @@ We have user manuals for both the API and the Web Client:<br/> [![API](https://i
 You can see the styles manual here:<br/> [![USER MANUAL](https://img.shields.io/static/v1?label=PDF&message=Style%20manual&color=ED1C24&style=for-the-badge)](./docs/StyleManual.pdf)
 
 ## Examples
-You can see all features examples in the "BatteryExamples.md", clicking in the next link:<br/> [![USER MANUAL](https://img.shields.io/static/v1?label=See&message=Battery%20examples&color=informational&style=for-the-badge)](./docs/BatteryExamples.md)
+You can see all features examples in the "Examples.md", clicking in the next link:<br/> [![USER MANUAL](https://img.shields.io/static/v1?label=See&message=Examples&color=informational&style=for-the-badge)](./docs/Examples.md)
 
 ## Important!! - SSL Certs not included
 As you can understand, I can't provide application passwords/credentials/certificates, as this could bring security issues, for this project you can only run it in DEVELOPMENT mode (using `npm start` command), Yes even if you want to be able to put it into production, access the `.crt` folder in the project root folder, (relative path from which this file is located is: `../.crt`, if the folder does not exist, no hesitate to create it) in that folder you will save the server.crt and the server.key (the certificates)

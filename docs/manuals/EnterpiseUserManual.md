@@ -111,7 +111,7 @@ The **tests** carried out for the clients were carried out by hand.
 As for the **battery of examples**, we have a **production version** that allows you to see a sample of  these, but to access the **production version**, you have to tell it to **Jose Antonio**, he has to turn on the server.
 
 You **can also see all kinds of examples** in our examples **MD on GitHub**:<br/>
-[![Battery examples](https://img.shields.io/static/v1?label=See&message=Battery%20Examples&color=informational&style=for-the-badge)](../BatteryExamples.md)
+[![Examples](https://img.shields.io/static/v1?label=See&message=Examples&color=informational&style=for-the-badge)](../Examples.md)
 
 ## User’s manuals
 You can find here a brief description of the elements used.

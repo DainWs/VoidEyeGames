@@ -1,4 +1,4 @@
-# Battery examples
+# Examples
 **Project:** Void Eye Games<br/>
 **Author:** Jose Antonio Duarte Pérez<br/>
 **Tutor:** Jose Antonio Piñero Berbel<br/>
@@ -8,7 +8,7 @@
 ## Sumary
 In this Markdown file, you will be able to see different examples of the characteristics and functionalities of each page, with a brief explanation of what is done in each one.
 
-**IMPORTANT!!! the Battery examples files its a markdown because it is what best allows the use of gifs, as you will understand, a normal pdf does not have gifs.**
+**IMPORTANT!!! the examples files its a markdown because it is what best allows the use of gifs, as you will understand, a normal pdf does not have gifs.**
 
 ## Home page example
 We use the slider a bit and show you the navigation bar.
