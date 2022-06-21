@@ -10,7 +10,7 @@
 Final project for 2ºDAW, its a website is intended for support in the search for the best offers and alternatives when buying video games. In addition, together with the detailed description of the video games that will be made through videos and images, you will find the different links to purchase websites and a series of comments written by users. They will also be able to report bugs to developers and view the location of our company on a map. In short, a page that helps customers to see on which page it is sold at the best price and the different prices at the time to buy video games. **Remember that games cannot be purchased on this page, since its purpose is consultation, and not the purchase of video games.**
 
 ### Documentation
-[![USER MANUAL](https://img.shields.io/static/v1?label=PDF&message=Documentation&color=ED1C24&style=for-the-badge)](./docs/VoidEyeGames-Documentation.pdf)<br/>
+[![USER MANUAL](https://img.shields.io/static/v1?label=PDF&message=Documentation&color=ED1C24&style=for-the-badge)](./docs/VoidEyeGame-Documentation.pdf)<br/>
 
 ### Apps documentation
 We use API and the Web Client, you can find **Applications documentation** in the following links.
