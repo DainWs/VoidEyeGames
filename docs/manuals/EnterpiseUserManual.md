@@ -444,6 +444,7 @@ A map of all the paths in which you can make requests.
 
 ### Style manual
 For the style manual, see the file _“docs/StyleManual.pdf”_, here is the link:
+
 [![Style Manual](https://img.shields.io/static/v1?label=PDF&message=Style%20Manual&color=C9252D&style=for-the-badge)](../StyleManual.pdf)
 
 ### Installation Guide
