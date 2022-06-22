@@ -21,7 +21,7 @@ rectangle Api {
 :User: --> (Iniciar\nsesión)
 :User: --> (Reportar\nincidencia)
 
-:LoggedUser: --|> :User:
+:LoggedUser: ----> (Reportar\nincidencia)
 :LoggedUser: --> (Cerrar\nsesión)
 :LoggedUser: --> (Realizar\ncomentario)
 

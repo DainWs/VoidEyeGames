@@ -1,4 +1,5 @@
 @startuml API Class Diagram
+skinparam groupInheritance 3
 class PostRequests {}
 namespace API {
  namespace libraries {
@@ -10,7 +11,12 @@ namespace API {
    +getFile(): String
   }
 
-  class Atlas {}
+  class Atlas {
+    -dbPDO: PDO
+    +select(ModelClass, ...)
+    +insert(ModelClass, ...)
+    +update(ModelClass, ...)
+  }
  }
  namespace models {
   class Games {
@@ -86,29 +92,22 @@ namespace API {
    -db: PDO
    -atlas: Atlas
    +BaseController()
-   +getUser(request, response, args): JSON
-   +getUsers(request, response, args): JSON
-   +getGame(request, response, args): JSON
-   +getGames(request, response, args): JSON
-   +getPlataforms(request, response, args): JSON
-   +getCategories(request, response, args): JSON
-   +signIn(request, response, args): JSON
-   +logIn(request, response, args): JSON
-   +addGame(request, response, args): JSON
-   +addPlataform(request, response, args): JSON
-   +addCategory(request, response, args): JSON
   }
+
+  class SelectController extends BaseController {}
+  class InsertController extends BaseController {}
+  class UpdateController extends BaseController {}
+  class HealthController extends BaseController {}
+  class SessionController extends BaseController {}
 
   .PostRequests --> BaseController 
   API.libraries.LogManager <-- BaseController 
   API.libraries.Atlas <-- BaseController 
 
-  BaseController --> API.models.Games
-  BaseController --> API.models.Categories
-  BaseController --> API.models.Plataforms
-  BaseController --> API.models.Users
+  API.libraries.Atlas -r-> API.models
  }
  
  note top of API.libraries.Atlas: A Library provider by Slim framework,\n and used for DB Operations
+ note top of API.controllers: Validates and process\nrequests and retrieve\nresponses.
 }
 @enduml
