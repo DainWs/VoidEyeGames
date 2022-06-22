@@ -78,42 +78,6 @@ namespace Desktop {
   Users --o Comments
   Games --o Medias
  }
- namespace factories {
-  class UsersFactory {
-   +parse(User)
-   +parseAll(Users)
-  }
-  Desktop.models.Users <-u- UsersFactory 
-  class GamesFactory {
-   +parse(Game)
-   +parseAll(Games)
-  }
-  Desktop.models.Games <--r-- GamesFactory
-  class CategoriesFactory {
-   +parse(Category)
-   +parseAll(Categories)
-  }
-  Desktop.models.Categories <-down-- CategoriesFactory 
-  class MediasFactory {
-   +parse(Media)
-   +parseAll(Medias)
-   }
-  Desktop.models.Medias <-down-- MediasFactory 
-  class CommentsFactory {
-   +parse(Comment)
-   +parseAll(Comments)
-  }
-  Desktop.models.Comments <-down-- CommentsFactory 
-  class PlataformsFactory {
-   +parse(Plataform)
-   +parseAll(Plataforms)
-  }
-  Desktop.models.Plataforms <--- PlataformsFactory 
-  GamesFactory -u-> CategoriesFactory
-  GamesFactory -u-> MediasFactory 
-  GamesFactory -u-> CommentsFactory 
-  GamesFactory -u-> PlataformsFactory 
- }
  namespace domain {
 	class SessionManager {
 		+{static} getInstance()
@@ -124,35 +88,36 @@ namespace Desktop {
 	}
  }
  namespace services {
-	class AjaxRequestData {
-          -url: String
-          -headers: Map<String, String> 
-          -params: Map<String, String>
-          +getters()
-          +setters()
-        }
-	class AjaxService {
+	class SocketRequest {
+		-url: String
+		-headers: Map<String, String> 
+		-params: Map<String, String>
+		+getters()
+		+setters()
+    }
+	class SocketController {
 		+{static} getInstance()
-		+post(AjaxRequestData)
-		+get(AjaxRequestData)
+		+post(SocketRequest)
+		+get(SocketRequest)
 	}
-        class DataProvider {
-          +{static} getInstance()
-          +supply(data)
-          +provide()
-        }
-        class AjaxObserver {
-         +subscribe(callback, event): void
-         +unsubscribe(callback, event): void
-         +notify(event): void
-        }
-	AjaxRequestData <-l- AjaxService
-        AjaxService -d-> DataProvider 
-        DataProvider -r-> AjaxObserver
-        AjaxObserver -d-> Desktop.pages.Page
+	class SocketDataProvider {
+		+{static} getInstance()
+		+supply(data)
+		+provide()
+	}
+	class SocketObserver {
+		+subscribe(callback, event): void
+		+unsubscribe(callback, event): void
+		+notify(event): void
+	}
+	SocketRequest <-l- SocketController
+	SocketController -d-> SocketDataProvider 
+	SocketDataProvider -r-> SocketObserver
+	SocketObserver -d-> Desktop.pages.Page
  }
- Desktop.services.AjaxService <-- Desktop.pages.Page
- Desktop.services.DataProvider <-- Desktop.pages.Page
+ Desktop.services.SocketController <-- Desktop.pages.Page
+ Desktop.services.SocketDataProvider <-- Desktop.pages.Page
+ Desktop.models.Games <-- Desktop.pages.Page
  Desktop.domain.SessionManager <-u- Desktop.pages.Page
  Desktop.domain.SessionManager -d-> Desktop.models.Users
  
@@ -161,7 +126,7 @@ namespace Desktop {
    +start()
  }
  App -d-o Desktop.pages.Page
- Desktop.services.AjaxService -u-> .Api 
- Desktop.services.AjaxService <-u- .Api 
+ Desktop.services.SocketController -u-> .Api 
+ Desktop.services.SocketController <-u- .Api 
 }
 @enduml
