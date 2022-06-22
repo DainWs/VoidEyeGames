@@ -1,4 +1,4 @@
-[![License](https://img.shields.io/static/v1?label=See&message=Readme&color=informational&style=for-the-badge)](../) [![License](https://img.shields.io/static/v1?label=See&message=Web%20Client&color=informational&style=for-the-badge)](../void-eye-games-client)
+[![License](https://img.shields.io/static/v1?label=See&message=Readme&color=informational&style=for-the-badge)](../README.md) [![License](https://img.shields.io/static/v1?label=See&message=Web%20Client&color=informational&style=for-the-badge)](../void-eye-games-client)
 
 # Void Eye Game - Api
 The API is the one that _provides data to the **web client**_ and *manage the session system*, see [Web Client](../void-eye-games-client) for more information.
